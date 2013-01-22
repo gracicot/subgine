@@ -18,13 +18,9 @@ Resistance::~Resistance()
 
 }
 
-Vector3 Resistance::apply(const PhysicPoint3& object, double time) const
+Vector3 Resistance::apply(const PhysicPoint3& object) const
 {
-	return Vector3(
-			   -object.getVelocity().x * ((getValue().x)),
-			   -object.getVelocity().y * ((getValue().y)),
-			   -object.getVelocity().z * ((getValue().z))
-		   );
+	return -1*object.getVelocity() * getValue();
 }
 
 Vector3 Resistance::getValue() const

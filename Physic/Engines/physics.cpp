@@ -32,7 +32,7 @@ void Physics::execute(float time)
 	{
 		if(!i->isLock())
 		{
-			i->applyRules(time); //apply rules
+			i->applyRules(); //apply rules
 		}
 	}
 }

@@ -16,6 +16,6 @@
 
 #define pow2(x) (x*x)
 
-const double pi = atan(1)/4;
+const double pi = 4.0*atan(1.0);
 
 #endif //INC_CONST_H

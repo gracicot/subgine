@@ -35,6 +35,7 @@ struct Vector : public Positionnable
 	void setLenght(const double lenght);
 	Vector project(Vector& other) const;
 	Vector normalize() const;
+	double dot(const Vector& vec) const;
 
 	virtual Vector getPosition() const;
 
@@ -45,7 +46,7 @@ struct Vector : public Positionnable
 	double y;
 };
 
-double operator*(const Vector& vec1, const Vector& vec2);
+Vector operator*(const Vector& vec1, const Vector& vec2);
 Vector operator*(const double& multiplier, const Vector& vec);
 Vector operator*(const Vector& vec, const double& multiplier);
 Vector operator+(const Vector& vec1, const Vector& vec2);

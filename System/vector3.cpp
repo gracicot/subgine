@@ -30,12 +30,9 @@ Vector3::Vector3(const Vector3& other) : x(other.x), y(other.y), z(other.z)
 
 Vector Vector3::getAngles() const
 {
-	double angle = atan2(y, x);
-	if (angle < 0)
-	{
-		angle += 2 * M_PI;
-	}
-	return Vector(angle, acos(z / getLenght()));
+	Vector angle(atan(y/x), acos(z / getLenght()));
+	
+	return angle;
 }
 
 double Vector3::getLenght() const
@@ -48,9 +45,9 @@ void Vector3::setAngles(const Vector angles)
 	if(x != 0 || y != 0 || z != 0)
 	{
 		double lenght = getLenght();
-		x = sin(angles.x) * cos(angles.y) * lenght;
+		x = sin(angles.y) * cos(angles.x) * lenght;
 		y = sin(angles.x) * sin(angles.y) * lenght;
-		z = cos(angles.x) * lenght;
+		z = cos(angles.y) * lenght;
 	}
 }
 
@@ -122,6 +119,7 @@ Vector3& operator+= (Vector3& vec1, const Vector3& vec2)
 {
 	vec1.x += vec2.x;
 	vec1.y += vec2.y;
+	vec1.z += vec2.z;
 	return vec1;
 }
 
@@ -134,7 +132,7 @@ Vector3& operator-= (Vector3& vec1, const Vector3& vec2)
 {
 	vec1.x -= vec2.x;
 	vec1.y -= vec2.y;
-	vec1.z -= vec2.y;
+	vec1.z -= vec2.z;
 	return vec1;
 }
 
@@ -145,5 +143,11 @@ Vector3& operator/= (Vector3& vec, const double& divider)
 	vec.z /= divider;
 	return vec;
 }
+
+Vector3 operator*(const Vector3& vec1, const Vector3& vec2)
+{
+	return Vector3(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
+}
+
 
 // kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 

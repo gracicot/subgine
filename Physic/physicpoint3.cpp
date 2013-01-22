@@ -1,14 +1,12 @@
-#include "physicpoint.h"
+#include "physicpoint3.h"
 
-PhysicPoint::PhysicPoint()
+PhysicPoint3::PhysicPoint3()
 {
-	_position = Vector(0, 0);
-	_velocity = Vector(0, 0);
 	_mass = 1;
 	_lock = false;
 }
 
-PhysicPoint::PhysicPoint(const PhysicPoint& c)
+PhysicPoint3::PhysicPoint3(const PhysicPoint3& c)
 {
 	_position = c._position;
 	_velocity = c._velocity;
@@ -21,7 +19,7 @@ PhysicPoint::PhysicPoint(const PhysicPoint& c)
 	_lock = c._lock;
 }
 
-PhysicPoint::~PhysicPoint()
+PhysicPoint3::~PhysicPoint3()
 {
 for(auto i : _rules)
 	{
@@ -29,29 +27,29 @@ for(auto i : _rules)
 	}
 }
 
-Vector PhysicPoint::getVelocity() const
+Vector3 PhysicPoint3::getVelocity() const
 {
 	return _velocity;
 }
 
-void PhysicPoint::setVelocity(Vector velocity)
+void PhysicPoint3::setVelocity(Vector3 velocity)
 {
 	_velocity = velocity;
 }
 
-void PhysicPoint::setPosition(Vector posision)
+void PhysicPoint3::setPosition(Vector3 posision)
 {
 	_position = posision;
 }
 
-void PhysicPoint::updatePosition(double time)
+void PhysicPoint3::updatePosition(double time)
 {
 	_position += _velocity * time;
 }
 
-Rule::Rule& PhysicPoint::getRule(std::string type)
+Rule3::Rule& PhysicPoint3::getRule(std::string type)
 {
-	std::map<std::string, Rule::Rule*>::iterator it = _rules.find(type);
+	std::map<std::string, Rule3::Rule*>::iterator it = _rules.find(type);
 
 	if(it != _rules.end())
 	{
@@ -61,9 +59,9 @@ Rule::Rule& PhysicPoint::getRule(std::string type)
 	throw std::out_of_range("Rule " + type + " doesn't exist...");
 }
 
-const Rule::Rule& PhysicPoint::getRule(std::string type) const
+const Rule3::Rule& PhysicPoint3::getRule(std::string type) const
 {
-	std::map<std::string, Rule::Rule*>::const_iterator it = _rules.find(type);
+	std::map<std::string, Rule3::Rule*>::const_iterator it = _rules.find(type);
 
 	if(it != _rules.end())
 	{
@@ -73,12 +71,12 @@ const Rule::Rule& PhysicPoint::getRule(std::string type) const
 	throw std::out_of_range("Rule " + type + " doesn't exist...");
 }
 
-void PhysicPoint::setForce(std::string type, const Vector force)
+void PhysicPoint3::setForce(std::string type, const Vector3 force)
 {
 	_forces[type] = force;
 }
 
-void PhysicPoint::updateVelocity(double time)
+void PhysicPoint3::updateVelocity(double time)
 {
 for(auto i : _forces)
 	{
@@ -94,37 +92,37 @@ for(auto i : _pulses)
 	_pulses.clear();
 }
 
-Vector PhysicPoint::getPulse(std::string pulseType)
+Vector3 PhysicPoint3::getPulse(std::string pulseType)
 {
 	return _pulses[pulseType];
 }
 
-void PhysicPoint::setPulse(const std::string pulseType, const Vector pulse)
+void PhysicPoint3::setPulse(const std::string pulseType, const Vector3 pulse)
 {
 	_pulses[pulseType] = pulse;
 }
 
-const std::map<std::string, Vector>& PhysicPoint::getForce() const
+const std::map<std::string, Vector3>& PhysicPoint3::getForce() const
 {
 	return _forces;
 }
 
-std::map<std::string, Vector>& PhysicPoint::getForce()
+std::map<std::string, Vector3>& PhysicPoint3::getForce()
 {
 	return _forces;
 }
 
-const std::map<std::string, Vector>& PhysicPoint::getPulse() const
+const std::map<std::string, Vector3>& PhysicPoint3::getPulse() const
 {
 	return _pulses;
 }
 
-std::map<std::string, Vector>& PhysicPoint::getPulse()
+std::map<std::string, Vector3>& PhysicPoint3::getPulse()
 {
 	return _pulses;
 }
 
-void PhysicPoint::applyRules()
+void PhysicPoint3::applyRules()
 {
 for(auto i : _rules)
 	{
@@ -132,12 +130,12 @@ for(auto i : _rules)
 	}
 }
 
-Vector PhysicPoint::getForce(std::string forceType)
+Vector3 PhysicPoint3::getForce(std::string forceType)
 {
 	return _forces[forceType];
 }
 
-PhysicPoint& PhysicPoint::operator=(const PhysicPoint& c)
+PhysicPoint3& PhysicPoint3::operator=(const PhysicPoint3& c)
 {
 	_position = c._position;
 	_velocity = c._velocity;
@@ -151,19 +149,19 @@ PhysicPoint& PhysicPoint::operator=(const PhysicPoint& c)
 	return *this;
 }
 
-std::map<std::string, Rule::Rule*>& PhysicPoint::getRule()
+std::map<std::string, Rule3::Rule*>& PhysicPoint3::getRule()
 {
 	return _rules;
 }
 
-const std::map<std::string, Rule::Rule*>& PhysicPoint::getRule() const
+const std::map<std::string, Rule3::Rule*>& PhysicPoint3::getRule() const
 {
 	return _rules;
 }
 
-void PhysicPoint::setRule(std::string tag, Rule::Rule* rule)
+void PhysicPoint3::setRule(std::string tag, Rule3::Rule* rule)
 {
-	std::map<std::string, Rule::Rule*>::iterator it = _rules.find(tag);
+	std::map<std::string, Rule3::Rule*>::iterator it = _rules.find(tag);
 
 	if(it == _rules.end())
 	{

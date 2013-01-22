@@ -32,7 +32,7 @@ public:
 	Attraction(Vector value = Vector(0, 0));
 	Attraction(const Attraction& c);
 	
-	virtual Vector apply(const PhysicPoint& object, double time) const;
+	virtual Vector apply(const PhysicPoint& object) const;
 	
 	void addObject(const PhysicPoint& object);
 	void removeObject(const PhysicPoint& object);

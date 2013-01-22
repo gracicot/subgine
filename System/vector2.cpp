@@ -104,6 +104,11 @@ Vector::operator sf::Vector2< float >() const
 	return sf::Vector2<float> (x, y);
 }
 
+double Vector::dot(const Vector& vec) const
+{
+	return (x*vec.x)+(y*vec.y);
+}
+
 
 //Operators
 
@@ -160,9 +165,9 @@ Vector& operator-= (Vector& vec1, const Vector& vec2)
 	return vec1;
 }
 
-double operator*(const Vector& vec1, const Vector& vec2)
+Vector operator*(const Vector& vec1, const Vector& vec2)
 {
-	return (vec1.x*vec2.x)+(vec2.y*vec1.y);
+	return Vector(vec1.x * vec2.x, vec1.y * vec2.y);
 }
 
 Vector& operator/= (Vector& vec, const double& divider)

@@ -33,7 +33,7 @@ public:
 	Rule();
 	Rule(const Rule& c);
 	virtual ~Rule();
-	virtual Vector apply(const PhysicPoint& object, double time) const =0;
+	virtual Vector apply(const PhysicPoint& object) const =0;
 	
 private:
 };

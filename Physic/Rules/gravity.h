@@ -14,7 +14,7 @@ public:
 	Gravity(const Gravity& c);
 	virtual ~Gravity();
 	
-	virtual Vector apply(const PhysicPoint& object, double time) const;
+	virtual Vector apply(const PhysicPoint& object) const;
 	
 	void setValue(Vector value);
 	Vector getValue() const;

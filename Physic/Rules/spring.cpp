@@ -100,12 +100,9 @@ void Spring::setSize(double size)
 	_size = size;
 }
 
-Vector Spring::apply(const PhysicPoint& object, double time) const
+Vector Spring::apply(const PhysicPoint& object) const
 {
-	return Vector(
-			   ((((cos((object.getPosition() - getPosition()).getAngle()) * getSize()) + getPosition().x) - object.getPosition().x)*time) * getValue().x,
-			   ((((sin((object.getPosition() - getPosition()).getAngle()) * getSize()) + getPosition().y) - object.getPosition().y)*time) * getValue().y
-		   );
+	return (getPosition() - object.getPosition()) * getValue() * ((getPosition() - object.getPosition()).getLenght() - getSize());
 }
 
 Vector Spring::getValue() const

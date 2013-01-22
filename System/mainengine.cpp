@@ -48,16 +48,13 @@ void MainEngine::setRunning(const bool state)
 void MainEngine::Run()
 {
 	sf::Clock timer;
-	sf::Clock timer2;
 	float time = 0;
-	int number = 0;
 
 	while(_engineRunning)
 	{
-		number++;
-		time = timer.GetElapsedTime() * (_speed / 0.015);
+		sf::Sleep(1.0 / 90.0);
+		time = timer.GetElapsedTime() * _speed;
 		timer.Reset();
-		sf::Sleep(1.0 / 240.0);
 
 	for(auto engines : _engineList)
 		{

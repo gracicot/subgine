@@ -12,7 +12,7 @@ public:
 
 	virtual void updateVelocity(double time) = 0;
 	virtual void updatePosition(double time) = 0;
-	virtual void applyRules(double time) = 0;
+	virtual void applyRules() = 0;
 	
 protected:
 	double _mass;

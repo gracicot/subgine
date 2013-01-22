@@ -69,14 +69,14 @@ Vector Polygon::projection(double angle) const
 	std::list<Vector>::const_iterator verticle = _vertex.begin();
 	current = *verticle;
 	current.setAngle(_angle+current.getAngle());
-	result_projection.x = axis * (current+_position);
+	result_projection.x = axis.dot(current+_position);
 	result_projection.y = result_projection.x;
 	
 	for(verticle++ ; verticle != _vertex.end() ; verticle++)
 	{
 		current = *verticle;
 		current.setAngle(_angle+current.getAngle());
-		double p = axis * (current+_position);
+		double p = axis.dot(current+_position);
 		if(p < result_projection.x)
 		{
 			result_projection.x = p;

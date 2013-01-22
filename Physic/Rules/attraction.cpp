@@ -32,21 +32,16 @@ Attraction::Attraction(Vector value) : _value(value)
 
 }
 
-Vector Attraction::apply(const PhysicPoint& object, double time) const
+Vector Attraction::apply(const PhysicPoint& object) const
 {
-	Vector result;
-	double divider;
-
+Vector result;
+	
 for(auto i : _objects)
 	{
-		divider = sqrt(pow2(i->getPosition().x - object.getPosition().x) +  pow2(i->getPosition().y - object.getPosition().y));
-		result += Vector(
-					  ((i->getPosition().x - object.getPosition().x) * i->getMass() * getValue().x * object.getMass()) / divider,
-					  ((i->getPosition().y - object.getPosition().y) * i->getMass() * getValue().y * object.getMass()) / divider
-				  );
+		result += ( ((i->getPosition() - object.getPosition()) * i->getMass() * object.getMass()) / (i->getPosition() - object.getPosition()).getLenght() ) * getValue();	  
 	}
 
-	return time * result;
+	return result;
 }
 
 void Attraction::addObject(const PhysicPoint& object)

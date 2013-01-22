@@ -25,6 +25,7 @@ struct Vector3 : public Positionnable3
 };
 
 Vector3 operator*(const double& multiplier, const Vector3& vec);
+Vector3 operator*(const Vector3& vec1, const Vector3& vec2);
 Vector3 operator*(const Vector3& vec, const double& multiplier);
 Vector3 operator+(const Vector3& vec1, const Vector3& vec2);
 Vector3 operator-(const Vector3& vec1, const Vector3& vec2);

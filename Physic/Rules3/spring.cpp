@@ -102,13 +102,9 @@ void Spring::setSize(double size)
 	_size = size;
 }
 
-Vector3 Spring::apply(const PhysicPoint3& object, double time) const
+Vector3 Spring::apply(const PhysicPoint3& object) const
 {
-	return Vector3(
-			   ((((cos((object.getPosition() - getPosition()).getAngles().y) * sin((object.getPosition() - getPosition()).getAngles().x) * getSize()) + getPosition().x) - object.getPosition().x) * time) * getValue().x,
-			   ((((sin((object.getPosition() - getPosition()).getAngles().x) * sin((object.getPosition() - getPosition()).getAngles().y) * getSize()) + getPosition().y) - object.getPosition().y) * time) * getValue().y,
-			   ((((cos((object.getPosition() - getPosition()).getAngles().x) * getSize()) + getPosition().z) - object.getPosition().z) * time) * getValue().z
-		   );
+	return (getPosition() - object.getPosition()) * getValue() * ((getPosition() - object.getPosition()).getLenght() - getSize());
 }
 
 Vector3 Spring::getValue() const

@@ -24,7 +24,7 @@ public:
 	//update function
 	void updateVelocity(double time);
 	void updatePosition(double time);
-	void applyRules(double time);
+	void applyRules();
 
 	//get
 	Vector3 getVelocity() const;
