@@ -34,14 +34,16 @@ Attraction::Attraction(Vector value) : _value(value)
 
 Vector Attraction::apply(const PhysicPoint& object) const
 {
-Vector result;
+	Vector result;
+	Vector absolute;
 	
 for(auto i : _objects)
 	{
-		result += ( ((i->getPosition() - object.getPosition()) * i->getMass() * object.getMass()) / (i->getPosition() - object.getPosition()).getLenght() ) * getValue();	  
+		absolute = i->getPosition() - object.getPosition();
+		result +=  (absolute.normalize() * i->getMass() * object.getMass()) / (pow2(absolute.x) + pow2(absolute.y));	  
 	}
 
-	return result;
+	return result * getValue();
 }
 
 void Attraction::addObject(const PhysicPoint& object)

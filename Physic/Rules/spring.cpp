@@ -56,7 +56,7 @@ Vector Spring::getPosition() const
 {
 	if(_position == nullptr)
 	{
-		throw std::runtime_error("Position not set");
+		return Vector();
 	}
 
 	return _position->getPosition();

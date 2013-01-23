@@ -35,13 +35,15 @@ Attraction::Attraction(Vector3 value) : _value(value)
 Vector3 Attraction::apply(const PhysicPoint3& object) const
 {
 	Vector3 result;
+	Vector3 absolute;
 	
 for(auto i : _objects)
 	{
-		result += ( ((i->getPosition() - object.getPosition()) * i->getMass() * object.getMass()) / (i->getPosition() - object.getPosition()).getLenght() ) * getValue();	  
+		absolute = i->getPosition() - object.getPosition();
+		result +=  (absolute.normalize() * i->getMass() * object.getMass()) / (pow2(absolute.x) + pow2(absolute.y) + pow2(absolute.z));	  
 	}
 
-	return result;
+	return result * getValue();
 }
 
 void Attraction::addObject(const PhysicPoint3& object)

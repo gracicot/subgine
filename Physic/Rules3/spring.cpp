@@ -57,7 +57,7 @@ Vector3 Spring::getPosition() const
 {
 	if(_position == nullptr)
 	{
-		throw std::runtime_error("Position not set");
+		return Vector3();
 	}
 
 	return _position->getPosition();
@@ -79,9 +79,7 @@ void Spring::setPosition(Vector3 pos)
 	if(_deletePosition)
 	{
 		Vector3* position = dynamic_cast<Vector3*>(_position);
-		position->x = pos.x;
-		position->y = pos.y;
-		position->z = pos.z;
+		*position = pos;
 	}
 	else
 	{
@@ -90,7 +88,6 @@ void Spring::setPosition(Vector3 pos)
 
 	_deletePosition = true;
 }
-
 
 double Spring::getSize() const
 {
