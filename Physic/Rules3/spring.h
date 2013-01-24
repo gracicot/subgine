@@ -29,7 +29,7 @@ namespace Rule3
 class Spring : public Rule
 {
 public:
-	Spring(const Vector3 value, const double size, const Positionnable3& position);
+	Spring(const Vector3 value, const double size, Positionnable3& position);
 	Spring(const Vector3 value, const double size, const Vector3 position);
 	Spring(const Spring& other);
 	virtual ~Spring();
@@ -41,8 +41,8 @@ public:
 	
 	void setValue(const Vector3 value);
 	void setSize(double size);
-	void setPosition(const Positionnable3& position);
-	void setPosition(const Vector3 position);
+	void setPosition(Positionnable3& position);
+	void setPosition(Vector3 position);
 
 private:
 	Vector3  _value;

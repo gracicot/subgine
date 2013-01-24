@@ -22,7 +22,7 @@
 namespace Rule3
 {
 
-Spring::Spring(const Vector3 value, const double size, const Positionnable3& position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector3 value, const double size, Positionnable3& position) : _deletePosition(false), _value(value), _size(size)
 {
 	setPosition(position);
 }
@@ -63,7 +63,7 @@ Vector3 Spring::getPosition() const
 	return _position->getPosition();
 }
 
-void Spring::setPosition(const Positionnable3& position)
+void Spring::setPosition(Positionnable3& position)
 {
 	if(_deletePosition)
 	{
@@ -74,16 +74,16 @@ void Spring::setPosition(const Positionnable3& position)
 	_position = &position;
 }
 
-void Spring::setPosition(const Vector3 position)
+void Spring::setPosition(Vector3 pos)
 {
 	if(_deletePosition)
 	{
 		Vector3* position = dynamic_cast<Vector3*>(_position);
-		*position = position;
+		*position = pos;
 	}
 	else
 	{
-		_position = new Vector3(position);
+		_position = new Vector3(pos);
 	}
 
 	_deletePosition = true;

@@ -22,7 +22,7 @@
 namespace Rule
 {
 
-Spring::Spring(const Vector value, const double size, const Positionnable& position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector value, const double size, Positionnable& position) : _deletePosition(false), _value(value), _size(size)
 {
 	setPosition(position);
 }
@@ -62,7 +62,7 @@ Vector Spring::getPosition() const
 	return _position->getPosition();
 }
 
-void Spring::setPosition(const Positionnable& position)
+void Spring::setPosition(Positionnable& position)
 {
 	if(_deletePosition)
 	{
@@ -70,20 +70,19 @@ void Spring::setPosition(const Positionnable& position)
 	}
 
 	_deletePosition = false;
-	_position = &pos;
+	_position = &position;
 }
 
-void Spring::setPosition(const Vector position)
+void Spring::setPosition(Vector pos)
 {
 	if(_deletePosition)
 	{
 		Vector* position = dynamic_cast<Vector*>(_position);
-		position->x = position.x;
-		position->y = position.y;
+		*position = pos;
 	}
 	else
 	{
-		_position = new Vector(position);
+		_position = new Vector(pos);
 	}
 
 	_deletePosition = true;
