@@ -32,7 +32,7 @@ Attraction::Attraction(Vector3 value) : _value(value)
 
 }
 
-Vector3 Attraction::apply(const PhysicPoint3& object) const
+Vector3 Attraction::getResult(const PhysicPoint3& object) const
 {
 	Vector3 result;
 	Vector3 absolute;

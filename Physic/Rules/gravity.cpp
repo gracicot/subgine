@@ -18,7 +18,7 @@ Gravity::~Gravity()
 
 }
 
-Vector Gravity::apply(const PhysicPoint& object) const
+Vector Gravity::getResult(const PhysicPoint& object) const
 {
 	return _value*object.getMass();
 }

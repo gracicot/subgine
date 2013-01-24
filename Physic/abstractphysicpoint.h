@@ -4,14 +4,14 @@
 class AbstractPhysicPoint
 {
 public:
-	void setMass(double mass);
-	void lock(bool lock);
+	void setMass(const double mass);
+	void lock(const bool lock);
 	
 	bool isLock() const;
 	double getMass() const;
 
-	virtual void updateVelocity(double time) = 0;
-	virtual void updatePosition(double time) = 0;
+	virtual void updateVelocity(const double time) = 0;
+	virtual void updatePosition(const double time) = 0;
 	virtual void applyRules() = 0;
 	
 protected:

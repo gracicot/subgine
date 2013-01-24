@@ -15,30 +15,32 @@ public:
 	PhysicPoint& operator=(const PhysicPoint&);
 
 	//set
-	void setPosision(Vector pos);
-	void setPosition(Vector posision);
-	void setVelocity(Vector velocity);
-	void setForce(std::string forceType, const Vector force);
-	void setPulse(const std::string pulseType, const Vector pulse);
-	void setRule(std::string tag, Rule::Rule* rule);
+	void setPosition(const Vector posision);
+	void setVelocity(const Vector velocity);
+	void setForce(const std::string type, const Vector force);
+	void setPulse(const std::string type, const Vector pulse);
+	void setRule(const std::string tag, Rule::Rule* rule);
 
 	//update function
-	void updateVelocity(double time);
-	void updatePosition(double time);
+	void updateVelocity(const double time);
+	void updatePosition(const double time);
 	void applyRules();
 
 	//get
 	Vector getVelocity() const;
-	Vector getForce(std::string forceType);
-	Vector getPulse(std::string pulseType);
-	Rule::Rule& getRule(std::string type);
-	const Rule::Rule& getRule(std::string type) const;
-	std::map<std::string, Rule::Rule*>& getRule();
-	const std::map<std::string, Rule::Rule*>& getRule() const;
+	
+	Vector getForce(const std::string type) const;
 	std::map<std::string, Vector>& getForce();
 	const std::map<std::string, Vector>& getForce() const;
+	
+	Vector getPulse(const std::string type) const;
 	std::map<std::string, Vector>& getPulse();
 	const std::map<std::string, Vector>& getPulse() const;
+	
+	Rule::Rule& getRule(const std::string type);
+	const Rule::Rule& getRule(const std::string type) const;
+	std::map<std::string, Rule::Rule*>& getRule();
+	const std::map<std::string, Rule::Rule*>& getRule() const;
 
 protected:
 	Vector _velocity;

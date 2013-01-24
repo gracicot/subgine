@@ -1,6 +1,6 @@
 #include "abstractphysicpoint.h"
 
-void AbstractPhysicPoint::lock(bool lock)
+void AbstractPhysicPoint::lock(const bool lock)
 {
 	_lock = lock;
 }
@@ -15,7 +15,7 @@ double AbstractPhysicPoint::getMass() const
 	return _mass;
 }
 
-void AbstractPhysicPoint::setMass(double mass)
+void AbstractPhysicPoint::setMass(const double mass)
 {
 	_mass = mass;
 }

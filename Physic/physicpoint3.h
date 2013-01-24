@@ -15,29 +15,32 @@ public:
 	PhysicPoint3& operator=(const PhysicPoint3&);
 
 	//set
-	void setPosition(Vector3 posision);
-	void setVelocity(Vector3 velocity);
-	void setForce(std::string type, const Vector3 force);
-	void setPulse(const std::string pulseType, const Vector3 pulse);
-	void setRule(std::string tag, Rule3::Rule* rule);
+	void setPosition(const Vector3 position);
+	void setVelocity(const Vector3 velocity);
+	void setForce(const std::string type, const Vector3 force);
+	void setPulse(const std::string type, const Vector3 pulse);
+	void setRule(const std::string tag, Rule3::Rule* rule);
 
 	//update function
-	void updateVelocity(double time);
-	void updatePosition(double time);
+	void updateVelocity(const double time);
+	void updatePosition(const double time);
 	void applyRules();
 
 	//get
 	Vector3 getVelocity() const;
-	Vector3 getPulse(std::string pulseType);
-	Vector3 getForce(std::string pulseType);
-	Rule3::Rule& getRule(std::string type);
-	const Rule3::Rule& getRule(std::string type) const;
-	std::map<std::string, Rule3::Rule*>& getRule();
-	const std::map<std::string, Rule3::Rule*>& getRule() const;
-	std::map<std::string, Vector3>& getForce();
-	const std::map<std::string, Vector3>& getForce() const;
+	
+	Vector3 getPulse(const std::string type) const;
 	 std::map< std::string, Vector3 >& getPulse();
 	const std::map<std::string, Vector3>& getPulse() const;
+	
+	Vector3 getForce(const std::string type) const;
+	std::map<std::string, Vector3>& getForce();
+	const std::map<std::string, Vector3>& getForce() const;
+	
+	Rule3::Rule& getRule(const std::string type);
+	const Rule3::Rule& getRule(const std::string type) const;
+	std::map<std::string, Rule3::Rule*>& getRule();
+	const std::map<std::string, Rule3::Rule*>& getRule() const;
 
 protected:
 	Vector3 _velocity;

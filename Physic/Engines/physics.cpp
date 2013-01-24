@@ -7,28 +7,31 @@ Physics::Physics()
 
 Physics::~Physics()
 {
-	
+
 }
 
 void Physics::execute(float time)
 {
-	for(auto i : getContent())
+
+for(auto i : getContent())
 	{
 		if(!i->isLock())
 		{
 			i->updateVelocity(time); //update velocity
+
 		}
 	}
 
-	for(auto i : getContent())
+for(auto i : getContent())
 	{
 		if(!i->isLock())
 		{
 			i->updatePosition(time); //update position
+
 		}
 	}
 
-	for(auto i : getContent())
+for(auto i : getContent())
 	{
 		if(!i->isLock())
 		{

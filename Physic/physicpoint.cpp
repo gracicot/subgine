@@ -34,22 +34,22 @@ Vector PhysicPoint::getVelocity() const
 	return _velocity;
 }
 
-void PhysicPoint::setVelocity(Vector velocity)
+void PhysicPoint::setVelocity(const Vector velocity)
 {
 	_velocity = velocity;
 }
 
-void PhysicPoint::setPosition(Vector posision)
+void PhysicPoint::setPosition(const Vector posision)
 {
 	_position = posision;
 }
 
-void PhysicPoint::updatePosition(double time)
+void PhysicPoint::updatePosition(const double time)
 {
 	_position += _velocity * time;
 }
 
-Rule::Rule& PhysicPoint::getRule(std::string type)
+Rule::Rule& PhysicPoint::getRule(const std::string type)
 {
 	std::map<std::string, Rule::Rule*>::iterator it = _rules.find(type);
 
@@ -61,7 +61,7 @@ Rule::Rule& PhysicPoint::getRule(std::string type)
 	throw std::out_of_range("Rule " + type + " doesn't exist...");
 }
 
-const Rule::Rule& PhysicPoint::getRule(std::string type) const
+const Rule::Rule& PhysicPoint::getRule(const std::string type) const
 {
 	std::map<std::string, Rule::Rule*>::const_iterator it = _rules.find(type);
 
@@ -73,12 +73,12 @@ const Rule::Rule& PhysicPoint::getRule(std::string type) const
 	throw std::out_of_range("Rule " + type + " doesn't exist...");
 }
 
-void PhysicPoint::setForce(std::string type, const Vector force)
+void PhysicPoint::setForce(const std::string type, const Vector force)
 {
 	_forces[type] = force;
 }
 
-void PhysicPoint::updateVelocity(double time)
+void PhysicPoint::updateVelocity(const double time)
 {
 for(auto i : _forces)
 	{
@@ -94,14 +94,21 @@ for(auto i : _pulses)
 	_pulses.clear();
 }
 
-Vector PhysicPoint::getPulse(std::string pulseType)
+Vector PhysicPoint::getPulse(const std::string type) const
 {
-	return _pulses[pulseType];
+	auto pulse = _pulses.find(type);
+
+	if(pulse == _pulses.end())
+	{
+		return Vector();
+	}
+
+	return pulse->second;
 }
 
-void PhysicPoint::setPulse(const std::string pulseType, const Vector pulse)
+void PhysicPoint::setPulse(const std::string type, const Vector pulse)
 {
-	_pulses[pulseType] = pulse;
+	_pulses[type] = pulse;
 }
 
 const std::map<std::string, Vector>& PhysicPoint::getForce() const
@@ -128,13 +135,20 @@ void PhysicPoint::applyRules()
 {
 for(auto i : _rules)
 	{
-		setForce(i.first, i.second->apply(*this));
+		setForce(i.first, i.second->getResult(*this));
 	}
 }
 
-Vector PhysicPoint::getForce(std::string forceType)
+Vector PhysicPoint::getForce(const std::string type) const
 {
-	return _forces[forceType];
+	auto force = _pulses.find(type);
+
+	if(force == _pulses.end())
+	{
+		return Vector();
+	}
+
+	return force->second;
 }
 
 PhysicPoint& PhysicPoint::operator=(const PhysicPoint& c)
@@ -161,7 +175,7 @@ const std::map<std::string, Rule::Rule*>& PhysicPoint::getRule() const
 	return _rules;
 }
 
-void PhysicPoint::setRule(std::string tag, Rule::Rule* rule)
+void PhysicPoint::setRule(const std::string tag, Rule::Rule* rule)
 {
 	std::map<std::string, Rule::Rule*>::iterator it = _rules.find(tag);
 
@@ -176,4 +190,4 @@ void PhysicPoint::setRule(std::string tag, Rule::Rule* rule)
 	}
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4;
+// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 

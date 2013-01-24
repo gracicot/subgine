@@ -28,25 +28,12 @@ void Bounce::apply(Collisionnable::Collisionnable& object, const Collisionnable:
 	if(point != nullptr && point != 0 && sat != nullptr && sat != 0)
 	{
 		PhysicPoint const* other = dynamic_cast<PhysicPoint const*>(other);
-		if(!point->isLock())
-		{
-			point->setPosition(point->getPosition()+sat->distance);
-		}
 		
 		if(other != nullptr && other != 0)
 		{
-			if(point->getMass() > other->getMass())
-			{
-				point->setPulse("Collision", -1*( (point->getVelocity()*(point->getMass()-other->getMass())) - (other->getVelocity()*(other->getMass()-point->getMass())) ) );
-			}
-			else
-			{
-				point->setPulse("Collision", -1*( (point->getVelocity()*(other->getMass()-point->getMass())) + (other->getVelocity()*(point->getMass()-other->getMass())) ) );
-			}
 		}
 		else
 		{
-			point->setPulse("Collision", -1*point->getVelocity()*point->getMass());
 		}
 		
 	}

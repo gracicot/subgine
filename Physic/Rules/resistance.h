@@ -13,7 +13,7 @@ public:
 	Resistance(const Resistance& c);
 	virtual ~Resistance();
 	
-	virtual Vector apply(const PhysicPoint& object) const;
+	virtual Vector getResult(const PhysicPoint& object) const;
 	
 	void setValue(Vector value);
 	Vector getValue() const;

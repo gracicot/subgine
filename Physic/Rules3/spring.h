@@ -37,7 +37,7 @@ public:
 	double getSize() const;
 	Vector3 getPosition() const;
 	
-	Vector3 apply(const PhysicPoint3& object) const;
+	Vector3 getResult(const PhysicPoint3& object) const;
 	
 	void setValue(Vector3 value);
 	void setSize(double size);
