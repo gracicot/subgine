@@ -27,7 +27,7 @@ Attraction::Attraction(const Attraction& c) : _value(c._value), _objects(c._obje
 
 }
 
-Attraction::Attraction(Vector value) : _value(value)
+Attraction::Attraction(const Vector value) : _value(value)
 {
 
 }
@@ -62,7 +62,7 @@ Vector Attraction::getValue() const
 	return _value;
 }
 
-void Attraction::setValue(Vector value)
+void Attraction::setValue(const Vector value)
 {
 	_value = value;
 }

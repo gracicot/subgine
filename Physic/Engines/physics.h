@@ -11,7 +11,7 @@ public:
 	Physics();
 	~Physics();
 
-	void execute(float time);
+	void execute(const float time);
 
 private:
 

@@ -22,12 +22,12 @@
 namespace Rule
 {
 
-Spring::Spring(Vector value, double size, Positionnable& position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector value, const double size, const Positionnable& position) : _deletePosition(false), _value(value), _size(size)
 {
 	setPosition(position);
 }
 
-Spring::Spring(Vector value, double size, Vector position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector value, const double size, const Vector position) : _deletePosition(false), _value(value), _size(size)
 {
 	setPosition(position);
 }
@@ -62,7 +62,7 @@ Vector Spring::getPosition() const
 	return _position->getPosition();
 }
 
-void Spring::setPosition(Positionnable& pos)
+void Spring::setPosition(const Positionnable& position)
 {
 	if(_deletePosition)
 	{
@@ -73,17 +73,17 @@ void Spring::setPosition(Positionnable& pos)
 	_position = &pos;
 }
 
-void Spring::setPosition(Vector pos)
+void Spring::setPosition(const Vector position)
 {
 	if(_deletePosition)
 	{
 		Vector* position = dynamic_cast<Vector*>(_position);
-		position->x = pos.x;
-		position->y = pos.y;
+		position->x = position.x;
+		position->y = position.y;
 	}
 	else
 	{
-		_position = new Vector(pos);
+		_position = new Vector(position);
 	}
 
 	_deletePosition = true;
@@ -95,7 +95,7 @@ double Spring::getSize() const
 	return _size;
 }
 
-void Spring::setSize(double size)
+void Spring::setSize(const double size)
 {
 	_size = size;
 }
@@ -110,7 +110,7 @@ Vector Spring::getValue() const
 	return _value;
 }
 
-void Spring::setValue(Vector value)
+void Spring::setValue(const Vector value)
 {
 	_value = value;
 }

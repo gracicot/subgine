@@ -8,7 +8,7 @@ Resistance::Resistance(const Resistance& c) : _value(c._value)
 
 }
 
-Resistance::Resistance(Vector3 value) : _value(value)
+Resistance::Resistance(const Vector3 value) : _value(value)
 {
 	
 }
@@ -28,7 +28,7 @@ Vector3 Resistance::getValue() const
 	return _value;
 }
 
-void Resistance::setValue(Vector3 value)
+void Resistance::setValue(const Vector3 value)
 {
 	_value = value;
 }

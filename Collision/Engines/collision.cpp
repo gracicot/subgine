@@ -29,7 +29,7 @@ Collision::~Collision()
 	
 }
 
-void Collision::execute(float time)
+void Collision::execute(const float time)
 {
 	for(auto it : _objects)
 	{

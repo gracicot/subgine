@@ -10,13 +10,13 @@ namespace Rule
 class Gravity : public Rule
 {
 public:
-	Gravity(Vector value = Vector(0, 0));
+	Gravity(const Vector value = Vector());
 	Gravity(const Gravity& c);
 	virtual ~Gravity();
 	
 	virtual Vector getResult(const PhysicPoint& object) const;
 	
-	void setValue(Vector value);
+	void setValue(const Vector value);
 	Vector getValue() const;
 	
 private:

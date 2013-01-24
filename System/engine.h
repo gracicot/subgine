@@ -25,7 +25,7 @@ class Engine
 public:
 	Engine();
 	virtual ~Engine();
-	virtual void execute(float time) = 0;
+	virtual void execute(const float time) = 0;
 };
 
 #endif // ENGINE_H

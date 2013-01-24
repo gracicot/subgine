@@ -8,7 +8,7 @@ Gravity::Gravity(const Gravity& c) : _value(c._value)
 
 }
 
-Gravity::Gravity(Vector3 value) : _value(value)
+Gravity::Gravity(const Vector3 value) : _value(value)
 {
 
 }
@@ -28,7 +28,7 @@ Vector3 Gravity::getValue() const
 	return _value;
 }
 
-void Gravity::setValue(Vector3 value)
+void Gravity::setValue(const Vector3 value)
 {
 	_value = value;
 }

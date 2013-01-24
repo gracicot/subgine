@@ -29,8 +29,8 @@ namespace Rule
 class Spring : public Rule
 {
 public:
-	Spring(Vector value, double size, Positionnable& position);
-	Spring(Vector value = Vector(0, 0), double size = 0, Vector position = Vector(0, 0));
+	Spring(const Vector value, const double size, const Positionnable& position);
+	Spring(const Vector value = Vector(), const double size = 0, const Vector position = Vector());
 	Spring(const Spring& other);
 	virtual ~Spring();
 	Vector getValue() const;
@@ -39,10 +39,10 @@ public:
 	
 	virtual Vector getResult(const PhysicPoint& object) const;
 	
-	void setValue(Vector value);
-	void setSize(double size);
-	void setPosition(Positionnable& pos);
-	void setPosition(Vector pos);
+	void setValue(const Vector value);
+	void setSize(const double size);
+	void setPosition(const Positionnable& position);
+	void setPosition(const Vector position);
 
 private:
 	Vector  _value;

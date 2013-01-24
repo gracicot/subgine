@@ -22,12 +22,12 @@
 namespace Rule3
 {
 
-Spring::Spring(Vector3 value, double size, Positionnable3& position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector3 value, const double size, const Positionnable3& position) : _deletePosition(false), _value(value), _size(size)
 {
 	setPosition(position);
 }
 
-Spring::Spring(Vector3 value, double size, Vector3 position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector3 value, const double size, const Vector3 position) : _deletePosition(false), _value(value), _size(size)
 {
 	setPosition(position);
 }
@@ -63,7 +63,7 @@ Vector3 Spring::getPosition() const
 	return _position->getPosition();
 }
 
-void Spring::setPosition(Positionnable3& pos)
+void Spring::setPosition(const Positionnable3& position)
 {
 	if(_deletePosition)
 	{
@@ -71,19 +71,19 @@ void Spring::setPosition(Positionnable3& pos)
 	}
 
 	_deletePosition = false;
-	_position = &pos;
+	_position = &position;
 }
 
-void Spring::setPosition(Vector3 pos)
+void Spring::setPosition(const Vector3 position)
 {
 	if(_deletePosition)
 	{
 		Vector3* position = dynamic_cast<Vector3*>(_position);
-		*position = pos;
+		*position = position;
 	}
 	else
 	{
-		_position = new Vector3(pos);
+		_position = new Vector3(position);
 	}
 
 	_deletePosition = true;
@@ -109,7 +109,7 @@ Vector3 Spring::getValue() const
 	return _value;
 }
 
-void Spring::setValue(Vector3 value)
+void Spring::setValue(const Vector3 value)
 {
 	_value = value;
 }

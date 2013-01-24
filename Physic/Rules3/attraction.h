@@ -29,7 +29,7 @@ namespace Rule3
 class Attraction : public Rule
 {
 public:
-	Attraction(Vector3 value = Vector3(0, 0));
+	Attraction(const Vector3 value = Vector3());
 	Attraction(const Attraction& c);
 	
 	virtual Vector3 getResult(const PhysicPoint3& object) const;
@@ -37,7 +37,7 @@ public:
 	void addObject(const PhysicPoint3& object);
 	void removeObject(const PhysicPoint3& object);
 	
-	void setValue(Vector3 value);
+	void setValue(const Vector3 value);
 	Vector3 getValue() const;
 	
 private:

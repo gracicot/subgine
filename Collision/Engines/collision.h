@@ -32,7 +32,7 @@ public:
 	Collision();
 	virtual ~Collision();
 
-	virtual void execute(float time);
+	virtual void execute(const float time);
 	
 	CollisionTester& getTester(const std::string tag);
 	const CollisionTester& getTester(const std::string tag) const;
