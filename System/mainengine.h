@@ -29,8 +29,8 @@ public:
 	~MainEngine();
 
 	//start or stop the engine
-	void setRunning(const bool state);
-	bool getRunning() const;
+	void running(const bool state);
+	bool isRunning() const;
 
 	//speed
 	void setSpeed(double speed);
@@ -40,13 +40,13 @@ public:
 	Engine& getEngine(const std::string tag);
 	const Engine& getEngine(const std::string tag) const;
 
-	Engine& addEngine(Engine* e, std::string alias);
+	Engine& addEngine(const std::string alias, Engine* e);
 
 private:
 	double _speed;
 
 	virtual void Run();
-	bool _engineRunning; //this is the state of the engine
+	bool _running;
 	double speed;
 
 	std::map<std::string, Engine*> _engineList;

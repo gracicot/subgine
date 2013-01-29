@@ -18,27 +18,27 @@
 #include "vector2.h"
 
 
-Vector::Vector(double _x, double _y) : x(_x), y(_y)
+Vector2::Vector2(double _x, double _y) : x(_x), y(_y)
 {
 
 }
 
-Vector::Vector(const Vector& other) : x(other.x), y(other.y)
+Vector2::Vector2(const Vector2& other) : x(other.x), y(other.y)
 {
 
 }
 
-Vector::Vector(const sf::Vector2< float >& other) : x(other.x), y(other.y)
+Vector2::Vector2(const sf::Vector2< float >& other) : x(other.x), y(other.y)
 {
 
 }
 
-Vector::Vector(const sf::Vector2< double >& other) : x(other.x), y(other.y)
+Vector2::Vector2(const sf::Vector2< double >& other) : x(other.x), y(other.y)
 {
 
 }
 
-double Vector::getAngle() const
+double Vector2::getAngle() const
 {
 	double angle = atan2(y, x);
 	if (angle < 0)
@@ -48,12 +48,12 @@ double Vector::getAngle() const
 	return angle;
 }
 
-double Vector::getLenght() const
+double Vector2::getLenght() const
 {
 	return sqrt(pow2(x) + pow2(y));
 }
 
-void Vector::setAngle(double angle)
+void Vector2::setAngle(double angle)
 {
 	if(x != 0 || y != 0)
 	{
@@ -63,7 +63,7 @@ void Vector::setAngle(double angle)
 	}
 }
 
-void Vector::setLenght(double lenght)
+void Vector2::setLenght(double lenght)
 {
 	if(x != 0 || y != 0)
 	{
@@ -77,34 +77,34 @@ void Vector::setLenght(double lenght)
 	}
 }
 
-Vector Vector::project(Vector& other) const
+Vector2 Vector2::project(Vector2& other) const
 {
-	Vector normalizedOther = other.normalize();
+	Vector2 normalizedOther = other.normalize();
 	return (*this * normalizedOther) * normalizedOther;
 }
 
-Vector Vector::normalize() const
+Vector2 Vector2::normalize() const
 {
 	double lenght = getLenght();
-	return Vector(x/lenght, y/lenght);
+	return Vector2(x/lenght, y/lenght);
 }
 
-Vector Vector::getPosition() const
+Vector2 Vector2::getPosition() const
 {
 	return *this;
 }
 
-Vector::operator sf::Vector2< double >() const
+Vector2::operator sf::Vector2< double >() const
 {
 	return sf::Vector2<double> (x, y);
 }
 
-Vector::operator sf::Vector2< float >() const
+Vector2::operator sf::Vector2< float >() const
 {
 	return sf::Vector2<float> (x, y);
 }
 
-double Vector::dot(const Vector& vec) const
+double Vector2::dot(const Vector2& vec) const
 {
 	return (x*vec.x)+(y*vec.y);
 }
@@ -112,65 +112,65 @@ double Vector::dot(const Vector& vec) const
 
 //Operators
 
-Vector& Vector::operator= (const Vector& other)
+Vector2& Vector2::operator= (const Vector2& other)
 {
 	x = other.x;
 	y = other.y;
 	return *this;
 }
 
-Vector operator/ (const Vector& vec, const double& divider)
+Vector2 operator/ (const Vector2& vec, const double& divider)
 {
-	return Vector(vec.x / divider, vec.y / divider);
+	return Vector2(vec.x / divider, vec.y / divider);
 }
 
-Vector operator* (const Vector& vec, const double& multiplier)
+Vector2 operator* (const Vector2& vec, const double& multiplier)
 {
-	return Vector(vec.x * multiplier, vec.y * multiplier);
+	return Vector2(vec.x * multiplier, vec.y * multiplier);
 }
 
-Vector operator* (const double& multiplier, const Vector& vec)
+Vector2 operator* (const double& multiplier, const Vector2& vec)
 {
-	return Vector(vec.x * multiplier, vec.y * multiplier);
+	return Vector2(vec.x * multiplier, vec.y * multiplier);
 }
 
-Vector& operator*= (Vector& vec, const double& multiplier)
+Vector2& operator*= (Vector2& vec, const double& multiplier)
 {
 	vec.x *= multiplier;
 	vec.y *= multiplier;
 	return vec;
 }
 
-Vector operator+ (const Vector& vec1, const Vector& vec2)
+Vector2 operator+ (const Vector2& vec1, const Vector2& vec2)
 {
-	return Vector(vec1.x + vec2.x, vec1.y + vec2.y);
+	return Vector2(vec1.x + vec2.x, vec1.y + vec2.y);
 }
 
-Vector& operator+= (Vector& vec1, const Vector& vec2)
+Vector2& operator+= (Vector2& vec1, const Vector2& vec2)
 {
 	vec1.x += vec2.x;
 	vec1.y += vec2.y;
 	return vec1;
 }
 
-Vector operator- (const Vector& vec1, const Vector& vec2)
+Vector2 operator- (const Vector2& vec1, const Vector2& vec2)
 {
-	return Vector(vec1.x - vec2.x, vec1.y - vec2.y);
+	return Vector2(vec1.x - vec2.x, vec1.y - vec2.y);
 }
 
-Vector& operator-= (Vector& vec1, const Vector& vec2)
+Vector2& operator-= (Vector2& vec1, const Vector2& vec2)
 {
 	vec1.x -= vec2.x;
 	vec1.y -= vec2.y;
 	return vec1;
 }
 
-Vector operator*(const Vector& vec1, const Vector& vec2)
+Vector2 operator*(const Vector2& vec1, const Vector2& vec2)
 {
-	return Vector(vec1.x * vec2.x, vec1.y * vec2.y);
+	return Vector2(vec1.x * vec2.x, vec1.y * vec2.y);
 }
 
-Vector& operator/= (Vector& vec, const double& divider)
+Vector2& operator/= (Vector2& vec, const double& divider)
 {
 	vec.x /= divider;
 	vec.y /= divider;

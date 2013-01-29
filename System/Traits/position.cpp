@@ -31,7 +31,7 @@ Position::~Position()
 	
 }
 
-Vector Position::getPosition() const
+Vector2 Position::getPosition() const
 {
 	return _position;
 }

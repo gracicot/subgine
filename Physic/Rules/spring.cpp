@@ -22,12 +22,12 @@
 namespace Rule
 {
 
-Spring::Spring(const Vector value, const double size, Positionnable& position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector2 value, const double size, Positionnable& position) : _deletePosition(false), _value(value), _size(size)
 {
 	setPosition(position);
 }
 
-Spring::Spring(const Vector value, const double size, const Vector position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector2 value, const double size, const Vector2 position) : _deletePosition(false), _value(value), _size(size)
 {
 	setPosition(position);
 }
@@ -52,11 +52,11 @@ Spring::~Spring()
 	}
 }
 
-Vector Spring::getPosition() const
+Vector2 Spring::getPosition() const
 {
 	if(_position == nullptr)
 	{
-		return Vector();
+		return Vector2();
 	}
 
 	return _position->getPosition();
@@ -73,16 +73,16 @@ void Spring::setPosition(Positionnable& position)
 	_position = &position;
 }
 
-void Spring::setPosition(Vector pos)
+void Spring::setPosition(Vector2 pos)
 {
 	if(_deletePosition)
 	{
-		Vector* position = dynamic_cast<Vector*>(_position);
+		Vector2* position = dynamic_cast<Vector2*>(_position);
 		*position = pos;
 	}
 	else
 	{
-		_position = new Vector(pos);
+		_position = new Vector2(pos);
 	}
 
 	_deletePosition = true;
@@ -99,17 +99,17 @@ void Spring::setSize(const double size)
 	_size = size;
 }
 
-Vector Spring::getResult(const PhysicPoint& object) const
+Vector2 Spring::getResult(const PhysicPoint& object) const
 {
 	return (getPosition() - object.getPosition()) * getValue() * ((getPosition() - object.getPosition()).getLenght() - getSize());
 }
 
-Vector Spring::getValue() const
+Vector2 Spring::getValue() const
 {
 	return _value;
 }
 
-void Spring::setValue(const Vector value)
+void Spring::setValue(const Vector2 value)
 {
 	_value = value;
 }

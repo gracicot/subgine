@@ -29,20 +29,20 @@ namespace Rule
 class Attraction : public Rule
 {
 public:
-	Attraction(const Vector value = Vector());
+	Attraction(const Vector2 value = Vector2());
 	Attraction(const Attraction& c);
 	
-	virtual Vector getResult(const PhysicPoint& object) const;
+	virtual Vector2 getResult(const PhysicPoint& object) const;
 	
 	void addObject(const PhysicPoint& object);
 	void removeObject(const PhysicPoint& object);
 	
-	void setValue(const Vector value);
-	Vector getValue() const;
+	void setValue(const Vector2 value);
+	Vector2 getValue() const;
 	
 private:
 	std::list<const PhysicPoint*> _objects;
-	Vector _value;
+	Vector2 _value;
 };
 
 }

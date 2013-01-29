@@ -23,7 +23,7 @@
 #include "../system.hpp"
 #include "collisionnable.h"
 
-class Vector;
+class Vector2;
 
 namespace Collisionnable
 {
@@ -34,7 +34,7 @@ public:
 	Point_able();
 	virtual ~Point_able();
 
-	virtual bool isPointInside(Vector point) const = 0;
+	virtual bool isPointInside(Vector2 point) const = 0;
 };
 
 }

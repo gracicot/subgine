@@ -11,11 +11,11 @@ public:
 	Vertex();
 	virtual ~Vertex();
 	
-	const std::list< Vector >& getVertex() const;
-	std::list<Vector>& getVertex();
+	const std::list< Vector2 >& getVertex() const;
+	std::list<Vector2>& getVertex();
 	
 protected:
-	std::list<Vector> _vertex;
+	std::list<Vector2> _vertex;
 };
 
 }

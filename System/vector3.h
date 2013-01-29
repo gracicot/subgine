@@ -11,9 +11,9 @@ struct Vector3 : public Positionnable3
 	Vector3(const Vector3& other);
 	
 	Vector3& operator=(const Vector3& other);
-	Vector getAngles() const;
+	Vector2 getAngles() const;
 	double getLenght() const;
-	void setAngles(const Vector angles);
+	void setAngles(const Vector2 angles);
 	void setLenght(const double lenght);
 	Vector3 normalize() const;
 

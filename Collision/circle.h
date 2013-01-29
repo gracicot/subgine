@@ -24,7 +24,7 @@
 #include "sat_able.h"
 #include "point_able.h"
 
-class Vector;
+class Vector2;
 
 namespace Collisionnable
 {
@@ -35,8 +35,8 @@ public:
 	Circle() = default;
 	virtual ~Circle();
 
-	virtual bool isPointInside(Vector point) const;
-	virtual Vector projection(double angle) const;
+	virtual bool isPointInside(Vector2 point) const;
+	virtual Vector2 projection(double angle) const;
 	
 protected:
 	double size;

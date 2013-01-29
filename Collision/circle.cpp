@@ -22,12 +22,12 @@
 
 namespace Collisionnable
 {
-bool Circle::isPointInside(Vector point) const
+bool Circle::isPointInside(Vector2 point) const
 {
 	return (_position - point).getLenght() < size;
 }
 
-Vector Circle::projection(double angle) const
+Vector2 Circle::projection(double angle) const
 {
 
 }

@@ -19,27 +19,27 @@
 
 MainEngine::MainEngine()
 {
-	_engineRunning = false;
+	_running = false;
 
 }
 
 MainEngine::~MainEngine()
 {
-	_engineRunning = false;
+	_running = false;
 	this->Wait();
 
 }
 
-void MainEngine::setRunning(const bool state)
+void MainEngine::running(const bool state)
 {
-	if(!_engineRunning && state)
+	if(!_running && state)
 	{
-		_engineRunning = true;
+		_running = true;
 		this->Launch();
 	}
-	else if(_engineRunning && !state)
+	else if(_running && !state)
 	{
-		_engineRunning = false;
+		_running = false;
 		this->Wait();
 	}
 
@@ -50,7 +50,7 @@ void MainEngine::Run()
 	sf::Clock timer;
 	float time = 0;
 
-	while(_engineRunning)
+	while(_running)
 	{
 		sf::Sleep(1.0 / 90.0);
 		time = timer.GetElapsedTime() * _speed;
@@ -64,14 +64,14 @@ void MainEngine::Run()
 
 }
 
-Engine& MainEngine::addEngine(Engine* e, std::string alias)
+Engine& MainEngine::addEngine(const std::string alias, Engine* e)
 {
 	_engineList[alias] = e;
 }
 
-bool MainEngine::getRunning() const
+bool MainEngine::isRunning() const
 {
-	return _engineRunning;
+	return _running;
 }
 
 double MainEngine::getSpeed()

@@ -28,9 +28,9 @@ Vector3::Vector3(const Vector3& other) : x(other.x), y(other.y), z(other.z)
 
 }
 
-Vector Vector3::getAngles() const
+Vector2 Vector3::getAngles() const
 {
-	Vector angle(atan(y/x), acos(z / getLenght()));
+	Vector2 angle(atan(y/x), acos(z / getLenght()));
 	
 	return angle;
 }
@@ -40,7 +40,7 @@ double Vector3::getLenght() const
 	return sqrt(pow2(x) + pow2(y) + pow2(z));
 }
 
-void Vector3::setAngles(const Vector angles)
+void Vector3::setAngles(const Vector2 angles)
 {
 	if(x != 0 || y != 0 || z != 0)
 	{

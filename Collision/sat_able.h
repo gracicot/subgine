@@ -32,8 +32,8 @@ public:
 	SAT_able();
 	virtual ~SAT_able();
 
-	virtual Vector projection(double angle) const = 0;
-	virtual Vector overlap(const SAT_able& other) const = 0;
+	virtual Vector2 projection(double angle) const = 0;
+	virtual Vector2 overlap(const SAT_able& other) const = 0;
 	
 protected:
 };

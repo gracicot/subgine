@@ -22,7 +22,7 @@
 
 namespace Collisionnable{
 	
-Point::Point(Vector position)
+Point::Point(Vector2 position)
 {
 	_position = position;
 }
@@ -32,7 +32,7 @@ Point::~Point()
 
 }
 
-Point::operator Vector() const
+Point::operator Vector2()
 {
 	return _position;
 }

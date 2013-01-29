@@ -35,18 +35,18 @@ Polygon::~Polygon()
 
 }
 
-void Polygon::addPoint(const Vector point)
+void Polygon::addPoint(const Vector2 point)
 {
 	_vertex.push_back(point);
 }
 
-bool Polygon::isPointInside(Vector point) const
+bool Polygon::isPointInside(Vector2 point) const
 {
 	bool oddNodes = false;
-	Vector previous_vertex = *_vertex.rbegin();
+	Vector2 previous_vertex = *_vertex.rbegin();
 	previous_vertex.setAngle(previous_vertex.getAngle()+_angle);
 	previous_vertex += _position;
-	for(Vector current_vertex : _vertex)
+	for(Vector2 current_vertex : _vertex)
 	{
 		current_vertex.setAngle(current_vertex.getAngle()+_angle);
 		current_vertex += _position;
@@ -61,12 +61,12 @@ bool Polygon::isPointInside(Vector point) const
 	return oddNodes;
 }
 
-Vector Polygon::projection(double angle) const
+Vector2 Polygon::projection(double angle) const
 {
-	Vector axis = {cos(angle), sin(angle)};
-	Vector result_projection;
-	Vector current;
-	std::list<Vector>::const_iterator verticle = _vertex.begin();
+	Vector2 axis = {cos(angle), sin(angle)};
+	Vector2 result_projection;
+	Vector2 current;
+	std::list<Vector2>::const_iterator verticle = _vertex.begin();
 	current = *verticle;
 	current.setAngle(_angle+current.getAngle());
 	result_projection.x = axis.dot(current+_position);
@@ -89,23 +89,23 @@ Vector Polygon::projection(double angle) const
 	return result_projection;
 }
 
-Vector Polygon::overlap(const SAT_able& other) const
+Vector2 Polygon::overlap(const SAT_able& other) const
 {
-	Vector overlap;
+	Vector2 overlap;
 	overlap.setLenght(std::numeric_limits< double >().max());
 	std::vector<double> angles = getAngles();
 	for(double angle : angles)
 	{
-		Vector projectionThis = this->projection(angle);
-		Vector projectionOther = other.projection(angle);
+		Vector2 projectionThis = this->projection(angle);
+		Vector2 projectionOther = other.projection(angle);
 		
 		if(projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y)
 		{
-			overlap = overlap.getLenght() > Vector(projectionOther.x, projectionThis.y).getLenght() ? Vector(projectionOther.x, projectionThis.y) : overlap;
+			overlap = overlap.getLenght() > Vector2(projectionOther.x, projectionThis.y).getLenght() ? Vector2(projectionOther.x, projectionThis.y) : overlap;
 		}
 		else if(projectionThis.x < projectionOther.y && projectionThis.x > projectionOther.x)
 		{
-			overlap = overlap.getLenght() > Vector(projectionThis.x, projectionOther.y).getLenght() ? Vector(projectionThis.x, projectionOther.y) : overlap;
+			overlap = overlap.getLenght() > Vector2(projectionThis.x, projectionOther.y).getLenght() ? Vector2(projectionThis.x, projectionOther.y) : overlap;
 		}
 		else if(projectionThis.x > projectionOther.x && projectionThis.y < projectionOther.y)
 		{
@@ -117,7 +117,7 @@ Vector Polygon::overlap(const SAT_able& other) const
 		}
 		else
 		{
-			return Vector(0,0);
+			return Vector2(0,0);
 		}
 	}
 	return overlap;
@@ -126,9 +126,9 @@ Vector Polygon::overlap(const SAT_able& other) const
 std::vector< double > Polygon::getAngles() const
 {
 	std::vector<double> angles;
-	Vector previous = *_vertex.rbegin();
+	Vector2 previous = *_vertex.rbegin();
 	previous.setAngle(_angle+previous.getAngle());
-	for(Vector current : _vertex)
+	for(Vector2 current : _vertex)
 	{
 		current.setAngle(_angle+current.getAngle());
 		angles.push_back((previous - current).getAngle() - (M_PI/2));

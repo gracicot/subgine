@@ -27,16 +27,16 @@ CollisionResult* SatTester::compareObject(Collisionnable::Collisionnable& object
 
 	if(shape1 != 0 && shape1 != nullptr && shape2 != 0 && shape2 != nullptr)
 	{
-		Vector test1 = shape1->overlap(*shape2);
-		Vector test2 = shape2->overlap(*shape1);
+		Vector2 test1 = shape1->overlap(*shape2);
+		Vector2 test2 = shape2->overlap(*shape1);
 
 		if(test1.getLenght() > 0 && test2.getLenght() > 0)
 		{
-			Vector shortest = test1.getLenght() < test2.getLenght() ? test1 : test2;
+			Vector2 shortest = test1.getLenght() < test2.getLenght() ? test1 : test2;
 			return new SatResult(true, time, shortest);
 		}
 
-		return new SatResult(false, time, Vector(0, 0));
+		return new SatResult(false, time, Vector2(0, 0));
 	}
 	return nullptr;
 }

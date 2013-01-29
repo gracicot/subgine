@@ -21,23 +21,23 @@
 #include "const.h"
 #include "positionnable.h"
 
-struct Vector : public Positionnable
+struct Vector2 : public Positionnable
 {
-	Vector(double _x = 0, double _y = 0);
-	Vector(const Vector& other);
-	Vector(const sf::Vector2<float>& other);
-	Vector(const sf::Vector2<double>& other);
+	Vector2(double _x = 0, double _y = 0);
+	Vector2(const Vector2& other);
+	Vector2(const sf::Vector2<float>& other);
+	Vector2(const sf::Vector2<double>& other);
 	
-	Vector& operator=(const Vector& other);
+	Vector2& operator=(const Vector2& other);
 	double getAngle() const;
 	double getLenght() const;
 	void setAngle(const double angle);
 	void setLenght(const double lenght);
-	Vector project(Vector& other) const;
-	Vector normalize() const;
-	double dot(const Vector& vec) const;
+	Vector2 project(Vector2& other) const;
+	Vector2 normalize() const;
+	double dot(const Vector2& vec) const;
 
-	virtual Vector getPosition() const;
+	virtual Vector2 getPosition() const;
 
 	operator sf::Vector2<double>() const;
 	operator sf::Vector2<float>() const;
@@ -46,17 +46,17 @@ struct Vector : public Positionnable
 	double y;
 };
 
-Vector operator*(const Vector& vec1, const Vector& vec2);
-Vector operator*(const double& multiplier, const Vector& vec);
-Vector operator*(const Vector& vec, const double& multiplier);
-Vector operator+(const Vector& vec1, const Vector& vec2);
-Vector operator-(const Vector& vec1, const Vector& vec2);
-Vector operator/(const Vector& vec, const double& divider);
-Vector& operator*=(Vector& vec, const double& multiplier);
-Vector& operator+=(Vector& vec1, const Vector& vec2);
-Vector& operator-=(Vector& vec1, const Vector& vec2);
-Vector& operator/=(Vector& vec, const double& divider);
-inline std::ostream& operator<<(std::ostream& out, Vector vec)
+Vector2 operator*(const Vector2& vec1, const Vector2& vec2);
+Vector2 operator*(const double& multiplier, const Vector2& vec);
+Vector2 operator*(const Vector2& vec, const double& multiplier);
+Vector2 operator+(const Vector2& vec1, const Vector2& vec2);
+Vector2 operator-(const Vector2& vec1, const Vector2& vec2);
+Vector2 operator/(const Vector2& vec, const double& divider);
+Vector2& operator*=(Vector2& vec, const double& multiplier);
+Vector2& operator+=(Vector2& vec1, const Vector2& vec2);
+Vector2& operator-=(Vector2& vec1, const Vector2& vec2);
+Vector2& operator/=(Vector2& vec, const double& divider);
+inline std::ostream& operator<<(std::ostream& out, Vector2 vec)
 {
 	out << vec.x << ", " << vec.y;
 	return out;

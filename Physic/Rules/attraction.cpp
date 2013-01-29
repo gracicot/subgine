@@ -27,15 +27,15 @@ Attraction::Attraction(const Attraction& c) : _value(c._value), _objects(c._obje
 
 }
 
-Attraction::Attraction(const Vector value) : _value(value)
+Attraction::Attraction(const Vector2 value) : _value(value)
 {
 
 }
 
-Vector Attraction::getResult(const PhysicPoint& object) const
+Vector2 Attraction::getResult(const PhysicPoint& object) const
 {
-	Vector result;
-	Vector absolute;
+	Vector2 result;
+	Vector2 absolute;
 	
 for(auto i : _objects)
 	{
@@ -57,12 +57,12 @@ void Attraction::removeObject(const PhysicPoint& object)
 	_objects.remove(&object);
 }
 
-Vector Attraction::getValue() const
+Vector2 Attraction::getValue() const
 {
 	return _value;
 }
 
-void Attraction::setValue(const Vector value)
+void Attraction::setValue(const Vector2 value)
 {
 	_value = value;
 }

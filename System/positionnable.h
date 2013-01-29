@@ -20,7 +20,7 @@
 #ifndef POSITIONNABLE_H
 #define POSITIONNABLE_H
 
-class Vector;
+class Vector2;
 
 class Positionnable
 {
@@ -29,7 +29,7 @@ public:
 	Positionnable();
 	virtual ~Positionnable();
 
-	virtual Vector getPosition() const = 0;
+	virtual Vector2 getPosition() const = 0;
 };
 
 #endif // POSITIONNABLE_H

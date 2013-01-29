@@ -30,7 +30,7 @@ class Spring : public Rule
 {
 public:
 	Spring(const Vector3 value, const double size, Positionnable3& position);
-	Spring(const Vector3 value, const double size, const Vector3 position);
+	Spring(const Vector3 value = Vector3(), const double size = 0, const Vector3 position = Vector3());
 	Spring(const Spring& other);
 	virtual ~Spring();
 	Vector3 getValue() const;

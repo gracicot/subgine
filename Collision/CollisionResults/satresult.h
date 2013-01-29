@@ -27,10 +27,10 @@
 
 struct SatResult : public CollisionResult
 {
-	SatResult(bool _isCollision, double _time, Vector _distance);
+	SatResult(bool _isCollision, double _time, Vector2 _distance);
 	~SatResult() = default;
 	
-	const Vector distance;
+	const Vector2 distance;
 };
 
 #endif // SATRESULT_H

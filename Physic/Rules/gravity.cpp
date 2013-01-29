@@ -8,7 +8,7 @@ Gravity::Gravity(const Gravity& c) : _value(c._value)
 
 }
 
-Gravity::Gravity(const Vector value) : _value(value)
+Gravity::Gravity(const Vector2 value) : _value(value)
 {
 
 }
@@ -18,17 +18,17 @@ Gravity::~Gravity()
 
 }
 
-Vector Gravity::getResult(const PhysicPoint& object) const
+Vector2 Gravity::getResult(const PhysicPoint& object) const
 {
 	return _value*object.getMass();
 }
 
-Vector Gravity::getValue() const
+Vector2 Gravity::getValue() const
 {
 	return _value;
 }
 
-void Gravity::setValue(const Vector value)
+void Gravity::setValue(const Vector2 value)
 {
 	_value = value;
 }

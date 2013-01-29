@@ -1,5 +1,8 @@
 #include "physicpoint3.h"
 
+#include "../system.hpp"
+#include "Rules3/rule.h"
+
 PhysicPoint3::PhysicPoint3()
 {
 	_mass = 1;

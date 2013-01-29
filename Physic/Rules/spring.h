@@ -29,23 +29,23 @@ namespace Rule
 class Spring : public Rule
 {
 public:
-	Spring(const Vector value, const double size, Positionnable& position);
-	Spring(const Vector value = Vector(), const double size = 0, const Vector position = Vector());
+	Spring(const Vector2 value, const double size, Positionnable& position);
+	Spring(const Vector2 value = Vector2(), const double size = 0, const Vector2 position = Vector2());
 	Spring(const Spring& other);
 	virtual ~Spring();
-	Vector getValue() const;
+	Vector2 getValue() const;
 	double getSize() const;
-	Vector getPosition() const;
+	Vector2 getPosition() const;
 	
-	virtual Vector getResult(const PhysicPoint& object) const;
+	virtual Vector2 getResult(const PhysicPoint& object) const;
 	
-	void setValue(const Vector value);
+	void setValue(const Vector2 value);
 	void setSize(const double size);
 	void setPosition(Positionnable& position);
-	void setPosition(Vector position);
+	void setPosition(Vector2 position);
 
 private:
-	Vector  _value;
+	Vector2  _value;
 	double _size;
 
 	bool _deletePosition;

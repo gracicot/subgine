@@ -19,7 +19,7 @@
 
 #include "satresult.h"
 
-SatResult::SatResult(bool _isCollision, double _time, Vector _distance): CollisionResult(_isCollision, _time), distance(_distance)
+SatResult::SatResult(bool _isCollision, double _time, Vector2 _distance): CollisionResult(_isCollision, _time), distance(_distance)
 {
 
 }

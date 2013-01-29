@@ -38,7 +38,6 @@ Spring::Spring(const Spring& other)
 	{
 		delete _position;
 	}
-
 	_deletePosition = other._deletePosition;
 	_position = other._position;
 	_size = other._size;

@@ -31,10 +31,10 @@ public:
 	Position();
 	virtual ~Position();
 	
-	virtual Vector getPosition() const;
+	virtual Vector2 getPosition() const;
 	
 protected:
-	Vector _position;
+	Vector2 _position;
 };
 
 }

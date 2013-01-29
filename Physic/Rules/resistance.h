@@ -9,17 +9,17 @@ namespace Rule{
 class Resistance : public Rule
 {
 public:
-	Resistance(const Vector value = Vector());
+	Resistance(const Vector2 value = Vector2());
 	Resistance(const Resistance& c);
 	virtual ~Resistance();
 	
-	virtual Vector getResult(const PhysicPoint& object) const;
+	virtual Vector2 getResult(const PhysicPoint& object) const;
 	
-	void setValue(const Vector value);
-	Vector getValue() const;
+	void setValue(const Vector2 value);
+	Vector2 getValue() const;
 	
 private:
-	Vector _value;
+	Vector2 _value;
 };
 
 }

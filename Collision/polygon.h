@@ -34,11 +34,11 @@ public:
 	Polygon();
 	virtual ~Polygon();
 
-	virtual Vector projection(double angle) const;
-	virtual bool isPointInside(Vector point) const;
-	virtual Vector overlap(const SAT_able& other) const;
+	virtual Vector2 projection(double angle) const;
+	virtual bool isPointInside(Vector2 point) const;
+	virtual Vector2 overlap(const SAT_able& other) const;
 	
-	void addPoint (const Vector point);
+	void addPoint (const Vector2 point);
 	std::vector< double > getAngles() const;
 	
 private:

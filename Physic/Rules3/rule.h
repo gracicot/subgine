@@ -20,8 +20,7 @@
 #ifndef RULE_H3
 #define RULE_H3
 
-#include "../../system.hpp"
-
+class Vector3;
 class PhysicPoint3;
 
 namespace Rule3
