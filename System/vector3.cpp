@@ -66,7 +66,7 @@ void Vector3::setLenght(double lenght)
 	}
 }
 
-Vector3 Vector3::normalize() const
+Vector3 Vector3::unit() const
 {
 	double lenght = getLenght();
 	return Vector3(x / lenght, y / lenght, z / lenght);

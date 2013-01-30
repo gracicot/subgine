@@ -53,7 +53,7 @@ void MainEngine::Run()
 	while(_running)
 	{
 		sf::Sleep(1.0 / 90.0);
-		time = timer.GetElapsedTime() * _speed;
+		time = timer.GetElapsedTime() * _speed * 10.0;
 		timer.Reset();
 
 	for(auto engines : _engineList)

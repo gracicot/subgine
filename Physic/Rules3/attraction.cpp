@@ -40,7 +40,7 @@ Vector3 Attraction::getResult(const PhysicPoint3& object) const
 for(auto i : _objects)
 	{
 		absolute = i->getPosition() - object.getPosition();
-		result +=  (absolute.normalize() * i->getMass() * object.getMass()) / (pow2(absolute.x) + pow2(absolute.y) + pow2(absolute.z));	  
+		result +=  (absolute.unit() * i->getMass() * object.getMass()) / (pow2(absolute.x) + pow2(absolute.y) + pow2(absolute.z));	  
 	}
 
 	return result * getValue();

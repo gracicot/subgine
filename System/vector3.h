@@ -15,7 +15,7 @@ struct Vector3 : public Positionnable3
 	double getLenght() const;
 	void setAngles(const Vector2 angles);
 	void setLenght(const double lenght);
-	Vector3 normalize() const;
+	Vector3 unit() const;
 
 	virtual Vector3 getPosition() const;
 	

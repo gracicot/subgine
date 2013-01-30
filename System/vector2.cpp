@@ -79,11 +79,11 @@ void Vector2::setLenght(double lenght)
 
 Vector2 Vector2::project(Vector2& other) const
 {
-	Vector2 normalizedOther = other.normalize();
-	return (*this * normalizedOther) * normalizedOther;
+	Vector2 unitOther = other.unit();
+	return (this->dot(unitOther)) * unitOther;
 }
 
-Vector2 Vector2::normalize() const
+Vector2 Vector2::unit() const
 {
 	double lenght = getLenght();
 	return Vector2(x/lenght, y/lenght);

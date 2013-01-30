@@ -34,7 +34,7 @@ struct Vector2 : public Positionnable
 	void setAngle(const double angle);
 	void setLenght(const double lenght);
 	Vector2 project(Vector2& other) const;
-	Vector2 normalize() const;
+	Vector2 unit() const;
 	double dot(const Vector2& vec) const;
 
 	virtual Vector2 getPosition() const;
