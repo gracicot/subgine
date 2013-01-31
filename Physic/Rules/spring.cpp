@@ -19,6 +19,8 @@
 
 #include "spring.h"
 
+#include "../physicpoint.h"
+
 namespace Rule
 {
 
@@ -101,7 +103,8 @@ void Spring::setSize(const double size)
 
 Vector2 Spring::getResult(const PhysicPoint& object) const
 {
-	return (getPosition() - object.getPosition()).unit() * getValue() * ((getPosition() - object.getPosition()).getLenght() - getSize());
+	Vector2 relative = getPosition() - object.getPosition();
+	return relative.unit() * getValue() * (relative.getLenght() - getSize());
 }
 
 Vector2 Spring::getValue() const

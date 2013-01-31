@@ -21,7 +21,6 @@
 #define RULE_SPRING_H
 
 #include "rule.h"
-#include "../physicpoint.h"
 
 namespace Rule
 {

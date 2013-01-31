@@ -2,7 +2,6 @@
 #define RESISTANCE_H
 
 #include "rule.h"
-#include "../physicpoint.h"
 
 namespace Rule{
 

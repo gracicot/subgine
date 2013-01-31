@@ -1,5 +1,8 @@
 #include "physicpoint.h"
 
+#include "../system.hpp"
+#include "Rules/rule.h"
+
 PhysicPoint::PhysicPoint()
 {
 	_position = Vector2(0, 0);

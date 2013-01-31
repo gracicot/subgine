@@ -2,7 +2,6 @@
 #define GRAVITY_H3
 
 #include "rule.h"
-#include "../physicpoint3.h"
 
 namespace Rule3
 {

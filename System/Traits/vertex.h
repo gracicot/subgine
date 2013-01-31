@@ -1,7 +1,7 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-#include "../../system.hpp"
+#include "../vector2.h"
 
 namespace Traits{
 

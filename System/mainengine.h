@@ -19,7 +19,8 @@
 #define MAINENGINE_H
 
 #include "const.h"
-#include "engine.h"
+
+class Engine;
 
 class MainEngine : private sf::Thread
 {

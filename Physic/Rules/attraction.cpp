@@ -19,6 +19,8 @@
 
 #include "attraction.h"
 
+#include "../physicpoint.h"
+
 namespace Rule
 {
 

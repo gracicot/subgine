@@ -17,6 +17,8 @@
 
 #include "mainengine.h"
 
+#include "engine.h"
+
 MainEngine::MainEngine()
 {
 	_running = false;

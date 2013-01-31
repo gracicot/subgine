@@ -2,9 +2,10 @@
 #ifndef DEF_PHYSIC_OBJECT
 #define DEF_PHYSIC_OBJECT
 
-#include "../system.hpp"
 #include "abstractphysicpoint.h"
-#include "Rules/rule.h"
+#include "../System/Traits/position.h"
+
+namespace Rule{class Rule;}
 
 class PhysicPoint : public virtual Traits::Position, public AbstractPhysicPoint
 {

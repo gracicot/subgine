@@ -1,5 +1,7 @@
 #include "gravity.h"
 
+#include "../physicpoint.h"
+
 namespace Rule
 {
 

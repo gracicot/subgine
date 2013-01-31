@@ -2,7 +2,7 @@
 #define DEF_PHYSICS_ENGINE
 
 #include "../../system.hpp"
-#include "../physicpoint.h"
+#include "../abstractphysicpoint.h"
 
 class Physics : public Container<AbstractPhysicPoint>, public Engine
 {

@@ -21,7 +21,8 @@
 #define RULE_SPRING_H3
 
 #include "rule.h"
-#include "../physicpoint3.h"
+
+class Positionnable3;
 
 namespace Rule3
 {

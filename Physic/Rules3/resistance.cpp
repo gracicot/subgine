@@ -1,5 +1,7 @@
 #include "resistance.h"
 
+#include "../physicpoint3.h"
+
 namespace Rule3
 {
 

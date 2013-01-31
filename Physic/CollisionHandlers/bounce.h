@@ -23,7 +23,6 @@
 #ifdef COLLISION_MAINHEADER
 
 #include "../../collision.hpp"
-#include "../physicpoint.h"
 
 class Bounce : public CollisionHandler
 {

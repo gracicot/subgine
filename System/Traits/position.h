@@ -20,7 +20,6 @@
 #ifndef TRAIT_POSITION_H
 #define TRAIT_POSITION_H
 
-#include "../positionnable.h"
 #include "../vector2.h"
 
 namespace Traits{

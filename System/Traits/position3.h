@@ -24,7 +24,7 @@
 
 namespace Traits{
 
-class Position3
+class Position3 : Positionnable3
 {
 public:
 	Position3();
