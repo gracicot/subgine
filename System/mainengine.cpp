@@ -19,9 +19,9 @@
 
 #include "engine.h"
 
-MainEngine::MainEngine()
+MainEngine::MainEngine() : _speed(0), _running(false)
 {
-	_running = false;
+	
 
 }
 
