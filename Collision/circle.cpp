@@ -24,14 +24,56 @@ namespace Collisionnable
 {
 bool Circle::isPointInside(Vector2 point) const
 {
-	return (_position - point).getLenght() < size;
+    return (_position - point).getLenght() < _radius;
 }
 
 Vector2 Circle::projection(double angle) const
 {
+    return Vector2(_position.x - _radius, _position.y + _radius);
+}
+
+Circle::~Circle()
+{
 
 }
 
+Vector2 Circle::overlap(const SAT_able& other) const
+{
+	Vector2 overlap;
+	double angle = other.getNearestPoint(_position).getAngle();
 	
+    Vector2 projectionThis = this->projection(angle);
+    Vector2 projectionOther = other.projection(angle);
+
+    if(projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y)
+    {
+        overlap = overlap.getLenght() > Vector2(projectionOther.x, projectionThis.y).getLenght() ? Vector2(projectionOther.x, projectionThis.y) : overlap;
+    }
+    else if(projectionThis.x < projectionOther.y && projectionThis.x > projectionOther.x)
+    {
+        overlap = overlap.getLenght() > Vector2(projectionThis.x, projectionOther.y).getLenght() ? Vector2(projectionThis.x, projectionOther.y) : overlap;
+    }
+    else if(projectionThis.x > projectionOther.x && projectionThis.y < projectionOther.y)
+    {
+        overlap = overlap.getLenght() > projectionThis.getLenght() ? projectionThis : overlap;
+    }
+    else if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.y)
+    {
+        overlap = overlap.getLenght() > projectionOther.getLenght() ? projectionOther : overlap;
+    }
+    else
+    {
+        return Vector2(0,0);
+    }
 }
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 
+
+Vector2 Circle::getNearestPoint(Vector2 point) const
+{
+	Vector2 nearest(_radius, 0);
+	nearest.setAngle((point - nearest).getAngle());
+	return nearest;
+}
+
+
+}
+

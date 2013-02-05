@@ -110,4 +110,4 @@ const Engine& MainEngine::getEngine(const std::string tag) const
 	throw std::out_of_range("Cannot find Engine associated with tag " + tag + "...");
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 
+

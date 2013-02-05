@@ -83,4 +83,4 @@ template<class T> class Storage : private Container<T>
 
 
 #endif // STORAGE_H
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 
+

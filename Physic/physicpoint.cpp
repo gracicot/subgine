@@ -193,4 +193,4 @@ void PhysicPoint::setRule(const std::string tag, Rule::Rule* rule)
 	}
 }
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 
+

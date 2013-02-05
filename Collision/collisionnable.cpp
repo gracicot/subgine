@@ -63,4 +63,4 @@ void Collisionnable::trigger(Collisionnable& other, CollisionResult* result, std
 }
 
 }
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 
+

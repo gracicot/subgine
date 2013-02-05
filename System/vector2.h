@@ -65,4 +65,4 @@ inline std::ostream& operator<<(std::ostream& out, Vector2 vec)
 
 #endif // VECTOR_H
 
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 
+

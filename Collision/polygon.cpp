@@ -137,5 +137,19 @@ std::vector< double > Polygon::getAngles() const
 	return angles;
 }
 
+Vector2 Polygon::getNearestPoint(Vector2 point) const
+{
+	Vector2 nearest;
+	for(Vector2 current : _vertex)
+	{
+		current.setAngle(_angle+current.getAngle());
+		if(nearest.getLenght() > (current - nearest).getLenght())
+		{
+			nearest = (current - nearest);
+		}
+	}
+	return nearest;
 }
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4; 
+
+}
+
