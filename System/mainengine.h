@@ -37,6 +37,9 @@ public:
 	void setSpeed(double speed);
 	double getSpeed();
 	
+	void setLoopPerSecond(const int loopPerSecond);
+	int getLoopPerSecond() const;
+	
 	//engines
 	Engine& getEngine(const std::string tag);
 	const Engine& getEngine(const std::string tag) const;
@@ -44,6 +47,7 @@ public:
 	Engine& addEngine(const std::string alias, Engine* e);
 
 private:
+	int _loopPerSecond;
 	double _speed;
 
 	virtual void Run();

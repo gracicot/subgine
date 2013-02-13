@@ -21,7 +21,7 @@
 
 MainEngine::MainEngine() : _speed(0), _running(false)
 {
-	
+
 
 }
 
@@ -29,7 +29,6 @@ MainEngine::~MainEngine()
 {
 	_running = false;
 	this->Wait();
-
 }
 
 void MainEngine::running(const bool state)
@@ -44,7 +43,6 @@ void MainEngine::running(const bool state)
 		_running = false;
 		this->Wait();
 	}
-
 }
 
 void MainEngine::Run()
@@ -54,7 +52,10 @@ void MainEngine::Run()
 
 	while(_running)
 	{
-		//sf::Sleep(1.0 / 3000.0);
+		if(_loopPerSecond > 0)
+		{
+			sf::Sleep(1.0 / (float)_loopPerSecond);
+		}
 		time = timer.GetElapsedTime() * _speed * 10.0;
 		timer.Reset();
 
@@ -110,4 +111,12 @@ const Engine& MainEngine::getEngine(const std::string tag) const
 	throw std::out_of_range("Cannot find Engine associated with tag " + tag + "...");
 }
 
+int MainEngine::getLoopPerSecond() const
+{
+	return _loopPerSecond;
+}
 
+void MainEngine::setLoopPerSecond(const int loopPerSecond)
+{
+	_loopPerSecond = loopPerSecond;
+}
