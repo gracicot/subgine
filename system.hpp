@@ -17,6 +17,7 @@
 #include "System/Traits/position3.h"
 #include "System/Traits/vertex.h"
 #include "System/Traits/angle.h"
+#include "System/Traits/radius.h"
 
 #endif
 

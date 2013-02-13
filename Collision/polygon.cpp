@@ -66,9 +66,13 @@ Vector2 Polygon::projection(double angle) const
 	Vector2 axis = {cos(angle), sin(angle)};
 	Vector2 result_projection;
 	Vector2 current;
+	
+	
 	std::list<Vector2>::const_iterator verticle = _vertex.begin();
+	
 	current = *verticle;
 	current.setAngle(_angle+current.getAngle());
+	
 	result_projection.x = axis.dot(current+_position);
 	result_projection.y = result_projection.x;
 	
@@ -86,6 +90,7 @@ Vector2 Polygon::projection(double angle) const
 			result_projection.y = p;
 		}
 	}
+	
 	return result_projection;
 }
 
@@ -93,8 +98,7 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 {
 	Vector2 overlap;
 	overlap.setLenght(std::numeric_limits< double >().max());
-	std::vector<double> angles = getAngles();
-	for(double angle : angles)
+	for(double angle : getAngles())
 	{
 		Vector2 projectionThis = this->projection(angle);
 		Vector2 projectionOther = other.projection(angle);
@@ -102,18 +106,26 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 		if(projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y)
 		{
 			overlap = overlap.getLenght() > Vector2(projectionOther.x, projectionThis.y).getLenght() ? Vector2(projectionOther.x, projectionThis.y) : overlap;
+			overlap = Vector2(overlap.y-overlap.x, 0);
+			overlap.setAngle(angle);
 		}
 		else if(projectionThis.x < projectionOther.y && projectionThis.x > projectionOther.x)
 		{
 			overlap = overlap.getLenght() > Vector2(projectionThis.x, projectionOther.y).getLenght() ? Vector2(projectionThis.x, projectionOther.y) : overlap;
+			overlap = Vector2(overlap.y-overlap.x, 0);
+			overlap.setAngle(angle);
 		}
 		else if(projectionThis.x > projectionOther.x && projectionThis.y < projectionOther.y)
 		{
 			overlap = overlap.getLenght() > projectionThis.getLenght() ? projectionThis : overlap;
+			overlap = Vector2(overlap.y-overlap.x, 0);
+			overlap.setAngle(angle);
 		}
 		else if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.y)
 		{
 			overlap = overlap.getLenght() > projectionOther.getLenght() ? projectionOther : overlap;
+			overlap = Vector2(overlap.y-overlap.x, 0);
+			overlap.setAngle(angle);
 		}
 		else
 		{

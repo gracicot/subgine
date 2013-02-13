@@ -14,6 +14,8 @@ public:
 	PhysicPoint3(const PhysicPoint3& c);
 	virtual ~PhysicPoint3();
 	PhysicPoint3& operator=(const PhysicPoint3&);
+	
+	Vector3 momentum() const;
 
 	//set
 	void setPosition(const Vector3 position);

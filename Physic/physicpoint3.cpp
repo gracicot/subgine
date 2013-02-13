@@ -52,7 +52,7 @@ void PhysicPoint3::updatePosition(const double time)
 
 Rule3::Rule& PhysicPoint3::getRule(const std::string type)
 {
-	std::map<std::string, Rule3::Rule*>::iterator it = _rules.find(type);
+	auto it = _rules.find(type);
 
 	if(it != _rules.end())
 	{
@@ -64,7 +64,7 @@ Rule3::Rule& PhysicPoint3::getRule(const std::string type)
 
 const Rule3::Rule& PhysicPoint3::getRule(const std::string type) const
 {
-	std::map<std::string, Rule3::Rule*>::const_iterator it = _rules.find(type);
+	auto it = _rules.find(type);
 
 	if(it != _rules.end())
 	{
@@ -178,7 +178,7 @@ const std::map<std::string, Rule3::Rule*>& PhysicPoint3::getRule() const
 
 void PhysicPoint3::setRule(const std::string tag, Rule3::Rule* rule)
 {
-	std::map<std::string, Rule3::Rule*>::iterator it = _rules.find(tag);
+	auto it = _rules.find(tag);
 
 	if(it == _rules.end())
 	{
@@ -191,5 +191,7 @@ void PhysicPoint3::setRule(const std::string tag, Rule3::Rule* rule)
 	}
 }
 
-
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4;
+Vector3 PhysicPoint3::momentum() const
+{
+	return _velocity * _mass;
+}

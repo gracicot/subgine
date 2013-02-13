@@ -16,7 +16,7 @@
 
 
 #include "vector3.h"
-
+#include "const.h"
 
 Vector3::Vector3(double _x, double _y, double _z) : x(_x), y(_y), z(_z)
 {
@@ -149,5 +149,9 @@ Vector3 operator*(const Vector3& vec1, const Vector3& vec2)
 	return Vector3(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
 }
 
+Vector3 operator-(const Vector3& vec)
+{
+	return Vector3(-vec.x, -vec.y, -vec.z);
+}
 
 

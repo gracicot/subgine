@@ -54,7 +54,7 @@ void PhysicPoint::updatePosition(const double time)
 
 Rule::Rule& PhysicPoint::getRule(const std::string tag)
 {
-	std::map<std::string, Rule::Rule*>::iterator it = _rules.find(tag);
+	auto it = _rules.find(tag);
 
 	if(it != _rules.end())
 	{
@@ -66,7 +66,7 @@ Rule::Rule& PhysicPoint::getRule(const std::string tag)
 
 const Rule::Rule& PhysicPoint::getRule(const std::string tag) const
 {
-	std::map<std::string, Rule::Rule*>::const_iterator it = _rules.find(tag);
+	auto it = _rules.find(tag);
 
 	if(it != _rules.end())
 	{
@@ -180,7 +180,7 @@ const std::map<std::string, Rule::Rule*>& PhysicPoint::getRule() const
 
 void PhysicPoint::setRule(const std::string tag, Rule::Rule* rule)
 {
-	std::map<std::string, Rule::Rule*>::iterator it = _rules.find(tag);
+	auto it = _rules.find(tag);
 
 	if(it == _rules.end())
 	{
@@ -193,4 +193,7 @@ void PhysicPoint::setRule(const std::string tag, Rule::Rule* rule)
 	}
 }
 
-
+Vector2 PhysicPoint::momentum() const
+{
+	return _velocity * _mass;
+}

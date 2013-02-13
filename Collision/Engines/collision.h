@@ -39,6 +39,7 @@ public:
 	
 	void addTester(CollisionTester* tester, const std::string tag);
 	void addData(Collisionnable::Collisionnable* object, std::list< std::string > testers);
+	void removeData(Collisionnable::Collisionnable& object);
 	
 protected:
 	std::map<Collisionnable::Collisionnable*, std::list<std::string>> _objects;

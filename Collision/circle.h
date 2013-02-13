@@ -29,10 +29,10 @@ class Vector2;
 namespace Collisionnable
 {
 
-class Circle : public virtual SAT_able, public virtual Point_able
+class Circle : public virtual SAT_able, public virtual Point_able, public virtual Traits::Radius
 {
 public:
-	Circle() = default;
+	Circle();
 	virtual ~Circle();
 
 	virtual bool isPointInside(Vector2 point) const;
@@ -40,8 +40,6 @@ public:
 	virtual Vector2 overlap(const SAT_able& other) const;
     virtual Vector2 getNearestPoint(Vector2 point) const;
 	
-protected:
-	double _radius;
 };
 
 }

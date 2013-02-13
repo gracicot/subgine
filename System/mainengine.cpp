@@ -54,7 +54,7 @@ void MainEngine::Run()
 
 	while(_running)
 	{
-		sf::Sleep(1.0 / 90.0);
+		//sf::Sleep(1.0 / 3000.0);
 		time = timer.GetElapsedTime() * _speed * 10.0;
 		timer.Reset();
 

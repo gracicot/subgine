@@ -18,8 +18,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include "const.h"
 #include "positionnable.h"
+#include "const.h"
 
 struct Vector2 : public Positionnable
 {
@@ -33,7 +33,7 @@ struct Vector2 : public Positionnable
 	double getLenght() const;
 	void setAngle(const double angle);
 	void setLenght(const double lenght);
-	Vector2 project(Vector2& other) const;
+	Vector2 project(Vector2 other) const;
 	Vector2 unit() const;
 	double dot(const Vector2& vec) const;
 
@@ -52,6 +52,7 @@ Vector2 operator*(const Vector2& vec, const double& multiplier);
 Vector2 operator+(const Vector2& vec1, const Vector2& vec2);
 Vector2 operator-(const Vector2& vec1, const Vector2& vec2);
 Vector2 operator/(const Vector2& vec, const double& divider);
+Vector2 operator-(const Vector2& vec);
 Vector2& operator*=(Vector2& vec, const double& multiplier);
 Vector2& operator+=(Vector2& vec1, const Vector2& vec2);
 Vector2& operator-=(Vector2& vec1, const Vector2& vec2);

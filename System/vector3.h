@@ -1,7 +1,6 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include "const.h"
 #include "vector2.h"
 #include "positionnable3.h"
 
@@ -30,6 +29,7 @@ Vector3 operator*(const Vector3& vec, const double& multiplier);
 Vector3 operator+(const Vector3& vec1, const Vector3& vec2);
 Vector3 operator-(const Vector3& vec1, const Vector3& vec2);
 Vector3 operator/(const Vector3& vec, const double& divider);
+Vector3 operator-(const Vector3& vec);
 Vector3& operator*=(Vector3& vec, const double& multiplier);
 Vector3& operator+=(Vector3& vec1, const Vector3& vec2);
 Vector3& operator-=(Vector3& vec1, const Vector3& vec2);

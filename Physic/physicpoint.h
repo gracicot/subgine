@@ -15,6 +15,8 @@ public:
 	virtual ~PhysicPoint();
 	PhysicPoint& operator=(const PhysicPoint&);
 
+	Vector2 momentum() const;
+	
 	//set
 	void setPosition(const Vector2 posision);
 	void setVelocity(const Vector2 velocity);

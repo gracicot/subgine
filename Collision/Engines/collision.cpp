@@ -84,3 +84,8 @@ void Collision::addTester(CollisionTester* tester, const std::string tag)
 	
 	_testers[tag] = tester;
 }
+
+void Collision::removeData(Collisionnable::Collisionnable& object)
+{
+	_objects.erase(&object);
+}

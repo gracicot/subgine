@@ -16,7 +16,7 @@
 
 
 #include "vector2.h"
-
+#include "const.h"
 
 Vector2::Vector2(double _x, double _y) : x(_x), y(_y)
 {
@@ -77,10 +77,10 @@ void Vector2::setLenght(double lenght)
 	}
 }
 
-Vector2 Vector2::project(Vector2& other) const
+Vector2 Vector2::project(Vector2 other) const
 {
 	Vector2 unitOther = other.unit();
-	return (this->dot(unitOther)) * unitOther;
+	return (this->dot(unitOther)) * other;
 }
 
 Vector2 Vector2::unit() const
@@ -177,4 +177,7 @@ Vector2& operator/= (Vector2& vec, const double& divider)
 	return vec;
 }
 
+Vector2 operator-(const Vector2& vec)
+{
 
+}
