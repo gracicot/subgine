@@ -19,9 +19,8 @@
 
 #include "engine.h"
 
-MainEngine::MainEngine() : _speed(0), _running(false)
+MainEngine::MainEngine() : _speed(0), _running(false), _loopPerSecond(90)
 {
-
 
 }
 
