@@ -46,14 +46,18 @@ public:
 
 	Engine& addEngine(const std::string alias, Engine* e);
 
+	static sf::Mutex& mutex();
+	
 private:
+	static sf::Mutex _mutex;
+	
 	int _loopPerSecond;
 	double _speed;
 
 	virtual void Run();
 	bool _running;
 	double speed;
-
+	
 	std::map<std::string, Engine*> _engineList;
 };
 

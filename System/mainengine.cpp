@@ -19,6 +19,8 @@
 
 #include "engine.h"
 
+sf::Mutex MainEngine::_mutex;
+
 MainEngine::MainEngine() : _speed(0), _running(false), _loopPerSecond(90)
 {
 
@@ -118,4 +120,9 @@ int MainEngine::getLoopPerSecond() const
 void MainEngine::setLoopPerSecond(const int loopPerSecond)
 {
 	_loopPerSecond = loopPerSecond;
+}
+
+sf::Mutex& MainEngine::mutex()
+{
+	return _mutex;
 }

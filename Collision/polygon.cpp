@@ -44,15 +44,15 @@ bool Polygon::isPointInside(Vector2 point) const
 {
 	bool oddNodes = false;
 	Vector2 previous_vertex = *_vertex.rbegin();
-	previous_vertex.setAngle(previous_vertex.getAngle()+_angle);
+	previous_vertex.setAngle(previous_vertex.getAngle() + _angle);
 	previous_vertex += _position;
-	for(Vector2 current_vertex : _vertex)
+for(Vector2 current_vertex : _vertex)
 	{
-		current_vertex.setAngle(current_vertex.getAngle()+_angle);
+		current_vertex.setAngle(current_vertex.getAngle() + _angle);
 		current_vertex += _position;
 		if((current_vertex.y < point.y && previous_vertex.y >= point.y
-			|| previous_vertex.y < point.y && current_vertex.y >= point.y)
-			&& (current_vertex.x <= point.x || previous_vertex.x <= point.x))
+				|| previous_vertex.y < point.y && current_vertex.y >= point.y)
+				&& (current_vertex.x <= point.x || previous_vertex.x <= point.x))
 		{
 			oddNodes ^= (current_vertex.x + (point.y - current_vertex.y) / (previous_vertex.y - current_vertex.y) * (previous_vertex.x - current_vertex.x) < point.x);
 		}
@@ -66,21 +66,21 @@ Vector2 Polygon::projection(double angle) const
 	Vector2 axis = {cos(angle), sin(angle)};
 	Vector2 result_projection;
 	Vector2 current;
-	
-	
+
+
 	std::list<Vector2>::const_iterator verticle = _vertex.begin();
-	
+
 	current = *verticle;
-	current.setAngle(_angle+current.getAngle());
-	
-	result_projection.x = axis.dot(current+_position);
+	current.setAngle(_angle + current.getAngle());
+
+	result_projection.x = axis.dot(current + _position);
 	result_projection.y = result_projection.x;
-	
+
 	for(verticle++ ; verticle != _vertex.end() ; verticle++)
 	{
 		current = *verticle;
-		current.setAngle(_angle+current.getAngle());
-		double p = axis.dot(current+_position);
+		current.setAngle(_angle + current.getAngle());
+		double p = axis.dot(current + _position);
 		if(p < result_projection.x)
 		{
 			result_projection.x = p;
@@ -90,7 +90,7 @@ Vector2 Polygon::projection(double angle) const
 			result_projection.y = p;
 		}
 	}
-	
+
 	return result_projection;
 }
 
@@ -98,34 +98,49 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 {
 	Vector2 overlap;
 	overlap.setLenght(std::numeric_limits< double >().max());
-	for(double angle : getAngles())
+	overlap.setAngle(pi/4);
+	
+for(double angle : getAngles())
 	{
 		Vector2 projectionThis = this->projection(angle);
 		Vector2 projectionOther = other.projection(angle);
-		
-		if(projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y)
+
+		if((projectionThis.y < projectionOther.x) || projectionThis.x > projectionOther.y)
 		{
-			overlap = overlap.getLenght() > Vector2(projectionOther.x, projectionThis.y).getLenght() ? Vector2(projectionOther.x, projectionThis.y) : overlap;
-			overlap = Vector2(overlap.y-overlap.x, 0);
-			overlap.setAngle(angle);
+			return Vector2();
 		}
-		else if(projectionThis.x < projectionOther.y && projectionThis.x > projectionOther.x)
+		
+		if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y || true)
 		{
-			overlap = overlap.getLenght() > Vector2(projectionThis.x, projectionOther.y).getLenght() ? Vector2(projectionThis.x, projectionOther.y) : overlap;
-			overlap = Vector2(overlap.y-overlap.x, 0);
-			overlap.setAngle(angle);
+			if(overlap.getLenght() > projectionThis.y - projectionOther.x)
+			{
+				overlap = {projectionThis.y - projectionOther.x, 0};
+				overlap.setAngle(angle);
+			}
 		}
 		else if(projectionThis.x > projectionOther.x && projectionThis.y < projectionOther.y)
 		{
-			overlap = overlap.getLenght() > projectionThis.getLenght() ? projectionThis : overlap;
-			overlap = Vector2(overlap.y-overlap.x, 0);
-			overlap.setAngle(angle);
+			if(overlap.getLenght() > projectionThis.y - projectionThis.x)
+			{
+				overlap = {projectionThis.y - projectionThis.x, 0};
+				overlap.setAngle(_angle);
+			}
+		}
+		else if(projectionThis.x > projectionOther.x && projectionThis.x < projectionOther.y && projectionThis.y > projectionOther.y)
+		{
+			if(overlap.getLenght() > projectionOther.y - projectionThis.x)
+			{
+				overlap = {projectionOther.y - projectionThis.x, 0};
+				overlap.setAngle(_angle);
+			}
 		}
 		else if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.y)
 		{
-			overlap = overlap.getLenght() > projectionOther.getLenght() ? projectionOther : overlap;
-			overlap = Vector2(overlap.y-overlap.x, 0);
-			overlap.setAngle(angle);
+			if(overlap.getLenght() > projectionOther.y - projectionOther.x)
+			{
+				overlap = {projectionOther.y - projectionOther.x};
+				overlap.setAngle(_angle);
+			}
 		}
 		else
 		{
@@ -139,11 +154,11 @@ std::vector< double > Polygon::getAngles() const
 {
 	std::vector<double> angles;
 	Vector2 previous = *_vertex.rbegin();
-	previous.setAngle(_angle+previous.getAngle());
-	for(Vector2 current : _vertex)
+	previous.setAngle(_angle + previous.getAngle());
+for(Vector2 current : _vertex)
 	{
-		current.setAngle(_angle+current.getAngle());
-		angles.push_back((previous - current).getAngle() - (M_PI/2));
+		current.setAngle(_angle + current.getAngle());
+		angles.push_back((previous - current).getAngle() - (pi / 2));
 		previous = current;
 	}
 	return angles;
@@ -152,9 +167,9 @@ std::vector< double > Polygon::getAngles() const
 Vector2 Polygon::getNearestPoint(Vector2 point) const
 {
 	Vector2 nearest;
-	for(Vector2 current : _vertex)
+for(Vector2 current : _vertex)
 	{
-		current.setAngle(_angle+current.getAngle());
+		current.setAngle(_angle + current.getAngle());
 		if(nearest.getLenght() > (current - nearest).getLenght())
 		{
 			nearest = (current - nearest);

@@ -20,12 +20,18 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include "const.h"
+
 class Engine
 {
 public:
 	Engine();
 	virtual ~Engine();
 	virtual void execute(const float time) = 0;
+	
+protected:
+	
+private:
 };
 
 #endif // ENGINE_H

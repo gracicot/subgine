@@ -61,29 +61,37 @@ Vector2 Circle::overlap(const SAT_able& other) const
 	Vector2 projectionThis = this->projection(angle);
 	Vector2 projectionOther = other.projection(angle);
 
-	if(projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y)
+	if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y)
 	{
-		overlap = overlap.getLenght() > Vector2(projectionOther.x, projectionThis.y).getLenght() ? Vector2(projectionOther.x, projectionThis.y) : overlap;
-		overlap = Vector2(overlap.y - overlap.x, 0);
-		overlap.setAngle(angle);
-	}
-	else if(projectionThis.x < projectionOther.y && projectionThis.x > projectionOther.x)
-	{
-		overlap = overlap.getLenght() > Vector2(projectionThis.x, projectionOther.y).getLenght() ? Vector2(projectionThis.x, projectionOther.y) : overlap;
-		overlap = Vector2(overlap.y - overlap.x, 0);
-		overlap.setAngle(angle);
+		if(overlap.getLenght() > projectionThis.y - projectionOther.x)
+		{
+			overlap = {projectionThis.y - projectionOther.x, 0};
+			overlap.setAngle(angle);
+		}
 	}
 	else if(projectionThis.x > projectionOther.x && projectionThis.y < projectionOther.y)
 	{
-		overlap = overlap.getLenght() > projectionThis.getLenght() ? projectionThis : overlap;
-		overlap = Vector2(overlap.y - overlap.x, 0);
-		overlap.setAngle(angle);
+		if(overlap.getLenght() > projectionThis.y - projectionThis.x)
+		{
+			overlap = {projectionThis.y - projectionThis.x, 0};
+			overlap.setAngle(angle);
+		}
+	}
+	else if(projectionThis.x > projectionOther.x && projectionThis.x < projectionOther.y && projectionThis.y > projectionOther.y)
+	{
+		if(overlap.getLenght() > projectionOther.y - projectionThis.x)
+		{
+			overlap = {projectionOther.y - projectionThis.x, 0};
+			overlap.setAngle(angle);
+		}
 	}
 	else if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.y)
 	{
-		overlap = overlap.getLenght() > projectionOther.getLenght() ? projectionOther : overlap;
-		overlap = Vector2(overlap.y - overlap.x, 0);
-		overlap.setAngle(angle);
+		if(overlap.getLenght() > projectionOther.y - projectionOther.x)
+		{
+			overlap = {projectionOther.y - projectionOther.x};
+			overlap.setAngle(angle);
+		}
 	}
 	else
 	{
