@@ -9,7 +9,6 @@
 #include "System/mainengine.h"
 #include "System/positionnable.h"
 #include "System/positionnable3.h"
-#include "System/factory.h"
 #include "System/vector2.h"
 #include "System/vector3.h"
 

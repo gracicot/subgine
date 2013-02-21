@@ -61,7 +61,11 @@ Vector2 Circle::overlap(const SAT_able& other) const
 	Vector2 projectionThis = this->projection(angle);
 	Vector2 projectionOther = other.projection(angle);
 
-	if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y)
+	if((projectionThis.y < projectionOther.x) || projectionThis.x > projectionOther.y)
+	{
+		return Vector2();
+	}
+	else
 	{
 		if(overlap.getLenght() > projectionThis.y - projectionOther.x)
 		{
@@ -69,43 +73,14 @@ Vector2 Circle::overlap(const SAT_able& other) const
 			overlap.setAngle(angle);
 		}
 	}
-	else if(projectionThis.x > projectionOther.x && projectionThis.y < projectionOther.y)
-	{
-		if(overlap.getLenght() > projectionThis.y - projectionThis.x)
-		{
-			overlap = {projectionThis.y - projectionThis.x, 0};
-			overlap.setAngle(angle);
-		}
-	}
-	else if(projectionThis.x > projectionOther.x && projectionThis.x < projectionOther.y && projectionThis.y > projectionOther.y)
-	{
-		if(overlap.getLenght() > projectionOther.y - projectionThis.x)
-		{
-			overlap = {projectionOther.y - projectionThis.x, 0};
-			overlap.setAngle(angle);
-		}
-	}
-	else if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.y)
-	{
-		if(overlap.getLenght() > projectionOther.y - projectionOther.x)
-		{
-			overlap = {projectionOther.y - projectionOther.x};
-			overlap.setAngle(angle);
-		}
-	}
-	else
-	{
-		return Vector2(0, 0);
-	}
-
 	return overlap;
 }
 
 Vector2 Circle::getNearestPoint(Vector2 point) const
 {
 	Vector2 nearest(_radius, 0);
-	nearest.setAngle((point - nearest).getAngle());
-	return nearest;
+	nearest.setAngle((point - _position).getAngle());
+	return nearest + _position;
 }
 
 

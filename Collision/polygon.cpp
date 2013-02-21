@@ -109,42 +109,13 @@ for(double angle : getAngles())
 		{
 			return Vector2();
 		}
-		
-		if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.x && projectionThis.y < projectionOther.y || true)
+		else
 		{
 			if(overlap.getLenght() > projectionThis.y - projectionOther.x)
 			{
 				overlap = {projectionThis.y - projectionOther.x, 0};
 				overlap.setAngle(angle);
 			}
-		}
-		else if(projectionThis.x > projectionOther.x && projectionThis.y < projectionOther.y)
-		{
-			if(overlap.getLenght() > projectionThis.y - projectionThis.x)
-			{
-				overlap = {projectionThis.y - projectionThis.x, 0};
-				overlap.setAngle(_angle);
-			}
-		}
-		else if(projectionThis.x > projectionOther.x && projectionThis.x < projectionOther.y && projectionThis.y > projectionOther.y)
-		{
-			if(overlap.getLenght() > projectionOther.y - projectionThis.x)
-			{
-				overlap = {projectionOther.y - projectionThis.x, 0};
-				overlap.setAngle(_angle);
-			}
-		}
-		else if(projectionThis.x < projectionOther.x && projectionThis.y > projectionOther.y)
-		{
-			if(overlap.getLenght() > projectionOther.y - projectionOther.x)
-			{
-				overlap = {projectionOther.y - projectionOther.x};
-				overlap.setAngle(_angle);
-			}
-		}
-		else
-		{
-			return Vector2(0,0);
 		}
 	}
 	return overlap;
@@ -166,16 +137,17 @@ for(Vector2 current : _vertex)
 
 Vector2 Polygon::getNearestPoint(Vector2 point) const
 {
-	Vector2 nearest;
+	Vector2 nearest(std::numeric_limits< double >().max(), 0);
+	nearest.setAngle(pi/4);
 for(Vector2 current : _vertex)
 	{
 		current.setAngle(_angle + current.getAngle());
-		if(nearest.getLenght() > (current - nearest).getLenght())
+		if(nearest.getLenght() > (current - point).getLenght())
 		{
-			nearest = (current - nearest);
+			nearest = current;
 		}
 	}
-	return nearest;
+	return nearest + _position;
 }
 
 }

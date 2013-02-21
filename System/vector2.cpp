@@ -79,8 +79,7 @@ void Vector2::setLenght(double lenght)
 
 Vector2 Vector2::project(Vector2 other) const
 {
-	Vector2 unitOther = other.unit();
-	return (this->dot(unitOther)) * other;
+	return (this->dot(other.unit())) * other;
 }
 
 Vector2 Vector2::unit() const
