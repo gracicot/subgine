@@ -17,6 +17,9 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(SFML 1.6 REQUIRED system)
 
 target_link_libraries(subgine-system ${SFML_LIBRARIES})
+target_link_libraries(subgine-collision subgine-system)
+target_link_libraries(subgine-particle subgine-collision subgine-system subgine-physic)
+target_link_libraries(subgine-physic subgine-collision subgine-system)
 
 install(TARGETS subgine-system DESTINATION lib)
 install(TARGETS subgine-physic DESTINATION lib)
