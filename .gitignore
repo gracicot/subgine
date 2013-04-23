@@ -1,0 +1,7 @@
+.svn
+.svn/
+build/
+*.kdev4
+*~
+.*
+!/.gitignore
