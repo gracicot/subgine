@@ -26,11 +26,13 @@ install(TARGETS subgine-physic DESTINATION lib)
 install(TARGETS subgine-collision DESTINATION lib)
 install(TARGETS subgine-particle DESTINATION lib)
 
-install(DIRECTORY ./ DESTINATION include
+install(DIRECTORY ./src/ DESTINATION include/subgine
           FILES_MATCHING PATTERN "*.hpp"
 		  PATTERN "*.h"
           PATTERN "build" EXCLUDE
+          PATTERN ".*" EXCLUDE
+          PATTERN "*~" EXCLUDE
 		  PATTERN "build/" EXCLUDE
+		  PATTERN ".svn/" EXCLUDE
 		  PATTERN ".git/" EXCLUDE
-		  PATTERN ".git" EXCLUDE
 )
