@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
+
 project(subgine)
 add_definitions("-std=c++0x")
 
@@ -21,7 +22,7 @@ install(TARGETS subgine-physic DESTINATION lib)
 install(TARGETS subgine-collision DESTINATION lib)
 install(TARGETS subgine-particle DESTINATION lib)
 
-install(DIRECTORY ./src/ DESTINATION include/subgine
+install(DIRECTORY src/ DESTINATION include/subgine
           FILES_MATCHING PATTERN "*.hpp"
 		  PATTERN "*.h"
           PATTERN "build" EXCLUDE
