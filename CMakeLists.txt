@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(subgine)
-include_directories("${PROJECT_BINARY_DIR}")
-ADD_DEFINITIONS("-std=c++0x")
+add_definitions("-std=c++0x")
 
 file(GLOB_RECURSE SYSTEM_SRC_FILES "${CMAKE_SOURCE_DIR}/src/System/*.cpp")
 file(GLOB_RECURSE PHYSIC_SRC_FILES "${CMAKE_SOURCE_DIR}/src/Physic/*.cpp")
