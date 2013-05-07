@@ -13,10 +13,6 @@ add_library(subgine-physic SHARED ${PHYSIC_SRC_FILES})
 add_library(subgine-collision SHARED ${COLLISION_SRC_FILES})
 add_library(subgine-particle SHARED ${PARTICLE_SRC_FILES})
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-find_package(SFML 1.6 REQUIRED system)
-
-target_link_libraries(subgine-system ${SFML_LIBRARIES})
 target_link_libraries(subgine-collision subgine-system)
 target_link_libraries(subgine-particle subgine-collision subgine-system subgine-physic)
 target_link_libraries(subgine-physic subgine-collision subgine-system)

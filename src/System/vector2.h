@@ -25,8 +25,6 @@ struct Vector2 : public Positionnable
 {
 	Vector2(double _x = 0, double _y = 0);
 	Vector2(const Vector2& other);
-	Vector2(const sf::Vector2<float>& other);
-	Vector2(const sf::Vector2<double>& other);
 	
 	Vector2& operator=(const Vector2& other);
 	double getAngle() const;
@@ -38,9 +36,6 @@ struct Vector2 : public Positionnable
 	double dot(const Vector2& vec) const;
 
 	virtual Vector2 getPosition() const;
-
-	operator sf::Vector2<double>() const;
-	operator sf::Vector2<float>() const;
 
 	double x;
 	double y;

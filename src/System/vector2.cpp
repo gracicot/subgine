@@ -28,22 +28,12 @@ Vector2::Vector2(const Vector2& other) : x(other.x), y(other.y)
 
 }
 
-Vector2::Vector2(const sf::Vector2< float >& other) : x(other.x), y(other.y)
-{
-
-}
-
-Vector2::Vector2(const sf::Vector2< double >& other) : x(other.x), y(other.y)
-{
-
-}
-
 double Vector2::getAngle() const
 {
 	double angle = atan2(y, x);
 	if (angle < 0)
 	{
-		angle += 2 * M_PI;
+		angle += 2 * pi;
 	}
 	return angle;
 }
@@ -91,16 +81,6 @@ Vector2 Vector2::unit() const
 Vector2 Vector2::getPosition() const
 {
 	return *this;
-}
-
-Vector2::operator sf::Vector2< double >() const
-{
-	return sf::Vector2<double> (x, y);
-}
-
-Vector2::operator sf::Vector2< float >() const
-{
-	return sf::Vector2<float> (x, y);
 }
 
 double Vector2::dot(const Vector2& vec) const

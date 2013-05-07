@@ -2,8 +2,6 @@
 #ifndef INC_CONST_H
 #define INC_CONST_H
 
-#include <SFML/System.hpp>
-
 #include <iostream>
 #include <map>
 #include <vector>

@@ -34,7 +34,6 @@ public:
 	
 private:
 	double _lifetime;
-	sf::Clock _time;
 };
 
 #endif // PARTICLE_H

@@ -19,10 +19,12 @@
 #define MAINENGINE_H
 
 #include "const.h"
+#include <thread>
+#include <mutex>
 
 class Engine;
 
-class MainEngine : private sf::Thread
+class MainEngine
 {
 public:
 	//constructors and destructors
@@ -46,15 +48,18 @@ public:
 
 	Engine& addEngine(const std::string alias, Engine* e);
 
-	static sf::Mutex& mutex();
+	static std::mutex& mutex();
+	void runThread();
 	
 private:
-	static sf::Mutex _mutex;
+	std::thread _thread;
+	static std::mutex _mutex;
 	
 	int _loopPerSecond;
 	double _speed;
 
-	virtual void Run();
+	void launchThread();
+	
 	bool _running;
 	double speed;
 	

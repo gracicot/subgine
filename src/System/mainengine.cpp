@@ -17,9 +17,13 @@
 
 #include "mainengine.h"
 
+#include <ratio>
+#include <chrono>
+#include <ctime>
+
 #include "engine.h"
 
-sf::Mutex MainEngine::_mutex;
+std::mutex MainEngine::_mutex;
 
 MainEngine::MainEngine() : _speed(0), _running(false), _loopPerSecond(90)
 {
@@ -28,8 +32,7 @@ MainEngine::MainEngine() : _speed(0), _running(false), _loopPerSecond(90)
 
 MainEngine::~MainEngine()
 {
-	_running = false;
-	this->Wait();
+	running(false);
 }
 
 void MainEngine::running(const bool state)
@@ -37,28 +40,33 @@ void MainEngine::running(const bool state)
 	if(!_running && state)
 	{
 		_running = true;
-		this->Launch();
+		launchThread();
 	}
 	else if(_running && !state)
 	{
 		_running = false;
-		this->Wait();
+		_thread.join();
 	}
 }
 
-void MainEngine::Run()
+void MainEngine::launchThread()
 {
-	sf::Clock timer;
-	float time = 0;
+	_thread = std::thread(&MainEngine::runThread, this);
+}
+
+void MainEngine::runThread()
+{
+	auto timer = std::chrono::high_resolution_clock::now();
+	double time = 0;
 
 	while(_running)
 	{
 		if(_loopPerSecond > 0)
 		{
-			sf::Sleep(1.0 / (float)_loopPerSecond);
+			std::this_thread::sleep_for(std::chrono::duration<double, std::ratio<1, 1>>(1.0 / (double)_loopPerSecond));
 		}
-		time = timer.GetElapsedTime() * _speed * 10.0;
-		timer.Reset();
+		time = std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1, 1>>>(std::chrono::high_resolution_clock::now() - timer).count() * _speed * 10.0;
+		timer = std::chrono::high_resolution_clock::now();
 
 	for(auto engines : _engineList)
 		{
@@ -122,7 +130,7 @@ void MainEngine::setLoopPerSecond(const int loopPerSecond)
 	_loopPerSecond = loopPerSecond;
 }
 
-sf::Mutex& MainEngine::mutex()
+std::mutex& MainEngine::mutex()
 {
 	return _mutex;
 }
