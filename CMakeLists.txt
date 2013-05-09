@@ -23,12 +23,12 @@ install(TARGETS subgine-collision DESTINATION lib)
 install(TARGETS subgine-particle DESTINATION lib)
 
 install(DIRECTORY src/ DESTINATION include/subgine
-          FILES_MATCHING PATTERN "*.hpp"
-		  PATTERN "*.h"
-          PATTERN "build" EXCLUDE
-          PATTERN ".*" EXCLUDE
-          PATTERN "*~" EXCLUDE
-		  PATTERN "build/" EXCLUDE
-		  PATTERN ".svn/" EXCLUDE
-		  PATTERN ".git/" EXCLUDE
+	FILES_MATCHING PATTERN "*.hpp"
+	PATTERN "*.h"
+	PATTERN "build" EXCLUDE
+	PATTERN ".*" EXCLUDE
+	PATTERN "*~" EXCLUDE
+	PATTERN "build/" EXCLUDE
+	PATTERN ".svn/" EXCLUDE
+	PATTERN ".git/" EXCLUDE
 )
