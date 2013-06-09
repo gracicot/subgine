@@ -1,6 +1,4 @@
-
-#ifndef COLLISION_MAINHEADER
-#define COLLISION_MAINHEADER
+#pragma once
 
 #include "system.hpp"
 
@@ -22,5 +20,3 @@
 #include "Collision/CollisionTesters/pointtester.h"
 
 #include "Collision/Engines/collision.h"
-
-#endif

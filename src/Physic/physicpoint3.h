@@ -1,6 +1,4 @@
-
-#ifndef DEF_PHYSIC_OBJECT3
-#define DEF_PHYSIC_OBJECT3
+#pragma once
 
 #include "abstractphysicpoint.h"
 #include "../System/Traits/position3.h"
@@ -52,6 +50,3 @@ protected:
 	std::map<std::string, Vector3> _forces;
 
 };
-
-#endif
-// kate: indent-mode cstyle; indent-width 4; replace-tabs off; tab-width 4;

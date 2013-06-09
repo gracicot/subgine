@@ -1,6 +1,4 @@
-
-#ifndef DEF_PHYSIC_OBJECT
-#define DEF_PHYSIC_OBJECT
+#pragma once
 
 #include "abstractphysicpoint.h"
 #include "../System/Traits/position.h"
@@ -52,6 +50,3 @@ protected:
 	std::map<std::string, Vector2> _forces;
 
 };
-
-#endif
-

@@ -1,6 +1,4 @@
-
-#ifndef PARTICLE_MAINHEADER
-#define PARTICLE_MAINHEADER
+#pragma once
 
 #include "system.hpp"
 #include "collision.hpp"
@@ -8,5 +6,3 @@
 
 #include "Particle/particle.h"
 #include "Particle/Engines/particle.h"
-
-#endif

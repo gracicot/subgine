@@ -1,5 +1,4 @@
-#ifndef RADIUS_H
-#define RADIUS_H
+#pragma once
 
 namespace Traits{
 
@@ -16,5 +15,3 @@ protected:
 };
 
 }
-
-#endif // RADIUS_H

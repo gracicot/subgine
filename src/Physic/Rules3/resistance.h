@@ -1,5 +1,4 @@
-#ifndef RESISTANCE_H3
-#define RESISTANCE_H3
+#pragma once
 
 #include "rule.h"
 
@@ -22,5 +21,3 @@ private:
 };
 
 }
-
-#endif // RESISTANCE_H

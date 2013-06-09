@@ -1,5 +1,4 @@
-#ifndef DEF_PHYSICS_ENGINE
-#define DEF_PHYSICS_ENGINE
+#pragma once
 
 #include "../../system.hpp"
 #include "../abstractphysicpoint.h"
@@ -16,6 +15,3 @@ public:
 private:
 
 };
-
-#endif
-

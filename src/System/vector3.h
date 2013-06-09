@@ -1,5 +1,4 @@
-#ifndef VECTOR3_H
-#define VECTOR3_H
+#pragma once
 
 #include "vector2.h"
 #include "positionnable3.h"
@@ -40,6 +39,3 @@ inline std::ostream& operator<<(std::ostream& out, Vector3 vec)
 	out << vec.x << ", " << vec.y << ", " << vec.z;
 	return out;
 }
-
-
-#endif // VECTOR3_H

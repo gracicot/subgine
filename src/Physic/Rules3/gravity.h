@@ -1,5 +1,4 @@
-#ifndef GRAVITY_H3
-#define GRAVITY_H3
+#pragma once
 
 #include "rule.h"
 
@@ -23,4 +22,3 @@ private:
 };
 
 }
-#endif // GRAVITY_H

@@ -1,5 +1,4 @@
-#ifndef ANGLE_H
-#define ANGLE_H
+#pragma once
 
 namespace Traits{
 
@@ -16,5 +15,3 @@ protected:
 };
 
 }
-
-#endif // ANGLE_H

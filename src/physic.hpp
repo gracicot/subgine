@@ -1,6 +1,4 @@
-
-#ifndef PHYSIC_MAINHEADER
-#define PHYSIC_MAINHEADER
+#pragma once
 
 #include "system.hpp"
 
@@ -20,5 +18,3 @@
 #include "Physic/Rules3/resistance.h"
 #include "Physic/Rules3/gravity.h"
 #include "Physic/Rules3/spring.h"
-
-#endif

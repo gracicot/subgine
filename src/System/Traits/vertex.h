@@ -1,5 +1,3 @@
-#ifndef VERTEX_H
-#define VERTEX_H
 
 #include "../vector2.h"
 
@@ -19,5 +17,3 @@ protected:
 };
 
 }
-
-#endif // VERTEX_H

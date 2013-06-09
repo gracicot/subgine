@@ -1,5 +1,4 @@
-#ifndef POINTTESTER_H
-#define POINTTESTER_H
+#pragma once
 
 #include "../../system.hpp"
 #include "../CollisionResults/collisionresult.h"
@@ -13,5 +12,3 @@ public:
 	
 	virtual CollisionResult* compareObject(Collisionnable::Collisionnable& object1, Collisionnable::Collisionnable& object2, double time) const;
 };
-
-#endif // POINTTESTER_H

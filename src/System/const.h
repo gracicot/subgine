@@ -1,6 +1,4 @@
-
-#ifndef INC_CONST_H
-#define INC_CONST_H
+#pragma once
 
 #include <iostream>
 #include <map>
@@ -15,5 +13,3 @@
 #define pow2(x) (x*x)
 
 const double pi = 4.0*atan(1.0);
-
-#endif //INC_CONST_H

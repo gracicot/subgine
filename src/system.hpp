@@ -1,6 +1,4 @@
-
-#ifndef SYSTEM_MAINHEADER
-#define SYSTEM_MAINHEADER
+#pragma once
 
 #include "System/const.h"
 
@@ -17,6 +15,3 @@
 #include "System/Traits/vertex.h"
 #include "System/Traits/angle.h"
 #include "System/Traits/radius.h"
-
-#endif
-

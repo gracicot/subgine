@@ -1,5 +1,4 @@
-#ifndef ABSTRACTPHYSICPOINT_H
-#define ABSTRACTPHYSICPOINT_H
+#pragma once
 
 class AbstractPhysicPoint
 {
@@ -18,5 +17,3 @@ protected:
 	double _mass;
 	bool _lock;
 };
-
-#endif // ABSTRACTPHYSICPOINT_H
