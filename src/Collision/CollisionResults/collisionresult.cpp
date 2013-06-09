@@ -19,7 +19,7 @@
 
 #include "collisionresult.h"
 
-CollisionResult::CollisionResult(const bool _isCollision, double _time) : time(_time), isCollision(_isCollision)
+CollisionResult::CollisionResult(const bool colliding, const double time) : _time(time), _colliding(colliding)
 {
 
 }
@@ -27,4 +27,24 @@ CollisionResult::CollisionResult(const bool _isCollision, double _time) : time(_
 CollisionResult::~CollisionResult()
 {
 
+}
+
+void CollisionResult::colliding (const bool colliding)
+{
+	_colliding = colliding;
+}
+
+double CollisionResult::getTime() const
+{
+	return _time;
+}
+
+bool CollisionResult::isColliding() const
+{
+	return _colliding;
+}
+
+void CollisionResult::setTime (double time)
+{
+	_time = time;
 }

@@ -7,8 +7,13 @@
 
 struct SatResult : public CollisionResult
 {
-	SatResult(bool _isCollision, double _time, Vector2 _distance);
+public:
+	SatResult(const bool colliding, const double time, const Vector2 gap);
 	~SatResult() = default;
 	
-	const Vector2 distance;
+	void setGap(const Vector2 gap);
+	Vector2 getGap() const;
+	
+private:
+	Vector2 _gap;
 };

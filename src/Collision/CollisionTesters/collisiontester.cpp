@@ -39,7 +39,7 @@ for(auto object2 : _objects)
 
 		if(result != 0 && result != nullptr)
 		{
-			if(result->isCollision)
+			if(result->isColliding())
 			{
 				object.trigger(*object2, result, getAlias());
 				object2->trigger(object, result, getAlias());
