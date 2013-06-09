@@ -24,33 +24,6 @@ CollisionTester::~CollisionTester()
 
 }
 
-void CollisionTester::flush()
-{
-	_objects.clear();
-}
-
-void CollisionTester::addObject(Collisionnable::Collisionnable& object, double time)
-{
-	CollisionResult* result = nullptr;
-
-for(auto object2 : _objects)
-	{
-		result = compareObject(object, *object2, time);
-
-		if(result != 0 && result != nullptr)
-		{
-			if(result->isColliding())
-			{
-				object.trigger(*object2, result, getAlias());
-				object2->trigger(object, result, getAlias());
-			}
-			delete result;
-		}
-	}
-
-	_objects.push_back(&object);
-}
-
 std::string CollisionTester::getAlias() const
 {
 	return _alias;

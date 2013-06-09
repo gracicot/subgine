@@ -33,6 +33,15 @@ void Collision::execute (const float time)
 {
 	for(auto test : _objects) {
 		
+		CollisionResult* result = std::get<0>(test)->compareObject(*std::get<1>(test), *std::get<2>(test), time);
+		
+		if(result != nullptr && result->isColliding())
+		{
+			std::get<1>(test)->trigger(*std::get<2>(test), result, std::get<0>(test)->getAlias());
+			std::get<2>(test)->trigger(*std::get<1>(test), result, std::get<0>(test)->getAlias());
+			
+			delete result;
+		}
 	}
 }
 

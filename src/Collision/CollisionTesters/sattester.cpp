@@ -35,8 +35,8 @@ CollisionResult* SatTester::compareObject(Collisionnable::Collisionnable& object
 			Vector2 shortest = test1.getLenght() < test2.getLenght() ? test1 : test2;
 			return new SatResult(true, time, shortest);
 		}
-
 		return new SatResult(false, time, Vector2(0, 0));
 	}
+	
 	return nullptr;
 }

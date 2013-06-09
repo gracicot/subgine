@@ -18,10 +18,9 @@ CollisionResult* PointTester::compareObject(Collisionnable::Collisionnable& obje
 		{
 			return new CollisionResult(true, time);
 		}
-		else
-		{
-			return new CollisionResult(false, time);
-		}
+		
+		return new CollisionResult(false, time);
 	}
+	
 	return nullptr;
 }
