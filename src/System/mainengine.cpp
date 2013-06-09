@@ -73,7 +73,6 @@ void MainEngine::runThread()
 			engines.second->execute(time);
 		}
 	}
-
 }
 
 Engine& MainEngine::addEngine(const std::string alias, Engine* e)
