@@ -6,6 +6,7 @@ A simple async physic engine made from scratch working with multiple sub-engine
 subgine is released under the MIT license.
 
 The MIT License (MIT)
+---------------------
 
 Copyright (c) 2013 Guillaume Racicot
 
