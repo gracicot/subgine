@@ -14,10 +14,11 @@ Vector2::Vector2(const Vector2& other) : x(other.x), y(other.y)
 double Vector2::getAngle() const
 {
 	double angle = atan2(y, x);
-	if (angle < 0)
-	{
+
+	if (angle < 0) {
 		angle += 2 * pi;
 	}
+
 	return angle;
 }
 
@@ -28,8 +29,7 @@ double Vector2::getLenght() const
 
 void Vector2::setAngle(double angle)
 {
-	if(x != 0 || y != 0)
-	{
+	if (x != 0 || y != 0) {
 		double lenght = getLenght();
 		x = cos(angle) * lenght;
 		y = sin(angle) * lenght;
@@ -38,14 +38,11 @@ void Vector2::setAngle(double angle)
 
 void Vector2::setLenght(double lenght)
 {
-	if(x != 0 || y != 0)
-	{
+	if (x != 0 || y != 0) {
 		double product = lenght / getLenght();
 		x *= product;
 		y *= product;
-	}
-	else
-	{
+	} else {
 		x = lenght;
 	}
 }
@@ -58,7 +55,7 @@ Vector2 Vector2::project(Vector2 other) const
 Vector2 Vector2::unit() const
 {
 	double lenght = getLenght();
-	return Vector2(x/lenght, y/lenght);
+	return Vector2(x / lenght, y / lenght);
 }
 
 Vector2 Vector2::getPosition() const
@@ -68,7 +65,7 @@ Vector2 Vector2::getPosition() const
 
 double Vector2::dot(const Vector2& vec) const
 {
-	return (x*vec.x)+(y*vec.y);
+	return (x * vec.x) + (y * vec.y);
 }
 
 
@@ -127,7 +124,7 @@ Vector2& operator-= (Vector2& vec1, const Vector2& vec2)
 	return vec1;
 }
 
-Vector2 operator*(const Vector2& vec1, const Vector2& vec2)
+Vector2 operator* (const Vector2& vec1, const Vector2& vec2)
 {
 	return Vector2(vec1.x * vec2.x, vec1.y * vec2.y);
 }
@@ -139,7 +136,7 @@ Vector2& operator/= (Vector2& vec, const double& divider)
 	return vec;
 }
 
-Vector2 operator-(const Vector2& vec)
+Vector2 operator- (const Vector2& vec)
 {
 
 }

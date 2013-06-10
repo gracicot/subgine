@@ -11,16 +11,14 @@ CollisionResult* PointTester::compareObject(Collisionnable::Collisionnable& obje
 	Collisionnable::Point* point = nullptr;
 	Collisionnable::Point_able* object = nullptr;
 
-	if(!(!(point = dynamic_cast<Collisionnable::Point*>(&object2)) && !(point = dynamic_cast<Collisionnable::Point*>(&object1)))
-			&& !(!(object = dynamic_cast<Collisionnable::Point_able*>(&object2)) && !(object = dynamic_cast<Collisionnable::Point_able*>(&object1))))
-	{
-		if(object->isPointInside(point->getPosition()))
-		{
+	if (!(!(point = dynamic_cast<Collisionnable::Point*>(&object2)) && !(point = dynamic_cast<Collisionnable::Point*>(&object1)))
+			&& !(!(object = dynamic_cast<Collisionnable::Point_able*>(&object2)) && !(object = dynamic_cast<Collisionnable::Point_able*>(&object1)))) {
+		if (object->isPointInside(point->getPosition())) {
 			return new CollisionResult(true, time);
 		}
-		
+
 		return new CollisionResult(false, time);
 	}
-	
+
 	return nullptr;
 }

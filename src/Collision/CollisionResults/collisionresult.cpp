@@ -10,7 +10,7 @@ CollisionResult::~CollisionResult()
 
 }
 
-void CollisionResult::colliding (const bool colliding)
+void CollisionResult::colliding(const bool colliding)
 {
 	_colliding = colliding;
 }
@@ -25,7 +25,7 @@ bool CollisionResult::isColliding() const
 	return _colliding;
 }
 
-void CollisionResult::setTime (double time)
+void CollisionResult::setTime(double time)
 {
 	_time = time;
 }

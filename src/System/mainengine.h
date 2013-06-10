@@ -20,10 +20,10 @@ public:
 	//speed
 	void setSpeed(double speed);
 	double getSpeed();
-	
+
 	void setLoopPerSecond(const int loopPerSecond);
 	int getLoopPerSecond() const;
-	
+
 	//engines
 	Engine& getEngine(const std::string tag);
 	const Engine& getEngine(const std::string tag) const;
@@ -32,18 +32,18 @@ public:
 
 	static std::mutex& mutex();
 	void runThread();
-	
+
 private:
 	std::thread _thread;
 	static std::mutex _mutex;
-	
+
 	int _loopPerSecond;
 	double _speed;
 
 	void launchThread();
-	
+
 	bool _running;
 	double speed;
-	
+
 	std::map<std::string, Engine*> _engineList;
 };

@@ -3,7 +3,10 @@
 #include "abstractphysicpoint.h"
 #include "../System/Traits/position.h"
 
-namespace Rule{class Rule;}
+namespace Rule
+{
+class Rule;
+}
 
 class PhysicPoint : public virtual Traits::Position, public AbstractPhysicPoint
 {
@@ -11,10 +14,10 @@ public:
 	PhysicPoint();
 	PhysicPoint(const PhysicPoint& c);
 	virtual ~PhysicPoint();
-	PhysicPoint& operator=(const PhysicPoint&);
+	PhysicPoint& operator= (const PhysicPoint&);
 
 	Vector2 momentum() const;
-	
+
 	//set
 	void setPosition(const Vector2 posision);
 	void setVelocity(const Vector2 velocity);
@@ -29,15 +32,15 @@ public:
 
 	//get
 	Vector2 getVelocity() const;
-	
+
 	Vector2 getForce(const std::string type) const;
 	std::map<std::string, Vector2>& getForce();
 	const std::map<std::string, Vector2>& getForce() const;
-	
+
 	Vector2 getPulse(const std::string type) const;
 	std::map<std::string, Vector2>& getPulse();
 	const std::map<std::string, Vector2>& getPulse() const;
-	
+
 	Rule::Rule& getRule(const std::string type);
 	const Rule::Rule& getRule(const std::string tag) const;
 	std::map<std::string, Rule::Rule*>& getRule();

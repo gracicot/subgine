@@ -24,8 +24,7 @@ PhysicPoint3::PhysicPoint3(const PhysicPoint3& c)
 
 PhysicPoint3::~PhysicPoint3()
 {
-for(auto i : _rules)
-	{
+	for (auto i : _rules) {
 		delete i.second;
 	}
 }
@@ -54,8 +53,7 @@ Rule3::Rule& PhysicPoint3::getRule(const std::string type)
 {
 	auto it = _rules.find(type);
 
-	if(it != _rules.end())
-	{
+	if (it != _rules.end()) {
 		return *it->second;
 	}
 
@@ -66,8 +64,7 @@ const Rule3::Rule& PhysicPoint3::getRule(const std::string type) const
 {
 	auto it = _rules.find(type);
 
-	if(it != _rules.end())
-	{
+	if (it != _rules.end()) {
 		return *it->second;
 	}
 
@@ -81,13 +78,11 @@ void PhysicPoint3::setForce(const std::string type, const Vector3 force)
 
 void PhysicPoint3::updateVelocity(const double time)
 {
-for(auto i : _forces)
-	{
+	for (auto i : _forces) {
 		_velocity += (i.second / _mass) * time;
 	}
 
-for(auto i : _pulses)
-	{
+	for (auto i : _pulses) {
 
 		_velocity += i.second / _mass;
 	}
@@ -98,12 +93,11 @@ for(auto i : _pulses)
 Vector3 PhysicPoint3::getPulse(const std::string type) const
 {
 	auto pulse = _pulses.find(type);
-	
-	if(pulse == _pulses.end())
-	{
+
+	if (pulse == _pulses.end()) {
 		return Vector3();
 	}
-	
+
 	return pulse->second;
 }
 
@@ -134,8 +128,7 @@ std::map<std::string, Vector3>& PhysicPoint3::getPulse()
 
 void PhysicPoint3::applyRules()
 {
-for(auto i : _rules)
-	{
+	for (auto i : _rules) {
 		setForce(i.first, i.second->getResult(*this));
 	}
 }
@@ -143,16 +136,15 @@ for(auto i : _rules)
 Vector3 PhysicPoint3::getForce(const std::string type) const
 {
 	auto force = _pulses.find(type);
-	
-	if(force == _pulses.end())
-	{
+
+	if (force == _pulses.end()) {
 		return Vector3();
 	}
-	
+
 	return force->second;
 }
 
-PhysicPoint3& PhysicPoint3::operator=(const PhysicPoint3& c)
+PhysicPoint3& PhysicPoint3::operator= (const PhysicPoint3& c)
 {
 	_position = c._position;
 	_velocity = c._velocity;
@@ -180,12 +172,9 @@ void PhysicPoint3::setRule(const std::string tag, Rule3::Rule* rule)
 {
 	auto it = _rules.find(tag);
 
-	if(it == _rules.end())
-	{
+	if (it == _rules.end()) {
 		_rules[tag] = rule;
-	}
-	else
-	{
+	} else {
 		delete it->second;
 		it->second = rule;
 	}

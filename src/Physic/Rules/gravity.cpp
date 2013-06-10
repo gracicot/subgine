@@ -22,7 +22,7 @@ Gravity::~Gravity()
 
 Vector2 Gravity::getResult(const PhysicPoint& object) const
 {
-	return _value*object.getMass();
+	return _value * object.getMass();
 }
 
 Vector2 Gravity::getValue() const

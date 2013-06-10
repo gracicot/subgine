@@ -13,7 +13,7 @@ class Collisionnable
 public:
 	Collisionnable();
 	virtual ~Collisionnable();
-	
+
 	void removeCollisionHandler(std::string tag);
 	void addCollisionHandler(CollisionHandler* handler, std::string tag);
 	void trigger(Collisionnable& other, CollisionResult* result, std::string tag);

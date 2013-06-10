@@ -26,8 +26,7 @@ PhysicPoint::PhysicPoint(const PhysicPoint& c)
 
 PhysicPoint::~PhysicPoint()
 {
-for(auto i : _rules)
-	{
+	for (auto i : _rules) {
 		delete i.second;
 	}
 }
@@ -56,8 +55,7 @@ Rule::Rule& PhysicPoint::getRule(const std::string tag)
 {
 	auto it = _rules.find(tag);
 
-	if(it != _rules.end())
-	{
+	if (it != _rules.end()) {
 		return *it->second;
 	}
 
@@ -68,8 +66,7 @@ const Rule::Rule& PhysicPoint::getRule(const std::string tag) const
 {
 	auto it = _rules.find(tag);
 
-	if(it != _rules.end())
-	{
+	if (it != _rules.end()) {
 		return *it->second;
 	}
 
@@ -83,13 +80,11 @@ void PhysicPoint::setForce(const std::string type, const Vector2 force)
 
 void PhysicPoint::updateVelocity(const double time)
 {
-for(auto i : _forces)
-	{
+	for (auto i : _forces) {
 		_velocity += (i.second / _mass) * time;
 	}
 
-for(auto i : _pulses)
-	{
+	for (auto i : _pulses) {
 
 		_velocity += i.second / _mass;
 	}
@@ -101,8 +96,7 @@ Vector2 PhysicPoint::getPulse(const std::string type) const
 {
 	auto pulse = _pulses.find(type);
 
-	if(pulse == _pulses.end())
-	{
+	if (pulse == _pulses.end()) {
 		return Vector2();
 	}
 
@@ -136,8 +130,7 @@ std::map<std::string, Vector2>& PhysicPoint::getPulse()
 
 void PhysicPoint::applyRules()
 {
-for(auto i : _rules)
-	{
+	for (auto i : _rules) {
 		setForce(i.first, i.second->getResult(*this));
 	}
 }
@@ -146,15 +139,14 @@ Vector2 PhysicPoint::getForce(const std::string type) const
 {
 	auto force = _pulses.find(type);
 
-	if(force == _pulses.end())
-	{
+	if (force == _pulses.end()) {
 		return Vector2();
 	}
 
 	return force->second;
 }
 
-PhysicPoint& PhysicPoint::operator=(const PhysicPoint& c)
+PhysicPoint& PhysicPoint::operator= (const PhysicPoint& c)
 {
 	_position = c._position;
 	_velocity = c._velocity;
@@ -182,12 +174,9 @@ void PhysicPoint::setRule(const std::string tag, Rule::Rule* rule)
 {
 	auto it = _rules.find(tag);
 
-	if(it == _rules.end())
-	{
+	if (it == _rules.end()) {
 		_rules[tag] = rule;
-	}
-	else
-	{
+	} else {
 		delete it->second;
 		it->second = rule;
 	}

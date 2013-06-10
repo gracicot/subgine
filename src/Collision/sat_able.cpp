@@ -3,15 +3,15 @@
 
 namespace Collisionnable
 {
-	
+
 SAT_able::SAT_able()
 {
-	
+
 }
 
 SAT_able::~SAT_able()
 {
-	
+
 }
 
 }

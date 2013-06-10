@@ -9,6 +9,6 @@ class PointTester : public CollisionTester
 public:
 	PointTester() = default;
 	virtual ~PointTester();
-	
+
 	virtual CollisionResult* compareObject(Collisionnable::Collisionnable& object1, Collisionnable::Collisionnable& object2, double time) const;
 };

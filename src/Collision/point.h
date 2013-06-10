@@ -14,7 +14,7 @@ public:
 	Point() = default;
 	Point(Vector2 position);
 	virtual ~Point();
-	
+
 	operator Vector2();
 };
 

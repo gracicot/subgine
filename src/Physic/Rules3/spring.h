@@ -17,9 +17,9 @@ public:
 	Vector3 getValue() const;
 	double getSize() const;
 	Vector3 getPosition() const;
-	
+
 	Vector3 getResult(const PhysicPoint3& object) const;
-	
+
 	void setValue(const Vector3 value);
 	void setSize(double size);
 	void setPosition(Positionnable3& position);

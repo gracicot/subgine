@@ -8,6 +8,6 @@ class ParticleEngine : public Engine, public Container<PhysicPoint>
 public:
 	ParticleEngine() = default;
 	~ParticleEngine() = default;
-	
+
 private:
 };

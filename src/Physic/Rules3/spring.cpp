@@ -17,10 +17,10 @@ Spring::Spring(const Vector3 value, const double size, const Vector3 position) :
 
 Spring::Spring(const Spring& other)
 {
-	if(_deletePosition)
-	{
+	if (_deletePosition) {
 		delete _position;
 	}
+
 	_deletePosition = other._deletePosition;
 	_position = other._position;
 	_size = other._size;
@@ -29,16 +29,14 @@ Spring::Spring(const Spring& other)
 
 Spring::~Spring()
 {
-	if(_deletePosition)
-	{
+	if (_deletePosition) {
 		delete _position;
 	}
 }
 
 Vector3 Spring::getPosition() const
 {
-	if(_position == nullptr)
-	{
+	if (_position == nullptr) {
 		return Vector3();
 	}
 
@@ -47,8 +45,7 @@ Vector3 Spring::getPosition() const
 
 void Spring::setPosition(Positionnable3& position)
 {
-	if(_deletePosition)
-	{
+	if (_deletePosition) {
 		delete _position;
 	}
 
@@ -58,13 +55,10 @@ void Spring::setPosition(Positionnable3& position)
 
 void Spring::setPosition(Vector3 pos)
 {
-	if(_deletePosition)
-	{
+	if (_deletePosition) {
 		Vector3* position = dynamic_cast<Vector3*>(_position);
 		*position = pos;
-	}
-	else
-	{
+	} else {
 		_position = new Vector3(pos);
 	}
 

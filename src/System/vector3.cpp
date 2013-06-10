@@ -13,8 +13,8 @@ Vector3::Vector3(const Vector3& other) : x(other.x), y(other.y), z(other.z)
 
 Vector2 Vector3::getAngles() const
 {
-	Vector2 angle(atan(y/x), acos(z / getLenght()));
-	
+	Vector2 angle(atan(y / x), acos(z / getLenght()));
+
 	return angle;
 }
 
@@ -25,8 +25,7 @@ double Vector3::getLenght() const
 
 void Vector3::setAngles(const Vector2 angles)
 {
-	if(x != 0 || y != 0 || z != 0)
-	{
+	if (x != 0 || y != 0 || z != 0) {
 		double lenght = getLenght();
 		x = sin(angles.y) * cos(angles.x) * lenght;
 		y = sin(angles.x) * sin(angles.y) * lenght;
@@ -36,15 +35,12 @@ void Vector3::setAngles(const Vector2 angles)
 
 void Vector3::setLenght(double lenght)
 {
-	if(x != 0 || y != 0 || z != 0)
-	{
+	if (x != 0 || y != 0 || z != 0) {
 		double product = lenght / getLenght();
 		x *= product;
 		y *= product;
 		z *= product;
-	}
-	else
-	{
+	} else {
 		x = lenght;
 	}
 }
@@ -127,12 +123,12 @@ Vector3& operator/= (Vector3& vec, const double& divider)
 	return vec;
 }
 
-Vector3 operator*(const Vector3& vec1, const Vector3& vec2)
+Vector3 operator* (const Vector3& vec1, const Vector3& vec2)
 {
 	return Vector3(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
 }
 
-Vector3 operator-(const Vector3& vec)
+Vector3 operator- (const Vector3& vec)
 {
 	return Vector3(-vec.x, -vec.y, -vec.z);
 }

@@ -1,7 +1,8 @@
 #include "point.h"
 
-namespace Collisionnable{
-	
+namespace Collisionnable
+{
+
 Point::Point(Vector2 position)
 {
 	_position = position;

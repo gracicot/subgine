@@ -17,8 +17,8 @@ public:
 	virtual bool isPointInside(Vector2 point) const;
 	virtual Vector2 projection(double angle) const;
 	virtual Vector2 overlap(const SAT_able& other) const;
-    virtual Vector2 getNearestPoint(Vector2 point) const;
-	
+	virtual Vector2 getNearestPoint(Vector2 point) const;
+
 };
 
 }

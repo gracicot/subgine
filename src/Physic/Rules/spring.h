@@ -15,9 +15,9 @@ public:
 	Vector2 getValue() const;
 	double getSize() const;
 	Vector2 getPosition() const;
-	
+
 	virtual Vector2 getResult(const PhysicPoint& object) const;
-	
+
 	void setValue(const Vector2 value);
 	void setSize(const double size);
 	void setPosition(Positionnable& position);

@@ -12,7 +12,7 @@ Resistance::Resistance(const Resistance& c) : _value(c._value)
 
 Resistance::Resistance(const Vector2 value) : _value(value)
 {
-	
+
 }
 
 Resistance::~Resistance()
@@ -22,7 +22,7 @@ Resistance::~Resistance()
 
 Vector2 Resistance::getResult(const PhysicPoint& object) const
 {
-	return -1*object.getVelocity() * getValue();
+	return -1 * object.getVelocity() * getValue();
 }
 
 Vector2 Resistance::getValue() const

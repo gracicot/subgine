@@ -1,6 +1,7 @@
 #include "vertex.h"
 
-namespace Traits{
+namespace Traits
+{
 
 Vertex::Vertex()
 {
@@ -9,7 +10,7 @@ Vertex::Vertex()
 
 Vertex::~Vertex()
 {
-	
+
 }
 
 const std::list<Vector2>& Vertex::getVertex() const
