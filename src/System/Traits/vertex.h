@@ -1,6 +1,7 @@
 
 #include "../vector2.h"
-
+namespace subgine
+{
 namespace Traits
 {
 
@@ -16,5 +17,8 @@ public:
 protected:
 	std::list<Vector2> _vertex;
 };
+
+}
+
 
 }

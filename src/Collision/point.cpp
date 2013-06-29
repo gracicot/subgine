@@ -1,6 +1,8 @@
 #include "point.h"
 
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 Point::Point(Vector2 position)
@@ -18,4 +20,5 @@ Point::operator Vector2()
 	return _position;
 }
 
+}
 }

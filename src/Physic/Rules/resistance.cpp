@@ -2,6 +2,10 @@
 
 #include "../physicpoint.h"
 
+namespace subgine
+{
+namespace physic
+{
 namespace Rule
 {
 
@@ -35,4 +39,6 @@ void Resistance::setValue(const Vector2 value)
 	_value = value;
 }
 
+}
+}
 }

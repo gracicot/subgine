@@ -5,7 +5,9 @@
 
 class Vector2;
 
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 class Circle : public virtual SAT_able, public virtual Point_able, public virtual Traits::Radius
@@ -21,4 +23,6 @@ public:
 
 };
 
+
+}
 }

@@ -1,5 +1,6 @@
 #pragma once
-
+namespace subgine
+{
 namespace Traits
 {
 
@@ -15,4 +16,5 @@ protected:
 	double _radius;
 };
 
+}
 }

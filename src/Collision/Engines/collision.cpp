@@ -2,6 +2,11 @@
 
 #include <algorithm>
 
+namespace subgine
+{
+namespace collision
+{
+
 Collision::Collision() : _testers()
 {
 
@@ -12,11 +17,11 @@ Collision::~Collision()
 
 }
 
-void Collision::execute(const float time)
+void Collision::execute(const double time)
 {
 	for (auto test : _objects) {
 
-		CollisionResult* result = std::get<0> (test)->compareObject(*std::get<1> (test), *std::get<2> (test), time);
+		Results::CollisionResult* result = std::get<0> (test)->compareObject(*std::get<1> (test), *std::get<2> (test), time);
 
 		if (result != nullptr) {
 			if (result->isColliding()) {
@@ -29,7 +34,7 @@ void Collision::execute(const float time)
 	}
 }
 
-void Collision::add(Collisionnable::Collisionnable* object, std::list< std::string > groups)
+void Collision::add(Collisionnable* object, std::list< std::string > groups)
 {
 	for (std::string & group : groups) {
 		_groups[group].push_back(object);
@@ -38,9 +43,9 @@ void Collision::add(Collisionnable::Collisionnable* object, std::list< std::stri
 	makeObjectList();
 }
 
-CollisionTester& Collision::getTester(const std::string tag)
+Testers::CollisionTester& Collision::getTester(const std::string tag)
 {
-	std::map<std::string, CollisionTester*>::iterator it = _testers.find(tag);
+	std::map<std::string, Testers::CollisionTester*>::iterator it = _testers.find(tag);
 
 	if (it != _testers.end()) {
 		return *it->second;
@@ -49,9 +54,9 @@ CollisionTester& Collision::getTester(const std::string tag)
 	throw std::out_of_range("No collision tester found with this tag");
 }
 
-const CollisionTester& Collision::getTester(const std::string tag) const
+const Testers::CollisionTester& Collision::getTester(const std::string tag) const
 {
-	std::map<std::string, CollisionTester*>::const_iterator it = _testers.find(tag);
+	std::map<std::string, Testers::CollisionTester*>::const_iterator it = _testers.find(tag);
 
 	if (it != _testers.end()) {
 		return *it->second;
@@ -60,7 +65,7 @@ const CollisionTester& Collision::getTester(const std::string tag) const
 	throw std::out_of_range("No collision tester found with this tag");
 }
 
-void Collision::addTester(CollisionTester* tester, const std::string tag)
+void Collision::addTester(Testers::CollisionTester* tester, const std::string tag)
 {
 	if (tester == nullptr || tester == 0) {
 		throw std::runtime_error("The tester is null");
@@ -71,7 +76,7 @@ void Collision::addTester(CollisionTester* tester, const std::string tag)
 	makeObjectList();
 }
 
-void Collision::remove(Collisionnable::Collisionnable& object)
+void Collision::remove(Collisionnable& object)
 {
 	for (auto group : _groups) {
 		group.second.remove(&object);
@@ -93,7 +98,7 @@ void Collision::removeTest(std::string tester, std::string group1, std::string g
 	});
 }
 
-void Collision::remove(Collisionnable::Collisionnable& object, std::list< std::string > groups)
+void Collision::remove(Collisionnable& object, std::list< std::string > groups)
 {
 	for (auto group : groups) {
 		_groups[group].remove(&object);
@@ -122,4 +127,7 @@ void Collision::makeObjectList()
 		}
 	}
 
+}
+
+}
 }

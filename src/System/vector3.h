@@ -2,7 +2,8 @@
 
 #include "vector2.h"
 #include "positionnable3.h"
-
+namespace subgine
+{
 struct Vector3 : public Positionnable3 {
 	Vector3(double _x = 0, double _y = 0, double _z = 0);
 	Vector3(const Vector3& other);
@@ -37,4 +38,7 @@ inline std::ostream& operator<< (std::ostream& out, Vector3 vec)
 {
 	out << vec.x << ", " << vec.y << ", " << vec.z;
 	return out;
+}
+
+
 }

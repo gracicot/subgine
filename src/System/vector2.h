@@ -3,6 +3,9 @@
 #include "positionnable.h"
 #include "const.h"
 
+namespace subgine
+{
+
 struct Vector2 : public Positionnable {
 	Vector2(double _x = 0, double _y = 0);
 	Vector2(const Vector2& other);
@@ -37,4 +40,7 @@ inline std::ostream& operator<< (std::ostream& out, Vector2 vec)
 {
 	out << vec.x << ", " << vec.y;
 	return out;
+}
+
+
 }

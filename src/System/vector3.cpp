@@ -1,6 +1,7 @@
 #include "vector3.h"
 #include "const.h"
-
+namespace subgine
+{
 Vector3::Vector3(double _x, double _y, double _z) : x(_x), y(_y), z(_z)
 {
 
@@ -134,3 +135,4 @@ Vector3 operator- (const Vector3& vec)
 }
 
 
+}

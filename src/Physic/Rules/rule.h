@@ -2,6 +2,12 @@
 
 #include "../../system.hpp"
 
+
+namespace subgine
+{
+namespace physic
+{
+
 class PhysicPoint;
 
 namespace Rule
@@ -18,4 +24,6 @@ public:
 private:
 };
 
+}
+}
 }

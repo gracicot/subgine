@@ -1,5 +1,6 @@
 #include "position3.h"
-
+namespace subgine
+{
 namespace Traits
 {
 
@@ -18,4 +19,5 @@ Vector3 Position3::getPosition() const
 	return _position;
 }
 
+}
 }

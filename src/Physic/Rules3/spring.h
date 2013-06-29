@@ -2,7 +2,12 @@
 
 #include "rule.h"
 
+namespace subgine
+{
+
 class Positionnable3;
+namespace physic
+{
 
 namespace Rule3
 {
@@ -33,4 +38,6 @@ private:
 	Positionnable3* _position;
 };
 
+}
+}
 }

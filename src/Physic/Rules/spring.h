@@ -2,6 +2,10 @@
 
 #include "rule.h"
 
+namespace subgine
+{
+namespace physic
+{
 namespace Rule
 {
 
@@ -31,4 +35,6 @@ private:
 	Positionnable* _position;
 };
 
+}
+}
 }

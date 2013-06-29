@@ -1,6 +1,8 @@
 #include "collisionnable.h"
 
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 Collisionnable::Collisionnable()
@@ -25,7 +27,7 @@ void Collisionnable::addCollisionHandler(CollisionHandler* handler, std::string 
 	}
 }
 
-void Collisionnable::trigger(Collisionnable& other, CollisionResult* result, std::string tag)
+void Collisionnable::trigger(Collisionnable& other, Results::CollisionResult* result, std::string tag)
 {
 	std::map<std::string, CollisionHandler*>::iterator it = _collisionhandlers.find(tag);
 
@@ -36,5 +38,6 @@ void Collisionnable::trigger(Collisionnable& other, CollisionResult* result, std
 	}
 }
 
-}
 
+}
+}

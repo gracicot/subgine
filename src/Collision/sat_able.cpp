@@ -1,7 +1,8 @@
 #include "sat_able.h"
 
-
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 SAT_able::SAT_able()
@@ -15,4 +16,4 @@ SAT_able::~SAT_able()
 }
 
 }
-
+}

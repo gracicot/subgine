@@ -1,5 +1,7 @@
 #pragma once
 
+namespace subgine
+{
 namespace Traits
 {
 
@@ -15,4 +17,5 @@ protected:
 	double _angle;
 };
 
+}
 }

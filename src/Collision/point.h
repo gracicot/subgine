@@ -5,7 +5,9 @@
 #include "collisionnable.h"
 #include "point_able.h"
 
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 class Point : public virtual Collisionnable, public virtual Traits::Position
@@ -18,4 +20,5 @@ public:
 	operator Vector2();
 };
 
+}
 }

@@ -5,6 +5,13 @@
 #include "collisionresult.h"
 #include "../collisionnable.h"
 
+namespace subgine
+{
+namespace collision
+{
+namespace Results
+{
+
 struct SatResult : public CollisionResult {
 public:
 	SatResult(const bool colliding, const double time, const Vector2 gap);
@@ -16,3 +23,7 @@ public:
 private:
 	Vector2 _gap;
 };
+
+}
+}
+}

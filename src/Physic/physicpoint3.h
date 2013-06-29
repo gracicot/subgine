@@ -3,6 +3,10 @@
 #include "abstractphysicpoint.h"
 #include "../System/Traits/position3.h"
 
+namespace subgine
+{
+namespace physic
+{
 namespace Rule3
 {
 class Rule;
@@ -53,3 +57,6 @@ protected:
 	std::map<std::string, Vector3> _forces;
 
 };
+
+}
+}

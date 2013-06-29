@@ -1,8 +1,9 @@
 #include "polygon.h"
 #include <limits>
 
-
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 Polygon::Polygon()
@@ -128,4 +129,4 @@ Vector2 Polygon::getNearestPoint(Vector2 point) const
 }
 
 }
-
+}

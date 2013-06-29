@@ -2,6 +2,10 @@
 
 #include "../physicpoint.h"
 
+namespace subgine
+{
+namespace physic
+{
 namespace Rule
 {
 
@@ -93,4 +97,5 @@ void Spring::setValue(const Vector2 value)
 }
 
 }
-
+}
+}

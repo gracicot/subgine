@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../vector3.h"
-
+namespace subgine
+{
 namespace Traits
 {
 
@@ -18,3 +19,5 @@ protected:
 };
 
 }
+}
+

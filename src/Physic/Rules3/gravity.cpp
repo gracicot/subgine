@@ -2,6 +2,10 @@
 
 #include "../physicpoint3.h"
 
+namespace subgine
+{
+namespace physic
+{
 namespace Rule3
 {
 
@@ -35,4 +39,6 @@ void Gravity::setValue(const Vector3 value)
 	_value = value;
 }
 
+}
+}
 }

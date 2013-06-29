@@ -2,7 +2,10 @@
 
 #include "../../system.hpp"
 #include "../abstractphysicpoint.h"
-
+namespace subgine
+{
+namespace physic
+{
 class Physics : public Container<AbstractPhysicPoint>, public Engine
 {
 public:
@@ -10,8 +13,11 @@ public:
 	Physics();
 	~Physics();
 
-	void execute(const float time);
+	void execute(const double time);
 
 private:
 
 };
+
+}
+}

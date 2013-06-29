@@ -3,7 +3,12 @@
 #include "../../system.hpp"
 #include "../../physic.hpp"
 
-class ParticleEngine : public Engine, public Container<PhysicPoint>
+namespace subgine
+{
+namespace particle
+{
+
+class ParticleEngine : public Engine, public Container<physic::PhysicPoint>
 {
 public:
 	ParticleEngine() = default;
@@ -11,3 +16,6 @@ public:
 
 private:
 };
+
+}
+}

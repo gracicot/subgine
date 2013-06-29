@@ -1,11 +1,17 @@
 #pragma once
 
-class CollisionResult;
 
-namespace Collisionnable
+namespace subgine
 {
+namespace collision
+{
+
 class Collisionnable;
+namespace Results
+{
+class CollisionResult;
 }
+
 
 class CollisionHandler
 {
@@ -13,5 +19,8 @@ public:
 	CollisionHandler() = default;
 	virtual ~CollisionHandler();
 
-	virtual void apply(Collisionnable::Collisionnable& object, const Collisionnable::Collisionnable& other, CollisionResult& result) = 0;
+	virtual void apply(Collisionnable& object, const Collisionnable& other, Results::CollisionResult& result) = 0;
 };
+
+}
+}

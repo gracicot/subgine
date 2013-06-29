@@ -1,6 +1,11 @@
 #pragma once
 
-#include "../collisionnable.h"
+namespace subgine
+{
+namespace collision
+{
+namespace Results
+{
 
 class CollisionResult
 {
@@ -18,3 +23,7 @@ private:
 	bool _colliding;
 	double _time;
 };
+
+}
+}
+}

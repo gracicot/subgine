@@ -1,5 +1,12 @@
 #include "collisionresult.h"
 
+namespace subgine
+{
+namespace collision
+{
+namespace Results
+{
+
 CollisionResult::CollisionResult(const bool colliding, const double time) : _time(time), _colliding(colliding)
 {
 
@@ -28,4 +35,8 @@ bool CollisionResult::isColliding() const
 void CollisionResult::setTime(double time)
 {
 	_time = time;
+}
+
+}
+}
 }

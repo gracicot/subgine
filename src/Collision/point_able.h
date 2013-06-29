@@ -3,10 +3,13 @@
 #include "../system.hpp"
 #include "collisionnable.h"
 
-class Vector2;
-
-namespace Collisionnable
+namespace subgine
 {
+
+
+namespace collision
+{
+
 
 class Point_able : public virtual Collisionnable, public virtual Traits::Position
 {
@@ -17,4 +20,6 @@ public:
 	virtual bool isPointInside(Vector2 point) const = 0;
 };
 
+
+}
 }

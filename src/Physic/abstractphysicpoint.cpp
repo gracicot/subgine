@@ -1,5 +1,10 @@
 #include "abstractphysicpoint.h"
 
+namespace subgine
+{
+namespace physic
+{
+
 void AbstractPhysicPoint::lock(const bool lock)
 {
 	_lock = lock;
@@ -18,4 +23,7 @@ double AbstractPhysicPoint::getMass() const
 void AbstractPhysicPoint::setMass(const double mass)
 {
 	_mass = mass;
+}
+
+}
 }

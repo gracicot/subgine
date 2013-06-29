@@ -3,6 +3,11 @@
 #include "../system.hpp"
 #include "Rules/rule.h"
 
+namespace subgine
+{
+namespace physic
+{
+
 PhysicPoint::PhysicPoint()
 {
 	_position = Vector2(0, 0);
@@ -185,4 +190,7 @@ void PhysicPoint::setRule(const std::string tag, Rule::Rule* rule)
 Vector2 PhysicPoint::momentum() const
 {
 	return _velocity * _mass;
+}
+
+}
 }

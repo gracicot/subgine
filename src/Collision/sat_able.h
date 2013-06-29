@@ -3,7 +3,9 @@
 #include "../system.hpp"
 #include "collisionnable.h"
 
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 class SAT_able : public virtual Collisionnable, public virtual Traits::Position
@@ -19,4 +21,6 @@ public:
 protected:
 };
 
+
+}
 }

@@ -1,7 +1,9 @@
 #include "circle.h"
 #include <limits>
 
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 Circle::Circle()
@@ -60,6 +62,5 @@ Vector2 Circle::getNearestPoint(Vector2 point) const
 	return nearest + _position;
 }
 
-
 }
-
+}

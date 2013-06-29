@@ -3,12 +3,21 @@
 #include "../../system.hpp"
 #include "../CollisionResults/collisionresult.h"
 #include "collisiontester.h"
-
+namespace subgine
+{
+namespace collision
+{
+namespace Testers
+{
 class PointTester : public CollisionTester
 {
 public:
 	PointTester() = default;
 	virtual ~PointTester();
 
-	virtual CollisionResult* compareObject(Collisionnable::Collisionnable& object1, Collisionnable::Collisionnable& object2, double time) const;
+	virtual Results::CollisionResult* compareObject(Collisionnable& object1, Collisionnable& object2, double time) const;
 };
+
+}
+}
+}

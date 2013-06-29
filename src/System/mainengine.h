@@ -4,6 +4,10 @@
 #include <thread>
 #include <mutex>
 
+
+namespace subgine
+{
+
 class Engine;
 
 class MainEngine
@@ -47,3 +51,6 @@ private:
 
 	std::map<std::string, Engine*> _engineList;
 };
+
+
+}

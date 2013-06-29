@@ -4,7 +4,9 @@
 #include "sat_able.h"
 #include "point_able.h"
 
-namespace Collisionnable
+namespace subgine
+{
+namespace collision
 {
 
 class Polygon : public virtual SAT_able, public virtual Point_able, public virtual Traits::Vertex, public virtual Traits::Angle
@@ -24,4 +26,5 @@ public:
 private:
 };
 
+}
 }

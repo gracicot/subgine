@@ -1,5 +1,6 @@
 #pragma once
-
+namespace subgine
+{
 class Vector3;
 
 class Positionnable3
@@ -11,3 +12,6 @@ public:
 
 	virtual Vector3 getPosition() const = 0;
 };
+
+}
+

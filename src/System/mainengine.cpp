@@ -6,7 +6,15 @@
 
 #include "engine.h"
 
-std::mutex MainEngine::_mutex;
+using namespace std;
+
+
+namespace subgine
+{
+
+
+
+mutex MainEngine::_mutex;
 
 MainEngine::MainEngine() : _speed(0), _running(false), _loopPerSecond(90)
 {
@@ -31,21 +39,21 @@ void MainEngine::running(const bool state)
 
 void MainEngine::launchThread()
 {
-	_thread = std::thread(&MainEngine::runThread, this);
+	_thread = thread(&MainEngine::runThread, this);
 }
 
 void MainEngine::runThread()
 {
-	auto timer = std::chrono::high_resolution_clock::now();
+	auto timer = chrono::high_resolution_clock::now();
 	double time = 0;
 
 	while (_running) {
 		if (_loopPerSecond > 0) {
-			std::this_thread::sleep_for(std::chrono::duration<double, std::ratio<1, 1>> (1.0 / (double) _loopPerSecond));
+			this_thread::sleep_for(chrono::duration<double, ratio<1, 1>> (1.0 / (double) _loopPerSecond));
 		}
 
-		time = std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1, 1>>> (std::chrono::high_resolution_clock::now() - timer).count() * _speed * 10.0;
-		timer = std::chrono::high_resolution_clock::now();
+		time = chrono::duration_cast<chrono::duration<double, ratio<1, 1>>> (chrono::high_resolution_clock::now() - timer).count() * _speed * 10.0;
+		timer = chrono::high_resolution_clock::now();
 
 		for (auto engines : _engineList) {
 			engines.second->execute(time);
@@ -53,7 +61,7 @@ void MainEngine::runThread()
 	}
 }
 
-Engine& MainEngine::addEngine(const std::string alias, Engine* e)
+Engine& MainEngine::addEngine(const string alias, Engine* e)
 {
 	_engineList[alias] = e;
 }
@@ -73,26 +81,26 @@ void MainEngine::setSpeed(double speed)
 	_speed = speed >= 0 ? speed : 0;
 }
 
-Engine& MainEngine::getEngine(const std::string tag)
+Engine& MainEngine::getEngine(const string tag)
 {
-	std::map<std::string, Engine*>::iterator it = _engineList.find(tag);
+	map<string, Engine*>::iterator it = _engineList.find(tag);
 
 	if (it != _engineList.end()) {
 		return *it->second;
 	}
 
-	throw std::out_of_range("Cannot find Engine associated with tag " + tag + "...");
+	throw out_of_range("Cannot find Engine associated with tag " + tag + "...");
 }
 
-const Engine& MainEngine::getEngine(const std::string tag) const
+const Engine& MainEngine::getEngine(const string tag) const
 {
-	std::map<std::string, Engine*>::const_iterator it = _engineList.find(tag);
+	map<string, Engine*>::const_iterator it = _engineList.find(tag);
 
 	if (it != _engineList.end()) {
 		return *it->second;
 	}
 
-	throw std::out_of_range("Cannot find Engine associated with tag " + tag + "...");
+	throw out_of_range("Cannot find Engine associated with tag " + tag + "...");
 }
 
 int MainEngine::getLoopPerSecond() const
@@ -105,7 +113,10 @@ void MainEngine::setLoopPerSecond(const int loopPerSecond)
 	_loopPerSecond = loopPerSecond;
 }
 
-std::mutex& MainEngine::mutex()
+mutex& MainEngine::mutex()
 {
 	return _mutex;
 }
+
+}
+

@@ -2,7 +2,12 @@
 
 #include "../physic.hpp"
 
-class Particle : public PhysicPoint
+namespace subgine
+{
+namespace particle
+{
+
+class Particle : public physic::PhysicPoint
 {
 public:
 	Particle(const double lifetime = 1);
@@ -15,3 +20,6 @@ public:
 private:
 	double _lifetime;
 };
+
+}
+}

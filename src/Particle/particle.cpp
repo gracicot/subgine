@@ -1,5 +1,10 @@
 #include "particle.h"
 
+namespace subgine
+{
+namespace particle
+{
+
 Particle::Particle(const double lifetime) : _lifetime(lifetime > 0 ? lifetime : 1)
 {
 
@@ -15,3 +20,5 @@ void Particle::setLifeTime(const double lifetime)
 	_lifetime = lifetime > 0 ? lifetime : _lifetime;
 }
 
+}
+}

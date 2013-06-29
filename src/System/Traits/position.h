@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../vector2.h"
-
+namespace subgine
+{
 namespace Traits
 {
 
@@ -16,5 +17,7 @@ public:
 protected:
 	Vector2 _position;
 };
+
+}
 
 }

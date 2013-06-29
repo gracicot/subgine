@@ -1,6 +1,9 @@
 #include "vector2.h"
 #include "const.h"
 
+namespace subgine
+{
+
 Vector2::Vector2(double _x, double _y) : x(_x), y(_y)
 {
 
@@ -138,5 +141,8 @@ Vector2& operator/= (Vector2& vec, const double& divider)
 
 Vector2 operator- (const Vector2& vec)
 {
+
+}
+
 
 }

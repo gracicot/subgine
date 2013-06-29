@@ -1,5 +1,6 @@
 #include "vertex.h"
-
+namespace subgine
+{
 namespace Traits
 {
 
@@ -23,4 +24,6 @@ std::list< Vector2 >& Vertex::getVertex()
 	return _vertex;
 }
 
+
+}
 }

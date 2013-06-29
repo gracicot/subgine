@@ -1,5 +1,12 @@
 #include "collisiontester.h"
 
+namespace subgine
+{
+namespace collision
+{
+namespace Testers
+{
+
 CollisionTester::~CollisionTester()
 {
 
@@ -13,4 +20,8 @@ std::string CollisionTester::getAlias() const
 void CollisionTester::setAlias(std::string alias)
 {
 	_alias = alias;
+}
+
+}
+}
 }

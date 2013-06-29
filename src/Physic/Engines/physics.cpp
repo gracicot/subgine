@@ -1,5 +1,10 @@
 #include "physics.h"
 
+namespace subgine
+{
+namespace physic
+{
+
 Physics::Physics()
 {
 
@@ -10,7 +15,7 @@ Physics::~Physics()
 
 }
 
-void Physics::execute(const float time)
+void Physics::execute(const double time)
 {
 
 	for (auto i : getContent()) {
@@ -34,3 +39,5 @@ void Physics::execute(const float time)
 	}
 }
 
+}
+}

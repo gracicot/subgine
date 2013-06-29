@@ -2,6 +2,10 @@
 
 #include "rule.h"
 
+namespace subgine
+{
+namespace physic
+{
 namespace Rule
 {
 
@@ -24,4 +28,6 @@ private:
 	Vector2 _value;
 };
 
+}
+}
 }

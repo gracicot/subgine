@@ -7,8 +7,19 @@
 #include "../sat_able.h"
 #include "../CollisionResults/satresult.h"
 
+namespace subgine
+{
+namespace collision
+{
+namespace Testers
+{
+
 class SatTester : public CollisionTester
 {
 public:
-	CollisionResult* compareObject(Collisionnable::Collisionnable& object1, Collisionnable::Collisionnable& object2, double time) const;
+	Results::CollisionResult* compareObject(subgine::collision::Collisionnable& object1, subgine::collision::Collisionnable& object2, double time) const;
 };
+
+}
+}
+}
