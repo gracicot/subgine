@@ -109,10 +109,5 @@ void MainEngine::setLoopPerSecond(const int loopPerSecond)
 	_loopPerSecond = loopPerSecond;
 }
 
-mutex& MainEngine::mutex()
-{
-	return _mutex;
-}
-
 }
 
