@@ -34,12 +34,10 @@ public:
 
 	Engine& addEngine(const std::string alias, Engine* e);
 
-	static std::mutex& mutex();
 	void runThread();
 
 private:
 	std::thread _thread;
-	static std::mutex _mutex;
 
 	int _loopPerSecond;
 	double _speed;

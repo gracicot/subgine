@@ -12,10 +12,6 @@ using namespace std;
 namespace subgine
 {
 
-
-
-mutex MainEngine::_mutex;
-
 MainEngine::MainEngine() : _speed(0), _running(false), _loopPerSecond(90)
 {
 
