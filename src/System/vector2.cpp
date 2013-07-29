@@ -1,5 +1,4 @@
 #include "vector2.h"
-#include "const.h"
 
 namespace subgine
 {
@@ -137,11 +136,6 @@ Vector2& operator/= (Vector2& vec, const double& divider)
 	vec.x /= divider;
 	vec.y /= divider;
 	return vec;
-}
-
-Vector2 operator- (const Vector2& vec)
-{
-
 }
 
 

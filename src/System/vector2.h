@@ -6,7 +6,8 @@
 namespace subgine
 {
 
-struct Vector2 : public Positionnable {
+class Vector2 : public Positionnable {
+public:
 	Vector2(double _x = 0, double _y = 0);
 	Vector2(const Vector2& other);
 
@@ -21,8 +22,7 @@ struct Vector2 : public Positionnable {
 
 	virtual Vector2 getPosition() const;
 
-	double x;
-	double y;
+	double x, y;
 };
 
 Vector2 operator* (const Vector2& vec1, const Vector2& vec2);
@@ -41,6 +41,5 @@ inline std::ostream& operator<< (std::ostream& out, Vector2 vec)
 	out << vec.x << ", " << vec.y;
 	return out;
 }
-
 
 }
