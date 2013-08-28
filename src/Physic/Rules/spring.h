@@ -1,6 +1,10 @@
 #pragma once
 
+#include <functional>
+#include <iostream>
+
 #include "rule.h"
+
 
 namespace subgine
 {
@@ -12,7 +16,7 @@ namespace Rule
 class Spring : public Rule
 {
 public:
-	Spring(const Vector2 value, const double size, Positionnable& position);
+	Spring(const subgine::Vector2 value, const double size, std::function< subgine::Vector2(void)> functor);
 	Spring(const Vector2 value = Vector2(), const double size = 0, const Vector2 position = Vector2());
 	Spring(const Spring& other);
 	virtual ~Spring();
@@ -24,15 +28,15 @@ public:
 
 	void setValue(const Vector2 value);
 	void setSize(const double size);
-	void setPosition(Positionnable& position);
+	void setPosition(std::function< subgine::Vector2(void) > functor);
 	void setPosition(Vector2 position);
 
 private:
 	Vector2  _value;
 	double _size;
 
-	bool _deletePosition;
-	Positionnable* _position;
+	Vector2 _position;
+	std::function< subgine::Vector2(void) > _functor;
 };
 
 }

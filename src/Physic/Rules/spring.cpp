@@ -9,23 +9,19 @@ namespace physic
 namespace Rule
 {
 
-Spring::Spring(const Vector2 value, const double size, Positionnable& position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const subgine::Vector2 value, const double size, std::function< subgine::Vector2(void) > functor) : _value(value), _size(size), _functor(functor)
 {
-	setPosition(position);
+	
 }
 
-Spring::Spring(const Vector2 value, const double size, const Vector2 position) : _deletePosition(false), _value(value), _size(size)
+Spring::Spring(const Vector2 value, const double size, const Vector2 position) : _value(value), _size(size), _functor(nullptr), _position(position)
 {
-	setPosition(position);
+	
 }
 
 Spring::Spring(const Spring& other)
 {
-	if (_deletePosition) {
-		delete _position;
-	}
-
-	_deletePosition = other._deletePosition;
+	_functor = other._functor;
 	_position = other._position;
 	_size = other._size;
 	_value = other._value;
@@ -33,42 +29,28 @@ Spring::Spring(const Spring& other)
 
 Spring::~Spring()
 {
-	if (_deletePosition) {
-		delete _position;
-	}
+	
 }
 
 Vector2 Spring::getPosition() const
 {
-	if (_position == nullptr) {
-		return Vector2();
+	if (_functor) {
+		return _functor();
+	} else {
+		return _position;
 	}
-
-	return _position->getPosition();
 }
 
-void Spring::setPosition(Positionnable& position)
+void Spring::setPosition(std::function< subgine::Vector2(void) > functor)
 {
-	if (_deletePosition) {
-		delete _position;
-	}
-
-	_deletePosition = false;
-	_position = &position;
+	_functor = functor;
 }
 
 void Spring::setPosition(Vector2 pos)
 {
-	if (_deletePosition) {
-		Vector2* position = dynamic_cast<Vector2*>(_position);
-		*position = pos;
-	} else {
-		_position = new Vector2(pos);
-	}
-
-	_deletePosition = true;
+	_functor = nullptr;
+	_position = pos;
 }
-
 
 double Spring::getSize() const
 {
