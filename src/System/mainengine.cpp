@@ -19,7 +19,9 @@ MainEngine::MainEngine() : _speed(0), _timer(chrono::high_resolution_clock::now(
 
 MainEngine::~MainEngine()
 {
-	_thread.join();
+	if (_thread.joinable()) {
+		_thread.join();
+	}
 }
 
 void MainEngine::run()
