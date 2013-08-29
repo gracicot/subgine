@@ -12,59 +12,38 @@ using namespace std;
 namespace subgine
 {
 
-MainEngine::MainEngine() : _speed(0), _running(false), _loopPerSecond(90)
+MainEngine::MainEngine() : _speed(0), _timer(chrono::high_resolution_clock::now()), _time(0)
 {
 
 }
 
 MainEngine::~MainEngine()
 {
-	running(false);
+	_thread.join();
 }
 
-void MainEngine::running(const bool state)
+void MainEngine::run()
 {
-	if (!_running && state) {
-		_running = true;
-		launchThread();
-	} else if (_running && !state) {
-		_running = false;
+	if (_thread.joinable()) {
 		_thread.join();
 	}
+	
+	_thread = thread(&MainEngine::runSync, this);
 }
 
-void MainEngine::launchThread()
+void MainEngine::runSync()
 {
-	_thread = thread(&MainEngine::runThread, this);
-}
+	_time = chrono::duration_cast<chrono::duration<double, ratio<1, 1>>> (chrono::high_resolution_clock::now() - _timer).count() * _speed * 10.0;
+	_timer = chrono::high_resolution_clock::now();
 
-void MainEngine::runThread()
-{
-	auto timer = chrono::high_resolution_clock::now();
-	double time = 0;
-
-	while (_running) {
-		if (_loopPerSecond > 0) {
-			this_thread::sleep_for(chrono::duration<double, ratio<1, 1>> (1.0 / (double) _loopPerSecond));
-		}
-
-		time = chrono::duration_cast<chrono::duration<double, ratio<1, 1>>> (chrono::high_resolution_clock::now() - timer).count() * _speed * 10.0;
-		timer = chrono::high_resolution_clock::now();
-
-		for (auto engines : _engineList) {
-			engines.second->execute(time);
-		}
+	for (auto engines : _engineList) {
+		engines.second->execute(_time);
 	}
 }
 
 Engine& MainEngine::addEngine(const string alias, Engine* e)
 {
 	_engineList[alias] = e;
-}
-
-bool MainEngine::isRunning() const
-{
-	return _running;
 }
 
 double MainEngine::getSpeed()
@@ -97,16 +76,6 @@ const Engine& MainEngine::getEngine(const string tag) const
 	}
 
 	throw out_of_range("Cannot find Engine associated with tag " + tag + "...");
-}
-
-int MainEngine::getLoopPerSecond() const
-{
-	return _loopPerSecond;
-}
-
-void MainEngine::setLoopPerSecond(const int loopPerSecond)
-{
-	_loopPerSecond = loopPerSecond;
 }
 
 }

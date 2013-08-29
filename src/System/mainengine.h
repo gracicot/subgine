@@ -17,16 +17,9 @@ public:
 	MainEngine();
 	~MainEngine();
 
-	//start or stop the engine
-	void running(const bool state);
-	bool isRunning() const;
-
 	//speed
 	void setSpeed(double speed);
 	double getSpeed();
-
-	void setLoopPerSecond(const int loopPerSecond);
-	int getLoopPerSecond() const;
 
 	//engines
 	Engine& getEngine(const std::string tag);
@@ -34,18 +27,14 @@ public:
 
 	Engine& addEngine(const std::string alias, Engine* e);
 
-	void runThread();
-
+	void run();
+	void runSync();
 private:
 	std::thread _thread;
 
-	int _loopPerSecond;
 	double _speed;
-
-	void launchThread();
-
-	bool _running;
-	double speed;
+	double _time;
+	std::chrono::high_resolution_clock::time_point _timer;
 
 	std::map<std::string, Engine*> _engineList;
 };
