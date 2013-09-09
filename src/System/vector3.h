@@ -1,43 +1,160 @@
 #pragma once
 
+#include "const.h"
+#include "vector.h"
 #include "vector2.h"
-#include "positionnable3.h"
+
 namespace subgine
 {
-struct Vector3 : public Positionnable3
-{
-	Vector3(double _x = 0, double _y = 0, double _z = 0);
-	Vector3(const Vector3& other);
-
-	Vector3& operator= (const Vector3& other);
-	Vector2 getAngles() const;
-	double getLenght() const;
-	void setAngles(const Vector2 angles);
-	void setLenght(const double lenght);
-	Vector3 unit() const;
-
-	virtual Vector3 getPosition() const;
+	template<class T>
+	class Vector<3, T>
+	{
+	public:
+		Vector(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z)
+		{
+			
+		}
+		
+		Vector(const Vector<3, T>& other) : x(other.x), y(other.y), z(other.z)
+		{
+			
+		}
+		
+		Vector<2, double> getAngles() const
+		{
+			Vector<2, double> angle(atan(y / x), acos(z / getLenght()));
+			
+			return angle;
+		}
+		
+		double getLenght() const
+		{
+			return sqrt(pow2(x) + pow2(y) + pow2(z));
+		}
+		
+		void setAngles(const Vector<2, double> angles)
+		{
+			if (x != 0 || y != 0 || z != 0) {
+				double lenght = getLenght();
+				x = sin(angles.y) * cos(angles.x) * lenght;
+				y = sin(angles.x) * sin(angles.y) * lenght;
+				z = cos(angles.y) * lenght;
+			}
+		}
+		
+		void setLenght(double lenght)
+		{
+			if (x != 0 || y != 0 || z != 0) {
+				double product = lenght / getLenght();
+				x *= product;
+				y *= product;
+				z *= product;
+			} else {
+				x = lenght;
+			}
+		}
+		
+		Vector<3, T> unit() const
+		{
+			double lenght = getLenght();
+			return Vector<3, T>(x / lenght, y / lenght, z / lenght);
+		}
+		
+		//Operators
+		
+		Vector<3, T>& operator= (const Vector<3, T>& other)
+		{
+			x = other.x;
+			y = other.y;
+			z = other.z;
+			return *this;
+		}
+		
+		T x, y, z;
+	};
 	
-	double x, y, z;
-};
-
-Vector3 operator* (const double& multiplier, const Vector3& vec);
-Vector3 operator* (const Vector3& vec1, const Vector3& vec2);
-Vector3 operator* (const Vector3& vec, const double& multiplier);
-Vector3 operator+ (const Vector3& vec1, const Vector3& vec2);
-Vector3 operator- (const Vector3& vec1, const Vector3& vec2);
-Vector3 operator/ (const Vector3& vec, const double& divider);
-Vector3 operator- (const Vector3& vec);
-Vector3& operator*= (Vector3& vec, const double& multiplier);
-Vector3& operator+= (Vector3& vec1, const Vector3& vec2);
-Vector3& operator-= (Vector3& vec1, const Vector3& vec2);
-Vector3& operator/= (Vector3& vec, const double& divider);
-
-inline std::ostream& operator<< (std::ostream& out, Vector3 vec)
-{
-	out << vec.x << ", " << vec.y << ", " << vec.z;
-	return out;
-}
-
-
+	template<class T>
+	Vector<3, T> operator/ (const Vector<3, T>& vec, const double& divider)
+	{
+		return Vector<3, T>(vec.x / divider, vec.y / divider, vec.z / divider);
+	}
+	
+	template<class T>
+	Vector<3, T> operator* (const Vector<3, T>& vec, const double& multiplier)
+	{
+		return Vector<3, T>(vec.x * multiplier, vec.y * multiplier, vec.z * multiplier);
+	}
+	
+	template<class T>
+	Vector<3, T> operator* (const double& multiplier, const Vector<3, T>& vec)
+	{
+		return Vector<3, T>(vec.x * multiplier, vec.y * multiplier, vec.z * multiplier);
+	}
+	
+	template<class T>
+	Vector<3, T>& operator*= (Vector<3, T>& vec, const double& multiplier)
+	{
+		vec.x *= multiplier;
+		vec.y *= multiplier;
+		vec.z *= multiplier;
+		return vec;
+	}
+	
+	template<class T>
+	Vector<3, T> operator+ (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
+	{
+		return Vector<3, T>(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z);
+	}
+	
+	template<class T>
+	Vector<3, T>& operator+= (Vector<3, T>& vec1, const Vector<3, T>& vec2)
+	{
+		vec1.x += vec2.x;
+		vec1.y += vec2.y;
+		vec1.z += vec2.z;
+		return vec1;
+	}
+	
+	template<class T>
+	Vector<3, T> operator- (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
+	{
+		return Vector<3, T>(vec1.x - vec2.x, vec1.y - vec2.y, vec1.z - vec2.z);
+	}
+	
+	template<class T>
+	Vector<3, T>& operator-= (Vector<3, T>& vec1, const Vector<3, T>& vec2)
+	{
+		vec1.x -= vec2.x;
+		vec1.y -= vec2.y;
+		vec1.z -= vec2.z;
+		return vec1;
+	}
+	
+	template<class T>
+	Vector<3, T>& operator/= (Vector<3, T>& vec, const double& divider)
+	{
+		vec.x /= divider;
+		vec.y /= divider;
+		vec.z /= divider;
+		return vec;
+	}
+	
+	template<class T>
+	Vector<3, T> operator* (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
+	{
+		return Vector<3, T>(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
+	}
+	
+	template<class T>
+	Vector<3, T> operator- (const Vector<3, T>& vec)
+	{
+		return Vector<3, T>(-vec.x, -vec.y, -vec.z);
+	}
+	
+	template<class T>
+	inline std::ostream& operator<< (std::ostream& out, Vector<3, T> vec)
+	{
+		out << vec.x << ", " << vec.y << ", " << vec.z;
+		return out;
+	}
 }
