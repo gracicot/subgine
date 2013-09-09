@@ -6,16 +6,14 @@ namespace subgine
 namespace Traits
 {
 
+template<int n = 2>
 class Position
 {
-public:
-	Position();
-	virtual ~Position();
-
 protected:
-	Vector2 _position;
+	Vector<n, double> _position;
 };
 
-}
+typedef Position<3> Position3;
 
+}
 }
