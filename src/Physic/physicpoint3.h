@@ -2,6 +2,7 @@
 
 #include "abstractphysicpoint.h"
 #include "../System/Traits/position3.h"
+#include "../System/positionnable3.h"
 
 namespace subgine
 {
@@ -12,7 +13,7 @@ namespace Rule3
 class Rule;
 }
 
-class PhysicPoint3 : public virtual Traits::Position3, public AbstractPhysicPoint
+class PhysicPoint3 : public virtual Traits::Position3, public AbstractPhysicPoint, public Positionnable3
 {
 public:
 	PhysicPoint3();
@@ -36,6 +37,7 @@ public:
 
 	//get
 	Vector3 getVelocity() const;
+	virtual Vector3 getPosition() const;
 
 	Vector3 getPulse(const std::string type) const;
 	std::map< std::string, Vector3 >& getPulse();

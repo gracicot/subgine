@@ -192,5 +192,11 @@ Vector2 PhysicPoint::momentum() const
 	return _velocity * _mass;
 }
 
+Vector2 PhysicPoint::getPosition() const
+{
+	return _position;
+}
+
+
 }
 }

@@ -190,5 +190,10 @@ Vector3 PhysicPoint3::momentum() const
 	return _velocity * _mass;
 }
 
+Vector3 PhysicPoint3::getPosition() const
+{
+	return _position;
+}
+
 }
 }
