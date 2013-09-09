@@ -14,10 +14,5 @@ Position3::~Position3()
 
 }
 
-Vector3 Position3::getPosition() const
-{
-	return _position;
-}
-
 }
 }

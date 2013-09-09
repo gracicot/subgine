@@ -1,7 +1,9 @@
 #pragma once
+
+#include "vector3.h"
+
 namespace subgine
 {
-class Vector3;
 
 class Positionnable3
 {

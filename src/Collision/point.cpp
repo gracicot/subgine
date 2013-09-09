@@ -20,5 +20,10 @@ Point::operator Vector2()
 	return _position;
 }
 
+Vector2 Point::getPosition() const
+{
+	return _position;
+}
+
 }
 }

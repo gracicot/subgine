@@ -6,13 +6,11 @@ namespace subgine
 namespace Traits
 {
 
-class Position : public Positionnable
+class Position
 {
 public:
 	Position();
 	virtual ~Position();
-
-	virtual Vector2 getPosition() const;
 
 protected:
 	Vector2 _position;
