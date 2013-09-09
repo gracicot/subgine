@@ -1,12 +1,13 @@
 #pragma once
 
-#include "../vector2.h"
+#include "../vector.h"
+
 namespace subgine
 {
 namespace Traits
 {
 
-template<int n = 2>
+template<int n>
 class Position
 {
 protected:
@@ -14,6 +15,7 @@ protected:
 };
 
 typedef Position<3> Position3;
+typedef Position<2> Position2;
 
 }
 }

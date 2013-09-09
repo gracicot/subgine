@@ -1,6 +1,7 @@
 #pragma once
 
 #include "rule.h"
+#include "../physicpoint.h"
 
 namespace subgine
 {
@@ -8,21 +9,33 @@ namespace physic
 {
 namespace Rule
 {
-
-class Gravity : public Rule
+	
+template<int n>
+class Gravity : public Rule<n>
 {
 public:
-	Gravity(const Vector2 value = Vector2());
-	Gravity(const Gravity& c);
-	virtual ~Gravity();
-
-	virtual Vector2 getResult(const PhysicPoint& object) const;
-
-	void setValue(const Vector2 value);
-	Vector2 getValue() const;
+	Gravity(const Vector<n, double> value = Vector<n, double>()) : _value(value)
+	{
+		
+	}
+	
+	Vector<n, double> getResult(const PhysicPoint<n>& object) const
+	{
+		return _value * object.getMass();
+	}
+	
+	Vector<n, double> getValue() const
+	{
+		return _value;
+	}
+	
+	void setValue(const Vector<n, double> value)
+	{
+		_value = value;
+	}
 
 private:
-	Vector2 _value;
+	Vector<n, double> _value;
 };
 
 }

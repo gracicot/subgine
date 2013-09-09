@@ -1,65 +1,217 @@
 #pragma once
 
+#include "../system.hpp"
+
 #include "abstractphysicpoint.h"
-#include "../System/Traits/position.h"
-#include "../System/positionnable.h"
+#include "Rules/rule.h"
 
 namespace subgine
 {
 namespace physic
 {
 
-namespace Rule
-{
-class Rule;
-}
-
-class PhysicPoint : public virtual Traits::Position, public AbstractPhysicPoint, public Positionnable
+template<int n>
+class PhysicPoint : public AbstractPhysicPoint, public Positionnable<n>, protected virtual Traits::Position<n>
 {
 public:
-	PhysicPoint();
-	PhysicPoint(const PhysicPoint& c);
-	virtual ~PhysicPoint();
-	PhysicPoint& operator= (const PhysicPoint&);
-
-	Vector2 momentum() const;
-
-	//set
-	void setPosition(const Vector2 posision);
-	void setVelocity(const Vector2 velocity);
-	void setForce(const std::string type, const Vector2 force);
-	void setPulse(const std::string type, const Vector2 pulse);
-	void setRule(const std::string tag, Rule::Rule* rule);
-
-	//update function
-	void updateVelocity(const double time);
-	void updatePosition(const double time);
-	void applyRules();
-
-	//get
-	Vector2 getVelocity() const;
-	virtual Vector2 getPosition() const;
-
-	Vector2 getForce(const std::string type) const;
-	std::map<std::string, Vector2>& getForce();
-	const std::map<std::string, Vector2>& getForce() const;
-
-	Vector2 getPulse(const std::string type) const;
-	std::map<std::string, Vector2>& getPulse();
-	const std::map<std::string, Vector2>& getPulse() const;
-
-	Rule::Rule& getRule(const std::string type);
-	const Rule::Rule& getRule(const std::string tag) const;
-	std::map<std::string, Rule::Rule*>& getRule();
-	const std::map<std::string, Rule::Rule*>& getRule() const;
+	PhysicPoint()
+	{
+		_mass = 1;
+		_lock = false;
+	}
+	
+	PhysicPoint(const PhysicPoint<n>& c)
+	{
+		_position = c._position;
+		_velocity = c._velocity;
+		
+		_mass = c._mass;
+		_forces.clear();
+		_forces.insert(c._forces.begin(), c._forces.begin());
+		_pulses.clear();
+		_pulses.insert(c._forces.begin(), c._forces.begin());
+		_lock = c._lock;
+	}
+	
+	~PhysicPoint()
+	{
+		for (auto i : _rules) {
+			delete i.second;
+		}
+	}
+	
+	Vector<n, double> getVelocity() const
+	{
+		return _velocity;
+	}
+	
+	void setVelocity(const Vector<n, double> velocity)
+	{
+		_velocity = velocity;
+	}
+	
+	void setPosition(const Vector<n, double> posision)
+	{
+		_position = posision;
+	}
+	
+	void updatePosition(const double time)
+	{
+		_position += _velocity * time;
+	}
+	
+	Rule::Rule<n>& getRule(const std::string tag)
+	{
+		auto it = _rules.find(tag);
+		
+		if (it != _rules.end()) {
+			return *it->second;
+		}
+		
+		throw std::out_of_range("Rule " + tag + " doesn't exist...");
+	}
+	
+	const Rule::Rule<n>& getRule(const std::string tag) const
+	{
+		auto it = _rules.find(tag);
+		
+		if (it != _rules.end()) {
+			return *it->second;
+		}
+		
+		throw std::out_of_range("Rule " + tag + " doesn't exist...");
+	}
+	
+	void setForce(const std::string type, const Vector<n, double> force)
+	{
+		_forces[type] = force;
+	}
+	
+	void updateVelocity(const double time)
+	{
+		for (auto i : _forces) {
+			_velocity += (i.second / _mass) * time;
+		}
+		
+		for (auto i : _pulses) {
+			
+			_velocity += i.second / _mass;
+		}
+		
+		_pulses.clear();
+	}
+	
+	Vector<n, double> getPulse(const std::string type) const
+	{
+		auto pulse = _pulses.find(type);
+		
+		if (pulse == _pulses.end()) {
+			return Vector<n, double>();
+		}
+		
+		return pulse->second;
+	}
+	
+	void setPulse(const std::string type, const Vector<n, double> pulse)
+	{
+		_pulses[type] = pulse;
+	}
+	
+	const std::map<std::string, Vector<n, double>>& getForce() const
+	{
+		return _forces;
+	}
+	
+	std::map<std::string, Vector<n, double>>& getForce()
+	{
+		return _forces;
+	}
+	
+	const std::map<std::string, Vector<n, double>>& getPulse() const
+	{
+		return _pulses;
+	}
+	
+	std::map<std::string, Vector<n, double>>& getPulse()
+	{
+		return _pulses;
+	}
+	
+	void applyRules()
+	{
+		for (auto i : _rules) {
+			setForce(i.first, i.second->getResult(*this));
+		}
+	}
+	
+	Vector<n, double> getForce(const std::string type) const
+	{
+		auto force = _pulses.find(type);
+		
+		if (force == _pulses.end()) {
+			return Vector<n, double>();
+		}
+		
+		return force->second;
+	}
+	
+	PhysicPoint<n>& operator= (const PhysicPoint<n>& c)
+	{
+		_position = c._position;
+		_velocity = c._velocity;
+		
+		_mass = c._mass;
+		_forces.clear();
+		_forces.insert(c._forces.begin(), c._forces.begin());
+		_pulses.clear();
+		_pulses.insert(c._forces.begin(), c._forces.begin());
+		_lock = c._lock;
+		return *this;
+	}
+	
+	std::map<std::string, Rule::Rule<n>*>& getRule()
+	{
+		return _rules;
+	}
+	
+	const std::map<std::string, Rule::Rule<n>*>& getRule() const
+	{
+		return _rules;
+	}
+	
+	void setRule(const std::string tag, Rule::Rule<n>* rule)
+	{
+		auto it = _rules.find(tag);
+		
+		if (it == _rules.end()) {
+			_rules[tag] = rule;
+		} else {
+			delete it->second;
+			it->second = rule;
+		}
+	}
+	
+	Vector<n, double> momentum() const
+	{
+		return _velocity * _mass;
+	}
+	
+	Vector<n, double> getPosition() const
+	{
+		return _position;
+	}
 
 protected:
-	Vector2 _velocity;
-	std::map<std::string, Vector2> _pulses;
-	std::map<std::string, Rule::Rule*> _rules;
-	std::map<std::string, Vector2> _forces;
+	Vector<n, double> _velocity;
+	std::map<std::string, Vector<n, double>> _pulses;
+	std::map<std::string, Rule::Rule<n>*> _rules;
+	std::map<std::string, Vector<n, double>> _forces;
 
 };
+
+typedef PhysicPoint<2> PhysicPoint2;
+typedef PhysicPoint<3> PhysicPoint3;
+
 }
 }
 

@@ -8,7 +8,7 @@ namespace subgine
 namespace collision
 {
 
-class SAT_able : public virtual Collisionnable, public virtual Traits::Position
+class SAT_able : public virtual Collisionnable, public virtual Traits::Position2
 {
 public:
 	SAT_able();

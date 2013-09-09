@@ -2,24 +2,26 @@
 
 #include "../physic.hpp"
 
-namespace subgine
-{
-namespace particle
-{
+//this shit does not work anymore
 
-class Particle : public physic::PhysicPoint
-{
-public:
-	Particle(const double lifetime = 1);
-	~Particle() = default;
-
-	double getTime() const;
-	void setLifeTime(const double lifetime);
-	double getLifetime() const;
-
-private:
-	double _lifetime;
-};
-
-}
-}
+// namespace subgine
+// {
+// namespace particle
+// {
+// 
+// class Particle : public physic::PhysicPoint<2>
+// {
+// public:
+// 	Particle(const double lifetime = 1);
+// 	~Particle() = default;
+// 
+// 	double getTime() const;
+// 	void setLifeTime(const double lifetime);
+// 	double getLifetime() const;
+// 
+// private:
+// 	double _lifetime;
+// };
+// 
+// }
+// }

@@ -11,7 +11,7 @@ namespace collision
 {
 
 
-class Point_able : public virtual Collisionnable, public virtual Traits::Position
+class Point_able : public virtual Collisionnable, public virtual Traits::Position2
 {
 public:
 	Point_able();

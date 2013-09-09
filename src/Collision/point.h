@@ -10,7 +10,7 @@ namespace subgine
 namespace collision
 {
 
-class Point : public virtual Collisionnable, public virtual Traits::Position
+class Point : public virtual Collisionnable, public virtual Traits::Position2
 {
 public:
 	Point() = default;

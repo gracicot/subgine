@@ -2,26 +2,20 @@
 
 #include "../../system.hpp"
 
+template<int n> class PhysicPoint;
 
 namespace subgine
 {
 namespace physic
 {
-
-class PhysicPoint;
-
 namespace Rule
 {
-
+	
+template<int n>
 class Rule
 {
 public:
-	Rule();
-	Rule(const Rule& c);
-	virtual ~Rule();
-	virtual Vector2 getResult(const PhysicPoint& object) const = 0;
-
-private:
+	virtual Vector<n, double> getResult(const PhysicPoint<n>& object) const = 0;
 };
 
 }
