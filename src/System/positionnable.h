@@ -1,19 +1,20 @@
 #pragma once
 
-#include "vector2.h"
+#include "vector.h"
 
 namespace subgine
 {
-
-class Positionnable
-{
-
-public:
-	Positionnable();
-	virtual ~Positionnable();
-
-	virtual Vector2 getPosition() const = 0;
-};
-
+	
+	template<int n>
+	class Positionnable
+	{
+		
+	public:
+		Positionnable();
+		virtual ~Positionnable();
+		
+		virtual Vector<n, double> getPosition() const = 0;
+	};
+	
 }
 
