@@ -11,7 +11,7 @@ namespace physic
 {
 
 template<int n>
-class PhysicPoint : public AbstractPhysicPoint, public Positionnable<n>, protected virtual Traits::Position<n>
+class PhysicPoint : public AbstractPhysicPoint, public Positionnable<n>, public virtual Traits::Position<n>
 {
 public:
 	PhysicPoint()
@@ -22,7 +22,7 @@ public:
 	
 	PhysicPoint(const PhysicPoint<n>& c)
 	{
-		_position = c._position;
+		this->_position = c._position;
 		_velocity = c._velocity;
 		
 		_mass = c._mass;
@@ -52,12 +52,12 @@ public:
 	
 	void setPosition(const Vector<n, double> posision)
 	{
-		_position = posision;
+		this->_position = posision;
 	}
 	
 	void updatePosition(const double time)
 	{
-		_position += _velocity * time;
+		this->_position += _velocity * time;
 	}
 	
 	Rule::Rule<n>& getRule(const std::string tag)
@@ -157,7 +157,7 @@ public:
 	
 	PhysicPoint<n>& operator= (const PhysicPoint<n>& c)
 	{
-		_position = c._position;
+		this->_position = c._position;
 		_velocity = c._velocity;
 		
 		_mass = c._mass;
@@ -196,9 +196,9 @@ public:
 		return _velocity * _mass;
 	}
 	
-	Vector<n, double> getPosition() const
+	Vector<n, double> getPosition() const 
 	{
-		return _position;
+		return this->_position;
 	}
 
 protected:

@@ -2,12 +2,14 @@
 
 #include "../../system.hpp"
 
-template<int n> class PhysicPoint;
 
 namespace subgine
 {
 namespace physic
 {
+
+template<int> class PhysicPoint;
+
 namespace Rule
 {
 	
