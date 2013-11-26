@@ -2,7 +2,7 @@
 
 namespace subgine
 {
-	template<int n, typename T = double>
+	template<int n, class T = double>
 	class Vector
 	{};
 	

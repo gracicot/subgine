@@ -29,7 +29,7 @@ namespace subgine
 		
 		double getLenght() const
 		{
-			return sqrt(pow2(x) + pow2(y) + pow2(z));
+			return sqrt((x*x) + (y*y) + (z*z));
 		}
 		
 		void setAngles(const Vector<2, double> angles)

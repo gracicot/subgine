@@ -10,7 +10,7 @@ namespace subgine
 	class Vector<2, T>
 	{
 	public:
-		Vector(double _x = 0, double _y = 0) : x(_x), y(_y)
+		Vector(T _x = 0, T _y = 0) : x(_x), y(_y)
 		{
 			
 		}
@@ -33,7 +33,7 @@ namespace subgine
 		
 		double getLenght() const
 		{
-			return sqrt(pow2(x) + pow2(y));
+			return sqrt((x*x) + (y*y));
 		}
 		
 		void setAngle(double angle)
