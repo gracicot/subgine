@@ -5,6 +5,11 @@ namespace subgine
 namespace physic
 {
 
+AbstractPhysicPoint::AbstractPhysicPoint() : _mass(1), _lock(false)
+{
+
+}
+
 void AbstractPhysicPoint::lock(const bool lock)
 {
 	_lock = lock;

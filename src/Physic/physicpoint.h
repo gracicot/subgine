@@ -16,21 +16,6 @@ class PhysicPoint : public AbstractPhysicPoint, public Positionnable<n>, public 
 public:
 	PhysicPoint()
 	{
-		_mass = 1;
-		_lock = false;
-	}
-	
-	PhysicPoint(const PhysicPoint<n>& c)
-	{
-		this->_position = c._position;
-		_velocity = c._velocity;
-		
-		_mass = c._mass;
-		_forces.clear();
-		_forces.insert(c._forces.begin(), c._forces.begin());
-		_pulses.clear();
-		_pulses.insert(c._forces.begin(), c._forces.begin());
-		_lock = c._lock;
 	}
 	
 	~PhysicPoint()

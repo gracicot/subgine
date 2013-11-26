@@ -8,6 +8,8 @@ namespace physic
 class AbstractPhysicPoint
 {
 public:
+	AbstractPhysicPoint();
+	
 	void setMass(const double mass);
 	void lock(const bool lock);
 
