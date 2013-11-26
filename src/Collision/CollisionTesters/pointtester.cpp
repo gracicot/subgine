@@ -13,7 +13,7 @@ PointTester::~PointTester()
 
 }
 
-Results::CollisionResult* PointTester::compareObject(Collisionnable& object1, Collisionnable& object2, double time) const
+Results::CollisionResult* PointTester::compareObject(CollisionBody& object1, CollisionBody& object2, double time) const
 {
 	Point* point = nullptr;
 	Point_able* object = nullptr;

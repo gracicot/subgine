@@ -15,7 +15,7 @@ public:
 	PointTester() = default;
 	virtual ~PointTester();
 
-	virtual Results::CollisionResult* compareObject(Collisionnable& object1, Collisionnable& object2, double time) const;
+	virtual Results::CollisionResult* compareObject(CollisionBody& object1, CollisionBody& object2, double time) const;
 };
 
 }

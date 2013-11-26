@@ -3,14 +3,12 @@
 #include "sat_able.h"
 #include "point_able.h"
 
-class Vector2;
-
 namespace subgine
 {
 namespace collision
 {
 
-class Circle : public virtual SAT_able, public virtual Point_able, public virtual Traits::Radius
+class Circle : public virtual SAT_able, public virtual Point_able, public virtual Traits::Radius, public virtual Traits::Position2
 {
 public:
 	Circle();

@@ -5,9 +5,8 @@ namespace subgine
 namespace collision
 {
 
-Point::Point(Vector2 position)
+Point::Point(std::function< subgine::Vector2(void) > functor) : _functor(functor)
 {
-	_position = position;
 }
 
 Point::~Point()
@@ -17,12 +16,12 @@ Point::~Point()
 
 Point::operator Vector2()
 {
-	return _position;
+	return getPosition();
 }
 
 Vector2 Point::getPosition() const
 {
-	return _position;
+	return _functor();
 }
 
 }

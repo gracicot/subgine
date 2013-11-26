@@ -8,7 +8,7 @@ namespace collision
 namespace Testers
 {
 
-Results::CollisionResult* SatTester::compareObject(Collisionnable& object1, Collisionnable& object2, double time) const
+Results::CollisionResult* SatTester::compareObject(CollisionBody& object1, CollisionBody& object2, double time) const
 {
 	SAT_able* shape1 = dynamic_cast<SAT_able*>(&object1);
 	SAT_able* shape2 = dynamic_cast<SAT_able*>(&object2);

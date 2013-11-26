@@ -6,7 +6,7 @@ namespace subgine
 namespace collision
 {
 
-Polygon::Polygon()
+Polygon::Polygon(std::function< subgine::Vector2(void) > position, std::function< double(void) > angle) : _position(position), _angle(angle)
 {
 
 }
@@ -25,12 +25,12 @@ bool Polygon::isPointInside(Vector2 point) const
 {
 	bool oddNodes = false;
 	Vector2 previous_vertex = *_vertex.rbegin();
-	previous_vertex.setAngle(previous_vertex.getAngle() + _angle);
-	previous_vertex += _position;
+	previous_vertex.setAngle(previous_vertex.getAngle() + getAngle());
+	previous_vertex += getPosition();
 
 	for (Vector2 current_vertex : _vertex) {
-		current_vertex.setAngle(current_vertex.getAngle() + _angle);
-		current_vertex += _position;
+		current_vertex.setAngle(current_vertex.getAngle() + getAngle());
+		current_vertex += getPosition();
 
 		if ((current_vertex.y < point.y && previous_vertex.y >= point.y
 				|| previous_vertex.y < point.y && current_vertex.y >= point.y)
@@ -54,15 +54,15 @@ Vector2 Polygon::projection(double angle) const
 	std::list<Vector2>::const_iterator verticle = _vertex.begin();
 
 	current = *verticle;
-	current.setAngle(_angle + current.getAngle());
+	current.setAngle(getAngle() + current.getAngle());
 
-	result_projection.x = axis.dot(current + _position);
+	result_projection.x = axis.dot(current + getPosition());
 	result_projection.y = result_projection.x;
 
 	for (verticle++ ; verticle != _vertex.end() ; verticle++) {
 		current = *verticle;
-		current.setAngle(_angle + current.getAngle());
-		double p = axis.dot(current + _position);
+		current.setAngle(getAngle() + current.getAngle());
+		double p = axis.dot(current + getPosition());
 
 		if (p < result_projection.x) {
 			result_projection.x = p;
@@ -93,7 +93,7 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 			}
 		}
 	}
-
+	
 	return overlap;
 }
 
@@ -101,10 +101,10 @@ std::vector< double > Polygon::getAngles() const
 {
 	std::vector<double> angles;
 	Vector2 previous = *_vertex.rbegin();
-	previous.setAngle(_angle + previous.getAngle());
+	previous.setAngle(getAngle() + previous.getAngle());
 
 	for (Vector2 current : _vertex) {
-		current.setAngle(_angle + current.getAngle());
+		current.setAngle(getAngle() + current.getAngle());
 		angles.push_back((previous - current).getAngle() - (pi / 2));
 		previous = current;
 	}
@@ -118,15 +118,26 @@ Vector2 Polygon::getNearestPoint(Vector2 point) const
 	nearest.setAngle(pi / 4);
 
 	for (Vector2 current : _vertex) {
-		current.setAngle(_angle + current.getAngle());
+		current.setAngle(getAngle() + current.getAngle());
 
 		if (nearest.getLenght() > (current - point).getLenght()) {
 			nearest = current;
 		}
 	}
 
-	return nearest + _position;
+	return nearest + getPosition();
 }
+
+double Polygon::getAngle() const
+{
+	return _angle();
+}
+
+Vector2 Polygon::getPosition() const
+{
+	return _position();
+}
+
 
 }
 }

@@ -3,7 +3,7 @@
 #include "../../system.hpp"
 
 #include "collisionresult.h"
-#include "../collisionnable.h"
+#include "../collisionbody.h"
 
 namespace subgine
 {

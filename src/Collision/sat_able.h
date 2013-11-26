@@ -1,14 +1,14 @@
 #pragma once
 
 #include "../system.hpp"
-#include "collisionnable.h"
+#include "collisionentity.h"
 
 namespace subgine
 {
 namespace collision
 {
 
-class SAT_able : public virtual Collisionnable, public virtual Traits::Position2
+class SAT_able : public virtual CollisionEntity
 {
 public:
 	SAT_able();

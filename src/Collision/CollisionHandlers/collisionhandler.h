@@ -6,7 +6,7 @@ namespace subgine
 namespace collision
 {
 
-class Collisionnable;
+class CollisionBody;
 namespace Results
 {
 class CollisionResult;
@@ -19,7 +19,7 @@ public:
 	CollisionHandler() = default;
 	virtual ~CollisionHandler();
 
-	virtual void apply(Collisionnable& object, const Collisionnable& other, Results::CollisionResult& result) = 0;
+	virtual void apply(CollisionBody& object, const CollisionBody& other, Results::CollisionResult& result) = 0;
 };
 
 }

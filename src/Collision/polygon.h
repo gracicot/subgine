@@ -9,11 +9,14 @@ namespace subgine
 namespace collision
 {
 
-class Polygon : public virtual SAT_able, public virtual Point_able, public virtual Traits::Vertex, public virtual Traits::Angle
+class Polygon : public virtual SAT_able, public virtual Point_able, public virtual Traits::Vertex
 {
 public:
-	Polygon();
+	Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle);
 	virtual ~Polygon();
+	
+	Vector2 getPosition() const;
+	double getAngle() const;
 
 	virtual Vector2 projection(double angle) const;
 	virtual bool isPointInside(Vector2 point) const;
@@ -24,6 +27,8 @@ public:
 	std::vector< double > getAngles() const;
 
 private:
+	std::function< Vector2(void) > _position;
+	std::function< double(void) > _angle;
 };
 
 }

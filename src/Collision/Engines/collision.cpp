@@ -7,7 +7,7 @@ namespace subgine
 namespace collision
 {
 
-Collision::Collision() : _testers()
+Collision::Collision()
 {
 
 }
@@ -19,110 +19,44 @@ Collision::~Collision()
 
 void Collision::execute(const double time)
 {
+	std::vector<std::tuple<CollisionBody*, Results::CollisionResult*, std::string, CollisionBody*>> results;
+	
 	for (auto test : _objects) {
-
-		Results::CollisionResult* result = std::get<0> (test)->compareObject(*std::get<1> (test), *std::get<2> (test), time);
-
-		if (result != nullptr) {
-			if (result->isColliding()) {
-				std::get<1> (test)->trigger(*std::get<2> (test), result, std::get<0> (test)->getAlias());
-				std::get<2> (test)->trigger(*std::get<1> (test), result, std::get<0> (test)->getAlias());
+		results.push_back(make_tuple(std::get<0> (test), std::get<0> (test)->testObject(*std::get<1> (test), time, std::get<2> (test)), std::get<2> (test), std::get<1>(test)));
+	}
+	
+	for (auto result : results) {
+		if (std::get<1>(result) != nullptr) {
+			if (std::get<1> (result)->isColliding()) {
+				std::get<0> (result)->trigger(*std::get<3> (result), std::get<1> (result), std::get<2> (result));
 			}
-
-			delete result;
+			
+			delete std::get<1> (result);
 		}
 	}
 }
 
-void Collision::add(Collisionnable* object, std::list< std::string > groups)
+void Collision::add(subgine::collision::CollisionBody* object, std::vector<std::string> groups, std::vector< std::string > collisionGroups)
 {
-	for (std::string & group : groups) {
-		_groups[group].push_back(object);
+	for (auto collisionGroup : collisionGroups) {
+		for (auto group : groups) {
+			_groups[group].push_back(std::make_tuple(object, collisionGroup));
+		}
 	}
 
 	makeObjectList();
-}
-
-Testers::CollisionTester& Collision::getTester(const std::string tag)
-{
-	std::map<std::string, Testers::CollisionTester*>::iterator it = _testers.find(tag);
-
-	if (it != _testers.end()) {
-		return *it->second;
-	}
-
-	throw std::out_of_range("No collision tester found with this tag");
-}
-
-const Testers::CollisionTester& Collision::getTester(const std::string tag) const
-{
-	std::map<std::string, Testers::CollisionTester*>::const_iterator it = _testers.find(tag);
-
-	if (it != _testers.end()) {
-		return *it->second;
-	}
-
-	throw std::out_of_range("No collision tester found with this tag");
-}
-
-void Collision::addTester(Testers::CollisionTester* tester, const std::string tag)
-{
-	if (tester == nullptr || tester == 0) {
-		throw std::runtime_error("The tester is null");
-	}
-
-	_testers[tag] = tester;
-
-	makeObjectList();
-}
-
-void Collision::remove(Collisionnable& object)
-{
-	for (auto group : _groups) {
-		group.second.remove(&object);
-	}
-
-	makeObjectList();
-}
-
-void Collision::addTest(std::string tester, std::string group1, std::string group2)
-{
-	_testDefinition.push_back(std::make_tuple(tester, group1, group2));
-}
-
-void Collision::removeTest(std::string tester, std::string group1, std::string group2)
-{
-	std::tuple<std::string, std::string, std::string> toFind = std::make_tuple(tester, group1, group2);
-	std::remove_if(_testDefinition.begin(), _testDefinition.end(), [&](std::tuple<std::string, std::string, std::string> it) -> bool {
-		return it == toFind;
-	});
-}
-
-void Collision::remove(Collisionnable& object, std::list< std::string > groups)
-{
-	for (auto group : groups) {
-		_groups[group].remove(&object);
-	}
-
-	makeObjectList();
-}
-
-void Collision::clear()
-{
-	_groups.clear();
-	_testers.clear();
-	_testDefinition.clear();
-	_objects.clear();
 }
 
 void Collision::makeObjectList()
 {
 	_objects.clear();
 
-	for (auto test : _testDefinition) {
-		for (auto object1 : _groups[std::get<1> (test)]) {
-			for (auto object2 : _groups[std::get<2> (test)]) {
-				_objects.push_back(std::make_tuple(_testers[std::get<0> (test)], object1, object2));
+	for (auto group : _groups) {
+		for (auto object : group.second) {
+			for (auto relatedObject : _groups[std::get<1>(object)]) {
+				if (std::get<0>(object) != std::get<0>(relatedObject)) {
+					_objects.push_back(std::make_tuple(std::get<0>(object), std::get<0>(relatedObject), std::get<1>(object)));
+				}
 			}
 		}
 	}

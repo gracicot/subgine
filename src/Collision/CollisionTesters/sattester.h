@@ -2,7 +2,7 @@
 
 #include "../../system.hpp"
 
-#include "../collisionnable.h"
+#include "../collisionbody.h"
 #include "collisiontester.h"
 #include "../sat_able.h"
 #include "../CollisionResults/satresult.h"
@@ -17,7 +17,7 @@ namespace Testers
 class SatTester : public CollisionTester
 {
 public:
-	Results::CollisionResult* compareObject(subgine::collision::Collisionnable& object1, subgine::collision::Collisionnable& object2, double time) const;
+	Results::CollisionResult* compareObject(subgine::collision::CollisionBody& object1, subgine::collision::CollisionBody& object2, double time) const;
 };
 
 }

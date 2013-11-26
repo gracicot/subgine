@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../collisionnable.h"
+#include "../collisionbody.h"
 #include "../CollisionResults/collisionresult.h"
 
 namespace subgine
@@ -16,8 +16,8 @@ public:
 	CollisionTester() = default;
 	virtual ~CollisionTester();
 
-	virtual Results::CollisionResult* compareObject(Collisionnable& object1, Collisionnable& object2, double time) const = 0;
-	void addObject(Collisionnable& object, double time);
+	virtual Results::CollisionResult* compareObject(CollisionBody& object1, CollisionBody& object2, double time) const = 0;
+	void addObject(CollisionBody& object, double time);
 
 	void setAlias(std::string alias);
 	std::string getAlias() const;
