@@ -40,9 +40,9 @@ public:
 		this->_position = posision;
 	}
 	
-	void updatePosition(const double time)
+	void updatePosition(const Vector<n, double> oldVelocity, const double time)
 	{
-		this->_position += _velocity * time;
+		this->_position += (oldVelocity + _velocity) * time/2;
 	}
 	
 	Rule::Rule<n>& getRule(const std::string tag)
@@ -72,6 +72,14 @@ public:
 		_forces[type] = force;
 	}
 	
+	void updatePhysic(const double time)
+	{
+		Vector<n, double> oldVelocity = _velocity;
+		applyRules();
+		updateVelocity(time);
+		updatePosition(oldVelocity, time);
+	}
+	
 	void updateVelocity(const double time)
 	{
 		for (auto i : _forces) {
@@ -79,8 +87,7 @@ public:
 		}
 		
 		for (auto i : _pulses) {
-			
-			_velocity += i.second / _mass;
+			_velocity += (i.second / _mass);
 		}
 		
 		_pulses.clear();
@@ -150,7 +157,6 @@ public:
 		_forces.insert(c._forces.begin(), c._forces.begin());
 		_pulses.clear();
 		_pulses.insert(c._forces.begin(), c._forces.begin());
-		_lock = c._lock;
 		return *this;
 	}
 	
