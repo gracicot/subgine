@@ -87,7 +87,7 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 		if ((projectionThis.y < projectionOther.x) || projectionThis.x > projectionOther.y) {
 			return Vector2();
 		} else {
-			if (overlap.getLenght() > projectionThis.y - projectionOther.x) {
+			if (overlap.getLength() > projectionThis.y - projectionOther.x) {
 				overlap = {projectionThis.y - projectionOther.x, 0};
 				overlap.setAngle(angle);
 			}
@@ -120,7 +120,7 @@ Vector2 Polygon::getNearestPoint(Vector2 point) const
 	for (Vector2 current : _vertex) {
 		current.setAngle(getAngle() + current.getAngle());
 
-		if (nearest.getLenght() > (current - point).getLenght()) {
+		if (nearest.getLength() > (current - point).getLength()) {
 			nearest = current;
 		}
 	}

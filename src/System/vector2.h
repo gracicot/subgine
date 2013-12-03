@@ -31,7 +31,7 @@ namespace subgine
 			return angle;
 		}
 		
-		double getLenght() const
+		double getLength() const
 		{
 			return sqrt((x*x) + (y*y));
 		}
@@ -39,7 +39,7 @@ namespace subgine
 		void setAngle(double angle)
 		{
 			if (x != 0 || y != 0) {
-				double lenght = getLenght();
+				double lenght = getLength();
 				x = cos(angle) * lenght;
 				y = sin(angle) * lenght;
 			}
@@ -48,7 +48,7 @@ namespace subgine
 		void setLenght(double lenght)
 		{
 			if (x != 0 || y != 0) {
-				double product = lenght / getLenght();
+				double product = lenght / getLength();
 				x *= product;
 				y *= product;
 			} else {
@@ -63,7 +63,7 @@ namespace subgine
 		
 		Vector<2, T> unit() const
 		{
-			double lenght = getLenght();
+			double lenght = getLength();
 			return Vector<2, T>(x / lenght, y / lenght);
 		}
 		
@@ -86,6 +86,12 @@ namespace subgine
 	Vector<2, T> operator/ (const Vector<2, T>& vec, const double& divider)
 	{
 		return Vector<2, T>(vec.x / divider, vec.y / divider);
+	}
+	
+	template<class T>
+	Vector<2, T> operator/ (const Vector<2, T>& vec1, const Vector<2, T>& vec2)
+	{
+		return Vector<2, T>(vec1.x / vec2.x, vec1.y / vec2.y);
 	}
 	
 	template<class T>

@@ -13,7 +13,7 @@ Circle::Circle()
 
 bool Circle::isPointInside(Vector2 point) const
 {
-	return (_position - point).getLenght() < _radius;
+	return (_position - point).getLength() < _radius;
 }
 
 Vector2 Circle::projection(double angle) const
@@ -46,7 +46,7 @@ Vector2 Circle::overlap(const SAT_able& other) const
 	if ((projectionThis.y < projectionOther.x) || projectionThis.x > projectionOther.y) {
 		return Vector2();
 	} else {
-		if (overlap.getLenght() > projectionThis.y - projectionOther.x) {
+		if (overlap.getLength() > projectionThis.y - projectionOther.x) {
 			overlap = {projectionThis.y - projectionOther.x, 0};
 			overlap.setAngle(angle);
 		}

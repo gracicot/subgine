@@ -74,7 +74,7 @@ public:
 	Vector<n, double> getResult(const PhysicPoint<n>& object) const
 	{
 		Vector<n, double> relative = getPosition() - object.getPosition();
-		return relative.unit() * getValue() * (relative.getLenght() - getSize());
+		return relative.unit() * getValue() * (relative.getLength() - getSize());
 	}
 	
 	Vector<n, double> getValue() const

@@ -17,8 +17,8 @@ Results::CollisionResult* SatTester::compareObject(CollisionBody& object1, Colli
 		Vector2 test1 = shape1->overlap(*shape2);
 		Vector2 test2 = shape2->overlap(*shape1);
 
-		if (test1.getLenght() > 0 && test2.getLenght() > 0) {
-			Vector2 shortest = test1.getLenght() < test2.getLenght() ? test1 : test2;
+		if (test1.getLength() > 0 && test2.getLength() > 0) {
+			Vector2 shortest = test1.getLength() < test2.getLength() ? test1 : test2;
 			return new Results::SatResult(true, time, shortest);
 		}
 

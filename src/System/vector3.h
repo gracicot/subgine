@@ -22,12 +22,12 @@ namespace subgine
 		
 		Vector<2, double> getAngles() const
 		{
-			Vector<2, double> angle(atan(y / x), acos(z / getLenght()));
+			Vector<2, double> angle(atan(y / x), acos(z / getLength()));
 			
 			return angle;
 		}
 		
-		double getLenght() const
+		double getLength() const
 		{
 			return sqrt((x*x) + (y*y) + (z*z));
 		}
@@ -35,7 +35,7 @@ namespace subgine
 		void setAngles(const Vector<2, double> angles)
 		{
 			if (x != 0 || y != 0 || z != 0) {
-				double lenght = getLenght();
+				double lenght = getLength();
 				x = sin(angles.y) * cos(angles.x) * lenght;
 				y = sin(angles.x) * sin(angles.y) * lenght;
 				z = cos(angles.y) * lenght;
@@ -45,7 +45,7 @@ namespace subgine
 		void setLenght(double lenght)
 		{
 			if (x != 0 || y != 0 || z != 0) {
-				double product = lenght / getLenght();
+				double product = lenght / getLength();
 				x *= product;
 				y *= product;
 				z *= product;
@@ -56,7 +56,7 @@ namespace subgine
 		
 		Vector<3, T> unit() const
 		{
-			double lenght = getLenght();
+			double lenght = getLength();
 			return Vector<3, T>(x / lenght, y / lenght, z / lenght);
 		}
 		
