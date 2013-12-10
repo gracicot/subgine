@@ -15,6 +15,10 @@ CollisionBody::~CollisionBody()
 	for (auto handler : _collisionhandlers) {
 		delete handler.second;
 	}
+	
+	for (auto entity : _collisionEntities) {
+		delete entity.second;
+	}
 }
 
 void CollisionBody::addCollisionHandler(std::string tag, CollisionHandler* handler)
