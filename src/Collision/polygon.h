@@ -13,7 +13,7 @@ class Polygon : public virtual SAT_able, public virtual Point_able, public virtu
 {
 public:
 	Polygon(subgine::Vector2 position = Vector2(), double angle = 0);
-	Polygon(std::function< subgine::Vector2 > position, double angle = 0);
+	Polygon(std::function< subgine::Vector2(void) > position, double angle = 0);
 	Polygon(Vector2 position, std::function< double(void) > angle);
 	Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle);
 	virtual ~Polygon();
