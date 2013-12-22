@@ -23,6 +23,9 @@ public:
 	
 	void setPosition(std::function< Vector2(void) > position);
 	void setAngle(std::function< double(void) > angle);
+	
+	void setAngle(double angle);
+	void setPosition(Vector2 position);
 
 	virtual Vector2 projection(double angle) const;
 	virtual bool isPointInside(Vector2 point) const;

@@ -13,27 +13,18 @@ Polygon::Polygon(std::function< subgine::Vector2(void) > position, std::function
 
 Polygon::Polygon(Vector2 position, double angle)
 {
-	_position = [position]() -> Vector2 {
-		return position;
-	};
-	
-	_angle = [angle]() -> double {
-		return angle;
-	};
+	setPosition(position);
+	setAngle(angle);
 }
 
 Polygon::Polygon(Vector2 position, std::function< double(void) > angle) : _angle(angle)
 {
-	_position = [position]() -> Vector2 {
-		return position;
-	};
+	setPosition(position);
 }
 
 Polygon::Polygon(std::function< Vector2(void) > position, double angle): _position(position)
 {
-	_angle = [angle]() -> double {
-		return angle;
-	};
+	setAngle(angle);
 }
 
 
@@ -172,6 +163,20 @@ void Polygon::setAngle(std::function< double(void) > angle)
 void Polygon::setPosition(std::function< Vector2(void) > position)
 {
 	_position = position;
+}
+
+void Polygon::setAngle(double angle)
+{
+	_angle = [angle]() -> double {
+		return angle;
+	};
+}
+
+void Polygon::setPosition(Vector2 position)
+{
+	_position = [position]() -> Vector2 {
+		return position;
+	};
 }
 
 }
