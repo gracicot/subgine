@@ -11,6 +11,32 @@ Polygon::Polygon(std::function< subgine::Vector2(void) > position, std::function
 
 }
 
+Polygon::Polygon(Vector2 position, double angle)
+{
+	_position = [position]() -> Vector2 {
+		return position;
+	};
+	
+	_angle = [angle]() -> double {
+		return angle;
+	};
+}
+
+Polygon::Polygon(Vector2 position, std::function< double > angle) : _angle(angle)
+{
+	_position = [position]() -> Vector2 {
+		return position;
+	};
+}
+
+Polygon::Polygon(std::function< Vector2 > position, double angle): _position(position)
+{
+	_angle = [angle]() -> double {
+		return angle;
+	};
+}
+
+
 Polygon::~Polygon()
 {
 
@@ -51,7 +77,7 @@ Vector2 Polygon::projection(double angle) const
 	Vector2 current;
 
 
-	std::list<Vector2>::const_iterator verticle = _vertex.begin();
+	auto verticle = _vertex.begin();
 
 	current = *verticle;
 	current.setAngle(getAngle() + current.getAngle());
@@ -138,6 +164,15 @@ Vector2 Polygon::getPosition() const
 	return _position();
 }
 
+void Polygon::setAngle(std::function< double > angle)
+{
+	_angle = angle;
+}
+
+void Polygon::setPosition(std::function< Vector2 > position)
+{
+	_position = position;
+}
 
 }
 }
