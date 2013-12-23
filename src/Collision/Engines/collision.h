@@ -3,7 +3,6 @@
 #include "../../system.hpp"
 
 #include "../collisionentity.h"
-#include "../CollisionTesters/collisiontester.h"
 
 namespace subgine
 {
