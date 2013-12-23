@@ -27,10 +27,11 @@ public:
 	void setAngle(double angle);
 	void setPosition(Vector2 position);
 
-	virtual Vector2 projection(double angle) const;
-	virtual bool isPointInside(Vector2 point) const;
-	virtual Vector2 overlap(const SAT_able& other) const;
-	virtual Vector2 getNearestPoint(Vector2 point) const;
+	virtual Vector2 projection(double angle) const override;
+	virtual bool isPointInside(Vector2 point) const override;
+	virtual Vector2 overlap(const SAT_able& other) const override;
+	virtual Vector2 getNearestPoint(Vector2 point) const override;
+	virtual CollisionEntity* clone() const override;
 
 	void addPoint(const Vector2 point);
 	std::vector< double > getAngles() const;

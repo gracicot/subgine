@@ -27,6 +27,10 @@ Polygon::Polygon(std::function< Vector2(void) > position, double angle): _positi
 	setAngle(angle);
 }
 
+CollisionEntity* Polygon::clone() const
+{
+	return new Polygon(*this);
+}
 
 Polygon::~Polygon()
 {

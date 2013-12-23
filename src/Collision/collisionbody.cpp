@@ -10,6 +10,17 @@ CollisionBody::CollisionBody()
 
 }
 
+CollisionBody::CollisionBody(const CollisionBody& other)
+{
+	for (auto entity : other._collisionEntities) {
+		_collisionEntities[entity.first] = entity.second->clone();
+	}
+	
+	for (auto handler : _collisionhandlers) {
+		_collisionhandlers[handler.first] = handler.second->clone();
+	}
+}
+
 CollisionBody::~CollisionBody()
 {
 	for (auto handler : _collisionhandlers) {

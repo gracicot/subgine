@@ -29,6 +29,11 @@ Vector2 Circle::projection(double angle) const
 	return Vector2(proj - _radius, proj + _radius);
 }
 
+CollisionEntity* Circle::clone() const
+{
+	return new Circle(*this);
+}
+
 Circle::~Circle()
 {
 

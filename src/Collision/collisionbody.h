@@ -15,6 +15,7 @@ class CollisionBody
 {
 public:
 	CollisionBody();
+	CollisionBody(const CollisionBody& other);
 	virtual ~CollisionBody();
 
 	virtual Results::CollisionResult* testObject(const CollisionBody& other, double time, std::string test) const =0;
