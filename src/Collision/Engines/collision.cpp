@@ -1,6 +1,6 @@
 #include "collision.h"
 
-#include <algorithm>
+#include "../collisionbody.h"
 
 namespace subgine
 {

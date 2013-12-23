@@ -2,12 +2,13 @@
 
 #include "../../system.hpp"
 
-#include "../collisionentity.h"
 
 namespace subgine
 {
 namespace collision
 {
+
+class CollisionBody;
 
 class Collision : public Engine
 {
