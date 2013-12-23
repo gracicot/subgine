@@ -21,9 +21,8 @@ namespace subgine
 		}
 		
 		template<class O>
-		Vector(const Vector< 2 , O > other) : x(other.x), y(other.y)
-		{
-			
+		operator Vector< 2 , O >(){
+			return Vector< 2 , O >(x, y);
 		}
 		
 		double getAngle() const

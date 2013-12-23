@@ -21,9 +21,8 @@ namespace subgine
 		}
 		
 		template<class O>
-		Vector(const Vector< 3 , O > other) : x(other.x), y(other.y), z(other.z)
-		{
-			
+		operator Vector< 3 , O >(){
+			return Vector< 3 , O >(x, y, z);
 		}
 		
 		Vector<2, double> getAngles() const
