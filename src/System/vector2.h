@@ -20,6 +20,12 @@ namespace subgine
 			
 		}
 		
+		template<class O>
+		Vector(const Vector< 2 , O > other) : x(other.x), y(other.y)
+		{
+			
+		}
+		
 		double getAngle() const
 		{
 			double angle = atan2(y, x);

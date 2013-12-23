@@ -20,6 +20,12 @@ namespace subgine
 			
 		}
 		
+		template<class O>
+		Vector(const Vector< 3 , O > other) : x(other.x), y(other.y), z(other.z)
+		{
+			
+		}
+		
 		Vector<2, double> getAngles() const
 		{
 			Vector<2, double> angle(atan(y / x), acos(z / getLength()));
