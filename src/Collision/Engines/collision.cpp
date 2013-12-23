@@ -38,8 +38,8 @@ void Collision::execute(const double time)
 
 void Collision::add(subgine::collision::CollisionBody* object, std::vector<std::string> groups, std::vector< std::string > collisionGroups)
 {
-	for (auto collisionGroup : collisionGroups) {
-		for (auto group : groups) {
+	for (auto group : groups) {
+		for (auto collisionGroup : collisionGroups) {
 			_groups[group].push_back(std::make_tuple(object, collisionGroup));
 		}
 	}
