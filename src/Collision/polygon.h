@@ -33,6 +33,7 @@ public:
 	virtual Vector2 getNearestPoint(Vector2 point) const override;
 	virtual CollisionEntity* clone() const override;
 
+	std::list<Vector2> getVertex() const;
 	void addPoint(const Vector2 point);
 	std::vector< double > getAngles() const;
 

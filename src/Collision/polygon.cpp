@@ -97,6 +97,10 @@ Vector2 Polygon::projection(double angle) const
 
 Vector2 Polygon::overlap(const SAT_able& other) const
 {
+	if (_vertex.size() == 0) {
+		return Vector2();
+	}
+	
 	Vector2 overlap;
 	overlap.setLenght(std::numeric_limits< double >().max());
 	overlap.setAngle(pi / 4);
@@ -181,6 +185,11 @@ void Polygon::setPosition(Vector2 position)
 	_position = [position]() -> Vector2 {
 		return position;
 	};
+}
+
+std::list< Vector2 > Polygon::getVertex() const
+{
+	return _vertex;
 }
 
 }
