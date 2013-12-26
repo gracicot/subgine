@@ -3,6 +3,8 @@ subgine
 
 A simple async physic engine made from scratch working with multiple sub-engine
 
+Subgine has not achieved a stable release yet, so use it at your own risks!
+
 subgine is released under the MIT license.
 
 The MIT License (MIT)
