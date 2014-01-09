@@ -43,6 +43,17 @@ public:
 	void updatePosition(const Vector<n, double> oldVelocity, const double time)
 	{
 		this->_position += (oldVelocity + _velocity) * time/2;
+		
+		for (auto& correctionList : _corrections) {
+			Vector<n, double> average;
+			for (Vector<n, double>& correction : correctionList.second) {
+				average += correction;
+			}
+			average / correctionList.second.size();
+			
+			this->_position += average;
+			correctionList.second.clear();
+		}
 	}
 	
 	Rule::Rule<n>& getRule(const std::string tag)
@@ -191,12 +202,18 @@ public:
 	{
 		return this->_position;
 	}
+	
+	void correctPosition(const std::string profile, const Vector<n, double> amount)
+	{
+		_corrections[profile].push_back(amount);
+	}
 
 protected:
 	Vector<n, double> _velocity;
 	std::map<std::string, Vector<n, double>> _pulses;
 	std::map<std::string, Rule::Rule<n>*> _rules;
 	std::map<std::string, Vector<n, double>> _forces;
+	std::map<std::string, std::vector<Vector<n, double>>> _corrections;
 
 };
 
