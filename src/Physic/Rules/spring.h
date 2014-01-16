@@ -23,7 +23,7 @@ public:
 		
 	}
 	
-	Spring(const Vector<n, double> value, const double size, const Vector<n, double> position) : _value(value), _size(size), _functor(nullptr), _position(position)
+	Spring(const Vector<n, double> value, const double size = 0, const Vector<n, double> position = Vector<n, double>()) : _value(value), _size(size), _functor(nullptr), _position(position)
 	{
 		
 	}
