@@ -9,6 +9,7 @@
 #include "System/vector.h"
 #include "System/vector2.h"
 #include "System/vector3.h"
+#include "System/vector4.h"
 
 #include "System/Traits/position.h"
 #include "System/Traits/vertex.h"

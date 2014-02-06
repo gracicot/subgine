@@ -1,5 +1,8 @@
+#pragma once
 
+#include "../const.h"
 #include "../vector2.h"
+
 namespace subgine
 {
 namespace Traits

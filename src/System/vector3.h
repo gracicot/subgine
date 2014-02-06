@@ -1,6 +1,7 @@
 #pragma once
 
-#include "const.h"
+#include <ostream>
+#include <cmath>
 #include "vector.h"
 #include "vector2.h"
 
@@ -10,7 +11,12 @@ namespace subgine
 	class Vector<3, T>
 	{
 	public:
-		Vector(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z)
+		Vector() : x(0), y(0), z(0)
+		{
+			
+		}
+		
+		Vector(T _x, T _y, T _z) : x(_x), y(_y), z(_z)
 		{
 			
 		}
@@ -22,17 +28,15 @@ namespace subgine
 		
 		template<class O>
 		operator Vector< 3 , O >(){
-			return Vector< 3 , O >(x, y, z);
+			return Vector< 3 , O >((O)x, (O)y, (O)z);
 		}
 		
-		Vector<2, double> getAngles() const
+		inline Vector<2, double> getAngles() const
 		{
-			Vector<2, double> angle(atan(y / x), acos(z / getLength()));
-			
-			return angle;
+			return Vector<2, double>(atan(y / x), acos(z / getLength()));
 		}
 		
-		double getLength() const
+		inline double getLength() const
 		{
 			return sqrt((x*x) + (y*y) + (z*z));
 		}
@@ -59,10 +63,20 @@ namespace subgine
 			}
 		}
 		
+		inline Vector<3, T> project(Vector<3, T> other) const
+		{
+			return (this->dot(other.unit())) * other;
+		}
+		
 		Vector<3, T> unit() const
 		{
 			double lenght = getLength();
 			return Vector<3, T>(x / lenght, y / lenght, z / lenght);
+		}
+		
+		inline double dot(const Vector<3, T>& vec) const
+		{
+			return (x * vec.x) + (y * vec.y) + (z * vec.z);
 		}
 		
 		//Operators
@@ -79,19 +93,19 @@ namespace subgine
 	};
 	
 	template<class T>
-	Vector<3, T> operator/ (const Vector<3, T>& vec, const double& divider)
+	inline Vector<3, T> operator/ (const Vector<3, T>& vec, const double& divider)
 	{
 		return Vector<3, T>(vec.x / divider, vec.y / divider, vec.z / divider);
 	}
 	
 	template<class T>
-	Vector<3, T> operator* (const Vector<3, T>& vec, const double& multiplier)
+	inline Vector<3, T> operator* (const Vector<3, T>& vec, const double& multiplier)
 	{
 		return Vector<3, T>(vec.x * multiplier, vec.y * multiplier, vec.z * multiplier);
 	}
 	
 	template<class T>
-	Vector<3, T> operator* (const double& multiplier, const Vector<3, T>& vec)
+	inline Vector<3, T> operator* (const double& multiplier, const Vector<3, T>& vec)
 	{
 		return Vector<3, T>(vec.x * multiplier, vec.y * multiplier, vec.z * multiplier);
 	}
@@ -106,7 +120,7 @@ namespace subgine
 	}
 	
 	template<class T>
-	Vector<3, T> operator+ (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
+	inline Vector<3, T> operator+ (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
 	{
 		return Vector<3, T>(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z);
 	}
@@ -121,7 +135,7 @@ namespace subgine
 	}
 	
 	template<class T>
-	Vector<3, T> operator- (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
+	inline Vector<3, T> operator- (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
 	{
 		return Vector<3, T>(vec1.x - vec2.x, vec1.y - vec2.y, vec1.z - vec2.z);
 	}
@@ -145,13 +159,13 @@ namespace subgine
 	}
 	
 	template<class T>
-	Vector<3, T> operator* (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
+	inline Vector<3, T> operator* (const Vector<3, T>& vec1, const Vector<3, T>& vec2)
 	{
 		return Vector<3, T>(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
 	}
 	
 	template<class T>
-	Vector<3, T> operator- (const Vector<3, T>& vec)
+	inline Vector<3, T> operator- (const Vector<3, T>& vec)
 	{
 		return Vector<3, T>(-vec.x, -vec.y, -vec.z);
 	}
@@ -167,4 +181,5 @@ namespace subgine
 	typedef Vector<3, float> Vector3f;
 	typedef Vector<3, double> Vector3d;
 	typedef Vector<3, int> Vector3i;
+	typedef Vector<3, unsigned int> Vector3ui;
 }

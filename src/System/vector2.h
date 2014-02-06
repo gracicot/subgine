@@ -1,6 +1,8 @@
 #pragma once
 
-#include "const.h"
+#include <ostream>
+#include <cmath>
+
 #include "vector.h"
 
 namespace subgine
@@ -10,7 +12,12 @@ namespace subgine
 	class Vector<2, T>
 	{
 	public:
-		Vector(T _x = 0, T _y = 0) : x(_x), y(_y)
+		Vector() : x(0), y(0)
+		{
+			
+		}
+		
+		Vector(T _x, T _y) : x(_x), y(_y)
 		{
 			
 		}
@@ -22,7 +29,7 @@ namespace subgine
 		
 		template<class O>
 		operator Vector< 2 , O >(){
-			return Vector< 2 , O >(x, y);
+			return Vector< 2 , O >((O)x, (O)y);
 		}
 		
 		double getAngle() const
@@ -173,4 +180,5 @@ namespace subgine
 	typedef Vector<2, float> Vector2f;
 	typedef Vector<2, double> Vector2d;
 	typedef Vector<2, int> Vector2i;
+	typedef Vector<2, unsigned int> Vector2ui;
 }
