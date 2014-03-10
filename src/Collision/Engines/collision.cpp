@@ -19,19 +19,17 @@ Collision::~Collision()
 
 void Collision::execute(const double time)
 {
-	std::vector<std::tuple<CollisionBody*, Results::CollisionResult*, std::string, CollisionBody*>> results;
+	std::vector<std::tuple<CollisionBody*, std::unique_ptr<Results::CollisionResult>, std::string, CollisionBody*>> results;
 	
 	for (auto test : _objects) {
-		results.push_back(make_tuple(std::get<0> (test), std::get<0> (test)->testObject(*std::get<1> (test), time, std::get<2> (test)), std::get<2> (test), std::get<1>(test)));
+		results.push_back(make_tuple(std::get<0> (test), std::move(std::get<0> (test)->testObject(*std::get<1> (test), time, std::get<2> (test))), std::get<2> (test), std::get<1>(test)));
 	}
 	
-	for (auto result : results) {
-		if (std::get<1>(result) != nullptr) {
+	for (auto& result : results) {
+		if (std::get<1>(result)) {
 			if (std::get<1> (result)->isColliding()) {
-				std::get<0> (result)->trigger(*std::get<3> (result), std::get<1> (result), std::get<2> (result));
+				std::get<0> (result)->trigger(*std::get<3> (result), std::move(std::get<1> (result)), std::get<2> (result));
 			}
-			
-			delete std::get<1> (result);
 		}
 	}
 }

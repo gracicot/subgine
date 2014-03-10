@@ -37,7 +37,7 @@ void CollisionBody::addCollisionHandler(std::string tag, CollisionHandler* handl
 	_collisionhandlers[tag] = handler;
 }
 
-void CollisionBody::trigger(const subgine::collision::CollisionBody& other, subgine::collision::Results::CollisionResult* result, std::string tag)
+void CollisionBody::trigger(const subgine::collision::CollisionBody& other, std::unique_ptr< subgine::collision::Results::CollisionResult > result, std::string tag)
 {
 	auto it = _collisionhandlers.find(tag);
 
