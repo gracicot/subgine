@@ -38,7 +38,7 @@ namespace subgine
 		
 		void setLenght(double lenght)
 		{
-			if (x != 0 || y != 0 || z != 0 || w != 0) {
+			if (notZero()) {
 				double product = lenght / getLength();
 				x *= product;
 				y *= product;
@@ -54,10 +54,20 @@ namespace subgine
 			return (this->dot(other.unit())) * other;
 		}
 		
+		bool notZero() const
+		{
+			return x != 0 || y != 0 || z != 0 || w != 0;
+		}
+		
 		Vector<4, T> unit() const
 		{
-			double lenght = getLength();
-			return Vector<4, T>(x / lenght, y / lenght,  z / lenght,  w / lenght);
+			if (notZero()) {
+				double lenght = getLength();
+				
+				return Vector<4, T>(x / lenght, y / lenght,  z / lenght,  w / lenght);
+			} else {
+				return Vector< 4 , T >(0, 0, 0, 0);
+			}
 		}
 		
 		inline double dot(const Vector<4, T>& vec) const

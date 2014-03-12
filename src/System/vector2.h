@@ -50,7 +50,7 @@ namespace subgine
 		
 		void setAngle(double angle)
 		{
-			if (x != 0 || y != 0) {
+			if (notZero()) {
 				double lenght = getLength();
 				x = cos(angle) * lenght;
 				y = sin(angle) * lenght;
@@ -59,7 +59,7 @@ namespace subgine
 		
 		void setLenght(double lenght)
 		{
-			if (x != 0 || y != 0) {
+			if (notZero()) {
 				double product = lenght / getLength();
 				x *= product;
 				y *= product;
@@ -73,10 +73,20 @@ namespace subgine
 			return (this->dot(other.unit())) * other;
 		}
 		
+		bool notZero() const
+		{
+			return x != 0 || y != 0;
+		}
+		
 		Vector<2, T> unit() const
 		{
-			double lenght = getLength();
-			return Vector<2, T>(x / lenght, y / lenght);
+			if (notZero()) {
+				double lenght = getLength();
+				
+				return Vector<2, T>(x / lenght, y / lenght);
+			} else {
+				return Vector< 2 , T >(0, 0);
+			}
 		}
 		
 		double dot(const Vector<2, T>& vec) const
