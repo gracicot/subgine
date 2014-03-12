@@ -20,14 +20,16 @@ public:
 
 	virtual std::unique_ptr<Results::CollisionResult> testObject(const CollisionBody& other, double time, std::string test) const =0;
 	void removeCollisionHandler(std::string tag);
-	void addCollisionHandler(std::string tag, CollisionHandler* handler);
+	void addCollisionHandler(std::string tag, std::shared_ptr<CollisionHandler> handler);
 	CollisionEntity& getCollisionEntity(std::string tag);
 	const CollisionEntity& getCollisionEntity(std::string tag) const;
+	void removeCollisionEntity(std::string tag);
+	void addCollisionEntity(std::string tag, std::shared_ptr<CollisionEntity> handler);
 	void trigger(const CollisionBody& other, std::unique_ptr<Results::CollisionResult> result, std::string tag);
 
-protected:
-	std::map<std::string, CollisionHandler*> _collisionhandlers;
-	std::map<std::string, CollisionEntity*> _collisionEntities;
+private:
+	std::map<std::string, std::shared_ptr<CollisionHandler>> _collisionhandlers;
+	std::map<std::string, std::shared_ptr<CollisionEntity>> _collisionEntities;
 };
 
 

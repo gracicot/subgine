@@ -13,26 +13,20 @@ CollisionBody::CollisionBody()
 CollisionBody::CollisionBody(const CollisionBody& other)
 {
 	for (auto entity : other._collisionEntities) {
-		_collisionEntities[entity.first] = entity.second->clone();
+		_collisionEntities[entity.first] = std::shared_ptr<CollisionEntity>(entity.second->clone());
 	}
 	
 	for (auto handler : _collisionhandlers) {
-		_collisionhandlers[handler.first] = handler.second->clone();
+		_collisionhandlers[handler.first] = std::shared_ptr<CollisionHandler>(handler.second->clone());
 	}
 }
 
 CollisionBody::~CollisionBody()
 {
-	for (auto handler : _collisionhandlers) {
-		delete handler.second;
-	}
 	
-	for (auto entity : _collisionEntities) {
-		delete entity.second;
-	}
 }
 
-void CollisionBody::addCollisionHandler(std::string tag, CollisionHandler* handler)
+void CollisionBody::addCollisionHandler(std::string tag, std::shared_ptr< subgine::collision::CollisionHandler > handler)
 {
 	_collisionhandlers[tag] = handler;
 }
@@ -55,6 +49,21 @@ CollisionEntity& CollisionBody::getCollisionEntity(std::string tag)
 	}
 	
 	throw std::out_of_range("CollisionEntity with tag \"" + tag + "\" not found...");
+}
+
+void CollisionBody::addCollisionEntity(std::string tag, std::shared_ptr< CollisionEntity > handler)
+{
+	_collisionEntities[tag] = handler;
+}
+
+void CollisionBody::removeCollisionEntity(std::string tag)
+{
+	_collisionEntities.erase(tag);
+}
+
+void CollisionBody::removeCollisionHandler(std::string tag)
+{
+	_collisionhandlers.erase(tag);
 }
 
 const CollisionEntity& CollisionBody::getCollisionEntity(std::string tag) const
