@@ -12,18 +12,24 @@ namespace collision
 class Polygon : public virtual SAT_able, public virtual Point_able, public virtual Traits::Vertex
 {
 public:
-	Polygon(subgine::Vector2 position = Vector2(), double angle = 0);
-	Polygon(std::function< subgine::Vector2(void) > position, double angle = 0);
-	Polygon(Vector2 position, std::function< double(void) > angle);
-	Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle);
+	Polygon(Vector2 position = Vector2(), double angle = 0, Vector2 estimatedVector = Vector2());
+	Polygon(std::function< Vector2(void) > position, double angle, Vector2 estimatedVector = Vector2());
+	Polygon(std::function< Vector2(void) > position, double angle, std::function< Vector2(void) > estimatedVector);
+	Polygon(Vector2 position, std::function< double(void) > angle, Vector2 estimatedVector = Vector2());
+	Polygon(Vector2 position, std::function< double(void) > angle, std::function< Vector2(void) > estimatedVector);
+	Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle, Vector2 estimatedVector = Vector2());
+	Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle, std::function< Vector2(void) > estimatedVector);
 	virtual ~Polygon();
 	
 	Vector2 getPosition() const;
 	double getAngle() const;
+	Vector2 getEstimatedVector() const;
 	
 	void setPosition(std::function< Vector2(void) > position);
 	void setAngle(std::function< double(void) > angle);
+	void setEstimatedVector(std::function< Vector2(void) > estimatedVector);
 	
+	void setEstimatedVector(Vector2 estimatedVector);
 	void setAngle(double angle);
 	void setPosition(Vector2 position);
 
@@ -40,6 +46,7 @@ public:
 private:
 	std::function< Vector2(void) > _position;
 	std::function< double(void) > _angle;
+	std::function< Vector2(void) > _estimatedVector;
 };
 
 }

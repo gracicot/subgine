@@ -6,25 +6,45 @@ namespace subgine
 namespace collision
 {
 
-Polygon::Polygon(std::function< subgine::Vector2(void) > position, std::function< double(void) > angle) : _position(position), _angle(angle)
+Polygon::Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle, std::function< Vector2(void) > estimatedVector): _position(position), _angle(angle), _estimatedVector(estimatedVector)
 {
 
 }
 
-Polygon::Polygon(Vector2 position, double angle)
+
+Polygon::Polygon(Vector2 position, double angle, Vector2 estimatedVector)
 {
 	setPosition(position);
 	setAngle(angle);
+	setEstimatedVector(estimatedVector);
 }
 
-Polygon::Polygon(Vector2 position, std::function< double(void) > angle) : _angle(angle)
+Polygon::Polygon(std::function< Vector2(void) > position, double angle, std::function< Vector2(void) > estimatedVector): _position(position), _estimatedVector(estimatedVector)
+{
+	setAngle(angle);
+}
+
+Polygon::Polygon(Vector2 position, std::function< double(void) > angle, Vector2 estimatedVector): _angle(angle)
+{
+	setPosition(position);
+	setEstimatedVector(estimatedVector);
+}
+
+Polygon::Polygon(Vector2 position, std::function< double(void) > angle, std::function< Vector2(void) > estimatedVector): _angle(angle), _estimatedVector(estimatedVector)
 {
 	setPosition(position);
 }
 
-Polygon::Polygon(std::function< Vector2(void) > position, double angle): _position(position)
+Polygon::Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle, Vector2 estimatedVector): _position(position), _angle(angle)
+{
+	setEstimatedVector(estimatedVector);
+}
+
+
+Polygon::Polygon(std::function< Vector2(void) > position, double angle, Vector2 estimatedVector): _position(position)
 {
 	setAngle(angle);
+	setEstimatedVector(estimatedVector);
 }
 
 CollisionEntity* Polygon::clone() const
@@ -113,6 +133,9 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 			return Vector2();
 		} else {
 			if (overlap.getLength() > projectionThis.y - projectionOther.x) {
+				if (getEstimatedVector().notZero()) {
+					// code with estimation
+				}
 				overlap = {projectionThis.y - projectionOther.x, 0};
 				overlap.setAngle(angle);
 			}
@@ -190,6 +213,23 @@ void Polygon::setPosition(Vector2 position)
 std::list< Vector2 > Polygon::getVertex() const
 {
 	return _vertex;
+}
+
+void Polygon::setEstimatedVector(std::function< Vector2(void) > estimatedVector)
+{
+	_estimatedVector = estimatedVector;
+}
+
+void Polygon::setEstimatedVector(Vector2 estimatedVector)
+{
+	_estimatedVector = [estimatedVector]() -> Vector2 {
+		return estimatedVector;
+	};
+}
+
+Vector2 Polygon::getEstimatedVector() const
+{
+	return _estimatedVector().unit();
 }
 
 }
