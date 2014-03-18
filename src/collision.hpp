@@ -2,7 +2,8 @@
 
 #include "system.hpp"
 
-#include "Collision/collisionnable.h"
+#include "Collision/collisionbody.h"
+#include "Collision/collisionentity.h"
 #include "Collision/sat_able.h"
 #include "Collision/point_able.h"
 #include "Collision/line.h"
@@ -14,9 +15,5 @@
 
 #include "Collision/CollisionResults/collisionresult.h"
 #include "Collision/CollisionResults/satresult.h"
-
-#include "Collision/CollisionTesters/collisiontester.h"
-#include "Collision/CollisionTesters/sattester.h"
-#include "Collision/CollisionTesters/pointtester.h"
 
 #include "Collision/Engines/collision.h"
