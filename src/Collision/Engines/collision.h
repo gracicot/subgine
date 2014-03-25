@@ -1,7 +1,9 @@
 #pragma once
 
-#include "../../system.hpp"
+#include <map>
+#include <vector>
 
+#include "../../system.hpp"
 
 namespace subgine
 {

@@ -2,6 +2,8 @@
 
 #include "../system.hpp"
 
+#include <vector>
+#include <map>
 #include "abstractphysicpoint.h"
 #include "Rules/rule.h"
 
@@ -93,15 +95,35 @@ public:
 	
 	void updateVelocity(const double time)
 	{
-		for (auto i : _forces) {
-			_velocity += (i.second / _mass) * time;
+		_velocity = getNextVelocity(time);
+		
+		_pulses.clear();
+	}
+	
+	Vector<n, double> getNextVelocity(const double time) const
+	{
+		Vector<n, double> velocity = _velocity;
+		
+		for (auto i : this->getNextForce()) {
+			velocity += (i.second / _mass) * time;
 		}
 		
 		for (auto i : _pulses) {
-			_velocity += (i.second / _mass);
+			velocity += (i.second / _mass);
 		}
 		
-		_pulses.clear();
+		return velocity;
+	}
+	
+	std::map<std::string, Vector<n, double>> getNextForce() const
+	{
+		auto forces = _forces;
+		
+		for (auto i : _rules) {
+			forces[i.first] = i.second->getResult(*this);
+		}
+		
+		return forces;
 	}
 	
 	Vector<n, double> getPulse(const std::string type) const
@@ -142,9 +164,7 @@ public:
 	
 	void applyRules()
 	{
-		for (auto i : _rules) {
-			setForce(i.first, i.second->getResult(*this));
-		}
+		_forces = getNextForce();
 	}
 	
 	Vector<n, double> getForce(const std::string type) const

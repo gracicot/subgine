@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../const.h"
+#include <list>
+
 #include "../vector2.h"
 
 namespace subgine

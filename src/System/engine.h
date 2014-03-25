@@ -1,6 +1,5 @@
 #pragma once
 
-#include "const.h"
 namespace subgine
 {
 class Engine

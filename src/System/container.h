@@ -1,5 +1,7 @@
 #pragma once
 
+#include <list>
+
 template<class T> class Storage;
 
 template<class T> class Container

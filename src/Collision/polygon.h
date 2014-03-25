@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "../system.hpp"
 #include "sat_able.h"
 #include "point_able.h"

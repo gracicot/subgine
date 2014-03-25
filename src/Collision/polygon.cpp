@@ -1,4 +1,5 @@
 #include "polygon.h"
+
 #include <limits>
 
 namespace subgine
@@ -141,7 +142,6 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 			}
 		}
 	}
-	
 	return overlap;
 }
 
