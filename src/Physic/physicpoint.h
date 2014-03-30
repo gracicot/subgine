@@ -42,22 +42,6 @@ public:
 		this->_position = posision;
 	}
 	
-	void updatePosition(const Vector<n, double> oldVelocity, const double time)
-	{
-		this->_position += (oldVelocity + _velocity) * time/2;
-		
-		for (auto& correctionList : _corrections) {
-			Vector<n, double> average;
-			for (Vector<n, double>& correction : correctionList.second) {
-				average += correction;
-			}
-			average / correctionList.second.size();
-			
-			this->_position += average;
-			correctionList.second.clear();
-		}
-	}
-	
 	Rule::Rule<n>& getRule(const std::string tag)
 	{
 		auto it = _rules.find(tag);
@@ -87,24 +71,18 @@ public:
 	
 	void updatePhysic(const double time)
 	{
-		Vector<n, double> oldVelocity = _velocity;
-		applyRules();
-		updateVelocity(time);
-		updatePosition(oldVelocity, time);
-	}
-	
-	void updateVelocity(const double time)
-	{
+		this->_position = getNextPosition(time);
+		_corrections.clear();
 		_velocity = getNextVelocity(time);
-		
 		_pulses.clear();
+		_forces = getNextForces();
 	}
 	
 	Vector<n, double> getNextVelocity(const double time) const
 	{
 		Vector<n, double> velocity = _velocity;
 		
-		for (auto i : this->getNextForce()) {
+		for (auto i : this->getNextForces()) {
 			velocity += (i.second / _mass) * time;
 		}
 		
@@ -115,7 +93,24 @@ public:
 		return velocity;
 	}
 	
-	std::map<std::string, Vector<n, double>> getNextForce() const
+	Vector<n, double> getNextPosition(const double time) const
+	{
+		Vector<n, double> position = this->_position + (_velocity + getNextVelocity(time)) * time/2;
+		
+		for (auto& correctionList : _corrections) {
+			Vector<n, double> average;
+			for (auto& correction : correctionList.second) {
+				average += correction;
+			}
+			average / correctionList.second.size();
+			
+			position += average;
+		}
+		
+		return position;
+	}
+	
+	std::map<std::string, Vector<n, double>> getNextForces() const
 	{
 		auto forces = _forces;
 		
@@ -160,11 +155,6 @@ public:
 	std::map<std::string, Vector<n, double>>& getPulse()
 	{
 		return _pulses;
-	}
-	
-	void applyRules()
-	{
-		_forces = getNextForce();
 	}
 	
 	Vector<n, double> getForce(const std::string type) const
