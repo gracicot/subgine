@@ -1,5 +1,6 @@
 #include "mainengine.h"
 
+#include <iostream>
 #include <ratio>
 #include <chrono>
 #include <ctime>
@@ -38,8 +39,12 @@ void MainEngine::runSync()
 	_time = chrono::duration_cast<chrono::duration<double, ratio<1, 1>>> (chrono::high_resolution_clock::now() - _timer).count() * _speed * 10.0;
 	_timer = chrono::high_resolution_clock::now();
 
+// 	auto timer2 = chrono::high_resolution_clock::now();
+
 	for (auto engines : _engineList) {
 		engines.second->execute(_time);
+// 		cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
+// 		timer2 = chrono::high_resolution_clock::now();
 	}
 }
 
