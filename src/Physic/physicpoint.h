@@ -159,9 +159,9 @@ public:
 	
 	Vector<n, double> getForce(const std::string type) const
 	{
-		auto force = _pulses.find(type);
+		auto force = _forces.find(type);
 		
-		if (force == _pulses.end()) {
+		if (force == _forces.end()) {
 			return Vector<n, double>();
 		}
 		
