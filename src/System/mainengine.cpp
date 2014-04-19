@@ -3,7 +3,6 @@
 #include <iostream>
 #include <ratio>
 #include <chrono>
-#include <ctime>
 
 #include "engine.h"
 
@@ -40,7 +39,7 @@ void MainEngine::runSync()
 	_timer = chrono::high_resolution_clock::now();
 
 // 	auto timer2 = chrono::high_resolution_clock::now();
-	int precision = 1;
+	int precision = 5;
 	
 	for (int i = 0 ; i<precision ; i++)
 		for (auto engines : _engineList) {
@@ -50,7 +49,7 @@ void MainEngine::runSync()
 		}
 }
 
-Engine& MainEngine::addEngine(const string alias, Engine* e)
+void MainEngine::addEngine(const string alias, Engine* e)
 {
 	_engineList[alias] = e;
 }

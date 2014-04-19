@@ -2,8 +2,6 @@
 
 #include <map>
 #include <thread>
-#include <mutex>
-
 
 namespace subgine
 {
@@ -25,7 +23,7 @@ public:
 	Engine& getEngine(const std::string tag);
 	const Engine& getEngine(const std::string tag) const;
 
-	Engine& addEngine(const std::string alias, Engine* e);
+	void addEngine(const std::string alias, Engine* e);
 
 	void run();
 	void runSync();
