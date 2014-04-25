@@ -1,6 +1,7 @@
 #include "polygon.h"
 
 #include <limits>
+#include <iostream>
 
 namespace subgine
 {
@@ -75,8 +76,8 @@ bool Polygon::isPointInside(Vector2 point) const
 		current_vertex += getPosition();
 
 		if ((current_vertex.y < point.y && previous_vertex.y >= point.y
-				|| previous_vertex.y < point.y && current_vertex.y >= point.y)
-				&& (current_vertex.x <= point.x || previous_vertex.x <= point.x)) {
+		        || previous_vertex.y < point.y && current_vertex.y >= point.y)
+		        && (current_vertex.x <= point.x || previous_vertex.x <= point.x)) {
 			oddNodes ^= (current_vertex.x + (point.y - current_vertex.y) / (previous_vertex.y - current_vertex.y) * (previous_vertex.x - current_vertex.x) < point.x);
 		}
 
@@ -121,7 +122,7 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 	if (_vertex.size() == 0) {
 		return Vector2();
 	}
-	
+
 	Vector2 overlap;
 	overlap.setLenght(std::numeric_limits< double >().max());
 	overlap.setAngle(pi / 4);
@@ -137,11 +138,13 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 				if (getEstimatedVector().notZero()) {
 					// code with estimation
 				}
+
 				overlap = {projectionThis.y - projectionOther.x, 0};
 				overlap.setAngle(angle);
 			}
 		}
 	}
+
 	return overlap;
 }
 
@@ -231,6 +234,63 @@ Vector2 Polygon::getEstimatedVector() const
 {
 	return _estimatedVector().unit();
 }
+
+Vector2d Polygon::boxOverlap(const AABB_able& other) const
+{
+	if (
+		getBoundingBox().second.x < other.getBoundingBox().first.x ||
+		getBoundingBox().second.y < other.getBoundingBox().first.y ||
+		getBoundingBox().first.x > other.getBoundingBox().second.x ||
+		getBoundingBox().first.y > other.getBoundingBox().second.y
+	   ) {
+			const Vector2& amin = getBoundingBox().first;
+            const Vector2& amax = getBoundingBox().second;
+            const Vector2& bmin = other.getBoundingBox().first;
+            const Vector2& bmax = other.getBoundingBox().second;
+ 
+            Vector2 mtd;
+ 
+            double left = (bmin.x - amax.x);
+            double right = (bmax.x - amin.x);
+            double top = (bmin.y - amax.y);
+            double bottom = (bmax.y - amin.y);
+ 
+            if (std::abs(left) < right) {
+                mtd.x = left;
+			} else {
+                mtd.x = right;
+			}
+			
+            if (std::abs(top) < bottom) {
+                mtd.y = top;
+			} else {
+                mtd.y = bottom;
+			}
+ 
+            if (std::abs(mtd.x) < std::abs(mtd.y)) {
+                mtd.x = 0;
+			} else {
+                mtd.x = 0;
+			}
+			
+            return mtd;
+	} else{
+		return Vector2d();
+	}
+}
+
+std::pair< Vector2d, Vector2d > Polygon::getBoundingBox() const
+{
+	Vector2d max;
+
+	for (auto & vertex : getVertex()) {
+		max.x = std::max(max.x, std::abs(vertex.x));
+		max.y = std::max(max.y, std::abs(vertex.y));
+	}
+
+	return std::pair<Vector2d, Vector2d>((-1 * max) + getPosition(), max + getPosition());
+}
+
 
 }
 }

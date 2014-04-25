@@ -1,5 +1,9 @@
 #pragma once
 
+namespace subgine
+{
+namespace collision
+{
 class CollisionEntity
 {
 public:
@@ -7,3 +11,6 @@ public:
 	virtual CollisionEntity* clone() const =0;
 	virtual ~CollisionEntity();
 };
+
+}
+}

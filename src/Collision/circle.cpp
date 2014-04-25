@@ -67,5 +67,15 @@ Vector2 Circle::getNearestPoint(Vector2 point) const
 	return nearest + _position;
 }
 
+Vector2d Circle::boxOverlap(const AABB_able& other) const
+{
+	return {};
+}
+
+std::pair< Vector2d, Vector2d > Circle::getBoundingBox() const
+{
+	return {};
+}
+
 }
 }
