@@ -27,13 +27,14 @@ namespace subgine
 		}
 		
 		template<class O>
-		operator Vector< 4 , O >(){
+		operator Vector< 4 , O >()
+		{
 			return Vector< 4 , O >((O)x, (O)y, (O)z, (O)w);
 		}
 		
 		inline double getLength() const
 		{
-			return sqrt((x*x) + (y*y) + (z*z) + (w*w));
+			return std::sqrt((x*x) + (y*y) + (z*z) + (w*w));
 		}
 		
 		void setLenght(double lenght)
@@ -54,7 +55,7 @@ namespace subgine
 			return (this->dot(other.unit())) * other;
 		}
 		
-		bool notZero() const
+		inline bool notZero() const
 		{
 			return x != 0 || y != 0 || z != 0 || w != 0;
 		}

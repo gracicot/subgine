@@ -33,21 +33,21 @@ namespace subgine
 		
 		inline Vector<2, double> getAngles() const
 		{
-			return Vector<2, double>(atan(y / x), acos(z / getLength()));
+			return Vector<2, double>(std::atan(y / x), std::acos(z / getLength()));
 		}
 		
 		inline double getLength() const
 		{
-			return sqrt((x*x) + (y*y) + (z*z));
+			return std::sqrt((x*x) + (y*y) + (z*z));
 		}
 		
 		void setAngles(const Vector<2, double> angles)
 		{
 			if (notZero()) {
 				double lenght = getLength();
-				x = sin(angles.y) * cos(angles.x) * lenght;
-				y = sin(angles.x) * sin(angles.y) * lenght;
-				z = cos(angles.y) * lenght;
+				x = std::sin(angles.y) * std::cos(angles.x) * lenght;
+				y = std::sin(angles.x) * std::sin(angles.y) * lenght;
+				z = std::cos(angles.y) * lenght;
 			}
 		}
 		
@@ -68,7 +68,7 @@ namespace subgine
 			return (this->dot(other.unit())) * other;
 		}
 		
-		bool notZero() const
+		inline bool notZero() const
 		{
 			return x != 0 || y != 0 || z != 0;
 		}

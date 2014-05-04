@@ -32,28 +32,28 @@ namespace subgine
 			return Vector< 2 , O >((O)x, (O)y);
 		}
 		
-		double getAngle() const
+		inline double getAngle() const
 		{
-			double angle = atan2(y, x);
+			double angle = std::atan2(y, x);
 			
 			if (angle < 0) {
-				angle += 2 * pi;
+				angle += tau;
 			}
 			
 			return angle;
 		}
 		
-		double getLength() const
+		inline double getLength() const
 		{
-			return sqrt((x*x) + (y*y));
+			return std::sqrt((x*x) + (y*y));
 		}
 		
 		void setAngle(double angle)
 		{
 			if (notZero()) {
 				double lenght = getLength();
-				x = cos(angle) * lenght;
-				y = sin(angle) * lenght;
+				x = std::cos(angle) * lenght;
+				y = std::sin(angle) * lenght;
 			}
 		}
 		
@@ -68,12 +68,12 @@ namespace subgine
 			}
 		}
 		
-		Vector<2, T> project(Vector<2, T> other) const
+		Vector<2, T> project(const Vector<2, T>& other) const
 		{
 			return (this->dot(other.unit())) * other;
 		}
 		
-		bool notZero() const
+		inline bool notZero() const
 		{
 			return x != 0 || y != 0;
 		}
@@ -89,9 +89,19 @@ namespace subgine
 			}
 		}
 		
-		double dot(const Vector<2, T>& vec) const
+		inline double dot(const Vector<2, T>& vec) const
 		{
 			return (x * vec.x) + (y * vec.y);
+		}
+		
+		inline double cross(const Vector<2, T>& other)
+		{
+			return (x * other.y) - (y * other.x);
+		}
+		
+		inline Vector< 2 , T > cross(double multiplier)
+		{
+			return Vector< 2 , T >(multiplier * y, -multiplier * x);
 		}
 		
 		Vector<2, T>& operator= (const Vector<2, T>& other)
