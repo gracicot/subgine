@@ -3,6 +3,7 @@
 #include "system.hpp"
 
 #include "Physic/physicpoint.h"
+#include "Physic/physicbody.h"
 
 #include "Physic/Engines/physics.h"
 

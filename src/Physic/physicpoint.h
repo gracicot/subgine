@@ -69,7 +69,7 @@ public:
 		_forces[type] = force;
 	}
 	
-	void updatePhysic(const double time)
+	void updatePhysic(const double time) override
 	{
 		this->_position = getNextPosition(time);
 		_corrections.clear();

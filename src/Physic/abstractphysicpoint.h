@@ -9,6 +9,7 @@ class AbstractPhysicPoint
 {
 public:
 	AbstractPhysicPoint();
+	~AbstractPhysicPoint() = default;
 	
 	void setMass(const double mass);
 	double getMass() const;
