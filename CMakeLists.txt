@@ -7,6 +7,8 @@ file(GLOB_RECURSE SYSTEM_SRC_FILES "${CMAKE_SOURCE_DIR}/src/System/*.cpp")
 file(GLOB_RECURSE PHYSIC_SRC_FILES "${CMAKE_SOURCE_DIR}/src/Physic/*.cpp")
 file(GLOB_RECURSE COLLISION_SRC_FILES "${CMAKE_SOURCE_DIR}/src/Collision/*.cpp")
 
+include_directories(${CMAKE_SOURCE_DIR}/src)
+
 add_library(subgine-system SHARED ${SYSTEM_SRC_FILES})
 add_library(subgine-physic SHARED ${PHYSIC_SRC_FILES})
 add_library(subgine-collision SHARED ${COLLISION_SRC_FILES})
