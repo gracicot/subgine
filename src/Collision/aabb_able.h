@@ -1,6 +1,6 @@
 #pragma once
 
-#include "system.hpp"
+#include "../system.hpp"
 
 #include "collisionentity.h"
 
