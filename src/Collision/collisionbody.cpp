@@ -40,12 +40,12 @@ void CollisionBody::trigger(const subgine::collision::CollisionBody& other, std:
 	}
 }
 
-CollisionEntity& CollisionBody::getCollisionEntity(std::string tag)
+std::shared_ptr<CollisionEntity> CollisionBody::getCollisionEntity(std::string tag)
 {
 	auto it = _collisionEntities.find(tag);
 	
 	if (it != _collisionEntities.end()) {
-		return *it->second;
+		return it->second;
 	}
 	
 	throw std::out_of_range("CollisionEntity with tag \"" + tag + "\" not found...");
@@ -66,12 +66,12 @@ void CollisionBody::removeCollisionHandler(std::string tag)
 	_collisionhandlers.erase(tag);
 }
 
-const CollisionEntity& CollisionBody::getCollisionEntity(std::string tag) const
+const std::shared_ptr<const CollisionEntity> CollisionBody::getCollisionEntity(std::string tag) const
 {
 	auto it = _collisionEntities.find(tag);
 	
 	if (it != _collisionEntities.end()) {
-		return *it->second;
+		return it->second;
 	}
 	
 	throw std::out_of_range("CollisionEntity with tag \"" + tag + "\" not found...");
