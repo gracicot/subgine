@@ -30,7 +30,7 @@ void Physics::removePhysicEntity(AbstractPhysicPoint* entity)
 void Physics::execute(const double time)
 {
 	for (auto i : _entites)
-		i->updatePhysic(time); //apply rules
+		i->update(time); //apply rules
 }
 
 }

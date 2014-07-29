@@ -13,11 +13,11 @@ class PhysicBody : public PhysicPoint<n>, Traits::Angle
 public:
 	PhysicBody() : _torque(0), _angularVecolicy(0) {}
 	
-	void updatePhysic(const double time) override
+	void update(const double time) override
 	{
 		_angle = getNextOrientation(time);
 		_angularVecolicy = getNextAngularVelocity(time);
-		PhysicPoint<n>::updatePhysic(time);
+		PhysicPoint<n>::update(time);
 	}
 	
 	double getNextOrientation(const double time) const
@@ -49,7 +49,7 @@ public:
 	{
 		return _torque;
 	}
-	
+	 
 	double getMomentOfInertia() const
 	{
 		return this->_mass;
