@@ -6,6 +6,6 @@ namespace subgine
 	extern const double tau;
 	
 	template<int n, class T = double>
-	class Vector{};
+	class Vector;
 }
 
