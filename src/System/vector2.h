@@ -28,7 +28,12 @@ namespace subgine
 		}
 		
 		template<class O>
-		operator Vector< 2 , O >(){
+		operator Vector< 2 , O > () const {
+			return Vector< 2 , O >((O)x, (O)y);
+		}
+		
+		template<class O>
+		operator Vector< 2 , O > () {
 			return Vector< 2 , O >((O)x, (O)y);
 		}
 		
