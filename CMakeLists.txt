@@ -2,10 +2,13 @@ cmake_minimum_required(VERSION 2.8)
 
 project(subgine)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+set(CMAKE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 
-file(GLOB_RECURSE SYSTEM_SRC_FILES "${CMAKE_SOURCE_DIR}/src/System/*.cpp")
-file(GLOB_RECURSE PHYSIC_SRC_FILES "${CMAKE_SOURCE_DIR}/src/Physic/*.cpp")
-file(GLOB_RECURSE COLLISION_SRC_FILES "${CMAKE_SOURCE_DIR}/src/Collision/*.cpp")
+file(GLOB_RECURSE SYSTEM_SRC_FILES "${CMAKE_SOURCE_DIR}/System/*.cpp")
+file(GLOB_RECURSE PHYSIC_SRC_FILES "${CMAKE_SOURCE_DIR}/Physic/*.cpp")
+file(GLOB_RECURSE COLLISION_SRC_FILES "${CMAKE_SOURCE_DIR}/Collision/*.cpp")
+
+include_directories("${CMAKE_SOURCE_DIR}")
 
 add_library(subgine-system SHARED ${SYSTEM_SRC_FILES})
 add_library(subgine-physic SHARED ${PHYSIC_SRC_FILES})
