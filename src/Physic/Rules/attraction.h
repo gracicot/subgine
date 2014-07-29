@@ -27,11 +27,12 @@ public:
 	Vector<n, double> getResult(const PhysicPoint<n>& object) const
 	{
 		Vector<n, double> result;
-		Vector<n, double> absolute;
 		
 		for (auto i : _objects) {
-			absolute = i->getPosition() - object.getPosition();
-			result += (absolute.unit() * i->getMass() * object.getMass()) / (pow2(absolute.x) + pow2(absolute.y));
+			Vector<n, double> absolute = i->getPosition() - object.getPosition();
+			double distance = absolute.getLength();
+			
+			result += gravity * ((absolute.unit() * i->getMass() * object.getMass()) / (distance*distance));
 		}
 		
 		return result * getValue();
@@ -59,9 +60,14 @@ public:
 	}
 
 private:
+	static const double gravity;
+	
 	std::list<const PhysicPoint<n>*> _objects;
 	Vector2 _value;
 };
+
+template<int n>
+const double Attraction<n>::gravity = 6.67e-11;
 
 }
 }
