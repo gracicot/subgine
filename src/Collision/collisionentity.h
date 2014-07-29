@@ -7,9 +7,9 @@ namespace collision
 class CollisionEntity
 {
 public:
-	CollisionEntity();
+	CollisionEntity() = default;
 	virtual CollisionEntity* clone() const =0;
-	virtual ~CollisionEntity();
+	~CollisionEntity() = default;
 };
 
 }
