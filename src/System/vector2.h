@@ -116,6 +116,16 @@ namespace subgine
 			return *this;
 		}
 		
+		inline bool operator< (const Vector<2, T>& other)
+		{
+			return ((x * x) + (y * y)) < ((other.x * other.x)+(other.y * other.y));
+		}
+		
+		inline bool operator> (const Vector<2, T>& other)
+		{
+			return ((x * x) + (y * y)) > ((other.x * other.x)+(other.y * other.y));
+		}
+		
 		T x, y;
 	};
 	
