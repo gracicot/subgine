@@ -12,6 +12,7 @@
 #include "Collision/circle.h"
 #include "Collision/point.h"
 #include "Collision/polygon.h"
+#include "Collision/quadtree.h"
 
 #include "Collision/CollisionHandlers/collisionhandler.h"
 
