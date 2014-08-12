@@ -1,5 +1,7 @@
 #pragma once
 
+namespace subgine {
+
 class Material
 {
 public:
@@ -21,3 +23,5 @@ private:
 	double _staticFriction;
 	double _dynamicFriction;
 };
+
+}

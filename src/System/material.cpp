@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+namespace subgine {
+
 Material::Material(double restitution, double density, double staticFriction, double dynamicFriction) : _density(density), _staticFriction(staticFriction), _dynamicFriction(dynamicFriction)
 {
 	setRestitution(restitution);
@@ -45,4 +47,6 @@ void Material::setRestitution(double restitution)
 void Material::setStaticFriction(double staticFriction)
 {
 	_staticFriction = staticFriction;
+}
+
 }
