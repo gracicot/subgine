@@ -77,5 +77,15 @@ const std::shared_ptr<const CollisionEntity> CollisionBody::getCollisionEntity(s
 	throw std::out_of_range("CollisionEntity with tag \"" + tag + "\" not found...");
 }
 
+Material CollisionBody::getMaterial() const
+{
+	return _material;
+}
+
+void CollisionBody::setMaterial(Material material)
+{
+	_material = material;
+}
+
 }
 }

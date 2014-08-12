@@ -26,8 +26,12 @@ public:
 	void removeCollisionEntity(std::string tag);
 	void addCollisionEntity(std::string tag, std::shared_ptr<CollisionEntity> handler);
 	void trigger(const CollisionBody& other, std::unique_ptr<Results::CollisionResult> result, std::string tag);
-
+	
+	void setMaterial(Material material);
+	Material getMaterial() const;
+	
 private:
+	Material _material;
 	std::map<std::string, std::shared_ptr<CollisionHandler>> _collisionhandlers;
 	std::map<std::string, std::shared_ptr<CollisionEntity>> _collisionEntities;
 };
