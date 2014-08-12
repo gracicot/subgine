@@ -29,7 +29,7 @@ double Material::getStaticFriction() const
 
 void Material::setDensity(double density)
 {
-	return _density;
+	_density = density;
 }
 
 void Material::setDynamicFriction(double dynamicFriction)
@@ -39,7 +39,7 @@ void Material::setDynamicFriction(double dynamicFriction)
 
 void Material::setRestitution(double restitution)
 {
-	_restitution = std::min(restitution, 1);
+	_restitution = std::min(restitution, 1.0);
 }
 
 void Material::setStaticFriction(double staticFriction)
