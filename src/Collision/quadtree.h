@@ -3,7 +3,7 @@
 #include <set>
 #include <memory>
 
-#include <subgine/system.hpp>
+#include "../system.hpp"
 #include "aabb_able.h"
 
 namespace subgine {
