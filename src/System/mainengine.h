@@ -25,11 +25,13 @@ public:
 
 	void addEngine(const std::string alias, Engine* e);
 
-	void run();
-	void runSync();
+	void run(bool run);
+	void update();
 private:
+	
 	std::thread _thread;
-
+	
+	bool _run;
 	double _speed;
 	double _time;
 	std::chrono::high_resolution_clock::time_point _timer;

@@ -24,29 +24,35 @@ MainEngine::~MainEngine()
 	}
 }
 
-void MainEngine::run()
+void MainEngine::run(bool run)
 {
-	if (_thread.joinable()) {
-		_thread.join();
+	_run = run;
+	
+	if (run) {
+		_timer = chrono::high_resolution_clock::now();
+		_thread = thread([&](){
+			while (_run) {
+				update();
+			}
+		});
+	} else {
+		if (_thread.joinable()) {
+			_thread.join();
+		}
 	}
 	
-	_thread = thread(&MainEngine::runSync, this);
 }
 
-void MainEngine::runSync()
+void MainEngine::update()
 {
 	_time = chrono::duration_cast<chrono::duration<double, ratio<1, 1>>> (chrono::high_resolution_clock::now() - _timer).count() * _speed;
 	_timer = chrono::high_resolution_clock::now();
 
-// 	auto timer2 = chrono::high_resolution_clock::now();
-	int precision = 5;
 	
-	for (int i = 0 ; i<precision ; i++)
-		for (auto engines : _engineList) {
-			engines.second->execute(_time/precision);
-	// 		cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
-	// 		timer2 = chrono::high_resolution_clock::now();
-		}
+	for (auto engines : _engineList) {
+		engines.second->execute(_time);
+// 		cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - _timer).count() << endl;
+	}
 }
 
 void MainEngine::addEngine(const string alias, Engine* e)
