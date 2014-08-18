@@ -12,7 +12,7 @@ using namespace std;
 namespace subgine
 {
 
-MainEngine::MainEngine() : _speed(0), _timer(chrono::high_resolution_clock::now()), _time(0)
+MainEngine::MainEngine() : _speed(1), _timer(chrono::high_resolution_clock::now()), _time(0)
 {
 
 }
