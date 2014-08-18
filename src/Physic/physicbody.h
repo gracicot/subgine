@@ -11,7 +11,7 @@ template<int n>
 class PhysicBody : public PhysicPoint<n>, Traits::Angle
 {
 public:
-	PhysicBody() : _torque(0), _angularVecolicy(0) {}
+	PhysicBody() : Angle(0), _torque(0), _angularVecolicy(0) {}
 	
 	void update(const double time) override
 	{
