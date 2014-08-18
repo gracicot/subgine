@@ -6,7 +6,7 @@ namespace collision
 {
 namespace Results
 {
-SatResult::SatResult(const bool colliding, const double time, const Vector2 gap) : CollisionResult(colliding, time), _gap(gap)
+SatResult::SatResult(const CollisionBody& other, const bool colliding, const double time, const subgine::Vector2 gap) : CollisionResult(other, colliding, time), _gap(gap)
 {
 
 }

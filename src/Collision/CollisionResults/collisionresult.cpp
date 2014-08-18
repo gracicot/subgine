@@ -7,7 +7,7 @@ namespace collision
 namespace Results
 {
 
-CollisionResult::CollisionResult(const bool colliding, const double time) : _time(time), _colliding(colliding)
+CollisionResult::CollisionResult(const CollisionBody& other, const bool colliding, const double time) : _time(time), _colliding(colliding), _other(&other)
 {
 
 }
@@ -35,6 +35,16 @@ bool CollisionResult::isColliding() const
 void CollisionResult::setTime(double time)
 {
 	_time = time;
+}
+
+const CollisionBody& CollisionResult::getOther() const
+{
+	return *_other;
+}
+
+void CollisionResult::setOther(const CollisionBody& other)
+{
+	_other = &other;
 }
 
 }

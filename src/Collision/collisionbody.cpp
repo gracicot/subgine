@@ -36,7 +36,7 @@ void CollisionBody::trigger(const subgine::collision::CollisionBody& other, std:
 	auto it = _collisionhandlers.find(tag);
 
 	if (it != _collisionhandlers.end()) {
-		it->second->apply(*this, other, *result);
+		it->second->apply(*this, *result);
 	}
 }
 

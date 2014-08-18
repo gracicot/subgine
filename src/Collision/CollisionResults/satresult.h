@@ -14,7 +14,7 @@ namespace Results
 
 struct SatResult : public CollisionResult {
 public:
-	SatResult(const bool colliding, const double time, const Vector2 gap);
+	SatResult(const CollisionBody& other, const bool colliding, const double time, const Vector2 gap);
 	~SatResult() = default;
 
 	void setGap(const Vector2 gap);
