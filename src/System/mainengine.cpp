@@ -33,6 +33,7 @@ void MainEngine::run(bool run)
 		_thread = thread([&](){
 			while (_run) {
 				update();
+				_mutex.unlock();
 			}
 		});
 	} else {
@@ -40,7 +41,15 @@ void MainEngine::run(bool run)
 			_thread.join();
 		}
 	}
-	
+}
+
+void MainEngine::pause(bool pause)
+{
+	if (pause) {
+		_mutex.lock();
+	} else {
+		_mutex.unlock();
+	}
 }
 
 void MainEngine::update()

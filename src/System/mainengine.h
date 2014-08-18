@@ -2,6 +2,7 @@
 
 #include <map>
 #include <thread>
+#include <mutex>
 
 namespace subgine
 {
@@ -26,10 +27,12 @@ public:
 	void addEngine(const std::string alias, Engine* e);
 
 	void run(bool run);
+	void pause(bool pause);
 	void update();
 private:
 	
 	std::thread _thread;
+	std::mutex _mutex;
 	
 	bool _run;
 	double _speed;
