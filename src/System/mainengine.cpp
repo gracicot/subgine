@@ -8,7 +8,6 @@
 
 using namespace std;
 
-
 namespace subgine
 {
 
@@ -32,8 +31,11 @@ void MainEngine::run(bool run)
 		_timer = chrono::high_resolution_clock::now();
 		_thread = thread([&](){
 			while (_run) {
+				_mutex.lock();
 				update();
 				_mutex.unlock();
+				this_thread::yield();
+				this_thread::sleep_for(chrono::microseconds(10));
 			}
 		});
 	} else {
@@ -58,9 +60,11 @@ void MainEngine::update()
 	_timer = chrono::high_resolution_clock::now();
 
 	
+// 	auto timer2 = chrono::high_resolution_clock::now();
 	for (auto engines : _engineList) {
 		engines.second->execute(_time);
-// 		cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - _timer).count() << endl;
+// 		cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
+// 		timer2 = chrono::high_resolution_clock::now();
 	}
 }
 
