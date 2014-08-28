@@ -56,6 +56,8 @@ private:
 	std::function< Vector2(void) > _estimatedVector;
 	
 	std::pair<Vector2d, Vector2d> _cachedBoundingBox;
+	std::vector<double> _cachedAngles;
+	std::map<double, Vector2> _cachedProjections;
 };
 
 }
