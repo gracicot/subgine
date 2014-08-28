@@ -19,16 +19,22 @@ Collision::~Collision()
 
 void Collision::execute(const double time)
 {
-	std::vector<std::tuple<CollisionBody*, std::unique_ptr<Results::CollisionResult>, std::string, CollisionBody*>> results;
+	struct TestResult {
+		CollisionBody* object;
+		std::unique_ptr<Results::CollisionResult> result;
+		std::string test;
+		CollisionBody* other;
+	};
+	std::vector<TestResult> results;
 	
-	for (auto test : _objects) {
-		results.push_back(make_tuple(std::get<0> (test), std::move(std::get<0> (test)->testObject(*std::get<1> (test), time, std::get<2> (test))), std::get<2> (test), std::get<1>(test)));
+	for (Test test : _objects) {
+		results.push_back({test.getObject(), std::move(test.getObject()->testObject(*test.getOther(), time, test.getTest())), test.getTest(), test.getOther()});
 	}
 	
 	for (auto& result : results) {
-		if (std::get<1>(result)) {
-			if (std::get<1> (result)->isColliding()) {
-				std::get<0> (result)->trigger(*std::get<3> (result), std::move(std::get<1> (result)), std::get<2> (result));
+		if (result.result) {
+			if (result.result->isColliding()) {
+				result.object->trigger(*result.other, std::move(result.result), result.test);
 			}
 		}
 	}
@@ -53,7 +59,7 @@ void Collision::makeObjectList()
 		for (auto object : group.second) {
 			for (auto relatedObject : _groups[std::get<1>(object)]) {
 				if (std::get<0>(object) != std::get<0>(relatedObject)) {
-					_objects.push_back(std::make_tuple(std::get<0>(object), std::get<0>(relatedObject), std::get<1>(object)));
+					_objects.push_back(Test(std::get<0>(object), std::get<0>(relatedObject), std::get<1>(object)));
 				}
 			}
 		}

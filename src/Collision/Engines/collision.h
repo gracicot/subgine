@@ -5,6 +5,8 @@
 
 #include "../../system.hpp"
 
+#include "test.h"
+
 namespace subgine
 {
 namespace collision
@@ -29,7 +31,7 @@ protected:
 
 	std::map<std::string, std::vector<std::tuple<CollisionBody*, std::string>>> _groups;
 
-	std::vector<std::tuple<CollisionBody*, CollisionBody*, std::string>> _objects;
+	std::vector<Test> _objects;
 };
 
 }
