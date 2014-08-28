@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <unordered_map>
 
 #include "../system.hpp" 
 #include "sat_able.h"
@@ -57,7 +58,7 @@ private:
 	
 	std::pair<Vector2d, Vector2d> _cachedBoundingBox;
 	std::vector<double> _cachedAngles;
-	std::map<double, Vector2> _cachedProjections;
+	std::unordered_map<double, Vector2> _cachedProjections;
 };
 
 }
