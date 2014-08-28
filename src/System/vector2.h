@@ -126,6 +126,16 @@ namespace subgine
 			return ((x * x) + (y * y)) > ((other.x * other.x)+(other.y * other.y));
 		}
 		
+		inline bool operator> (double length)
+		{
+			return ((x * x) + (y * y)) > (length*length);
+		}
+		
+		inline bool operator< (double length)
+		{
+			return ((x * x) + (y * y)) < (length*length);
+		}
+		
 		T x, y;
 	};
 	
