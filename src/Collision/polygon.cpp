@@ -9,45 +9,41 @@ namespace collision
 {
 
 
-Polygon::Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle, std::function< Vector2(void) > estimatedVector): _position(position), _angle(angle), _estimatedVector(estimatedVector)
+Polygon::Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle, std::function< Vector2(void) > estimatedVector): _position(position), _angle(angle)
 {
 
 }
 
 
-Polygon::Polygon(Vector2 position, double angle, Vector2 estimatedVector)
+Polygon::Polygon(subgine::Vector2 position, double angle)
 {
 	setPosition(position);
 	setAngle(angle);
-	setEstimatedVector(estimatedVector);
 }
 
-Polygon::Polygon(std::function< Vector2(void) > position, double angle, std::function< Vector2(void) > estimatedVector): _position(position), _estimatedVector(estimatedVector)
+Polygon::Polygon(std::function< Vector2(void) > position, double angle, std::function< Vector2(void) > estimatedVector): _position(position)
 {
 	setAngle(angle);
 }
 
-Polygon::Polygon(Vector2 position, std::function< double(void) > angle, Vector2 estimatedVector): _angle(angle)
-{
-	setPosition(position);
-	setEstimatedVector(estimatedVector);
-}
-
-Polygon::Polygon(Vector2 position, std::function< double(void) > angle, std::function< Vector2(void) > estimatedVector): _angle(angle), _estimatedVector(estimatedVector)
+Polygon::Polygon(subgine::Vector2 position, std::function< double > angle): _angle(angle)
 {
 	setPosition(position);
 }
 
-Polygon::Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle, Vector2 estimatedVector): _position(position), _angle(angle)
+Polygon::Polygon(Vector2 position, std::function< double(void) > angle, std::function< Vector2(void) > estimatedVector): _angle(angle)
 {
-	setEstimatedVector(estimatedVector);
+	setPosition(position);
+}
+
+Polygon::Polygon(std::function< subgine::Vector2 > position, std::function< double > angle): _position(position), _angle(angle)
+{
 }
 
 
-Polygon::Polygon(std::function< Vector2(void) > position, double angle, Vector2 estimatedVector): _position(position)
+Polygon::Polygon(std::function< subgine::Vector2 > position, double angle): _position(position)
 {
 	setAngle(angle);
-	setEstimatedVector(estimatedVector);
 }
 
 CollisionEntity* Polygon::clone() const
@@ -316,23 +312,6 @@ void Polygon::setPosition(Vector2 position)
 std::list< Vector2 > Polygon::getVertex() const
 {
 	return _vertex;
-}
-
-void Polygon::setEstimatedVector(std::function< Vector2(void) > estimatedVector)
-{
-	_estimatedVector = estimatedVector;
-}
-
-void Polygon::setEstimatedVector(Vector2 estimatedVector)
-{
-	_estimatedVector = [estimatedVector]() -> Vector2 {
-		return estimatedVector;
-	};
-}
-
-Vector2 Polygon::getEstimatedVector() const
-{
-	return _estimatedVector().unit();
 }
 
 std::pair< Vector2d, Vector2d > Polygon::getBoundingBox() const
