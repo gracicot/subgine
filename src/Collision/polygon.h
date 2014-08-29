@@ -20,6 +20,7 @@ public:
 	Polygon(std::function< Vector2(void) > position, double angle);
 	Polygon(Vector2 position, std::function< double(void) > angle);
 	Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle);
+	~Polygon() = default;
 	
 	Vector2 getPosition() const;
 	double getAngle() const;
