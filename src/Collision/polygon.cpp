@@ -70,7 +70,7 @@ void Polygon::addPoint(const Vector2 point)
 		max.x = std::max(max.x, std::abs(vertex.x));
 		max.y = std::max(max.y, std::abs(vertex.y));
 	}
-	_cachedBoundingBox = std::pair<Vector2d, Vector2d>((-1 * max), max);
+	_cachedBoundingBox = std::pair<Vector2d, Vector2d>((-1.5 * max), 1.5*max);
 }
 
 bool Polygon::isPointInside(Vector2 point) const
@@ -100,14 +100,14 @@ Vector2 Polygon::projection(double angle)
 {
 	Vector2d projection;
 	std::unordered_map<double, Vector2d>::iterator it;
-	if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(std::sin(angle))) != _cachedProjections.end())) {
+	if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(std::sin(angle - getAngle()))) != _cachedProjections.end())) {
 			projection = it->second;
 	} else {
-		if (_cachedProjections.size() > 3 * _vertex.size()) {
-			_cachedProjections.erase(_cachedProjections.begin(), std::next(_cachedProjections.begin(), _vertex.size()));
+		if (_cachedProjections.size() > 100 * _vertex.size()) {
+			_cachedProjections.erase(_cachedProjections.begin(), std::next(_cachedProjections.begin(), 3 * _vertex.size()));
 		}
 		
-		Vector2 axis(cos(angle), sin(angle));
+		Vector2 axis(cos(angle - getAngle()), sin(angle - getAngle()));
 		Vector2 current;
 
 		auto verticle = _vertex.begin();
@@ -125,11 +125,11 @@ Vector2 Polygon::projection(double angle)
 			projection.y = std::max(projection.y, p);
 		}
 		
-		_cachedProjections[std::sin(angle + getAngle())] = projection;
-		_cachedProjections[std::sin(angle + getAngle() + pi)] = Vector2(-projection.y, -projection.x);
+		_cachedProjections[std::sin(angle - getAngle())] = projection;
+		_cachedProjections[std::sin((angle - getAngle()) + pi)] = Vector2(-projection.y, -projection.x);
 	}
 	
-	Vector2 axis(cos(angle + getAngle()), sin(angle + getAngle()));
+	Vector2 axis(cos(angle), sin(angle));
 	projection.x += axis.dot(getPosition());
 	projection.y += axis.dot(getPosition());
 
@@ -140,10 +140,10 @@ Vector2 Polygon::projection(double angle) const
 {
 	Vector2d projection;
 	std::unordered_map<double, Vector2d>::const_iterator it;
-	if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(std::sin(angle))) != _cachedProjections.end())) {
+	if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(std::sin(angle - getAngle()))) != _cachedProjections.end())) {
 			projection = it->second;
 	} else {
-		Vector2 axis(cos(angle), sin(angle));
+		Vector2 axis(cos(angle - getAngle()), sin(angle - getAngle()));
 		Vector2 current;
 
 		auto verticle = _vertex.begin();
@@ -162,7 +162,7 @@ Vector2 Polygon::projection(double angle) const
 		}
 	}
 
-	Vector2 axis(cos(angle + getAngle()), sin(angle + getAngle()));
+	Vector2 axis(cos(angle), sin(angle));
 	projection.x += axis.dot(getPosition());
 	projection.y += axis.dot(getPosition());
 	
@@ -181,12 +181,12 @@ Vector2 Polygon::overlap(const SAT_able& other)
 		Vector2 projectionThis = this->projection(angle);
 		Vector2 projectionOther = other.projection(angle);
 
-		if ((projectionThis.y < projectionOther.x) || projectionThis.x > projectionOther.y) {
+		if (projectionThis.y < projectionOther.x || projectionThis.x > projectionOther.y) {
 			return Vector2();
 		} else {
 			if (!overlap.notZero() || overlap > projectionThis.y - projectionOther.x) {
 				overlap = Vector2d(projectionThis.y - projectionOther.x, 0);
-				overlap.setAngle(angle + getAngle());
+				overlap.setAngle(angle);
 			}
 		}
 	}
@@ -206,12 +206,12 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 		Vector2 projectionThis = this->projection(angle);
 		Vector2 projectionOther = other.projection(angle);
 
-		if ((projectionThis.y < projectionOther.x) || projectionThis.x > projectionOther.y) {
+		if (projectionThis.y < projectionOther.x || projectionThis.x > projectionOther.y) {
 			return Vector2();
 		} else {
 			if (!overlap.notZero() || overlap > projectionThis.y - projectionOther.x) {
 				overlap = Vector2d(projectionThis.y - projectionOther.x, 0);
-				overlap.setAngle(angle + getAngle());
+				overlap.setAngle(angle);
 			}
 		}
 	}
@@ -222,24 +222,30 @@ Vector2 Polygon::overlap(const SAT_able& other) const
 std::vector< double > Polygon::getAngles()
 {
 	if (_cachedAngles.size() == 0) {
-		_cachedAngles.reserve(_vertex.size());
-		
+		std::vector<double> angles;
 		Vector2 previous = *_vertex.rbegin();
 
 		for (Vector2 current : _vertex) {
-			_cachedAngles.push_back((previous - current).getAngle() - (tau / 4));
+			angles.push_back((previous - current).getAngle() - (tau / 4));
 			previous = current;
 		}
+		
+		_cachedAngles = angles;
 	}
 	
-	return _cachedAngles;
+	std::vector<double> angles;
+	
+	for (auto angle : _cachedAngles) {
+		angles.push_back(angle + getAngle());
+	}
+	
+	return angles;
 }
 
 std::vector< double > Polygon::getAngles() const
 {
+	std::vector<double> angles;
 	if (_cachedAngles.size() == 0) {
-		std::vector<double> angles(_vertex.size());
-		
 		Vector2 previous = *_vertex.rbegin();
 		previous.setAngle(getAngle() + previous.getAngle());
 
@@ -248,11 +254,13 @@ std::vector< double > Polygon::getAngles() const
 			angles.push_back((previous - current).getAngle() - (tau / 4));
 			previous = current;
 		}
-		
-		return angles;
 	} else {
-		return _cachedAngles;
+		for (auto angle : _cachedAngles) {
+			angles.push_back(angle + getAngle());
+		}
 	}
+	
+	return angles;
 }
 
 Vector2 Polygon::getNearestPoint(Vector2 point) const
