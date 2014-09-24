@@ -1,6 +1,10 @@
 #pragma once
 
 #include "physicpoint.h"
+#include "../System/Shape/shape.h"
+
+#include <iostream>
+#include <memory>
 
 namespace subgine
 {
@@ -15,8 +19,10 @@ public:
 	
 	void update(const double time) override
 	{
-		_angle = getNextOrientation(time);
+		_angle = std::fmod(getNextOrientation(time), tau);
 		_angularVecolicy = getNextAngularVelocity(time);
+		_pulsesPosition.clear();
+		_torque = getNextTorque(time);
 		PhysicPoint<n>::update(time);
 	}
 	
@@ -37,7 +43,22 @@ public:
 	
 	double getNextAngularVelocity(const double time) const
 	{
-		return _angularVecolicy + (getNextTorque(time) / getMomentOfInertia()) * time;
+		double velocity = _angularVecolicy / tau;
+		double torquePulse = 0;
+		
+		velocity += (getNextTorque(time) / getMomentOfInertia()) * time;
+		
+		for (auto forcePos : _pulsesPosition) {
+			Vector<n, double> force = this->getPulse(forcePos.first);
+			double distance = forcePos.second.getLength();
+			
+			if (forcePos.second.notZero() && force.notZero()) {
+				torquePulse += forcePos.second.cross(force) * distance;
+			}
+		}
+		velocity += torquePulse / getMomentOfInertia();
+		
+		return (velocity / 1.0001) * tau;
 	}
 	
 	double getTorque() const
@@ -47,12 +68,31 @@ public:
 	
 	double getNextTorque(const double time) const
 	{
-		return _torque;
+		double torque = 0;
+		
+		for (auto forcePos : _forcesPosition) {
+			Vector<n, double> force = this->getForce(forcePos.first);
+			double distance = forcePos.second.getLength();
+			
+			torque += forcePos.second.angle(forcePos.second.getAngle() + getOrientation()).cross(force) * distance;
+		}
+		
+		return torque;
 	}
-	 
+	
 	double getMomentOfInertia() const
 	{
-		return this->_mass;
+		if (_shape) {
+			return _momentOfInertia;
+		} else {
+			return this->_mass;
+		}
+	}
+	
+	void setShape(std::shared_ptr<shape::Shape<n>> shape)
+	{
+		_shape = shape;
+		_momentOfInertia = _shape->getMomentOfInertia(this->_mass);
 	}
 	
 	void setPulse(const std::string type, const Vector<n, double> pulse, const Vector<n, double> position = Vector<n, double>())
@@ -68,9 +108,11 @@ public:
 	}
 	
 protected:
+	std::shared_ptr<shape::Shape<n>> _shape;
 	std::map<std::string, Vector<n, double>> _pulsesPosition;
 	std::map<std::string, Vector<n, double>> _forcesPosition;
 	
+	double _momentOfInertia;
 	double _angularVecolicy;
 	double _torque;
 };
