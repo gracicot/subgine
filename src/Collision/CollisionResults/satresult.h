@@ -5,6 +5,8 @@
 #include "collisionresult.h"
 #include "../collisionbody.h"
 
+#include <vector>
+
 namespace subgine
 {
 namespace collision
@@ -19,9 +21,13 @@ public:
 
 	void setGap(const Vector2 gap);
 	Vector2 getGap() const;
+	
+	void setContacts(std::vector<Vector2d> contacts);
+	std::vector<Vector2d> getContacts() const;
 
 private:
 	Vector2 _gap;
+	std::vector<Vector2d> _contacts;
 };
 
 }

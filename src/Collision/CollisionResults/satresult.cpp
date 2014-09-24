@@ -21,6 +21,16 @@ void SatResult::setGap(const Vector2 gap)
 	_gap = gap;
 }
 
+std::vector< Vector2d > SatResult::getContacts() const
+{
+	return _contacts;
+}
+
+void SatResult::setContacts(std::vector< Vector2d > contacts)
+{
+	_contacts = contacts;
+}
+
 }
 }
 }
