@@ -5,6 +5,8 @@
 #include "System/positionnable.h"
 #include "System/material.h"
 #include "System/vector.h"
+#include "System/Shape/shape.h"
+#include "System/Shape/polygon.h"
 #include "System/vector2.h"
 #include "System/vector3.h"
 #include "System/vector4.h"
