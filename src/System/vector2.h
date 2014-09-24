@@ -94,6 +94,17 @@ namespace subgine
 			}
 		}
 		
+		inline Vector<2, T> angle(double angle) const
+		{
+			Vector< 2 , T > temp;
+			if (notZero()) {
+				double lenght = getLength();
+				temp.x = std::cos(angle) * lenght;
+				temp.y = std::sin(angle) * lenght;
+			}
+			return temp;
+		}
+		
 		inline double dot(const Vector<2, T>& vec) const
 		{
 			return (x * vec.x) + (y * vec.y);
