@@ -2,14 +2,18 @@
 
 #include "../system.hpp"
 
-#include "CollisionHandlers/collisionhandler.h"
-#include "CollisionResults/collisionresult.h"
-#include "collisionentity.h"
+#include <memory>
 
-namespace subgine
-{
-namespace collision
-{
+namespace subgine {
+namespace collision {
+
+namespace Results {
+	class CollisionResult;
+}
+
+class CollisionTester;
+class CollisionHandler;
+class CollisionEntity;
 
 class CollisionBody
 {
@@ -18,22 +22,31 @@ public:
 	CollisionBody(const CollisionBody& other);
 	virtual ~CollisionBody();
 
-	virtual std::unique_ptr<Results::CollisionResult> testObject(const CollisionBody& other, double time, std::string test) =0;
-	void removeCollisionHandler(std::string tag);
-	void addCollisionHandler(std::string tag, std::shared_ptr<CollisionHandler> handler);
+	std::unique_ptr<Results::CollisionResult> testObject(const CollisionBody& other, double time, std::string test) const;
+	
+	std::map<std::string, std::shared_ptr<CollisionHandler>>& getCollisionHandler();
+	const std::map<std::string, std::shared_ptr<CollisionHandler>>& getCollisionHandler() const;
+	std::shared_ptr<CollisionHandler>& getCollisionHandler(const std::string tag);
+	const std::shared_ptr<CollisionHandler>& getCollisionHandler(const std::string tag) const;
+	
+	std::map<std::string, std::unique_ptr<CollisionTester>>& getCollisionTester();
+	const std::map<std::string, std::unique_ptr<CollisionTester>>& getCollisionTester() const;
+	
 	std::shared_ptr<CollisionEntity> getCollisionEntity(std::string tag);
 	const std::shared_ptr<const CollisionEntity> getCollisionEntity(std::string tag) const;
-	void removeCollisionEntity(std::string tag);
-	void addCollisionEntity(std::string tag, std::shared_ptr<CollisionEntity> handler);
-	void trigger(const CollisionBody& other, std::unique_ptr<Results::CollisionResult> result, std::string tag);
+	std::map<std::string, std::shared_ptr<CollisionEntity>>& getCollisionEntity();
+	const std::map<std::string, std::shared_ptr<CollisionEntity>>& getCollisionEntity() const;
 	
+	void trigger(const CollisionBody& other, std::unique_ptr<Results::CollisionResult> result, std::string tag);
+
 	void setMaterial(Material material);
 	Material getMaterial() const;
-	
+
 private:
 	Material _material;
 	std::map<std::string, std::shared_ptr<CollisionHandler>> _collisionhandlers;
 	std::map<std::string, std::shared_ptr<CollisionEntity>> _collisionEntities;
+	std::map<std::string, std::unique_ptr<CollisionTester>> _collisionTesters;
 };
 
 
