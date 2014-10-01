@@ -31,21 +31,19 @@ public:
 	void setAngle(double angle);
 	void setPosition(Vector2 position);
 	
-	virtual Vector2 projection(double angle) override;
 	virtual Vector2 projection(double angle) const override;
 	virtual bool isPointInside(Vector2 point) const override;
-	virtual Vector2 overlap(const subgine::collision::SAT_able& other) override;
 	virtual Vector2 overlap(const subgine::collision::SAT_able& other) const override;
 	virtual Vector2 getNearestPoint(Vector2 point) const override;
 	virtual CollisionEntity* clone() const override;
 	virtual std::pair< Vector2d, Vector2d > getBoundingBox() const override;
 
-	std::list<Vector2> getVertex() const;
-	void addPoint(const Vector2 point);
-	std::vector< double > getAngles();
+	std::shared_ptr< shape::Polygon > getShape() const;
+	void setShape(std::shared_ptr<shape::Polygon> shape);
 	std::vector< double > getAngles() const;
 
 private:
+	std::shared_ptr<shape::Polygon> _shape;
 	std::function< Vector2(void) > _position;
 	std::function< double(void) > _angle;
 	
