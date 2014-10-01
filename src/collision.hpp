@@ -16,6 +16,10 @@
 
 #include "Collision/CollisionHandlers/collisionhandler.h"
 
+#include "Collision/CollisionTester/collisiontester.h"
+#include "Collision/CollisionTester/sattester.h"
+#include "Collision/CollisionTester/satquadtreetester.h"
+
 #include "Collision/CollisionResults/collisionresult.h"
 #include "Collision/CollisionResults/satresult.h"
 
