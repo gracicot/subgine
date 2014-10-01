@@ -1,6 +1,7 @@
 #include "collision.h"
 
 #include "../collisionbody.h"
+#include "../CollisionResults/collisionresult.h"
 
 namespace subgine
 {
@@ -19,12 +20,14 @@ Collision::~Collision()
 
 void Collision::execute(const double time)
 {
+	// todo: move to a class
 	struct TestResult {
 		CollisionBody* object;
 		std::unique_ptr<Results::CollisionResult> result;
 		std::string test;
 		CollisionBody* other;
 	};
+	
 	std::vector<TestResult> results;
 	
 	for (Test test : _objects) {
