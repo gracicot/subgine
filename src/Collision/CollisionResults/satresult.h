@@ -3,18 +3,15 @@
 #include "../../system.hpp"
 
 #include "collisionresult.h"
-#include "../collisionbody.h"
 
 #include <vector>
 
-namespace subgine
-{
-namespace collision
-{
-namespace Results
-{
+namespace subgine {
+namespace collision {
+namespace Results {
 
-struct SatResult : public CollisionResult {
+class SatResult : public CollisionResult
+{
 public:
 	SatResult(const CollisionBody& other, const bool colliding, const double time, const Vector2 gap);
 	~SatResult() = default;

@@ -1,13 +1,11 @@
 #pragma once
 
-#include "../collisionbody.h"
+namespace subgine {
+namespace collision {
 
-namespace subgine
-{
-namespace collision
-{
-namespace Results
-{
+class CollisionBody;
+
+namespace Results {
 
 class CollisionResult
 {

@@ -1,5 +1,7 @@
 #include "collisionresult.h"
 
+#include "../collisionbody.h"
+
 namespace subgine
 {
 namespace collision
