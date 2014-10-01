@@ -16,8 +16,6 @@ public:
 	SAT_able() = default;
 	~SAT_able() = default;
 
-	virtual Vector2 projection(double angle) = 0;
-	virtual Vector2 overlap(const SAT_able& other) = 0;
 	virtual Vector2 projection(double angle) const = 0;
 	virtual Vector2 overlap(const SAT_able& other) const = 0;
 	virtual Vector2 getNearestPoint(Vector2 point) const = 0;
