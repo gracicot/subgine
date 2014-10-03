@@ -12,14 +12,14 @@ namespace physic
 {
 
 template<int n>
-class PhysicBody : public PhysicPoint<n>, Traits::Angle
+class PhysicBody : public PhysicPoint<n>
 {
 public:
-	PhysicBody() : Angle(0), _torque(0), _angularVecolicy(0) {}
+	PhysicBody() : _torque(0), _angularVecolicy(0), _orientation(0) {}
 	
 	void update(const double time) override
 	{
-		_angle = std::fmod(getNextOrientation(time), tau);
+		_orientation = std::fmod(getNextOrientation(time), tau);
 		_angularVecolicy = getNextAngularVelocity(time);
 		_pulsesPosition.clear();
 		_torque = getNextTorque(time);
@@ -28,17 +28,22 @@ public:
 	
 	double getNextOrientation(const double time) const
 	{
-		return _angle + (getNextAngularVelocity(time)) * time;
+		return _orientation + (getNextAngularVelocity(time)) * time;
 	}
 	
 	double getOrientation() const
 	{
-		return _angle;
+		return _orientation;
 	}
 	
 	double getAngularVelocity() const
 	{
 		return _angularVecolicy;
+	}
+	
+	double setOrientation(double orientation)
+	{
+		_orientation = orientation;
 	}
 	
 	double getNextAngularVelocity(const double time) const
@@ -112,6 +117,7 @@ protected:
 	std::map<std::string, Vector<n, double>> _pulsesPosition;
 	std::map<std::string, Vector<n, double>> _forcesPosition;
 	
+	double _orientation;
 	double _momentOfInertia;
 	double _angularVecolicy;
 	double _torque;
