@@ -41,6 +41,45 @@ CollisionEntity* Polygon::clone() const
 	return new Polygon(*this);
 }
 
+double Polygon::getAngle() const
+{
+	return _angle();
+}
+
+Vector2 Polygon::getPosition() const
+{
+	return _position();
+}
+
+void Polygon::setAngle(std::function< double(void) > angle)
+{
+	_angle = angle;
+}
+
+void Polygon::setPosition(std::function< Vector2(void) > position)
+{
+	_position = position;
+}
+
+void Polygon::setAngle(double angle)
+{
+	_angle = [angle]() -> double {
+		return angle;
+	};
+}
+
+void Polygon::setPosition(Vector2 position)
+{
+	_position = [position]() -> Vector2 {
+		return position;
+	};
+}
+
+std::pair< Vector2d, Vector2d > Polygon::getBoundingBox() const
+{
+	return {_cachedBoundingBox.first + getPosition(), _cachedBoundingBox.second + getPosition()};
+}
+
 void Polygon::setShape(std::shared_ptr<shape::Polygon> shape)
 {
 	_shape = shape;
@@ -177,21 +216,8 @@ std::vector< double > Polygon::getAngles() const
 {
 	std::vector<double> angles;
 	
-	if (_shape && _shape->getVertices().size() > 0) {
-		if (_cachedAngles.size() == 0) {
-			Vector2 previous = *_shape->getVertices().rbegin();
-			previous.setAngle(getAngle() + previous.getAngle());
-
-			for (Vector2 current : _vertex) {
-				current.setAngle(getAngle() + current.getAngle());
-				angles.push_back((previous - current).getAngle() - (tau / 4));
-				previous = current;
-			}
-		} else {
-			for (auto angle : _cachedAngles) {
-				angles.push_back(angle + getAngle());
-			}
-		}
+	for (auto angle : _cachedAngles) {
+		angles.push_back(angle + getAngle());
 	}
 
 	return angles;
@@ -215,45 +241,6 @@ Vector2 Polygon::getNearestPoint(Vector2 point) const
 	} else {
 		return Vector2d();
 	}
-}
-
-double Polygon::getAngle() const
-{
-	return _angle();
-}
-
-Vector2 Polygon::getPosition() const
-{
-	return _position();
-}
-
-void Polygon::setAngle(std::function< double(void) > angle)
-{
-	_angle = angle;
-}
-
-void Polygon::setPosition(std::function< Vector2(void) > position)
-{
-	_position = position;
-}
-
-void Polygon::setAngle(double angle)
-{
-	_angle = [angle]() -> double {
-		return angle;
-	};
-}
-
-void Polygon::setPosition(Vector2 position)
-{
-	_position = [position]() -> Vector2 {
-		return position;
-	};
-}
-
-std::pair< Vector2d, Vector2d > Polygon::getBoundingBox() const
-{
-	return {_cachedBoundingBox.first + getPosition(), _cachedBoundingBox.second + getPosition()};
 }
 
 
