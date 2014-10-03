@@ -8,7 +8,12 @@ void Polygon::addVertice(Vector2d vertice)
 	_vertices.push_back(vertice);
 }
 
-std::vector< Vector2d > Polygon::getVertices() const
+const std::vector< Vector2d >& Polygon::getVertices() const
+{
+	return _vertices;
+}
+
+std::vector< Vector2d >& Polygon::getVertices()
 {
 	return _vertices;
 }

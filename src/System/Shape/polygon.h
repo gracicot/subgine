@@ -19,7 +19,8 @@ public:
 	Polygon(Polygon&&) = default;
 	
 	void addVertice(Vector2d vertice);
-	std::vector<Vector2d> getVertices() const;
+	const std::vector<Vector2d>& getVertices() const;
+	std::vector<Vector2d>& getVertices();
 	void setVertices(std::vector<Vector2d> vertices);
 	
 	virtual double getMomentOfInertia(double mass) const override;
