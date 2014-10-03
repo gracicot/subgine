@@ -226,7 +226,6 @@ namespace subgine
 	}
 	
 	
-	typedef Vector<2> Vector2;
 	typedef Vector<2, float> Vector2f;
 	typedef Vector<2, double> Vector2d;
 	typedef Vector<2, int> Vector2i;

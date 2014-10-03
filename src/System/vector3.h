@@ -186,7 +186,6 @@ namespace subgine
 		return out;
 	}
 	
-	typedef Vector<3> Vector3;
 	typedef Vector<3, float> Vector3f;
 	typedef Vector<3, double> Vector3d;
 	typedef Vector<3, int> Vector3i;

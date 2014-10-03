@@ -171,8 +171,6 @@ namespace subgine
 		return out;
 	}
 	
-	
-	typedef Vector<4> Vector4;
 	typedef Vector<4, float> Vector4f;
 	typedef Vector<4, double> Vector4d;
 	typedef Vector<4, int> Vector4i;

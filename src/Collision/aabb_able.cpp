@@ -11,12 +11,12 @@ subgine::Vector2d subgine::collision::AABB_able::boxOverlap(const subgine::colli
 	    boundingBoxThis.first.x > boundingBoxOther.second.x ||
 	    boundingBoxThis.first.y > boundingBoxOther.second.y
 	) {
-		const Vector2& amin = boundingBoxThis.first;
-		const Vector2& amax = boundingBoxThis.second;
-		const Vector2& bmin = boundingBoxOther.first;
-		const Vector2& bmax = boundingBoxOther.second;
+		const Vector2d& amin = boundingBoxThis.first;
+		const Vector2d& amax = boundingBoxThis.second;
+		const Vector2d& bmin = boundingBoxOther.first;
+		const Vector2d& bmax = boundingBoxOther.second;
 
-		Vector2 mtd;
+		Vector2d mtd;
 
 		double left = (bmin.x - amax.x);
 		double right = (bmax.x - amin.x);

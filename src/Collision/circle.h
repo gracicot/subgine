@@ -14,10 +14,10 @@ public:
 	Circle();
 	virtual ~Circle();
 
-	virtual bool isPointInside(Vector2 point) const override;
-	virtual Vector2 projection(double angle) const override;
-	virtual Vector2 overlap(const SAT_able& other) const override;
-	virtual Vector2 getNearestPoint(Vector2 point) const override;
+	virtual bool isPointInside(Vector2d point) const override;
+	virtual Vector2d projection(double angle) const override;
+	virtual Vector2d overlap(const SAT_able& other) const override;
+	virtual Vector2d getNearestPoint(Vector2d point) const override;
 	virtual Vector2d boxOverlap(const AABB_able& other) const override;
 	virtual std::pair< Vector2d, Vector2d > getBoundingBox() const override;
 	

@@ -17,7 +17,7 @@ public:
 	Point_able() = default;
 	~Point_able() = default;
 
-	virtual bool isPointInside(Vector2 point) const = 0;
+	virtual bool isPointInside(Vector2d point) const = 0;
 };
 
 

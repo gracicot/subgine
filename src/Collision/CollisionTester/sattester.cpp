@@ -16,16 +16,16 @@ std::unique_ptr< Results::CollisionResult > SatTester::test(const CollisionBody&
 
 	if (satThis && satOther) {
 		if (satThis->isboxOverlapping(*satOther)) {
-			Vector2 overlap1 = satThis->overlap(*satOther);
-			Vector2 overlap2 = satOther->overlap(*satThis);
+			Vector2d overlap1 = satThis->overlap(*satOther);
+			Vector2d overlap2 = satOther->overlap(*satThis);
 
 			if (overlap1.notZero() && overlap2.notZero()) {
-				Vector2 shortest = overlap1 < overlap2 ? overlap1 : -1 * overlap2;
+				Vector2d shortest = overlap1 < overlap2 ? overlap1 : -1 * overlap2;
 				return std::unique_ptr<Results::CollisionResult>(new Results::SatResult(other, true, time, shortest));
 			}
 		}
 
-		return std::unique_ptr<Results::CollisionResult>(new Results::SatResult(other, false, time, Vector2()));
+		return std::unique_ptr<Results::CollisionResult>(new Results::SatResult(other, false, time, Vector2d()));
 	} else {
 		return std::unique_ptr<Results::CollisionResult>(nullptr);
 	}

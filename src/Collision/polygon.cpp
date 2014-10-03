@@ -7,25 +7,25 @@ namespace subgine {
 namespace collision {
 
 
-Polygon::Polygon(std::function< Vector2(void) > position, std::function< double(void) > angle): _position(position), _angle(angle)
+Polygon::Polygon(std::function< Vector2d(void) > position, std::function< double(void) > angle): _position(position), _angle(angle)
 {
 	setShape(std::make_shared<shape::Polygon>());
 }
 
-Polygon::Polygon(Vector2 position, double angle)
+Polygon::Polygon(Vector2d position, double angle)
 {
 	setPosition(position);
 	setAngle(angle);
 	setShape(std::make_shared<shape::Polygon>());
 }
 
-Polygon::Polygon(std::function< Vector2(void) > position, double angle): _position(position)
+Polygon::Polygon(std::function< Vector2d(void) > position, double angle): _position(position)
 {
 	setAngle(angle);
 	setShape(std::make_shared<shape::Polygon>());
 }
 
-Polygon::Polygon(Vector2 position, std::function< double(void) > angle): _angle(angle)
+Polygon::Polygon(Vector2d position, std::function< double(void) > angle): _angle(angle)
 {
 	setPosition(position);
 	setShape(std::make_shared<shape::Polygon>());
@@ -46,7 +46,7 @@ double Polygon::getAngle() const
 	return _angle();
 }
 
-Vector2 Polygon::getPosition() const
+Vector2d Polygon::getPosition() const
 {
 	return _position();
 }
@@ -56,7 +56,7 @@ void Polygon::setAngle(std::function< double(void) > angle)
 	_angle = angle;
 }
 
-void Polygon::setPosition(std::function< Vector2(void) > position)
+void Polygon::setPosition(std::function< Vector2d(void) > position)
 {
 	_position = position;
 }
@@ -68,9 +68,9 @@ void Polygon::setAngle(double angle)
 	};
 }
 
-void Polygon::setPosition(Vector2 position)
+void Polygon::setPosition(Vector2d position)
 {
-	_position = [position]() -> Vector2 {
+	_position = [position]() -> Vector2d {
 		return position;
 	};
 }
@@ -94,17 +94,17 @@ void Polygon::setShape(std::shared_ptr<shape::Polygon> shape)
 		}
 
 		{
-			Vector2 previous = *_shape->getVertices().rbegin();
-			for (Vector2 current : _shape->getVertices()) {
+			Vector2d previous = *_shape->getVertices().rbegin();
+			for (Vector2d current : _shape->getVertices()) {
 				_cachedAngles.push_back((previous - current).getAngle() - (tau / 4));
 				previous = current;
 			}
 		}
 
 		for (auto angle : _cachedAngles) {
-			Vector2 axis(cos(angle), sin(angle));
-			Vector2 current;
-			Vector2 projection;
+			Vector2d axis(cos(angle), sin(angle));
+			Vector2d current;
+			Vector2d projection;
 			auto vertex = _shape->getVertices().begin();
 
 			current = *vertex;
@@ -121,19 +121,19 @@ void Polygon::setShape(std::shared_ptr<shape::Polygon> shape)
 			}
 
 			_cachedProjections[std::sin(angle)] = projection;
-			_cachedProjections[std::sin((angle + pi))] = Vector2(-projection.y, -projection.x);
+			_cachedProjections[std::sin((angle + pi))] = Vector2d(-projection.y, -projection.x);
 		}
 	}
 }
 
-bool Polygon::isPointInside(Vector2 point) const
+bool Polygon::isPointInside(Vector2d point) const
 {
 	bool oddNodes = false;
-	Vector2 previous = *_shape->getVertices().rbegin();
+	Vector2d previous = *_shape->getVertices().rbegin();
 	previous.setAngle(previous.getAngle() + getAngle());
 	previous += getPosition();
 
-	for (Vector2 current :_shape->getVertices()) {
+	for (Vector2d current :_shape->getVertices()) {
 		current.setAngle(current.getAngle() + getAngle());
 		current += getPosition();
 
@@ -149,7 +149,7 @@ bool Polygon::isPointInside(Vector2 point) const
 	return oddNodes;
 }
 
-Vector2 Polygon::projection(double angle) const
+Vector2d Polygon::projection(double angle) const
 {
 	if (_shape && _shape->getVertices().size() > 0) {
 		Vector2d projection;
@@ -158,8 +158,8 @@ Vector2 Polygon::projection(double angle) const
 		if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(std::sin(angle - getAngle()))) != _cachedProjections.end())) {
 			projection = it->second;
 		} else {
-			Vector2 axis(cos(angle - getAngle()), sin(angle - getAngle()));
-			Vector2 current;
+			Vector2d axis(cos(angle - getAngle()), sin(angle - getAngle()));
+			Vector2d current;
 
 			auto verticle = _shape->getVertices().begin();
 
@@ -177,7 +177,7 @@ Vector2 Polygon::projection(double angle) const
 			}
 		}
 
-		Vector2 axis(cos(angle), sin(angle));
+		Vector2d axis(cos(angle), sin(angle));
 		projection.x += axis.dot(getPosition());
 		projection.y += axis.dot(getPosition());
 
@@ -187,20 +187,20 @@ Vector2 Polygon::projection(double angle) const
 	}
 }
 
-Vector2 Polygon::overlap(const SAT_able& other) const
+Vector2d Polygon::overlap(const SAT_able& other) const
 {
 	if (!_shape || _shape->getVertices().size() == 0) {
-		return Vector2();
+		return Vector2d();
 	}
 
-	Vector2 overlap;
+	Vector2d overlap;
 
 	for (double angle : getAngles()) {
-		Vector2 projectionThis = this->projection(angle);
-		Vector2 projectionOther = other.projection(angle);
+		Vector2d projectionThis = this->projection(angle);
+		Vector2d projectionOther = other.projection(angle);
 
 		if (projectionThis.y < projectionOther.x || projectionThis.x > projectionOther.y) {
-			return Vector2();
+			return Vector2d();
 		} else {
 			if (!overlap.notZero() || overlap > projectionThis.y - projectionOther.x) {
 				overlap = Vector2d(projectionThis.y - projectionOther.x, 0);
@@ -223,13 +223,13 @@ std::vector< double > Polygon::getAngles() const
 	return angles;
 }
 
-Vector2 Polygon::getNearestPoint(Vector2 point) const
+Vector2d Polygon::getNearestPoint(Vector2d point) const
 {
 	if (_shape && _shape->getVertices().size()) {
-		Vector2 nearest(std::numeric_limits< double >().max(), 0);
+		Vector2d nearest(std::numeric_limits< double >().max(), 0);
 		nearest.setAngle(pi / 4);
 
-		for (Vector2 current : _shape->getVertices()) {
+		for (Vector2d current : _shape->getVertices()) {
 			current.setAngle(getAngle() + current.getAngle());
 
 			if (nearest.getLength() > (current - point).getLength()) {

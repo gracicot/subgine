@@ -11,22 +11,22 @@ Circle::Circle()
 
 }
 
-bool Circle::isPointInside(Vector2 point) const
+bool Circle::isPointInside(Vector2d point) const
 {
 	return (_position - point).getLength() < _radius;
 }
 
-Vector2 Circle::projection(double angle) const
+Vector2d Circle::projection(double angle) const
 {
 	double proj;
-	Vector2 axis = {cos(angle), sin(angle) };
+	Vector2d axis = {cos(angle), sin(angle) };
 
 	proj = axis.dot(_position);
 
 	//std::cerr << Vector2(proj-_radius, proj+_radius) << std::endl;
 
 
-	return Vector2(proj - _radius, proj + _radius);
+	return Vector2d(proj - _radius, proj + _radius);
 }
 
 CollisionEntity* Circle::clone() const
@@ -39,17 +39,17 @@ Circle::~Circle()
 
 }
 
-Vector2 Circle::overlap(const SAT_able& other) const
+Vector2d Circle::overlap(const SAT_able& other) const
 {
-	Vector2 overlap;
+	Vector2d overlap;
 	overlap.setLenght(std::numeric_limits< double >().max());
 	double angle = (_position - other.getNearestPoint(_position)).getAngle();
 
-	Vector2 projectionThis = this->projection(angle);
-	Vector2 projectionOther = other.projection(angle);
+	Vector2d projectionThis = this->projection(angle);
+	Vector2d projectionOther = other.projection(angle);
 
 	if ((projectionThis.y < projectionOther.x) || projectionThis.x > projectionOther.y) {
-		return Vector2();
+		return Vector2d();
 	} else {
 		if (overlap.getLength() > projectionThis.y - projectionOther.x) {
 			overlap = {projectionThis.y - projectionOther.x, 0};
@@ -60,9 +60,9 @@ Vector2 Circle::overlap(const SAT_able& other) const
 	return overlap;
 }
 
-Vector2 Circle::getNearestPoint(Vector2 point) const
+Vector2d Circle::getNearestPoint(Vector2d point) const
 {
-	Vector2 nearest(_radius, 0);
+	Vector2d nearest(_radius, 0);
 	nearest.setAngle((point - _position).getAngle());
 	return nearest + _position;
 }

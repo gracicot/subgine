@@ -13,7 +13,7 @@ public:
 	Line() = default;
 	virtual ~Line();
 
-	virtual Vector2 projection(double angle);
+	virtual Vector2d projection(double angle);
 };
 
 }

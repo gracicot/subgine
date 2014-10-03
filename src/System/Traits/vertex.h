@@ -15,11 +15,11 @@ public:
 	Vertex();
 	virtual ~Vertex();
 
-	const std::list< Vector2 >& getVertex() const;
-	std::list<Vector2>& getVertex();
+	const std::list< Vector2d >& getVertex() const;
+	std::list<Vector2d>& getVertex();
 
 protected:
-	std::list<Vector2> _vertex;
+	std::list<Vector2d> _vertex;
 };
 
 }

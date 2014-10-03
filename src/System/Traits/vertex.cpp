@@ -14,12 +14,12 @@ Vertex::~Vertex()
 
 }
 
-const std::list<Vector2>& Vertex::getVertex() const
+const std::list<Vector2d>& Vertex::getVertex() const
 {
 	return _vertex;
 }
 
-std::list< Vector2 >& Vertex::getVertex()
+std::list< Vector2d >& Vertex::getVertex()
 {
 	return _vertex;
 }

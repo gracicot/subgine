@@ -12,7 +12,7 @@ namespace collision {
 
 std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const CollisionBody& self, const CollisionBody& other, double time, std::string test) const
 {
-	Vector2 response;
+	Vector2d response;
 
 	auto tree = std::dynamic_pointer_cast<const QuadTree>(other.getCollisionEntity(test));
 	auto satThis = std::dynamic_pointer_cast<const SAT_able>(self.getCollisionEntity(test));
@@ -30,11 +30,11 @@ std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const Collis
 					if (satThis->isboxOverlapping(*realAABBOther)) {
 						auto realSatOther = std::dynamic_pointer_cast<const SAT_able>(realAABBOther);
 
-						Vector2 overlap1 = satThis->overlap(*realSatOther);
-						Vector2 overlap2 = realSatOther->overlap(*satThis);
+						Vector2d overlap1 = satThis->overlap(*realSatOther);
+						Vector2d overlap2 = realSatOther->overlap(*satThis);
 
 						if (overlap1.notZero() && overlap2.notZero()) {
-							Vector2 shortest = overlap1 < overlap2 ? overlap1 : -1 * overlap2;
+							Vector2d shortest = overlap1 < overlap2 ? overlap1 : -1 * overlap2;
 
 							if ((shortest.x > 0 && response.x > 0) || (shortest.x < 0 && response.x < 0)) {
 								response.x = std::abs(response.x) < std::abs(shortest.x) ? shortest.x : response.x;

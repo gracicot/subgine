@@ -8,17 +8,17 @@ namespace collision
 {
 namespace Results
 {
-SatResult::SatResult(const CollisionBody& other, const bool colliding, const double time, const subgine::Vector2 gap) : CollisionResult(other, colliding, time), _gap(gap)
+SatResult::SatResult(const CollisionBody& other, const bool colliding, const double time, const subgine::Vector2d gap) : CollisionResult(other, colliding, time), _gap(gap)
 {
 
 }
 
-Vector2 SatResult::getGap() const
+Vector2d SatResult::getGap() const
 {
 	return _gap;
 }
 
-void SatResult::setGap(const Vector2 gap)
+void SatResult::setGap(const Vector2d gap)
 {
 	_gap = gap;
 }
