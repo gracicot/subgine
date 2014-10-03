@@ -18,12 +18,12 @@ template<int n>
 class Spring : public Rule<n>
 {
 public:
-	Spring(const Vector<n, double> value, const double size, std::function< Vector<n, double>(void) > functor) : _value(value), _size(size), _functor(functor)
+	Spring(const double value, const double size, std::function< Vector<n, double>(void) > functor) : _value(value), _size(size), _functor(functor)
 	{
 		
 	}
 	
-	Spring(const Vector<n, double> value, const double size = 0, const Vector<n, double> position = Vector<n, double>()) : _value(value), _size(size), _functor(nullptr), _position(position)
+	Spring(const double value, const double size = 0, const Vector<n, double> position = Vector<n, double>()) : _value(value), _size(size), _functor(nullptr), _position(position)
 	{
 		
 	}
@@ -77,18 +77,18 @@ public:
 		return relative.unit() * getValue() * (relative.getLength() - getSize());
 	}
 	
-	Vector<n, double> getValue() const
+	double getValue() const
 	{
 		return _value;
 	}
 	
-	void setValue(const Vector<n, double> value)
+	void setValue(const double value)
 	{
 		_value = value;
 	}
 
 private:
-	Vector<n, double>  _value;
+	double  _value;
 	double _size;
 
 	Vector<n, double> _position;

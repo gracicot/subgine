@@ -49,12 +49,12 @@ public:
 		_objects.remove(&object);
 	}
 	
-	Vector<n, double> getValue() const
+	double getValue() const
 	{
 		return _value;
 	}
 	
-	void setValue(const Vector<n, double> value)
+	void setValue(const double value)
 	{
 		_value = value;
 	}
@@ -63,7 +63,7 @@ private:
 	static const double gravity;
 	
 	std::list<const PhysicPoint<n>*> _objects;
-	Vector2 _value;
+	double _value;
 };
 
 template<int n>

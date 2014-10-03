@@ -155,12 +155,6 @@ namespace subgine
 	}
 	
 	template<class T>
-	inline Vector<4, T> operator* (const Vector<4, T>& vec1, const Vector<4, T>& vec2)
-	{
-		return Vector<4, T>(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z, vec1.w * vec2.w);
-	}
-	
-	template<class T>
 	Vector<4, T>& operator/= (Vector<4, T>& vec, const double& divider)
 	{
 		vec.x /= divider;

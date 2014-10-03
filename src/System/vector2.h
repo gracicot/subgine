@@ -211,12 +211,6 @@ namespace subgine
 	}
 	
 	template<class T>
-	Vector<2, T> operator* (const Vector<2, T>& vec1, const Vector<2, T>& vec2)
-	{
-		return Vector<2, T>(vec1.x * vec2.x, vec1.y * vec2.y);
-	}
-	
-	template<class T>
 	Vector<2, T>& operator/= (Vector<2, T>& vec, const double& divider)
 	{
 		vec.x /= divider;

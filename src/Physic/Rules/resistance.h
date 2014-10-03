@@ -14,7 +14,7 @@ template<int n>
 class Resistance : public Rule<n>
 {
 public:
-	Resistance(const Vector<n, double> value = Vector<n, double>()) : _value(value)
+	Resistance(const double value = 0) : _value(value)
 	{
 		
 	}
@@ -24,18 +24,18 @@ public:
 		return -1 * object.getVelocity() * getValue();
 	}
 	
-	Vector<n, double> getValue() const
+	double getValue() const
 	{
 		return _value;
 	}
 	
-	void setValue(const Vector<n, double> value)
+	void setValue(const double value)
 	{
 		_value = value;
 	}
 
 private:
-	Vector<n, double> _value;
+	double _value;
 };
 
 }
