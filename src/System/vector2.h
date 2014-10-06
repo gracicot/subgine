@@ -13,28 +13,21 @@ namespace subgine
 	{
 	public:
 		Vector() : x(0), y(0)
-		{
-			
-		}
+		{}
 		
 		Vector(T _x, T _y) : x(_x), y(_y)
-		{
-			
-		}
+		{}
 		
 		Vector(const Vector<2, T>& other) : x(other.x), y(other.y)
+		{}
+		
+		template<class O>
+		operator Vector< 2 , O > () const
 		{
-			
-		}
-		
-		template<class O>
-		operator Vector< 2 , O > () const {
-			return Vector< 2 , O >((O)x, (O)y);
-		}
-		
-		template<class O>
-		operator Vector< 2 , O > () {
-			return Vector< 2 , O >((O)x, (O)y);
+			return Vector< 2 , O >(
+				static_cast<O>(x),
+				static_cast<O>(y)
+			);
 		}
 		
 		inline double getAngle() const
@@ -110,12 +103,12 @@ namespace subgine
 			return (x * vec.x) + (y * vec.y);
 		}
 		
-		inline double cross(const Vector<2, T>& other)
+		inline double cross(const Vector<2, T>& other) const
 		{
 			return (x * other.y) - (y * other.x);
 		}
 		
-		inline Vector< 2 , T > cross(double multiplier)
+		inline Vector< 2 , T > cross(double multiplier) const
 		{
 			return Vector< 2 , T >(multiplier * y, -multiplier * x);
 		}
@@ -127,22 +120,22 @@ namespace subgine
 			return *this;
 		}
 		
-		inline bool operator< (const Vector<2, T>& other)
+		inline bool operator< (const Vector<2, T>& other) const
 		{
 			return ((x * x) + (y * y)) < ((other.x * other.x)+(other.y * other.y));
 		}
 		
-		inline bool operator> (const Vector<2, T>& other)
+		inline bool operator> (const Vector<2, T>& other) const
 		{
 			return ((x * x) + (y * y)) > ((other.x * other.x)+(other.y * other.y));
 		}
 		
-		inline bool operator> (double length)
+		inline bool operator> (double length) const
 		{
 			return ((x * x) + (y * y)) > (length*length);
 		}
 		
-		inline bool operator< (double length)
+		inline bool operator< (double length) const
 		{
 			return ((x * x) + (y * y)) < (length*length);
 		}

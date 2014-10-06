@@ -12,24 +12,23 @@ namespace subgine
 	{
 	public:
 		Vector() : x(0), y(0), z(0), w(0)
-		{
-			
-		}
+		{}
 		
 		Vector(T _x, T _y, T _z, T _w) : x(_x), y(_y), z(_z), w(_w)
-		{
-			
-		}
+		{}
 		
 		Vector(const Vector<4, T>& other) : x(other.x), y(other.y), z(other.z), w(other.w)
-		{
-			
-		}
+		{}
 		
 		template<class O>
-		operator Vector< 4 , O >()
+		operator Vector< 4 , O >() const
 		{
-			return Vector< 4 , O >((O)x, (O)y, (O)z, (O)w);
+			return Vector< 4 , O >(
+				static_cast<O>(x),
+				static_cast<O>(y),
+				static_cast<O>(z),
+				static_cast<O>(w)
+			);
 		}
 		
 		inline double getLength() const

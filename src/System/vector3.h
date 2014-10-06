@@ -12,23 +12,22 @@ namespace subgine
 	{
 	public:
 		Vector() : x(0), y(0), z(0)
-		{
-			
-		}
+		{}
 		
 		Vector(T _x, T _y, T _z) : x(_x), y(_y), z(_z)
-		{
-			
-		}
+		{}
 		
 		Vector(const Vector<3, T>& other) : x(other.x), y(other.y), z(other.z)
-		{
-			
-		}
+		{}
 		
 		template<class O>
-		operator Vector< 3 , O >(){
-			return Vector< 3 , O >((O)x, (O)y, (O)z);
+		operator Vector< 3 , O >() const
+		{
+			return Vector< 3 , O >(
+				static_cast<O>(x),
+				static_cast<O>(y),
+				static_cast<O>(z)
+			);
 		}
 		
 		inline Vector<2, double> getAngles() const
@@ -84,7 +83,7 @@ namespace subgine
 			}
 		}
 		
-		inline Vector<3, T> cross(Vector<3, T>& other)
+		inline Vector<3, T> cross(Vector<3, T>& other) const
 		{
 			return Vector< 3 , T >(y * other.z - z*other.y, -1* x*other.z + z*other.x, x*other.y - y*other.x);
 		}
