@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "../system.hpp"
@@ -78,7 +79,7 @@ public:
 		_forces = getNextForces();
 	}
 	
-	Vector<n, double> getNextVelocity(const double time) const
+	virtual Vector<n, double> getNextVelocity(const double time) const
 	{
 		Vector<n, double> velocity = _velocity;
 		
@@ -110,7 +111,7 @@ public:
 		return position;
 	}
 	
-	std::map<std::string, Vector<n, double>> getNextForces() const
+	virtual std::map<std::string, Vector<n, double>> getNextForces() const
 	{
 		auto forces = _forces;
 		

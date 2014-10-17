@@ -24,7 +24,58 @@ public:
 		_angularVelocity = getNextAngularVelocity(time);
 		_pulsesPosition.clear();
 		_torque = getNextTorque(time);
-		PhysicPoint<n>::update(time);
+
+		this->_position = PhysicPoint<n>::getNextPosition(time);
+		this->_corrections.clear();
+		this->_velocity = PhysicPoint<n>::getNextVelocity(time);
+		this->_pulses.clear();
+		this->_forces = PhysicPoint<n>::getNextForces();
+	}
+	
+	virtual Vector<n, double> getNextVelocity(const double time) const override
+	{
+		Vector<n, double> velocity = this->_velocity;
+		
+		for (auto i : this->getNextForces()) {
+			velocity += (i.second / this->_mass) * time;
+		}
+		
+		for (auto i : this->_pulses) {
+			Vector<n, double> pulse = i.second;
+			Vector<n, double> position = getPulsePosition(i.first);
+			double distance = position.getLength();
+
+			if (position.notZero() && pulse.notZero()) {
+				Angle torque = position.angle(position.getAngle() + getOrientation()).cross(pulse) * distance;
+				pulse /= (torque.getLength() / getMomentOfInertia()) + 1;
+			}
+			
+			velocity += (pulse / this->_mass);
+		}
+		
+		return velocity;
+	}
+	
+	virtual std::map<std::string, Vector<n, double>> getNextForces() const
+	{
+		auto forces = this->_forces;
+		
+		for (auto i : this->_rules) {
+			forces[i.first] = i.second->getResult(*this);
+		}
+		
+		for (auto& i : forces) {
+			Vector<n, double> force = i.second;
+			Vector<n, double> position = getForcePosition(i.first);
+			double distance = position.getLength();
+
+			if (position.notZero() && force.notZero()) {
+				Angle torque = position.angle(position.getAngle() + getOrientation()).cross(force) * distance;
+				i.second /= (torque.getLength() / getMomentOfInertia()) + 1;
+			}
+		}
+		
+		return forces;
 	}
 
 	Angle getNextOrientation(const double time) const
@@ -59,7 +110,8 @@ public:
 			double distance = forcePos.second.getLength();
 
 			if (forcePos.second.notZero() && force.notZero()) {
-				torquePulse += forcePos.second.cross(force) * distance;
+				Angle torque = forcePos.second.angle(forcePos.second.getAngle() + getOrientation()).cross(force) * distance;
+				torquePulse += torque;
 			}
 		}
 
@@ -81,7 +133,8 @@ public:
 			Vector<n, double> force = this->getForce(forcePos.first);
 			double distance = forcePos.second.getLength();
 
-			torque += forcePos.second.angle(forcePos.second.getAngle() + getOrientation()).cross(force) * distance;
+			Angle forceTorque = forcePos.second.angle(forcePos.second.getAngle() + getOrientation()).cross(force) * distance;
+			torque += forceTorque;
 		}
 
 		return torque;
@@ -112,6 +165,24 @@ public:
 	{
 		this->_forces[type] = force;
 		_forcesPosition[type] = position;
+	}
+	
+	Vector<n, double> getPulsePosition(std::string type) const
+	{
+		auto it = _pulsesPosition.find(type);
+		if (it != _pulsesPosition.end()) {
+			return it->second;
+		}
+		return Vector<n, double>();
+	}
+	
+	Vector<n, double> getForcePosition(std::string type) const
+	{
+		auto it = _forcesPosition.find(type);
+		if (it != _forcesPosition.end()) {
+			return it->second;
+		}
+		return Vector<n, double>();
 	}
 
 protected:
