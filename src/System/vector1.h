@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "vector.h"
+#include "vector2.h"
 
 namespace subgine {
 
@@ -52,6 +53,11 @@ public:
 		} else {
 			return Vector< 1 , T >(0);
 		}
+	}
+	
+	Vector< 2 , T > cross(const Vector< 2 , T >& other)
+	{
+		return Vector< 2 , T >( -x * other.y, x * other.x );
 	}
 
 	Vector<1, T>& operator= (const Vector<1, T>& other)
