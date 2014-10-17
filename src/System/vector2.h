@@ -108,7 +108,7 @@ namespace subgine
 			return (x * other.y) - (y * other.x);
 		}
 		
-		inline Vector< 2 , T > cross(double multiplier) const
+		inline Vector< 2 , T > cross(const double multiplier) const
 		{
 			return Vector< 2 , T >(multiplier * y, -multiplier * x);
 		}
