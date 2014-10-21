@@ -63,7 +63,7 @@ void MainEngine::update()
 	auto timer2 = chrono::high_resolution_clock::now();
 	for (auto engines : _engineList) {
 		engines.second->execute(_time);
-		cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
+        //cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
 		timer2 = chrono::high_resolution_clock::now();
 	}
 }
