@@ -6,27 +6,51 @@ namespace subgine
 namespace collision
 {
 
-Circle::Circle()
+Circle::Circle(std::function<Vector2d(void)> position) : _position(position)
 {
 
 }
 
+Circle::Circle(Vector2d position)
+{
+	_position = [position](){
+		return position;
+	};
+}
+
+Vector2d Circle::getPosition() const
+{
+	return _position();
+}
+
+std::shared_ptr< shape::Circle > Circle::getShape() const
+{
+	return _shape;
+}
+
+void Circle::setShape(std::shared_ptr< shape::Circle > shape)
+{
+	_shape = shape;
+}
+
 bool Circle::isPointInside(Vector2d point) const
 {
-	return (_position - point).getLength() < _radius;
+	double radius = _shape->getRadius();
+	return (getPosition() - point).getLength() < radius;
 }
 
 Vector2d Circle::projection(double angle) const
 {
 	double proj;
+	double radius = _shape->getRadius();
 	Vector2d axis = {cos(angle), sin(angle) };
 
-	proj = axis.dot(_position);
+	proj = axis.dot(getPosition());
 
 	//std::cerr << Vector2(proj-_radius, proj+_radius) << std::endl;
 
 
-	return Vector2d(proj - _radius, proj + _radius);
+	return Vector2d(proj - radius, proj + radius);
 }
 
 CollisionEntity* Circle::clone() const
@@ -34,16 +58,11 @@ CollisionEntity* Circle::clone() const
 	return new Circle(*this);
 }
 
-Circle::~Circle()
-{
-
-}
-
 Vector2d Circle::overlap(const SAT_able& other) const
 {
 	Vector2d overlap;
 	overlap.setLenght(std::numeric_limits< double >().max());
-	double angle = (_position - other.getNearestPoint(_position)).getAngle();
+	double angle = (other.getNearestPoint(getPosition()) - getPosition()).getAngle();
 
 	Vector2d projectionThis = this->projection(angle);
 	Vector2d projectionOther = other.projection(angle);
@@ -62,19 +81,16 @@ Vector2d Circle::overlap(const SAT_able& other) const
 
 Vector2d Circle::getNearestPoint(Vector2d point) const
 {
-	Vector2d nearest(_radius, 0);
-	nearest.setAngle((point - _position).getAngle());
-	return nearest + _position;
-}
-
-Vector2d Circle::boxOverlap(const AABB_able& other) const
-{
-	return {};
+	double radius = _shape->getRadius();
+	Vector2d nearest(radius, 0);
+	nearest.setAngle((point - getPosition()).getAngle());
+	return nearest + getPosition();
 }
 
 std::pair< Vector2d, Vector2d > Circle::getBoundingBox() const
 {
-	return {};
+	double radius = _shape->getRadius();
+	return {Vector2d{-radius, -radius} + getPosition(), Vector2d{radius, radius} + getPosition()};
 }
 
 }
