@@ -11,7 +11,7 @@ using namespace std;
 namespace subgine
 {
 
-MainEngine::MainEngine() : _speed(1), _timer(chrono::high_resolution_clock::now()), _time(0)
+MainEngine::MainEngine() : _speed(1), _timer(chrono::high_resolution_clock::now()), _time(0), _onUpdate(nullptr)
 {
 
 }
@@ -31,11 +31,8 @@ void MainEngine::run(bool run)
 		_timer = chrono::high_resolution_clock::now();
 		_thread = thread([&](){
 			while (_run) {
-				_mutex.lock();
 				update();
-				_mutex.unlock();
-				this_thread::yield();
-				this_thread::sleep_for(chrono::microseconds(10));
+				onUpdate();
 			}
 		});
 	} else {
@@ -45,13 +42,16 @@ void MainEngine::run(bool run)
 	}
 }
 
-void MainEngine::pause(bool pause)
+void MainEngine::onUpdate() const
 {
-	if (pause) {
-		_mutex.lock();
-	} else {
-		_mutex.unlock();
+	if (_onUpdate) {
+		_onUpdate();
 	}
+}
+
+void MainEngine::onUpdate(function< void() > callback)
+{
+	_onUpdate = callback;
 }
 
 void MainEngine::update()
