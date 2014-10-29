@@ -46,7 +46,7 @@ public:
 			double distance = position.getLength();
 
 			if (position.notZero() && pulse.notZero()) {
-				Angle torque = position.angle(position.getAngle() + getOrientation()).cross(pulse) * distance;
+				Angle torque = position.cross(pulse) * distance;
 				pulse /= (torque.getLength() / getMomentOfInertia()) + 1;
 			}
 			
@@ -70,7 +70,7 @@ public:
 			double distance = position.getLength();
 
 			if (position.notZero() && force.notZero()) {
-				Angle torque = position.angle(position.getAngle() + getOrientation()).cross(force) * distance;
+				Angle torque = position.cross(force) * distance;
 				i.second /= (torque.getLength() / getMomentOfInertia()) + 1;
 			}
 		}
@@ -110,7 +110,7 @@ public:
 			double distance = forcePos.second.getLength();
 
 			if (forcePos.second.notZero() && force.notZero()) {
-				Angle torque = forcePos.second.angle(forcePos.second.getAngle() + getOrientation()).cross(force) * distance;
+				Angle torque = forcePos.second.cross(force) * distance;
 				torquePulse += torque;
 			}
 		}
@@ -133,7 +133,7 @@ public:
 			Vector<n, double> force = this->getForce(forcePos.first);
 			double distance = forcePos.second.getLength();
 
-			Angle forceTorque = forcePos.second.angle(forcePos.second.getAngle() + getOrientation()).cross(force) * distance;
+			Angle forceTorque = forcePos.second.cross(force) * distance;
 			torque += forceTorque;
 		}
 
@@ -153,6 +153,11 @@ public:
 	{
 		_shape = shape;
 		_momentOfInertia = _shape->getMomentOfInertia(this->_mass);
+	}
+	
+	std::shared_ptr<shape::Shape<n>> getShape() const
+	{
+		return _shape;
 	}
 
 	void setPulse(const std::string type, const Vector<n, double> pulse, const Vector<n, double> position = Vector<n, double>())
