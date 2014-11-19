@@ -31,5 +31,10 @@ std::unique_ptr< Results::CollisionResult > SatTester::test(const CollisionBody&
 	}
 }
 
+CollisionTester* SatTester::clone()
+{
+	return new SatTester(*this);
+}
+
 }
 }

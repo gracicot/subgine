@@ -47,8 +47,6 @@ Vector2d Circle::projection(double angle) const
 
 	proj = axis.dot(getPosition());
 
-	//std::cerr << Vector2(proj-_radius, proj+_radius) << std::endl;
-
 
 	return Vector2d(proj - radius, proj + radius);
 }
@@ -60,8 +58,7 @@ CollisionEntity* Circle::clone() const
 
 Vector2d Circle::overlap(const SAT_able& other) const
 {
-	Vector2d overlap;
-	overlap.setLenght(std::numeric_limits< double >().max());
+	Vector2d overlap(0, 0);
 	double angle = (other.getNearestPoint(getPosition()) - getPosition()).getAngle();
 
 	Vector2d projectionThis = this->projection(angle);
@@ -70,7 +67,7 @@ Vector2d Circle::overlap(const SAT_able& other) const
 	if ((projectionThis.y < projectionOther.x) || projectionThis.x > projectionOther.y) {
 		return Vector2d();
 	} else {
-		if (overlap.getLength() > projectionThis.y - projectionOther.x) {
+		if (!overlap.notZero() || overlap > projectionThis.y - projectionOther.x) {
 			overlap = {projectionThis.y - projectionOther.x, 0};
 			overlap.setAngle(angle);
 		}

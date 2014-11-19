@@ -5,30 +5,38 @@
 #include "CollisionHandlers/collisionhandler.h"
 #include "CollisionResults/collisionresult.h"
 
+using namespace std;
+
 namespace subgine
 {
 namespace collision
 {
+
+CollisionBody::CollisionBody(CollisionBody && other) :
+	_material(move(other._material)),
+	_collisionhandlers(move(other._collisionhandlers)),
+	_collisionEntities(move(other._collisionEntities)),
+	_collisionTesters(move(other._collisionTesters))
+{}
+
+CollisionBody::CollisionBody(const CollisionBody& other) :
+	_material(other._material),
+	_collisionhandlers(other._collisionhandlers),
+	_collisionEntities(other._collisionEntities)
+{
+	for (auto& tester : other._collisionTesters) {
+		_collisionTesters.insert(std::pair<std::string, std::unique_ptr<CollisionTester>>(tester.first, std::unique_ptr<CollisionTester>(tester.second->clone())));
+	}
+}
 
 CollisionBody::CollisionBody()
 {
 
 }
 
-CollisionBody::CollisionBody(const CollisionBody& other)
-{
-	for (auto entity : other._collisionEntities) {
-		_collisionEntities[entity.first] = std::shared_ptr<CollisionEntity>(entity.second->clone());
-	}
-	
-	for (auto handler : _collisionhandlers) {
-		_collisionhandlers[handler.first] = std::shared_ptr<CollisionHandler>(handler.second->clone());
-	}
-}
-
 CollisionBody::~CollisionBody()
 {
-	
+
 }
 
 std::unique_ptr< Results::CollisionResult > CollisionBody::testObject(const CollisionBody& other, double time, std::string test) const
@@ -44,9 +52,8 @@ std::unique_ptr< Results::CollisionResult > CollisionBody::testObject(const Coll
 
 void CollisionBody::trigger(const subgine::collision::CollisionBody& other, std::unique_ptr< subgine::collision::Results::CollisionResult > result, std::string tag)
 {
-	auto it = _collisionhandlers.find(tag);
-
-	if (it != _collisionhandlers.end()) {
+	auto range = _collisionhandlers.equal_range(tag);
+	for(auto it = range.first ; it != range.second ; it++) {
 		it->second->apply(*this, *result);
 	}
 }
@@ -83,34 +90,36 @@ std::map< std::string, std::shared_ptr< CollisionEntity > >& CollisionBody::getC
 	return _collisionEntities;
 }
 
-const std::shared_ptr< CollisionHandler >& CollisionBody::getCollisionHandler(const std::string tag) const
+std::vector<std::shared_ptr< const CollisionHandler >> CollisionBody::getCollisionHandler(const std::string tag) const
 {
-	auto it = _collisionhandlers.find(tag);
+	auto range = _collisionhandlers.equal_range(tag);
+	std::vector<std::shared_ptr< const CollisionHandler >> results;
 	
-	if (it != _collisionhandlers.end()) {
-		return it->second;
+	for(auto& it = range.first ; it != range.second ; it++) {
+		results.push_back(it->second);
 	}
 	
-	throw std::out_of_range("CollisionHandler with tag \"" + tag + "\" not found...");
+	return results;
 }
 
-std::shared_ptr< CollisionHandler >& CollisionBody::getCollisionHandler(const std::string tag)
+std::vector<std::shared_ptr< CollisionHandler >> CollisionBody::getCollisionHandler(const std::string tag)
 {
-	auto it = _collisionhandlers.find(tag);
+	auto range = _collisionhandlers.equal_range(tag);
+	std::vector<std::shared_ptr< CollisionHandler >> results;
 	
-	if (it != _collisionhandlers.end()) {
-		return it->second;
+	for(auto it = range.first ; it != range.second ; it++) {
+		results.push_back(it->second);
 	}
 	
-	throw std::out_of_range("CollisionHandler with tag \"" + tag + "\" not found...");
+	return results;
 }
 
-const std::map< std::string, std::shared_ptr< CollisionHandler > >& CollisionBody::getCollisionHandler() const
+const std::multimap< std::string, std::shared_ptr< CollisionHandler > >& CollisionBody::getCollisionHandler() const
 {
 	return _collisionhandlers;
 }
 
-std::map< std::string, std::shared_ptr< CollisionHandler > >& CollisionBody::getCollisionHandler()
+std::multimap< std::string, std::shared_ptr< CollisionHandler > >& CollisionBody::getCollisionHandler()
 {
 	return _collisionhandlers;
 }

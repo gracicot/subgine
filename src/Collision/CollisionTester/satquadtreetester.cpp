@@ -63,5 +63,10 @@ std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const Collis
 	}
 }
 
+CollisionTester* SatQuadTreeTester::clone()
+{
+	return new SatQuadTreeTester(*this);
+}
+
 }
 }
