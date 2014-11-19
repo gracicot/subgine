@@ -2,6 +2,7 @@
 
 #include <map>
 #include <vector>
+#include <mutex>
 
 #include "../../system.hpp"
 
@@ -27,6 +28,7 @@ public:
 	void remove(CollisionBody& object);
 
 protected:
+	std::mutex _inserting;
 	void makeObjectList();
 
 	std::map<std::string, std::vector<std::tuple<CollisionBody*, std::string>>> _groups;
