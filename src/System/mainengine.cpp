@@ -23,12 +23,18 @@ MainEngine::~MainEngine()
 	}
 }
 
+void MainEngine::reset()
+{
+	_timer = chrono::high_resolution_clock::now();
+	_time = 0;
+}
+
 void MainEngine::run(bool run)
 {
 	_run = run;
 	
 	if (run) {
-		_timer = chrono::high_resolution_clock::now();
+		reset();
 		_thread = thread([&](){
 			while (_run) {
 				update();
@@ -63,7 +69,7 @@ void MainEngine::update()
 	auto timer2 = chrono::high_resolution_clock::now();
 	for (auto engines : _engineList) {
 		engines.second->execute(_time);
-        //cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
+//         cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
 		timer2 = chrono::high_resolution_clock::now();
 	}
 }

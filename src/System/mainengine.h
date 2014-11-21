@@ -30,6 +30,7 @@ public:
 	void onUpdate(std::function<void()> callback);
 	void onUpdate() const;
 
+	void reset();
 	void run(bool run);
 	void update();
 private:
