@@ -226,15 +226,17 @@ std::vector< double > Polygon::getAngles() const
 Vector2d Polygon::getNearestPoint(Vector2d point) const
 {
 	if (_shape && _shape->getVertices().size()) {
-		Vector2d nearest(std::numeric_limits< double >().max(), 0);
-		nearest.setAngle(pi / 4);
+		Vector2d nearest(0, 0);
+		bool first = true;
 
 		for (Vector2d current : _shape->getVertices()) {
 			current.setAngle(getAngle() + current.getAngle());
 
-			if (nearest.getLength() > (current - point).getLength()) {
+			if (first || nearest > (current - point)) {
 				nearest = current;
 			}
+			
+			first = false;
 		}
 
 		return nearest + getPosition();
