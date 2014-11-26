@@ -31,9 +31,10 @@ protected:
 	std::mutex _inserting;
 	void makeObjectList();
 
-	std::map<std::string, std::vector<std::tuple<CollisionBody*, std::string>>> _groups;
+	std::map<CollisionBody*, std::pair<std::vector<std::string>, std::vector<std::string>>> _objects;
+	bool _listClean;
 
-	std::vector<Test> _objects;
+	std::vector<Test> _test;
 };
 
 }

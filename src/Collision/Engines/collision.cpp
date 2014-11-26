@@ -5,6 +5,7 @@
 
 #include <future>
 #include <thread>
+#include <algorithm>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ namespace subgine
 namespace collision
 {
 
-Collision::Collision()
+Collision::Collision() : _listClean(true)
 {
 
 }
@@ -25,8 +26,11 @@ Collision::~Collision()
 
 void Collision::execute(const double time)
 {
+	if (!_listClean) {
+		makeObjectList();
+	}
 	_inserting.lock();
-	vector<Test> objects = _objects;
+	vector<Test> objects = _test;
 	_inserting.unlock();
 	// todo: move to a class
 	struct TestResult {
@@ -83,29 +87,42 @@ void Collision::execute(const double time)
 
 void Collision::add(subgine::collision::CollisionBody* object, vector<string> groups, vector< string > collisionGroups)
 {
-	for (auto group : groups) {
-		for (auto collisionGroup : collisionGroups) {
-			_groups[group].push_back(make_tuple(object, collisionGroup));
-		}
-	}
+	_objects[object] = {groups, collisionGroups};
+	
+	_listClean = false;
+}
 
-	makeObjectList();
+void Collision::remove(CollisionBody& object)
+{
+	_objects.erase(&object);
+	
+	_listClean = false;
 }
 
 void Collision::makeObjectList()
 {
 	_inserting.lock();
-	_objects.clear();
-
-	for (auto group : _groups) {
-		for (auto object : group.second) {
-			for (auto relatedObject : _groups[get<1>(object)]) {
-				if (get<0>(object) != get<0>(relatedObject)) {
-					_objects.push_back(Test(get<0>(object), get<0>(relatedObject), get<1>(object)));
+	_test.clear();
+	
+	
+	for (auto object : _objects) {
+		for (auto group : object.second.second) {
+			auto findByGroup = [&group] (decltype(object)& current) -> bool {
+				return find(current.second.first.begin(), current.second.first.end(), group) != current.second.first.end();
+			};
+			for (
+				auto it = std::find_if(_objects.begin(), _objects.end(), findByGroup);
+				it != _objects.end();
+				it = std::find_if(++it, _objects.end(), findByGroup)
+			) {
+				if (object.first != it->first) {
+					_test.push_back({object.first, it->first, group});
 				}
 			}
 		}
 	}
+	
+	_listClean = true;
 	_inserting.unlock();
 }
 
