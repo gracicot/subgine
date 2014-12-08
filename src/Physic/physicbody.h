@@ -46,7 +46,7 @@ public:
 			double distance = position.getLength();
 
 			if (position.notZero() && pulse.notZero()) {
-				Angle torque = position.cross(pulse) * distance;
+				Angle torque = position.cross(pulse) / (distance*this->_mass);
 				pulse /= (torque.getLength() / getMomentOfInertia()) + 1;
 			}
 			
@@ -70,7 +70,7 @@ public:
 			double distance = position.getLength();
 
 			if (position.notZero() && force.notZero()) {
-				Angle torque = position.cross(force) * distance;
+				Angle torque = position.cross(force) / (distance*this->_mass);
 				i.second /= (torque.getLength() / getMomentOfInertia()) + 1;
 			}
 		}
@@ -100,8 +100,8 @@ public:
 
 	Angle getNextAngularVelocity(const double time) const
 	{
-		Angle velocity = _angularVelocity / tau;
-		Angle torquePulse = 0;
+		Angle velocity = Angle();
+		Angle torquePulse = Angle();
 
 		velocity += (getNextTorque(time) / getMomentOfInertia()) * time;
 
@@ -110,14 +110,14 @@ public:
 			double distance = forcePos.second.getLength();
 
 			if (forcePos.second.notZero() && force.notZero()) {
-				Angle torque = forcePos.second.cross(force) * distance;
+				Angle torque = forcePos.second.cross(force) / (distance*this->_mass);
 				torquePulse += torque;
 			}
 		}
 
-		velocity += torquePulse / getMomentOfInertia();
+		velocity = torquePulse / getMomentOfInertia();
 
-		return (velocity / 1.0001) * tau;
+		return _angularVelocity + (velocity / 1.0001) * tau;
 	}
 
 	Angle getTorque() const
@@ -127,13 +127,13 @@ public:
 
 	Angle getNextTorque(const double time) const
 	{
-		Angle torque = 0;
+		Angle torque = Angle();
 
 		for (auto forcePos : _forcesPosition) {
 			Vector<n, double> force = this->getForce(forcePos.first);
 			double distance = forcePos.second.getLength();
 
-			Angle forceTorque = forcePos.second.cross(force) * distance;
+			Angle forceTorque = forcePos.second.cross(force) / (distance*this->_mass);
 			torque += forceTorque;
 		}
 
