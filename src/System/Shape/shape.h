@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../vector.h"
+#include "../vector-all.h"
 
 namespace subgine {
 namespace shape {
