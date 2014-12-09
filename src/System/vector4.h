@@ -85,6 +85,9 @@ namespace subgine
 		}
 		
 		T x, y, z, w;
+		
+		constexpr static int size = 4;
+		using type = T;
 	};
 	
 	template<class T>

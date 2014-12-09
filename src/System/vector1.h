@@ -33,6 +33,9 @@ public:
 	operator T () const;
 
 	T x;
+	
+	constexpr static int size = 1;
+	using type = T;
 };
 
 template<class T>
