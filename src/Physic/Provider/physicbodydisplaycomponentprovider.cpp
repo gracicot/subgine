@@ -4,7 +4,8 @@ namespace subgine {
 namespace physic {
 
 template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, std::function<double()> scale) : 
+PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, std::function<double()> scale) :
+	PhysicPointPositionProvider<n>(physicBody),
 	PhysicBodyComponentProvider<n>(physicBody),
 	_scale(scale)
 {
@@ -12,7 +13,8 @@ PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const 
 }
 
 template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, double scale) : 
+PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, double scale) :
+	PhysicPointPositionProvider<n>(physicBody),
 	PhysicBodyComponentProvider<n>(physicBody),
 	_scale([scale]() {
 		return scale;

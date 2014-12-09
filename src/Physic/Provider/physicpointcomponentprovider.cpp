@@ -5,7 +5,7 @@ namespace physic {
 
 template<int n>
 PhysicPointComponentProvider<n>::PhysicPointComponentProvider(const PhysicPoint<n>& physicPoint, std::function<subgine::Vector<freedom(n), double>()> orientation) :
-	_physicPoint(physicPoint),
+	PhysicPointPositionProvider<n>(physicPoint),
 	_orientation(orientation)
 {
 
@@ -13,7 +13,7 @@ PhysicPointComponentProvider<n>::PhysicPointComponentProvider(const PhysicPoint<
 
 template<int n>
 PhysicPointComponentProvider<n>::PhysicPointComponentProvider(const PhysicPoint<n>& physicPoint, subgine::Vector<freedom(n), double> orientation) :
-	_physicPoint(physicPoint),
+	PhysicPointPositionProvider<n>(physicPoint),
 	_orientation([orientation]() {
 		return orientation;
 	})
@@ -24,19 +24,15 @@ PhysicPointComponentProvider<n>::PhysicPointComponentProvider(const PhysicPoint<
 template<int n>
 void PhysicPointComponentProvider<n>::setOrientation(std::function<Vector<freedom(n), double>()> orientation)
 {
-
+	_orientation = orientation;
 }
 
 template<int n>
 void PhysicPointComponentProvider<n>::setOrientation(Vector<freedom(n), double> orientation)
 {
-
-}
-
-template<int n>
-Vector<n, double> PhysicPointComponentProvider<n>::getPosition() const
-{
-	return _physicPoint.getPosition();
+	_orientation = [orientation]() {
+		return orientation;
+	};
 }
 
 template <int n>

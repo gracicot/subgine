@@ -1,15 +1,15 @@
 #pragma once
 
 #include "componentprovider.h"
+#include "zeropositionprovider.h"
 
 namespace subgine {
 
 template<int n>
-class ZeroComponentProvider : public virtual ComponentProvider<n>
+class ZeroComponentProvider : public virtual ComponentProvider<n>, public virtual ZeroPositionProvider<n>
 {
 public:
 	virtual Vector<freedom(n), double> getOrientation() const override;
-	virtual Vector<n, double> getPosition() const override;
 };
 
 extern template class ZeroComponentProvider<2>;

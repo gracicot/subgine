@@ -4,7 +4,7 @@ namespace subgine {
 
 template <int n>
 CallbackComponentProvider<n>::CallbackComponentProvider(std::function<Vector<n, double>()> position, std::function<Vector<freedom(n), double>()> orientation) : 
-	_position(position),
+	CallbackPositionProvider<n>(position),
 	_orientation(orientation)
 {
 	
@@ -12,9 +12,7 @@ CallbackComponentProvider<n>::CallbackComponentProvider(std::function<Vector<n, 
 
 template <int n>
 CallbackComponentProvider<n>::CallbackComponentProvider(Vector<n, double> position, std::function<Vector<freedom(n), double>()> orientation) :
-	_position([position]() {
-		return position;
-	}),
+	CallbackPositionProvider<n>(position),
 	_orientation(orientation)
 {
 	
@@ -22,7 +20,7 @@ CallbackComponentProvider<n>::CallbackComponentProvider(Vector<n, double> positi
 
 template <int n>
 CallbackComponentProvider<n>::CallbackComponentProvider(std::function<Vector<n, double>()> position, Vector<freedom(n), double> orientation) :
-	_position(position),
+	CallbackPositionProvider<n>(position),
 	_orientation([orientation]() {
 		return orientation;
 	})
@@ -32,28 +30,12 @@ CallbackComponentProvider<n>::CallbackComponentProvider(std::function<Vector<n, 
 
 template <int n>
 CallbackComponentProvider<n>::CallbackComponentProvider(Vector<n, double> position, Vector<freedom(n), double> orientation) :
-	_position([position]() {
-		return position;
-	}),
+	CallbackPositionProvider<n>(position),
 	_orientation([orientation]() {
 		return orientation;
 	})
 {
 	
-}
-
-template <int n>
-void CallbackComponentProvider<n>::setPosition(std::function<Vector<n, double>()> position)
-{
-	_position = position;
-}
-
-template <int n>
-void CallbackComponentProvider<n>::setPosition(Vector<n, double> position)
-{
-	_position = [position]() {
-		return position;
-	};
 }
 
 template <int n>
@@ -68,12 +50,6 @@ void CallbackComponentProvider<n>::setOrientation(Vector<freedom(n), double> ori
 	_orientation = [orientation]() {
 		return orientation;
 	};
-}
-
-template <int n>
-Vector<n, double> CallbackComponentProvider<n>::getPosition() const
-{
-	return _position();
 }
 
 template <int n>

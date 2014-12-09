@@ -6,7 +6,7 @@
 namespace subgine {
 
 template <int n>
-class CallbackDisplayComponentProvider : public CallbackComponentProvider<n>, public DisplayComponentProvider<n>
+class CallbackDisplayComponentProvider : public virtual CallbackComponentProvider<n>, public virtual DisplayComponentProvider<n>
 {
 public:
 	CallbackDisplayComponentProvider(

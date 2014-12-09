@@ -1,20 +1,20 @@
 #pragma once
 
-#include "physicbody.h"
+#include "physicpointpositionprovider.h"
+#include "../physicbody.h"
 
-#include "../system.hpp"
+#include "../../system.hpp"
 
 namespace subgine {
 namespace physic {
 
 template<int n>
-class PhysicBodyComponentProvider : public virtual ComponentProvider<n>
+class PhysicBodyComponentProvider : public virtual ComponentProvider<n>, public virtual PhysicPointPositionProvider<n>
 {
 public:
 	PhysicBodyComponentProvider(const PhysicBody<n>& physicoBody);
 	
 	virtual Vector<freedom(n), double> getOrientation() const override;
-	virtual Vector<n, double> getPosition() const override;
 	
 private:
 	const PhysicBody<n>& _physicBody;

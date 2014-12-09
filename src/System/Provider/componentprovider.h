@@ -1,15 +1,14 @@
 #pragma once
 
-#include "vector-all.h"
+#include "positionprovider.h"
 
 namespace subgine {
 
 template <int n>
-class ComponentProvider
+class ComponentProvider : public virtual PositionProvider<n>
 {
 public:
 	virtual Vector<freedom(n), double> getOrientation() const = 0;
-	virtual Vector<n, double> getPosition() const = 0;
 };
 
 extern template class ComponentProvider<2>;

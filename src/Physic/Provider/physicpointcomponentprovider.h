@@ -1,14 +1,15 @@
 #pragma once
 
-#include "physicpoint.h"
+#include "physicpointpositionprovider.h"
+#include "../physicpoint.h"
 
-#include "../system.hpp"
+#include "../../system.hpp"
 
 namespace subgine {
 namespace physic {
 
 template <int n>
-class PhysicPointComponentProvider : ComponentProvider<n>
+class PhysicPointComponentProvider : public virtual ComponentProvider<n>, public virtual PhysicPointPositionProvider<n>
 {
 public:
 	PhysicPointComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation = Vector<freedom(n), double>());
@@ -17,11 +18,9 @@ public:
 	void setOrientation(std::function<Vector<freedom(n), double>()> orientation);
 	void setOrientation(Vector<freedom(n), double> orientation);
 	
-	virtual Vector<n, double> getPosition() const override;
 	virtual Vector<freedom(n), double> getOrientation() const override;
 	
 private:
-	const PhysicPoint<n>& _physicPoint;
 	std::function<Vector<freedom(n), double>()> _orientation;
 };
 

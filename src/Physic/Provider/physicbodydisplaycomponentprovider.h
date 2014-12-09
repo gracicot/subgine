@@ -2,7 +2,7 @@
 
 #include "physicbodycomponentprovider.h"
 
-#include "../system.hpp"
+#include "../../system.hpp"
 
 namespace subgine {
 namespace physic {
