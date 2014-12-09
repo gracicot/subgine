@@ -128,25 +128,29 @@ void Polygon::setShape(std::shared_ptr<shape::Polygon> shape)
 
 bool Polygon::isPointInside(Vector2d point) const
 {
-	bool oddNodes = false;
-	Vector2d previous = *_shape->getVertices().rbegin();
-	previous.setAngle(previous.getAngle() + getAngle());
-	previous += getPosition();
+	if (_shape && _shape->getVertices().size()) {
+		bool oddNodes = false;
+		Vector2d previous = *_shape->getVertices().rbegin();
+		previous.setAngle(previous.getAngle() + getAngle());
+		previous += getPosition();
 
-	for (Vector2d current :_shape->getVertices()) {
-		current.setAngle(current.getAngle() + getAngle());
-		current += getPosition();
+		for (Vector2d current :_shape->getVertices()) {
+			current.setAngle(current.getAngle() + getAngle());
+			current += getPosition();
 
-		if ((current.y < point.y && previous.y >= point.y
-		        || previous.y < point.y && current.y >= point.y)
-		        && (current.x <= point.x || previous.x <= point.x)) {
-			oddNodes ^= (current.x + (point.y - current.y) / (previous.y - current.y) * (previous.x - current.x) < point.x);
+			if ((current.y < point.y && previous.y >= point.y
+					|| previous.y < point.y && current.y >= point.y)
+					&& (current.x <= point.x || previous.x <= point.x)) {
+				oddNodes ^= (current.x + (point.y - current.y) / (previous.y - current.y) * (previous.x - current.x) < point.x);
+			}
+
+			previous = current;
 		}
 
-		previous = current;
+		return oddNodes;
+	} else {
+		return false;
 	}
-
-	return oddNodes;
 }
 
 Vector2d Polygon::projection(double angle) const
