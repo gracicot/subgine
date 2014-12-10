@@ -15,7 +15,10 @@ public:
 	Vector(const Vector<1, T>& other);
 	
 	template<class O>
-	operator Vector< 1 , O > () const;
+	operator Vector< 1 , O > () const
+	{
+		return Vector< 1 , O >(static_cast<O>(x));
+	}
 
 	double getLength() const;
 	void setLength(double length);
@@ -82,7 +85,6 @@ Vector<1, T>& operator/= (Vector<1, T>& vec, const double& divider);
 
 template<class T>
 std::ostream& operator<< (std::ostream& out, Vector<1, T> vec);
-
 
 extern template Vector<1, float> operator/ (const Vector<1, float>& vec, const double& divider);
 extern template Vector<1, float> operator/ (const Vector<1, float>& vec1, const Vector<1, float>& vec2);

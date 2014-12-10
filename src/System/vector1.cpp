@@ -19,12 +19,6 @@ template<class T>
 Vector<1, T>::Vector(const Vector<1, T>& other) : x(other.x)
 {}
 
-template<class T> template<class O>
-Vector<1, T>::operator Vector< 1 , O > () const
-{
-	return Vector< 1 , O >(static_cast<O>(x));
-}
-
 template<class T>
 inline double Vector<1, T>::getLength() const
 {
