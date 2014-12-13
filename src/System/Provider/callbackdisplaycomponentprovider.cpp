@@ -1,12 +1,14 @@
 #include "callbackdisplaycomponentprovider.h"
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 
 template <int n>
 CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
-	std::function<Vector<n, double>()> position,
-	std::function<Vector<freedom(n), double>()> orientation,
-	std::function<double()> scale
+	function<Vector<n, double>()> position,
+	function<Vector<freedom(n), double>()> orientation,
+	function<double()> scale
 ) : 
 	CallbackComponentProvider<n>(position, orientation),
 	_scale(scale)
@@ -17,8 +19,8 @@ CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
 template <int n>
 CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
 	Vector<n, double> position,
-	std::function<Vector<freedom(n), double>()> orientation,
-	std::function<double()> scale
+	function<Vector<freedom(n), double>()> orientation,
+	function<double()> scale
 ) : 
 	CallbackComponentProvider<n>(position, orientation),
 	_scale(scale)
@@ -28,9 +30,9 @@ CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
 
 template <int n>
 CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
-	std::function<Vector<n, double>()> position,
+	function<Vector<n, double>()> position,
 	Vector<freedom(n), double> orientation,
-	std::function<double()> scale
+	function<double()> scale
 ) : 
 	CallbackComponentProvider<n>(position, orientation),
 	_scale(scale)
@@ -42,7 +44,7 @@ template <int n>
 CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
 	Vector<n, double> position,
 	Vector<freedom(n), double> orientation,
-	std::function<double()> scale
+	function<double()> scale
 ) : 
 	CallbackComponentProvider<n>(position, orientation),
 	_scale(scale)
@@ -52,8 +54,8 @@ CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
 
 template <int n>
 CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
-	std::function<Vector<n, double>()> position,
-	std::function<Vector<freedom(n), double>()> orientation,
+	function<Vector<n, double>()> position,
+	function<Vector<freedom(n), double>()> orientation,
 	double scale
 ) : 
 	CallbackComponentProvider<n>(position, orientation),
@@ -67,7 +69,7 @@ CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
 template <int n>
 CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
 	Vector<n, double> position,
-	std::function<Vector<freedom(n), double>()> orientation,
+	function<Vector<freedom(n), double>()> orientation,
 	double scale
 ) : 
 	CallbackComponentProvider<n>(position, orientation),
@@ -80,7 +82,7 @@ CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
 
 template <int n>
 CallbackDisplayComponentProvider<n>::CallbackDisplayComponentProvider(
-	std::function<Vector<n, double>()> position,
+	function<Vector<n, double>()> position,
 	Vector<freedom(n), double> orientation,
 	double scale
 ) : 
@@ -115,7 +117,7 @@ void CallbackDisplayComponentProvider<n>::setScale(double scale)
 }
 
 template <int n>
-void CallbackDisplayComponentProvider<n>::setScale(std::function<double()> scale)
+void CallbackDisplayComponentProvider<n>::setScale(function<double()> scale)
 {
 	_scale = scale;
 }

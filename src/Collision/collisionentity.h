@@ -1,9 +1,7 @@
 #pragma once
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
+
 class CollisionEntity
 {
 public:
@@ -12,5 +10,4 @@ public:
 	~CollisionEntity() = default;
 };
 
-}
 }

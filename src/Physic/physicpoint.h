@@ -8,8 +8,7 @@
 #include "abstractphysicpoint.h"
 #include "Rules/rule.h"
 
-namespace subgine {
-namespace physic {
+namespace sbg {
 
 template<int n>
 class PhysicPoint : public AbstractPhysicPoint, public Positionnable<n>, public virtual Traits::Position<n>
@@ -65,6 +64,5 @@ extern template class PhysicPoint<3>;
 typedef PhysicPoint<2> PhysicPoint2;
 typedef PhysicPoint<3> PhysicPoint3;
 
-}
 }
 

@@ -9,10 +9,7 @@
 
 using namespace std;
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
 
 Collision::Collision() : _listClean(true)
 {
@@ -56,7 +53,7 @@ void Collision::execute(const double time)
 			advance(it, number);
 		}
 	};
-	const int numbreOfWorkers = std::min(static_cast<long unsigned int>(std::thread::hardware_concurrency() - 1), objects.size());
+	const int numbreOfWorkers = min(static_cast<long unsigned int>(thread::hardware_concurrency() - 1), objects.size());
 	if (numbreOfWorkers > 1) {
 			
 		vector<thread> workers;
@@ -85,7 +82,7 @@ void Collision::execute(const double time)
 	}
 }
 
-void Collision::add(subgine::collision::CollisionBody* object, vector<string> groups, vector< string > collisionGroups)
+void Collision::add(CollisionBody* object, vector<string> groups, vector< string > collisionGroups)
 {
 	_objects[object] = {groups, collisionGroups};
 	
@@ -111,9 +108,9 @@ void Collision::makeObjectList()
 				return find(current.second.first.begin(), current.second.first.end(), group) != current.second.first.end();
 			};
 			for (
-				auto it = std::find_if(_objects.begin(), _objects.end(), findByGroup);
+				auto it = find_if(_objects.begin(), _objects.end(), findByGroup);
 				it != _objects.end();
-				it = std::find_if(++it, _objects.end(), findByGroup)
+				it = find_if(++it, _objects.end(), findByGroup)
 			) {
 				if (object.first != it->first) {
 					_test.push_back({object.first, it->first, group});
@@ -126,5 +123,4 @@ void Collision::makeObjectList()
 	_inserting.unlock();
 }
 
-}
 }

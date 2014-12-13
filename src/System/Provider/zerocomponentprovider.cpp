@@ -1,6 +1,8 @@
 #include "zerocomponentprovider.h"
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 
 template<int n>
 Vector<freedom(n), double> ZeroComponentProvider<n>::getOrientation() const

@@ -1,10 +1,7 @@
 #pragma once
 #include "aabb_able.h"
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
 
 class AABBBox : public AABB_able
 {
@@ -25,5 +22,4 @@ private:
 	 std::pair<Vector2d, Vector2d> _box;
 };
 
-}
 }

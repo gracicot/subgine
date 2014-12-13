@@ -8,10 +8,7 @@
 
 #include "test.h"
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
 
 class CollisionBody;
 
@@ -24,7 +21,7 @@ public:
 
 	virtual void execute(const double time);
 
-	void add(subgine::collision::CollisionBody* object, std::vector< std::string > groups, std::vector< std::string > collisionGroups);
+	void add(CollisionBody* object, std::vector<std::string> groups, std::vector<std::string> collisionGroups);
 	void remove(CollisionBody& object);
 
 protected:
@@ -37,5 +34,4 @@ protected:
 	std::vector<Test> _test;
 };
 
-}
 }

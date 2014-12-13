@@ -4,7 +4,7 @@
 
 #include <iosfwd>
 
-namespace subgine {
+namespace sbg {
 
 template<class T>
 class Vector<1, T>

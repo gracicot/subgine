@@ -3,12 +3,8 @@
 #include "rule.h"
 #include "../physicpoint.h"
 
-namespace subgine
-{
-namespace physic
-{
-namespace Rule
-{
+namespace sbg {
+namespace Rule {
 
 template<int n>
 class Resistance : public Rule<n>
@@ -38,6 +34,5 @@ private:
 	double _value;
 };
 
-}
 }
 }

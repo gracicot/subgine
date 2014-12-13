@@ -1,8 +1,7 @@
 #include "vertex.h"
-namespace subgine
-{
-namespace Traits
-{
+
+namespace sbg {
+namespace Traits {
 
 Vertex::Vertex()
 {
@@ -23,7 +22,6 @@ std::list< Vector2d >& Vertex::getVertex()
 {
 	return _vertex;
 }
-
 
 }
 }

@@ -4,8 +4,7 @@
 
 #include "../../system.hpp"
 
-namespace subgine {
-namespace physic {
+namespace sbg {
 
 template<int n>
 class PhysicBodyDisplayComponentProvider : public virtual PhysicBodyComponentProvider<n>, public virtual DisplayComponentProvider<n>
@@ -28,5 +27,4 @@ extern template class PhysicBodyDisplayComponentProvider<3>;
 typedef PhysicBodyDisplayComponentProvider<2> PhysicBody2DDisplayComponentProvider;
 typedef PhysicBodyDisplayComponentProvider<3> PhysicBody3DDisplayComponentProvider;
 
-}
 }

@@ -1,7 +1,8 @@
 #include "physicpointpositionprovider.h"
 
-namespace subgine {
-namespace physic {
+using namespace std;
+
+namespace sbg {
 
 template<int n>
 PhysicPointPositionProvider<n>::PhysicPointPositionProvider(const PhysicPoint<n>& physicPoint) : _physicPoint(physicPoint)
@@ -18,5 +19,4 @@ Vector< n, double > PhysicPointPositionProvider<n>::getPosition() const
 template class PhysicPointPositionProvider<2>;
 template class PhysicPointPositionProvider<3>;
 
-}
 }

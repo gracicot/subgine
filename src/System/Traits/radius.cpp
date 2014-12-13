@@ -1,7 +1,8 @@
 #include "radius.h"
 
-namespace subgine
-{
+using namespace std;
+
+namespace sbg {
 
 double Traits::Radius::getRadius() const
 {

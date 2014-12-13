@@ -2,8 +2,7 @@
 
 #include <string>
 
-namespace subgine {
-namespace collision {
+namespace sbg {
 
 class CollisionBody;
 
@@ -27,5 +26,4 @@ private:
 	std::string _test;
 };
 
-}
 }

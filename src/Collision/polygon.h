@@ -8,10 +8,7 @@
 #include "point_able.h"
 #include "aabb_able.h"
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
 
 class Polygon : public virtual SAT_able, public virtual Traits::Vertex
 {
@@ -33,7 +30,7 @@ public:
 	
 	virtual Vector2d projection(double angle) const override;
 	virtual bool isPointInside(Vector2d point) const override;
-	virtual Vector2d overlap(const subgine::collision::SAT_able& other) const override;
+	virtual Vector2d overlap(const SAT_able& other) const override;
 	virtual Vector2d getNearestPoint(Vector2d point) const override;
 	virtual CollisionEntity* clone() const override;
 	virtual std::pair< Vector2d, Vector2d > getBoundingBox() const override;
@@ -52,5 +49,4 @@ private:
 	std::unordered_map<double, Vector2d> _cachedProjections;
 };
 
-}
 }

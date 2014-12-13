@@ -2,7 +2,7 @@
 
 #include "../vector-all.h"
 
-namespace subgine {
+namespace sbg {
 namespace shape {
 
 template<int n>

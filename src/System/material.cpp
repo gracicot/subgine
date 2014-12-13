@@ -2,7 +2,9 @@
 
 #include <algorithm>
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 
 Material::Material(double restitution, double density, double staticFriction, double dynamicFriction) : _density(density), _staticFriction(staticFriction), _dynamicFriction(dynamicFriction)
 {
@@ -41,7 +43,7 @@ void Material::setDynamicFriction(double dynamicFriction)
 
 void Material::setRestitution(double restitution)
 {
-	_restitution = std::min(restitution, 1.0);
+	_restitution = min(restitution, 1.0);
 }
 
 void Material::setStaticFriction(double staticFriction)

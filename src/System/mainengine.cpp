@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace subgine
+namespace sbg
 {
 
 MainEngine::MainEngine() : _speed(1), _timer(chrono::high_resolution_clock::now()), _time(0), _onUpdate(nullptr)

@@ -5,10 +5,7 @@
 #include "aabb_able.h"
 #include "point_able.h"
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
 
 class SAT_able : public virtual CollisionEntity, public virtual AABB_able, public virtual Point_able
 {
@@ -24,5 +21,4 @@ protected:
 };
 
 
-}
 }

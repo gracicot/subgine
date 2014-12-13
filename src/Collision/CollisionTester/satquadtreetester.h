@@ -4,17 +4,13 @@
 
 #include <memory>
 
-namespace subgine {
-namespace collision {
+namespace sbg {
 
 class SatQuadTreeTester : public CollisionTester
 {
 public:
-	virtual std::unique_ptr< Results::CollisionResult > test(const subgine::collision::CollisionBody& self, const subgine::collision::CollisionBody& other, double time, std::string test) const override;
+	virtual std::unique_ptr< Results::CollisionResult > test(const CollisionBody& self, const CollisionBody& other, double time, std::string test) const override;
 	virtual CollisionTester* clone() override;
 };
 
 }
-}
-
-

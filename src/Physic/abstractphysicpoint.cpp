@@ -1,9 +1,8 @@
 #include "abstractphysicpoint.h"
 
-namespace subgine
-{
-namespace physic
-{
+using namespace std;
+
+namespace sbg {
 
 AbstractPhysicPoint::AbstractPhysicPoint() : _mass(1)
 {
@@ -20,5 +19,4 @@ void AbstractPhysicPoint::setMass(const double mass)
 	_mass = mass;
 }
 
-}
 }

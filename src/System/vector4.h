@@ -4,7 +4,7 @@
 #include <cmath>
 #include "vector.h"
 
-namespace subgine
+namespace sbg
 {
 	
 	template<class T>

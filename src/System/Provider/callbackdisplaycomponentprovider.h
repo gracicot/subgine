@@ -3,7 +3,7 @@
 #include "displaycomponentprovider.h"
 #include "callbackcomponentprovider.h"
 
-namespace subgine {
+namespace sbg {
 
 template <int n>
 class CallbackDisplayComponentProvider : public virtual CallbackComponentProvider<n>, public virtual DisplayComponentProvider<n>

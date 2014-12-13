@@ -1,11 +1,10 @@
 #include "point.h"
 
-namespace subgine
-{
-namespace collision
-{
+using namespace std;
 
-Point::Point(std::function< subgine::Vector2d(void) > functor) : _functor(functor)
+namespace sbg {
+
+Point::Point(function< Vector2d(void) > functor) : _functor(functor)
 {
 }
 
@@ -24,5 +23,4 @@ Vector2d Point::getPosition() const
 	return _functor();
 }
 
-}
 }

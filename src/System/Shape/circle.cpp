@@ -1,6 +1,8 @@
 #include "circle.h"
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 namespace shape {
 
 Circle::Circle(double radius) : _radius(radius) {}

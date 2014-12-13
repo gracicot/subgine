@@ -1,10 +1,9 @@
 #include "circle.h"
 #include <limits>
 
-namespace subgine
-{
-namespace collision
-{
+using namespace std;
+
+namespace sbg {
 
 Circle::Circle(std::function<Vector2d(void)> position) : _position(position)
 {
@@ -23,12 +22,12 @@ Vector2d Circle::getPosition() const
 	return _position();
 }
 
-std::shared_ptr< shape::Circle > Circle::getShape() const
+std::shared_ptr<shape::Circle> Circle::getShape() const
 {
 	return _shape;
 }
 
-void Circle::setShape(std::shared_ptr< shape::Circle > shape)
+void Circle::setShape(std::shared_ptr<shape::Circle> shape)
 {
 	_shape = shape;
 }
@@ -90,5 +89,4 @@ std::pair< Vector2d, Vector2d > Circle::getBoundingBox() const
 	return {Vector2d{-radius, -radius} + getPosition(), Vector2d{radius, radius} + getPosition()};
 }
 
-}
 }

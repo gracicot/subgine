@@ -1,7 +1,9 @@
 #include "engine.h"
 
-namespace subgine
-{
+using namespace std;
+
+namespace sbg {
+
 Engine::Engine()
 {
 

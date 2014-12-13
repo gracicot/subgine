@@ -1,5 +1,5 @@
 #pragma once
-namespace subgine
+namespace sbg
 {
 namespace Traits
 {

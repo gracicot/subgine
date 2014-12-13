@@ -1,6 +1,6 @@
 #pragma once
 
-namespace subgine
+namespace sbg
 {
 	extern const double pi;
 	extern const double tau;

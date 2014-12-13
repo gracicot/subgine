@@ -1,7 +1,6 @@
 #pragma once
 
-namespace subgine {
-namespace collision {
+namespace sbg {
 
 class CollisionBody;
 
@@ -28,6 +27,5 @@ private:
 	double _time;
 };
 
-}
 }
 }

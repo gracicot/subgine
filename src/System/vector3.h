@@ -5,7 +5,7 @@
 #include "vector.h"
 #include "vector2.h"
 
-namespace subgine
+namespace sbg
 {
 	template<class T>
 	class Vector<3, T>

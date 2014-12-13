@@ -1,36 +1,42 @@
 #include "test.h"
 
-subgine::collision::Test::Test(subgine::collision::CollisionBody* object, subgine::collision::CollisionBody* other, std::string test): _object(object), _other(other), _test(test)
+using namespace std;
+
+namespace sbg {
+
+Test::Test(CollisionBody* object, CollisionBody* other, std::string test): _object(object), _other(other), _test(test)
 {
 
 }
 
-subgine::collision::CollisionBody* subgine::collision::Test::getObject() const
+CollisionBody* Test::getObject() const
 {
 	return _object;
 }
 
-subgine::collision::CollisionBody* subgine::collision::Test::getOther() const
+CollisionBody* Test::getOther() const
 {
 	return _other;
 }
 
-std::string subgine::collision::Test::getTest() const
+std::string Test::getTest() const
 {
 	return _test;
 }
 
-void subgine::collision::Test::setObject(subgine::collision::CollisionBody* object)
+void Test::setObject(CollisionBody* object)
 {
 	_object = object;
 }
 
-void subgine::collision::Test::setOther(subgine::collision::CollisionBody* other)
+void Test::setOther(CollisionBody* other)
 {
 	_other = other;
 }
 
-void subgine::collision::Test::setTest(std::string test)
+void Test::setTest(std::string test)
 {
 	_test = test;
+}
+
 }

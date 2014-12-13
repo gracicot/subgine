@@ -3,35 +3,35 @@
 #include <limits>
 #include <iostream>
 
-namespace subgine {
-namespace collision {
+using namespace std;
 
+namespace sbg {
 
-Polygon::Polygon(std::function< Vector2d(void) > position, std::function< double(void) > angle): _position(position), _angle(angle)
+Polygon::Polygon(function< Vector2d(void) > position, function< double(void) > angle): _position(position), _angle(angle)
 {
-	setShape(std::make_shared<shape::Polygon>());
+	setShape(make_shared<shape::Polygon>());
 }
 
 Polygon::Polygon(Vector2d position, double angle)
 {
 	setPosition(position);
 	setAngle(angle);
-	setShape(std::make_shared<shape::Polygon>());
+	setShape(make_shared<shape::Polygon>());
 }
 
-Polygon::Polygon(std::function< Vector2d(void) > position, double angle): _position(position)
+Polygon::Polygon(function<Vector2d(void)> position, double angle): _position(position)
 {
 	setAngle(angle);
-	setShape(std::make_shared<shape::Polygon>());
+	setShape(make_shared<shape::Polygon>());
 }
 
-Polygon::Polygon(Vector2d position, std::function< double(void) > angle): _angle(angle)
+Polygon::Polygon(Vector2d position, function< double(void) > angle): _angle(angle)
 {
 	setPosition(position);
-	setShape(std::make_shared<shape::Polygon>());
+	setShape(make_shared<shape::Polygon>());
 }
 
-std::shared_ptr<shape::Polygon> Polygon::getShape() const
+shared_ptr<shape::Polygon> Polygon::getShape() const
 {
 	return _shape;
 }
@@ -51,12 +51,12 @@ Vector2d Polygon::getPosition() const
 	return _position();
 }
 
-void Polygon::setAngle(std::function< double(void) > angle)
+void Polygon::setAngle(function< double(void) > angle)
 {
 	_angle = angle;
 }
 
-void Polygon::setPosition(std::function< Vector2d(void) > position)
+void Polygon::setPosition(function<Vector2d(void)> position)
 {
 	_position = position;
 }
@@ -75,22 +75,22 @@ void Polygon::setPosition(Vector2d position)
 	};
 }
 
-std::pair< Vector2d, Vector2d > Polygon::getBoundingBox() const
+pair< Vector2d, Vector2d> Polygon::getBoundingBox() const
 {
 	return {_cachedBoundingBox.first + getPosition(), _cachedBoundingBox.second + getPosition()};
 }
 
-void Polygon::setShape(std::shared_ptr<shape::Polygon> shape)
+void Polygon::setShape(shared_ptr<shape::Polygon> shape)
 {
 	_shape = shape;
 	if (_shape->getVertices().size() > 0) {
 		{
-			Vector2d max;
-			for (auto & vertex : _shape->getVertices()) {
-				max.x = std::max(max.x, std::abs(vertex.x));
-				max.y = std::max(max.y, std::abs(vertex.y));
+			Vector2d maximum;
+			for (auto vertex : _shape->getVertices()) {
+				maximum.x = max(maximum.x, abs(vertex.x));
+				maximum.y = max(maximum.y, abs(vertex.y));
 			}
-			_cachedBoundingBox = std::pair<Vector2d, Vector2d>((-1.5 * max), 1.5 * max);
+			_cachedBoundingBox = pair<Vector2d, Vector2d>((-1.5 * maximum), 1.5 * maximum);
 		}
 
 		{
@@ -116,12 +116,12 @@ void Polygon::setShape(std::shared_ptr<shape::Polygon> shape)
 				current = *vertex;
 				double p = axis.dot(current);
 
-				projection.x = std::min(projection.x, p);
-				projection.y = std::max(projection.y, p);
+				projection.x = min(projection.x, p);
+				projection.y = max(projection.y, p);
 			}
 
-			_cachedProjections[std::sin(angle)] = projection;
-			_cachedProjections[std::sin((angle + pi))] = Vector2d(-projection.y, -projection.x);
+			_cachedProjections[sin(angle)] = projection;
+			_cachedProjections[sin((angle + pi))] = Vector2d(-projection.y, -projection.x);
 		}
 	}
 }
@@ -157,9 +157,9 @@ Vector2d Polygon::projection(double angle) const
 {
 	if (_shape && _shape->getVertices().size() > 0) {
 		Vector2d projection;
-		std::unordered_map<double, Vector2d>::const_iterator it;
+		unordered_map<double, Vector2d>::const_iterator it;
 
-		if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(std::sin(angle - getAngle()))) != _cachedProjections.end())) {
+		if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(sin(angle - getAngle()))) != _cachedProjections.end())) {
 			projection = it->second;
 		} else {
 			Vector2d axis(cos(angle - getAngle()), sin(angle - getAngle()));
@@ -176,8 +176,8 @@ Vector2d Polygon::projection(double angle) const
 				current = *verticle;
 				double p = axis.dot(current);
 
-				projection.x = std::min(projection.x, p);
-				projection.y = std::max(projection.y, p);
+				projection.x = min(projection.x, p);
+				projection.y = max(projection.y, p);
 			}
 		}
 
@@ -216,9 +216,9 @@ Vector2d Polygon::overlap(const SAT_able& other) const
 	return overlap;
 }
 
-std::vector< double > Polygon::getAngles() const
+vector< double > Polygon::getAngles() const
 {
-	std::vector<double> angles;
+	vector<double> angles;
 	
 	for (auto angle : _cachedAngles) {
 		angles.push_back(angle + getAngle());
@@ -249,6 +249,4 @@ Vector2d Polygon::getNearestPoint(Vector2d point) const
 	}
 }
 
-
-}
 }

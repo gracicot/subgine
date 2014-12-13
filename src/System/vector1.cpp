@@ -5,7 +5,9 @@
 #include <ostream>
 #include <cmath>
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 
 template<class T>
 Vector<1, T>::Vector() : x(0)
@@ -22,7 +24,7 @@ Vector<1, T>::Vector(const Vector<1, T>& other) : x(other.x)
 template<class T>
 inline double Vector<1, T>::getLength() const
 {
-	return std::abs(x);
+	return abs(x);
 }
 
 template<class T>
@@ -45,7 +47,7 @@ template<class T>
 Vector<1, T> Vector<1, T>::unit() const
 {
 	if (notZero()) {
-		return Vector< 1 , T >(x / std::abs(x));
+		return Vector< 1 , T >(x / abs(x));
 	} else {
 		return Vector< 1 , T >(0);
 	}
@@ -192,7 +194,7 @@ Vector<1, T>& operator/= (Vector<1, T>& vec, const double& divider)
 }
 
 template<class T>
-inline std::ostream& operator<< (std::ostream& out, Vector<1, T> vec)
+inline ostream& operator<< (ostream& out, Vector<1, T> vec)
 {
 	out << vec.x;
 	return out;
@@ -212,7 +214,7 @@ template Vector<1, double> operator- (const Vector<1, double>& vec1, double scal
 template Vector<1, double>& operator-= (Vector<1, double>& vec1, const Vector<1, double>& vec2);
 template Vector<1, double>& operator-= (Vector<1, double>& vec1, double scalar);
 template Vector<1, double>& operator/= (Vector<1, double>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, double> vec);
+template ostream& operator<< (ostream& out, Vector<1, double> vec);
 
 template Vector<1, float> operator/ (const Vector<1, float>& vec, const double& divider);
 template Vector<1, float> operator/ (const Vector<1, float>& vec1, const Vector<1, float>& vec2);
@@ -228,7 +230,7 @@ template Vector<1, float> operator- (const Vector<1, float>& vec1, float scalar)
 template Vector<1, float>& operator-= (Vector<1, float>& vec1, const Vector<1, float>& vec2);
 template Vector<1, float>& operator-= (Vector<1, float>& vec1, float scalar);
 template Vector<1, float>& operator/= (Vector<1, float>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, float> vec);
+template ostream& operator<< (ostream& out, Vector<1, float> vec);
 
 template Vector<1, long double> operator/ (const Vector<1, long double>& vec, const double& divider);
 template Vector<1, long double> operator/ (const Vector<1, long double>& vec1, const Vector<1, long double>& vec2);
@@ -244,7 +246,7 @@ template Vector<1, long double> operator- (const Vector<1, long double>& vec1, l
 template Vector<1, long double>& operator-= (Vector<1, long double>& vec1, const Vector<1, long double>& vec2);
 template Vector<1, long double>& operator-= (Vector<1, long double>& vec1, long double scalar);
 template Vector<1, long double>& operator/= (Vector<1, long double>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, long double> vec);
+template ostream& operator<< (ostream& out, Vector<1, long double> vec);
 
 template Vector<1, int> operator/ (const Vector<1, int>& vec, const double& divider);
 template Vector<1, int> operator/ (const Vector<1, int>& vec1, const Vector<1, int>& vec2);
@@ -260,7 +262,7 @@ template Vector<1, int> operator- (const Vector<1, int>& vec1, int scalar);
 template Vector<1, int>& operator-= (Vector<1, int>& vec1, const Vector<1, int>& vec2);
 template Vector<1, int>& operator-= (Vector<1, int>& vec1, int scalar);
 template Vector<1, int>& operator/= (Vector<1, int>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, int> vec);
+template ostream& operator<< (ostream& out, Vector<1, int> vec);
 
 template Vector<1, unsigned int> operator/ (const Vector<1, unsigned int>& vec, const double& divider);
 template Vector<1, unsigned int> operator/ (const Vector<1, unsigned int>& vec1, const Vector<1, unsigned int>& vec2);
@@ -276,7 +278,7 @@ template Vector<1, unsigned int> operator- (const Vector<1, unsigned int>& vec1,
 template Vector<1, unsigned int>& operator-= (Vector<1, unsigned int>& vec1, const Vector<1, unsigned int>& vec2);
 template Vector<1, unsigned int>& operator-= (Vector<1, unsigned int>& vec1, unsigned int scalar);
 template Vector<1, unsigned int>& operator/= (Vector<1, unsigned int>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, unsigned int> vec);
+template ostream& operator<< (ostream& out, Vector<1, unsigned int> vec);
 
 template Vector<1, long> operator/ (const Vector<1, long>& vec, const double& divider);
 template Vector<1, long> operator/ (const Vector<1, long>& vec1, const Vector<1, long>& vec2);
@@ -292,7 +294,7 @@ template Vector<1, long> operator- (const Vector<1, long>& vec1, long scalar);
 template Vector<1, long>& operator-= (Vector<1, long>& vec1, const Vector<1, long>& vec2);
 template Vector<1, long>& operator-= (Vector<1, long>& vec1, long scalar);
 template Vector<1, long>& operator/= (Vector<1, long>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, long> vec);
+template ostream& operator<< (ostream& out, Vector<1, long> vec);
 
 template Vector<1, unsigned long> operator/ (const Vector<1, unsigned long>& vec, const double& divider);
 template Vector<1, unsigned long> operator/ (const Vector<1, unsigned long>& vec1, const Vector<1, unsigned long>& vec2);
@@ -308,7 +310,7 @@ template Vector<1, unsigned long> operator- (const Vector<1, unsigned long>& vec
 template Vector<1, unsigned long>& operator-= (Vector<1, unsigned long>& vec1, const Vector<1, unsigned long>& vec2);
 template Vector<1, unsigned long>& operator-= (Vector<1, unsigned long>& vec1, unsigned long scalar);
 template Vector<1, unsigned long>& operator/= (Vector<1, unsigned long>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, unsigned long> vec);
+template ostream& operator<< (ostream& out, Vector<1, unsigned long> vec);
 
 template Vector<1, short> operator/ (const Vector<1, short>& vec, const double& divider);
 template Vector<1, short> operator/ (const Vector<1, short>& vec1, const Vector<1, short>& vec2);
@@ -324,7 +326,7 @@ template Vector<1, short> operator- (const Vector<1, short>& vec1, short scalar)
 template Vector<1, short>& operator-= (Vector<1, short>& vec1, const Vector<1, short>& vec2);
 template Vector<1, short>& operator-= (Vector<1, short>& vec1, short scalar);
 template Vector<1, short>& operator/= (Vector<1, short>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, short> vec);
+template ostream& operator<< (ostream& out, Vector<1, short> vec);
 
 template Vector<1, unsigned short> operator/ (const Vector<1, unsigned short>& vec, const double& divider);
 template Vector<1, unsigned short> operator/ (const Vector<1, unsigned short>& vec1, const Vector<1, unsigned short>& vec2);
@@ -340,7 +342,7 @@ template Vector<1, unsigned short> operator- (const Vector<1, unsigned short>& v
 template Vector<1, unsigned short>& operator-= (Vector<1, unsigned short>& vec1, const Vector<1, unsigned short>& vec2);
 template Vector<1, unsigned short>& operator-= (Vector<1, unsigned short>& vec1, unsigned short scalar);
 template Vector<1, unsigned short>& operator/= (Vector<1, unsigned short>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, unsigned short> vec);
+template ostream& operator<< (ostream& out, Vector<1, unsigned short> vec);
 
 template Vector<1, char> operator/ (const Vector<1, char>& vec, const double& divider);
 template Vector<1, char> operator/ (const Vector<1, char>& vec1, const Vector<1, char>& vec2);
@@ -356,7 +358,7 @@ template Vector<1, char> operator- (const Vector<1, char>& vec1, char scalar);
 template Vector<1, char>& operator-= (Vector<1, char>& vec1, const Vector<1, char>& vec2);
 template Vector<1, char>& operator-= (Vector<1, char>& vec1, char scalar);
 template Vector<1, char>& operator/= (Vector<1, char>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, char> vec);
+template ostream& operator<< (ostream& out, Vector<1, char> vec);
 
 template Vector<1, unsigned char> operator/ (const Vector<1, unsigned char>& vec, const double& divider);
 template Vector<1, unsigned char> operator/ (const Vector<1, unsigned char>& vec1, const Vector<1, unsigned char>& vec2);
@@ -372,7 +374,7 @@ template Vector<1, unsigned char> operator- (const Vector<1, unsigned char>& vec
 template Vector<1, unsigned char>& operator-= (Vector<1, unsigned char>& vec1, const Vector<1, unsigned char>& vec2);
 template Vector<1, unsigned char>& operator-= (Vector<1, unsigned char>& vec1, unsigned char scalar);
 template Vector<1, unsigned char>& operator/= (Vector<1, unsigned char>& vec, const double& divider);
-template std::ostream& operator<< (std::ostream& out, Vector<1, unsigned char> vec);
+template ostream& operator<< (ostream& out, Vector<1, unsigned char> vec);
 
 template class Vector<1, float>;
 template class Vector<1, double>;

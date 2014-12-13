@@ -1,6 +1,8 @@
 #include "polygon.h"
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 namespace shape {
 
 void Polygon::addVertice(Vector2d vertice)

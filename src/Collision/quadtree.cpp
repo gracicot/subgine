@@ -3,12 +3,11 @@
 #include <iostream>
 #include <algorithm>
 
-using namespace subgine;
+using namespace std;
 
-namespace subgine {
-namespace collision {
+namespace sbg {
 
-QuadTree::QuadTree(std::pair< subgine::Vector2d, subgine::Vector2d > box): _boundingBox(box)
+QuadTree::QuadTree(pair<Vector2d, Vector2d> box): _boundingBox(box)
 {
 	
 }
@@ -18,11 +17,11 @@ QuadTree::QuadTree(const QuadTree& other)
 	_boundingBox = other._boundingBox;
 	_objects = other._objects;
 	for (int i = 0 ; i<_nodes.size() ; i++) {
-		_nodes[i] = std::unique_ptr<QuadTree>(dynamic_cast<QuadTree*>(other._nodes[i]->clone()));
+		_nodes[i] = unique_ptr<QuadTree>(dynamic_cast<QuadTree*>(other._nodes[i]->clone()));
 	}
 }
 
-std::pair< subgine::Vector2d, subgine::Vector2d > QuadTree::getChildBoundingBox(int position) const
+pair<Vector2d, Vector2d> QuadTree::getChildBoundingBox(int position) const
 {
 	switch (position) {
 		case 0:
@@ -48,7 +47,7 @@ std::pair< subgine::Vector2d, subgine::Vector2d > QuadTree::getChildBoundingBox(
 	}
 }
 
-void QuadTree::add(std::weak_ptr< const subgine::collision::AABB_able > object)
+void QuadTree::add(weak_ptr< const AABB_able > object)
 {
 	auto obj = object.lock();
 	if (isContaining(*obj) && (obj->getBoundingBox().first - obj->getBoundingBox().second).notZero()) {
@@ -57,7 +56,7 @@ void QuadTree::add(std::weak_ptr< const subgine::collision::AABB_able > object)
 	pushDown();
 }
 
-void QuadTree::subdivide(std::weak_ptr< const collision::AABB_able > object)
+void QuadTree::subdivide(weak_ptr< const AABB_able > object)
 {
 	auto obj = object.lock();
 	if (isboxOverlapping(*obj) && (obj->getBoundingBox().first - obj->getBoundingBox().second).notZero()) {
@@ -66,7 +65,7 @@ void QuadTree::subdivide(std::weak_ptr< const collision::AABB_able > object)
 			auto& node = _nodes[i];
 			
 			if (!node) {
-				node = std::unique_ptr<QuadTree>(new QuadTree(box));
+				node = unique_ptr<QuadTree>(new QuadTree(box));
 			}
 			
 			if (node->isContaining(*obj)) {
@@ -110,7 +109,7 @@ void QuadTree::pushDown()
 	}
 }
 
-QuadTree::container QuadTree::getNearby(const collision::AABB_able& other) const
+QuadTree::container QuadTree::getNearby(const AABB_able& other) const
 {
 	container object = _objects;
 	
@@ -124,34 +123,34 @@ QuadTree::container QuadTree::getNearby(const collision::AABB_able& other) const
 	return object;
 }
 
-subgine::collision::CollisionEntity* QuadTree::clone() const
+CollisionEntity* QuadTree::clone() const
 {
 	return new QuadTree(*this);
 }
 
-std::pair< subgine::Vector2d, subgine::Vector2d > QuadTree::getBoundingBox() const
+pair< Vector2d, Vector2d > QuadTree::getBoundingBox() const
 {
 	return _boundingBox;
 }
 
-subgine::Vector2d QuadTree::getPosition() const
+Vector2d QuadTree::getPosition() const
 {
 	return _boundingBox.first;
 }
 
-subgine::Vector2d QuadTree::getSize() const
+Vector2d QuadTree::getSize() const
 {
 	return _boundingBox.second - _boundingBox.first;
 }
 
-void QuadTree::setPosition(subgine::Vector2d position)
+void QuadTree::setPosition(Vector2d position)
 {
-	subgine::Vector2d size = getSize();
+	Vector2d size = getSize();
 	_boundingBox.first = position;
 	setSize(size);
 }
 
-void QuadTree::setSize(subgine::Vector2d size)
+void QuadTree::setSize(Vector2d size)
 {
 	_boundingBox.second = size + _boundingBox.first;
 }
@@ -166,5 +165,4 @@ QuadTree::container& QuadTree::getObjects()
 	return _objects;
 }
 
-}
 }

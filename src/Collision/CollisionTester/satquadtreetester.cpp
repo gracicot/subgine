@@ -7,8 +7,7 @@
 
 #include "../../system.hpp"
 
-namespace subgine {
-namespace collision {
+namespace sbg {
 
 std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const CollisionBody& self, const CollisionBody& other, double time, std::string test) const
 {
@@ -68,5 +67,4 @@ CollisionTester* SatQuadTreeTester::clone()
 	return new SatQuadTreeTester(*this);
 }
 
-}
 }

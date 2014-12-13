@@ -2,7 +2,7 @@
 
 #include "positionprovider.h"
 
-namespace subgine {
+namespace sbg {
 
 template <int n>
 class ComponentProvider : public virtual PositionProvider<n>

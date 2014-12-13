@@ -3,10 +3,7 @@
 #include "sat_able.h"
 #include "point_able.h"
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
 
 class Circle : public virtual SAT_able
 {
@@ -31,6 +28,4 @@ private:
 	std::function< Vector2d(void) > _position;
 };
 
-
-}
 }

@@ -2,8 +2,9 @@
 
 #include "../physicbody.h"
 
-namespace subgine {
-namespace physic {
+using namespace std;
+
+namespace sbg {
 
 template<int n>
 PhysicBodyComponentProvider<n>::PhysicBodyComponentProvider(const PhysicBody<n>& physicBody) : PhysicPointPositionProvider<n>(physicBody), _physicBody(physicBody)
@@ -20,5 +21,4 @@ Vector<freedom(n), double> PhysicBodyComponentProvider<n>::getOrientation() cons
 template class PhysicBodyComponentProvider<2>;
 template class PhysicBodyComponentProvider<3>;
 
-}
 }

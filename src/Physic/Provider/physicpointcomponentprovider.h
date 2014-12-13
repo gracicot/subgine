@@ -5,8 +5,7 @@
 
 #include "../../system.hpp"
 
-namespace subgine {
-namespace physic {
+namespace sbg {
 
 template <int n>
 class PhysicPointComponentProvider : public virtual ComponentProvider<n>, public virtual PhysicPointPositionProvider<n>
@@ -30,5 +29,4 @@ extern template class PhysicPointComponentProvider<3>;
 typedef PhysicPointComponentProvider<2> PhysicPoint2DComponentProvider;
 typedef PhysicPointComponentProvider<3> PhysicPoint3DComponentProvider;
 
-}
 }

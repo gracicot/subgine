@@ -1,14 +1,12 @@
 #pragma once
 
 
-namespace subgine
-{
-namespace collision
+namespace sbg
 {
 
 class CollisionBody;
-namespace Results
-{
+
+namespace Results {
 class CollisionResult;
 }
 
@@ -23,5 +21,4 @@ public:
 	virtual CollisionHandler* clone() const = 0;
 };
 
-}
 }

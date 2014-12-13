@@ -1,6 +1,6 @@
 #pragma once
 
-namespace subgine {
+namespace sbg {
 
 class Material
 {

@@ -3,13 +3,7 @@
 #include "../system.hpp"
 #include "collisionentity.h"
 
-namespace subgine
-{
-
-
-namespace collision
-{
-
+namespace sbg {
 
 class Point_able : public virtual CollisionEntity
 {
@@ -20,6 +14,4 @@ public:
 	virtual bool isPointInside(Vector2d point) const = 0;
 };
 
-
-}
 }

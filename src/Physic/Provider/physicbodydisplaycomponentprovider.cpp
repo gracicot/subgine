@@ -1,10 +1,11 @@
 #include "physicbodydisplaycomponentprovider.h"
 
-namespace subgine {
-namespace physic {
+using namespace std;
+
+namespace sbg {
 
 template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, std::function<double()> scale) :
+PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, function<double()> scale) :
 	PhysicPointPositionProvider<n>(physicBody),
 	PhysicBodyComponentProvider<n>(physicBody),
 	_scale(scale)
@@ -24,7 +25,7 @@ PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const 
 }
 
 template<int n>
-void PhysicBodyDisplayComponentProvider<n>::setScale(std::function<double()> scale)
+void PhysicBodyDisplayComponentProvider<n>::setScale(function<double()> scale)
 {
 	_scale = scale;
 }
@@ -46,5 +47,4 @@ double PhysicBodyDisplayComponentProvider<n>::getScale() const
 template class PhysicBodyDisplayComponentProvider<2>;
 template class PhysicBodyDisplayComponentProvider<3>;
 
-}
 }

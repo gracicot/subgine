@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace subgine {
+namespace sbg {
 namespace shape {
 
 class Polygon : public Shape<2>

@@ -1,7 +1,8 @@
 #include "physicpoint.h"
 
-namespace subgine {
-namespace physic {
+using namespace std;
+
+namespace sbg {
 
 template<int n>
 PhysicPoint<n>::PhysicPoint()
@@ -35,7 +36,7 @@ void PhysicPoint<n>::setPosition(const Vector<n, double> posision)
 }
 
 template<int n>
-Rule::Rule<n>& PhysicPoint<n>::getRule(const std::string tag)
+Rule::Rule<n>& PhysicPoint<n>::getRule(const string tag)
 {
 	auto it = _rules.find(tag);
 
@@ -43,11 +44,11 @@ Rule::Rule<n>& PhysicPoint<n>::getRule(const std::string tag)
 		return *it->second;
 	}
 
-	throw std::out_of_range("Rule " + tag + " doesn't exist...");
+	throw out_of_range("Rule " + tag + " doesn't exist...");
 }
 
 template<int n>
-const Rule::Rule<n>& PhysicPoint<n>::getRule(const std::string tag) const
+const Rule::Rule<n>& PhysicPoint<n>::getRule(const string tag) const
 {
 	auto it = _rules.find(tag);
 
@@ -55,11 +56,11 @@ const Rule::Rule<n>& PhysicPoint<n>::getRule(const std::string tag) const
 		return *it->second;
 	}
 
-	throw std::out_of_range("Rule " + tag + " doesn't exist...");
+	throw out_of_range("Rule " + tag + " doesn't exist...");
 }
 
 template<int n>
-void PhysicPoint<n>::setForce(const std::string type, const Vector<n, double> force)
+void PhysicPoint<n>::setForce(const string type, const Vector<n, double> force)
 {
 	_forces[type] = force;
 }
@@ -111,7 +112,7 @@ Vector<n, double> PhysicPoint<n>::getNextPosition(const double time) const
 }
 
 template<int n>
-std::map<std::string, Vector<n, double>> PhysicPoint<n>::getNextForces() const
+map<string, Vector<n, double>> PhysicPoint<n>::getNextForces() const
 {
 	auto forces = _forces;
 
@@ -123,7 +124,7 @@ std::map<std::string, Vector<n, double>> PhysicPoint<n>::getNextForces() const
 }
 
 template<int n>
-Vector<n, double> PhysicPoint<n>::getPulse(const std::string type) const
+Vector<n, double> PhysicPoint<n>::getPulse(const string type) const
 {
 	auto pulse = _pulses.find(type);
 
@@ -135,37 +136,37 @@ Vector<n, double> PhysicPoint<n>::getPulse(const std::string type) const
 }
 
 template<int n>
-void PhysicPoint<n>::setPulse(const std::string type, const Vector<n, double> pulse)
+void PhysicPoint<n>::setPulse(const string type, const Vector<n, double> pulse)
 {
 	_pulses[type] = pulse;
 }
 
 template<int n>
-const std::map<std::string, Vector<n, double>>& PhysicPoint<n>::getForce() const
+const map<string, Vector<n, double>>& PhysicPoint<n>::getForce() const
 {
 	return _forces;
 }
 
 template<int n>
-std::map<std::string, Vector<n, double>>& PhysicPoint<n>::getForce()
+map<string, Vector<n, double>>& PhysicPoint<n>::getForce()
 {
 	return _forces;
 }
 
 template<int n>
-const std::map<std::string, Vector<n, double>>& PhysicPoint<n>::getPulse() const
+const map<string, Vector<n, double>>& PhysicPoint<n>::getPulse() const
 {
 	return _pulses;
 }
 
 template<int n>
-std::map<std::string, Vector<n, double>>& PhysicPoint<n>::getPulse()
+map<string, Vector<n, double>>& PhysicPoint<n>::getPulse()
 {
 	return _pulses;
 }
 
 template<int n>
-Vector<n, double> PhysicPoint<n>::getForce(const std::string type) const
+Vector<n, double> PhysicPoint<n>::getForce(const string type) const
 {
 	auto force = _forces.find(type);
 
@@ -191,19 +192,19 @@ PhysicPoint<n>& PhysicPoint<n>::operator= (const PhysicPoint<n>& c)
 }
 
 template<int n>
-std::map<std::string, Rule::Rule<n>*>& PhysicPoint<n>::getRule()
+map<string, Rule::Rule<n>*>& PhysicPoint<n>::getRule()
 {
 	return _rules;
 }
 
 template<int n>
-const std::map<std::string, Rule::Rule<n>*>& PhysicPoint<n>::getRule() const
+const map<string, Rule::Rule<n>*>& PhysicPoint<n>::getRule() const
 {
 	return _rules;
 }
 
 template<int n>
-void PhysicPoint<n>::setRule(const std::string tag, Rule::Rule<n>* rule)
+void PhysicPoint<n>::setRule(const string tag, Rule::Rule<n>* rule)
 {
 	auto it = _rules.find(tag);
 
@@ -228,7 +229,7 @@ Vector<n, double> PhysicPoint<n>::getPosition() const
 }
 
 template<int n>
-void PhysicPoint<n>::correctPosition(const std::string profile, const Vector<n, double> amount)
+void PhysicPoint<n>::correctPosition(const string profile, const Vector<n, double> amount)
 {
 	_corrections[profile].push_back(amount);
 }
@@ -236,5 +237,4 @@ void PhysicPoint<n>::correctPosition(const std::string profile, const Vector<n, 
 template class PhysicPoint<2>;
 template class PhysicPoint<3>;
 
-}
 }

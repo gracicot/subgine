@@ -5,7 +5,7 @@
 #include <mutex>
 #include <functional>
 
-namespace subgine
+namespace sbg
 {
 
 class Engine;

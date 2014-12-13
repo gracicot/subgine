@@ -5,10 +5,8 @@
 #include "../../system.hpp"
 #include "../abstractphysicpoint.h"
 
-namespace subgine
-{
-namespace physic
-{
+namespace sbg {
+
 class Physics : public Engine
 {
 public:
@@ -25,5 +23,4 @@ private:
 	std::vector<AbstractPhysicPoint*> _entites;
 };
 
-}
 }

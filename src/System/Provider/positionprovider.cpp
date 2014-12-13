@@ -1,6 +1,8 @@
 #include "positionprovider.h"
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 
 template class PositionProvider<2>;
 template class PositionProvider<3>;

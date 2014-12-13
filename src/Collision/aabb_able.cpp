@@ -1,6 +1,10 @@
 #include "aabb_able.h"
 
-subgine::Vector2d subgine::collision::AABB_able::boxOverlap(const subgine::collision::AABB_able& other) const
+using namespace std;
+
+namespace sbg {
+
+Vector2d AABB_able::boxOverlap(const AABB_able& other) const
 {
 	auto boundingBoxThis = getBoundingBox();
 	auto boundingBoxOther = other.getBoundingBox();
@@ -23,19 +27,19 @@ subgine::Vector2d subgine::collision::AABB_able::boxOverlap(const subgine::colli
 		double top = (bmin.y - amax.y);
 		double bottom = (bmax.y - amin.y);
 
-		if (std::abs(left) < right) {
+		if (abs(left) < right) {
 			mtd.x = left;
 		} else {
 			mtd.x = right;
 		}
 
-		if (std::abs(top) < bottom) {
+		if (abs(top) < bottom) {
 			mtd.y = top;
 		} else {
 			mtd.y = bottom;
 		}
 
-		if (std::abs(mtd.x) < std::abs(mtd.y)) {
+		if (abs(mtd.x) < abs(mtd.y)) {
 			mtd.x = 0;
 		} else {
 			mtd.x = 0;
@@ -47,7 +51,7 @@ subgine::Vector2d subgine::collision::AABB_able::boxOverlap(const subgine::colli
 	}
 }
 
-bool subgine::collision::AABB_able::isboxOverlapping(const subgine::collision::AABB_able& other) const
+bool AABB_able::isboxOverlapping(const AABB_able& other) const
 {
 	auto boundingBoxThis = getBoundingBox();
 	auto boundingBoxOther = other.getBoundingBox();
@@ -60,7 +64,7 @@ bool subgine::collision::AABB_able::isboxOverlapping(const subgine::collision::A
 	);
 }
 
-bool subgine::collision::AABB_able::isContaining(const subgine::collision::AABB_able& other) const
+bool AABB_able::isContaining(const AABB_able& other) const
 {
 	auto boundingBoxThis = getBoundingBox();
 	auto boundingBoxOther = other.getBoundingBox();
@@ -71,4 +75,6 @@ bool subgine::collision::AABB_able::isContaining(const subgine::collision::AABB_
 		boundingBoxThis.second.x >= boundingBoxOther.second.x &&
 		boundingBoxThis.second.y >= boundingBoxOther.second.y 
 	);
+}
+
 }

@@ -4,13 +4,11 @@
 
 #include <memory>
 
-namespace subgine {
+namespace sbg {
 
 namespace shape {
 	template<int n> class Shape;
 }
-
-namespace physic {
 
 template<int n>
 class PhysicBody : public PhysicPoint<n>
@@ -74,5 +72,4 @@ extern template class PhysicBody<3>;
 typedef PhysicBody<2> PhysicBody2;
 typedef PhysicBody<3> PhysicBody3;
 
-}
 }

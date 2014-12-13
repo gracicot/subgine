@@ -1,9 +1,11 @@
 #include "callbackpositionprovider.h"
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 
 template<int n>
-CallbackPositionProvider<n>::CallbackPositionProvider(std::function<Vector<n, double>()> position) : _position(position)
+CallbackPositionProvider<n>::CallbackPositionProvider(function<Vector<n, double>()> position) : _position(position)
 {
 	
 }
@@ -18,7 +20,7 @@ CallbackPositionProvider<n>::CallbackPositionProvider(Vector<n, double> position
 }
 
 template<int n>
-void CallbackPositionProvider<n>::setPosition(std::function<Vector<n, double>()> position)
+void CallbackPositionProvider<n>::setPosition(function<Vector<n, double>()> position)
 {
 	_position = position;
 }

@@ -3,12 +3,8 @@
 #include "rule.h"
 #include "../physicpoint.h"
 
-namespace subgine
-{
-namespace physic
-{
-namespace Rule
-{
+namespace sbg {
+namespace Rule {
 
 template<int n>
 class Attraction : public Rule<n>
@@ -69,6 +65,5 @@ private:
 template<int n>
 const double Attraction<n>::gravity = 6.67e-11;
 
-}
 }
 }

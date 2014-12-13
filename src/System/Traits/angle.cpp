@@ -1,7 +1,8 @@
 #include "angle.h"
 
-namespace subgine
-{
+using namespace std;
+
+namespace sbg {
 
 Traits::Angle::Angle(double angle) : _angle(angle)
 {

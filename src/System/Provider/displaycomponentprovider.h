@@ -2,7 +2,7 @@
 
 #include "componentprovider.h"
 
-namespace subgine {
+namespace sbg {
 
 template<int n>
 class DisplayComponentProvider : public virtual ComponentProvider<n>

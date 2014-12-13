@@ -1,6 +1,8 @@
 #include "zeropositionprovider.h"
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 
 template<int n>
 Vector<n, double> ZeroPositionProvider<n>::getPosition() const

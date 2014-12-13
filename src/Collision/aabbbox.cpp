@@ -1,26 +1,32 @@
 #include "aabbbox.h"
 
-subgine::collision::AABBBox::AABBBox(std::pair< subgine::Vector2d, subgine::Vector2d > box) : _box(box)
+using namespace std;
+
+namespace sbg {
+
+AABBBox::AABBBox(pair<Vector2d, Vector2d> box) : _box(box)
 {
 
 }
 
-subgine::collision::CollisionEntity* subgine::collision::AABBBox::clone() const
+CollisionEntity* AABBBox::clone() const
 {
 	return new AABBBox(*this);
 }
 
-std::pair< subgine::Vector2d, subgine::Vector2d > subgine::collision::AABBBox::getBoundingBox() const
+pair< Vector2d, Vector2d > AABBBox::getBoundingBox() const
 {
 	return _box;
 }
 
-std::pair< subgine::Vector2d, subgine::Vector2d > subgine::collision::AABBBox::getBox() const
+pair<Vector2d, Vector2d> AABBBox::getBox() const
 {
 	return _box;
 }
 
-void subgine::collision::AABBBox::setBox(std::pair< subgine::Vector2d, subgine::Vector2d > box)
+void AABBBox::setBox(pair< Vector2d, Vector2d > box)
 {
 	_box = box;
+}
+
 }

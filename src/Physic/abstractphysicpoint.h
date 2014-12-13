@@ -1,9 +1,6 @@
 #pragma once
 
-namespace subgine
-{
-namespace physic
-{
+namespace sbg {
 
 class AbstractPhysicPoint
 {
@@ -20,5 +17,4 @@ protected:
 	double _mass;
 };
 
-}
 }

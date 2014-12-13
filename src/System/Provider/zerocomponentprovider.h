@@ -3,7 +3,7 @@
 #include "componentprovider.h"
 #include "zeropositionprovider.h"
 
-namespace subgine {
+namespace sbg {
 
 template<int n>
 class ZeroComponentProvider : public virtual ComponentProvider<n>, public virtual ZeroPositionProvider<n>

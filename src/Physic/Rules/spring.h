@@ -7,12 +7,8 @@
 #include "../physicpoint.h"
 
 
-namespace subgine
-{
-namespace physic
-{
-namespace Rule
-{
+namespace sbg {
+namespace Rule {
 
 template<int n>
 class Spring : public Rule<n>
@@ -95,6 +91,5 @@ private:
 	std::function< Vector<n, double>(void) > _functor;
 };
 
-}
 }
 }

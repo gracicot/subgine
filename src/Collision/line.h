@@ -2,10 +2,7 @@
 
 #include "sat_able.h"
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
 
 class Line : public virtual SAT_able
 {
@@ -16,5 +13,4 @@ public:
 	virtual Vector2d projection(double angle);
 };
 
-}
 }

@@ -1,14 +1,12 @@
 #include "collisionhandler.h"
 
-namespace subgine
-{
-namespace collision
-{
+using namespace std;
+
+namespace sbg {
 
 CollisionHandler::~CollisionHandler()
 {
 
 }
 
-}
 }

@@ -5,7 +5,7 @@
 
 #include <functional>
 
-namespace subgine {
+namespace sbg {
 
 template <int n>
 class CallbackComponentProvider : public virtual ComponentProvider<n>, public virtual CallbackPositionProvider<n>

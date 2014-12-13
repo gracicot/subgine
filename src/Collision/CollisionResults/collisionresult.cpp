@@ -2,12 +2,10 @@
 
 #include "../collisionbody.h"
 
-namespace subgine
-{
-namespace collision
-{
-namespace Results
-{
+using namespace std;
+
+namespace sbg {
+namespace Results {
 
 CollisionResult::CollisionResult(const CollisionBody& other, const bool colliding, const double time) : _time(time), _colliding(colliding), _other(&other)
 {
@@ -49,6 +47,5 @@ void CollisionResult::setOther(const CollisionBody& other)
 	_other = &other;
 }
 
-}
 }
 }

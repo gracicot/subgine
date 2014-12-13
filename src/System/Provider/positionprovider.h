@@ -2,7 +2,7 @@
 
 #include "../vector-all.h"
 
-namespace subgine {
+namespace sbg {
 
 template<int n>
 class PositionProvider

@@ -4,8 +4,7 @@
 
 #include <memory>
 
-namespace subgine {
-namespace collision {
+namespace sbg {
 
 namespace Results {
 	class CollisionResult;
@@ -50,6 +49,4 @@ private:
 	std::map<std::string, std::unique_ptr<CollisionTester>> _collisionTesters;
 };
 
-
-}
 }

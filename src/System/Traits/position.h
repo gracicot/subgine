@@ -2,7 +2,7 @@
 
 #include "../vector.h"
 
-namespace subgine
+namespace sbg
 {
 namespace Traits
 {

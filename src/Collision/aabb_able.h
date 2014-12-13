@@ -4,10 +4,7 @@
 
 #include "collisionentity.h"
 
-namespace subgine
-{
-namespace collision
-{
+namespace sbg {
 
 class AABB_able : public virtual CollisionEntity
 {
@@ -21,5 +18,4 @@ public:
 	
 };
 
-}
 }

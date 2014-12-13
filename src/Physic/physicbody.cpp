@@ -5,8 +5,9 @@
 #include <cmath>
 #include <iostream>
 
-namespace subgine {
-namespace physic {
+using namespace std;
+
+namespace sbg {
 
 template<int n>
 PhysicBody<n>::PhysicBody() : _torque(Angle()), _angularVelocity(Angle()), _orientation(Angle()) {}
@@ -14,7 +15,7 @@ PhysicBody<n>::PhysicBody() : _torque(Angle()), _angularVelocity(Angle()), _orie
 template<>
 void PhysicBody<2>::update(const double time)
 {
-	_orientation = std::fmod(getNextOrientation(time), tau);
+	_orientation = fmod(getNextOrientation(time), tau);
 	_angularVelocity = getNextAngularVelocity(time);
 	_pulsesPosition.clear();
 	_torque = getNextTorque(time);
@@ -30,9 +31,9 @@ template<>
 void PhysicBody<3>::update(const double time)
 {
 	Angle nextOrientation = getNextOrientation(time);
-	_orientation.x = std::fmod(nextOrientation.x, tau);
-	_orientation.y = std::fmod(nextOrientation.y, tau);
-	_orientation.z = std::fmod(nextOrientation.z, tau);
+	_orientation.x = fmod(nextOrientation.x, tau);
+	_orientation.y = fmod(nextOrientation.y, tau);
+	_orientation.z = fmod(nextOrientation.z, tau);
 	_angularVelocity = getNextAngularVelocity(time);
 	_pulsesPosition.clear();
 	_torque = getNextTorque(time);
@@ -70,7 +71,7 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(const double time) const
 }
 
 template<int n>
-std::map<std::string, Vector<n, double>> PhysicBody<n>::getNextForces() const
+map<string, Vector<n, double>> PhysicBody<n>::getNextForces() const
 {
 	auto forces = this->_forces;
 
@@ -172,34 +173,34 @@ double PhysicBody<n>::getMomentOfInertia() const
 }
 
 template<int n>
-void PhysicBody<n>::setShape(std::shared_ptr<shape::Shape<n>> shape)
+void PhysicBody<n>::setShape(shared_ptr<shape::Shape<n>> shape)
 {
 	_shape = shape;
 	_momentOfInertia = _shape->getMomentOfInertia(this->_mass);
 }
 
 template<int n>
-std::shared_ptr<shape::Shape<n>> PhysicBody<n>::getShape() const
+shared_ptr<shape::Shape<n>> PhysicBody<n>::getShape() const
 {
 	return _shape;
 }
 
 template<int n>
-void PhysicBody<n>::setPulse(const std::string type, const Vector<n, double> pulse, const Vector<n, double> position)
+void PhysicBody<n>::setPulse(const string type, const Vector<n, double> pulse, const Vector<n, double> position)
 {
 	this->_pulses[type] = pulse;
 	_pulsesPosition[type] = position;
 }
 
 template<int n>
-void PhysicBody<n>::setForce(const std::string type, const Vector<n, double> force, const Vector<n, double> position)
+void PhysicBody<n>::setForce(const string type, const Vector<n, double> force, const Vector<n, double> position)
 {
 	this->_forces[type] = force;
 	_forcesPosition[type] = position;
 }
 
 template<int n>
-Vector<n, double> PhysicBody<n>::getPulsePosition(std::string type) const
+Vector<n, double> PhysicBody<n>::getPulsePosition(string type) const
 {
 	auto it = _pulsesPosition.find(type);
 
@@ -211,7 +212,7 @@ Vector<n, double> PhysicBody<n>::getPulsePosition(std::string type) const
 }
 
 template<int n>
-Vector<n, double> PhysicBody<n>::getForcePosition(std::string type) const
+Vector<n, double> PhysicBody<n>::getForcePosition(string type) const
 {
 	auto it = _forcesPosition.find(type);
 
@@ -225,5 +226,4 @@ Vector<n, double> PhysicBody<n>::getForcePosition(std::string type) const
 template class PhysicBody<2>;
 template class PhysicBody<3>;
 
-}
 }

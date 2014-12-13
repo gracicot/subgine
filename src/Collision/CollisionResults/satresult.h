@@ -6,8 +6,7 @@
 
 #include <vector>
 
-namespace subgine {
-namespace collision {
+namespace sbg {
 namespace Results {
 
 class SatResult : public CollisionResult
@@ -27,6 +26,5 @@ private:
 	std::vector<Vector2d> _contacts;
 };
 
-}
 }
 }

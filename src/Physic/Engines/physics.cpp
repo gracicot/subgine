@@ -2,10 +2,9 @@
 
 #include <algorithm>
 
-namespace subgine
-{
-namespace physic
-{
+using namespace std;
+
+namespace sbg {
 
 Physics::Physics()
 {
@@ -24,7 +23,7 @@ void Physics::addPhysicEntity(AbstractPhysicPoint* entity)
 
 void Physics::removePhysicEntity(AbstractPhysicPoint* entity)
 {
-	_entites.erase(std::remove(_entites.begin(), _entites.end(), entity));
+	_entites.erase(remove(_entites.begin(), _entites.end(), entity));
 }
 
 void Physics::execute(const double time)
@@ -33,5 +32,4 @@ void Physics::execute(const double time)
 		i->update(time); //apply rules
 }
 
-}
 }

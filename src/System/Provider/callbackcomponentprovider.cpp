@@ -1,9 +1,11 @@
 #include "callbackcomponentprovider.h"
 
-namespace subgine {
+using namespace std;
+
+namespace sbg {
 
 template <int n>
-CallbackComponentProvider<n>::CallbackComponentProvider(std::function<Vector<n, double>()> position, std::function<Vector<freedom(n), double>()> orientation) : 
+CallbackComponentProvider<n>::CallbackComponentProvider(function<Vector<n, double>()> position, function<Vector<freedom(n), double>()> orientation) : 
 	CallbackPositionProvider<n>(position),
 	_orientation(orientation)
 {
@@ -11,7 +13,7 @@ CallbackComponentProvider<n>::CallbackComponentProvider(std::function<Vector<n, 
 }
 
 template <int n>
-CallbackComponentProvider<n>::CallbackComponentProvider(Vector<n, double> position, std::function<Vector<freedom(n), double>()> orientation) :
+CallbackComponentProvider<n>::CallbackComponentProvider(Vector<n, double> position, function<Vector<freedom(n), double>()> orientation) :
 	CallbackPositionProvider<n>(position),
 	_orientation(orientation)
 {
@@ -19,7 +21,7 @@ CallbackComponentProvider<n>::CallbackComponentProvider(Vector<n, double> positi
 }
 
 template <int n>
-CallbackComponentProvider<n>::CallbackComponentProvider(std::function<Vector<n, double>()> position, Vector<freedom(n), double> orientation) :
+CallbackComponentProvider<n>::CallbackComponentProvider(function<Vector<n, double>()> position, Vector<freedom(n), double> orientation) :
 	CallbackPositionProvider<n>(position),
 	_orientation([orientation]() {
 		return orientation;
@@ -39,7 +41,7 @@ CallbackComponentProvider<n>::CallbackComponentProvider(Vector<n, double> positi
 }
 
 template <int n>
-void CallbackComponentProvider<n>::setOrientation(std::function<Vector<freedom(n), double>()> orientation)
+void CallbackComponentProvider<n>::setOrientation(function<Vector<freedom(n), double>()> orientation)
 {
 	_orientation = orientation;
 }

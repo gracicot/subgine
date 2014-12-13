@@ -5,7 +5,7 @@
 #include "vector3.h"
 #include "vector4.h"
 
-namespace subgine
+namespace sbg
 {
 	template<int n>
 	class Positionnable
