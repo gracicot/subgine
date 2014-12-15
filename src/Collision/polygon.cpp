@@ -7,27 +7,13 @@ using namespace std;
 
 namespace sbg {
 
-Polygon::Polygon(function< Vector2d(void) > position, function< double(void) > angle): _position(position), _angle(angle)
+Polygon::Polygon(): _components(shared_ptr<ComponentProvider2D>(new ZeroComponentProvider2D))
 {
-	setShape(make_shared<shape::Polygon>());
+	
 }
 
-Polygon::Polygon(Vector2d position, double angle)
+Polygon::Polygon(shared_ptr<ComponentProvider2D> components): _components(components)
 {
-	setPosition(position);
-	setAngle(angle);
-	setShape(make_shared<shape::Polygon>());
-}
-
-Polygon::Polygon(function<Vector2d(void)> position, double angle): _position(position)
-{
-	setAngle(angle);
-	setShape(make_shared<shape::Polygon>());
-}
-
-Polygon::Polygon(Vector2d position, function< double(void) > angle): _angle(angle)
-{
-	setPosition(position);
 	setShape(make_shared<shape::Polygon>());
 }
 
@@ -41,38 +27,19 @@ CollisionEntity* Polygon::clone() const
 	return new Polygon(*this);
 }
 
+void Polygon::setComponents(shared_ptr<ComponentProvider2D> components)
+{
+	_components = move(components);
+}
+
 double Polygon::getAngle() const
 {
-	return _angle();
+	return _components->getOrientation();
 }
 
 Vector2d Polygon::getPosition() const
 {
-	return _position();
-}
-
-void Polygon::setAngle(function< double(void) > angle)
-{
-	_angle = angle;
-}
-
-void Polygon::setPosition(function<Vector2d(void)> position)
-{
-	_position = position;
-}
-
-void Polygon::setAngle(double angle)
-{
-	_angle = [angle]() -> double {
-		return angle;
-	};
-}
-
-void Polygon::setPosition(Vector2d position)
-{
-	_position = [position]() -> Vector2d {
-		return position;
-	};
+	return _components->getPosition();
 }
 
 pair< Vector2d, Vector2d> Polygon::getBoundingBox() const

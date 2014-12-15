@@ -10,23 +10,17 @@
 
 namespace sbg {
 
-class Polygon : public virtual SAT_able, public virtual Traits::Vertex
+class Polygon : public virtual SAT_able
 {
 public:
-	Polygon(Vector2d position = Vector2d(), double angle = 0);
-	Polygon(std::function< Vector2d(void) > position, double angle);
-	Polygon(Vector2d position, std::function< double(void) > angle);
-	Polygon(std::function< Vector2d(void) > position, std::function< double(void) > angle);
+	Polygon();
+	Polygon(std::shared_ptr<ComponentProvider2D> components);
 	~Polygon() = default;
 	
 	Vector2d getPosition() const;
 	double getAngle() const;
 	
-	void setPosition(std::function< Vector2d(void) > position);
-	void setAngle(std::function< double(void) > angle);
-	
-	void setAngle(double angle);
-	void setPosition(Vector2d position);
+	void setComponents(std::shared_ptr<ComponentProvider2D> components);
 	
 	virtual Vector2d projection(double angle) const override;
 	virtual bool isPointInside(Vector2d point) const override;
@@ -41,8 +35,7 @@ public:
 
 private:
 	std::shared_ptr<shape::Polygon> _shape;
-	std::function< Vector2d(void) > _position;
-	std::function< double(void) > _angle;
+	std::shared_ptr<ComponentProvider2D> _components;
 	
 	std::pair<Vector2d, Vector2d> _cachedBoundingBox;
 	std::vector<double> _cachedAngles;

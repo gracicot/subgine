@@ -1,25 +1,25 @@
 #include "circle.h"
 #include <limits>
 
+#include <iostream>
+
 using namespace std;
 
 namespace sbg {
 
-Circle::Circle(std::function<Vector2d(void)> position) : _position(position)
+Circle::Circle() : _provider(make_shared<ZeroPositionProvider2D>())
 {
 
 }
 
-Circle::Circle(Vector2d position)
+Circle::Circle(shared_ptr<sbg::PositionProvider2D> provider): _provider(provider)
 {
-	_position = [position](){
-		return position;
-	};
+	
 }
 
 Vector2d Circle::getPosition() const
 {
-	return _position();
+	return _provider->getPosition();
 }
 
 std::shared_ptr<shape::Circle> Circle::getShape() const
@@ -73,6 +73,11 @@ Vector2d Circle::overlap(const SAT_able& other) const
 	}
 
 	return overlap;
+}
+
+Vector2d Circle::setPositionProvider(shared_ptr<PositionProvider2D> provider)
+{
+	_provider = provider;
 }
 
 Vector2d Circle::getNearestPoint(Vector2d point) const
