@@ -68,21 +68,21 @@ void Collision::execute(const double time)
 		}
 	};
 	
-	const int numbreOfWorkers = min(static_cast<long unsigned int>(thread::hardware_concurrency() - 10), objects.size());
-// 	if (numbreOfWorkers > 1) {
-// 			
-// 		vector<thread> workers;
-// 		for (int i = 0 ; i<numbreOfWorkers ; i++) {
-// 			workers.push_back(thread(worker, numbreOfWorkers, i));
-// 		}
-// 		for (auto& workerThread : workers) {
-// 			if (workerThread.joinable()) {
-// 				workerThread.join();
-// 			}
-// 		}
-// 	} else {
+	const int numbreOfWorkers = min(static_cast<long unsigned int>(thread::hardware_concurrency() - 1), objects.size());
+	if (numbreOfWorkers > 1) {
+			
+		vector<thread> workers;
+		for (int i = 0 ; i<numbreOfWorkers ; i++) {
+			workers.push_back(thread(worker, numbreOfWorkers, i));
+		}
+		for (auto& workerThread : workers) {
+			if (workerThread.joinable()) {
+				workerThread.join();
+			}
+		}
+	} else {
 		worker(1, 0);
-// 	}
+	}
 	
 	for (auto& result : results) {
 		if (result.result) {
