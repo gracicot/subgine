@@ -4,17 +4,17 @@ using namespace std;
 
 namespace sbg {
 
-Test::Test(CollisionBody* object, CollisionBody* other, std::string test): _object(object), _other(other), _test(test)
+Test::Test(std::weak_ptr<CollisionBody> object, std::weak_ptr<CollisionBody> other, string test): _object(object), _other(other), _test(test)
 {
 
 }
 
-CollisionBody* Test::getObject() const
+std::weak_ptr<CollisionBody> Test::getObject() const
 {
 	return _object;
 }
 
-CollisionBody* Test::getOther() const
+std::weak_ptr<CollisionBody> Test::getOther() const
 {
 	return _other;
 }
@@ -24,12 +24,12 @@ std::string Test::getTest() const
 	return _test;
 }
 
-void Test::setObject(CollisionBody* object)
+void Test::setObject(std::weak_ptr<CollisionBody> object)
 {
 	_object = object;
 }
 
-void Test::setOther(CollisionBody* other)
+void Test::setOther(std::weak_ptr<CollisionBody> other)
 {
 	_other = other;
 }

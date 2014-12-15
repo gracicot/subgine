@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 namespace sbg {
 
@@ -9,20 +10,20 @@ class CollisionBody;
 class Test
 {
 public:
-	Test(CollisionBody* object, CollisionBody* other, std::string test);
+	Test(std::weak_ptr<CollisionBody> object, std::weak_ptr<CollisionBody> other, std::string test);
 	
 	void setTest(std::string test);
 	std::string getTest() const;
 	
-	CollisionBody* getObject() const;
-	void setObject(CollisionBody* object);
+	std::weak_ptr<CollisionBody> getObject() const;
+	void setObject(std::weak_ptr<CollisionBody> object);
 	
-	CollisionBody* getOther() const;
-	void setOther(CollisionBody* other);
+	std::weak_ptr<CollisionBody> getOther() const;
+	void setOther(std::weak_ptr<CollisionBody> other);
 	
 private:
-	CollisionBody* _object;
-	CollisionBody* _other;
+	std::weak_ptr<CollisionBody> _object;
+	std::weak_ptr<CollisionBody> _other;
 	std::string _test;
 };
 

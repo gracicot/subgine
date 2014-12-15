@@ -21,14 +21,14 @@ public:
 
 	virtual void execute(const double time);
 
-	void add(CollisionBody* object, std::vector<std::string> groups, std::vector<std::string> collisionGroups);
-	void remove(CollisionBody& object);
+	void add(std::weak_ptr<CollisionBody> object, std::vector<std::string> groups, std::vector<std::string> collisionGroups);
+	void remove(std::weak_ptr<CollisionBody> object);
 
 protected:
 	std::mutex _inserting;
 	void makeObjectList();
 
-	std::map<CollisionBody*, std::pair<std::vector<std::string>, std::vector<std::string>>> _objects;
+	std::map<std::weak_ptr<CollisionBody>, std::pair<std::vector<std::string>, std::vector<std::string>>, std::owner_less<std::weak_ptr<CollisionBody>>> _objects;
 	bool _listClean;
 
 	std::vector<Test> _test;

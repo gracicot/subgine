@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <set>
 
 #include "../../system.hpp"
 #include "../abstractphysicpoint.h"
@@ -14,13 +14,13 @@ public:
 	Physics();
 	~Physics();
 	
-	void addPhysicEntity(AbstractPhysicPoint* entity);
-	void removePhysicEntity(AbstractPhysicPoint* entity);
+	void add(std::weak_ptr<AbstractPhysicPoint> entity);
+	void remove(std::weak_ptr<AbstractPhysicPoint> entity);
 
 	void execute(const double time);
 
 private:
-	std::vector<AbstractPhysicPoint*> _entites;
+	std::set<std::weak_ptr<AbstractPhysicPoint>, std::owner_less<std::weak_ptr<AbstractPhysicPoint>>> _objects;
 };
 
 }
