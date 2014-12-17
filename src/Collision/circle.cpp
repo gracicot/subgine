@@ -68,7 +68,7 @@ Vector2d Circle::overlap(const SAT_able& other) const
 	} else {
 		if (!overlap.notZero() || overlap > projectionThis.y - projectionOther.x) {
 			overlap = {projectionThis.y - projectionOther.x, 0};
-			overlap.setAngle(angle);
+			overlap.setAngle(projectionThis.x < projectionOther.x ? angle:-angle);
 		}
 	}
 
