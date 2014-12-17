@@ -60,7 +60,7 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(const double time) const
 		double distance = position.getLength();
 
 		if (position.notZero() && pulse.notZero()) {
-			Angle torque = position.cross(pulse) / (distance * this->_mass);
+			Angle torque = position.cross(pulse) / distance;
 			pulse /= (torque.getLength() / getMomentOfInertia()) + 1;
 		}
 
@@ -85,7 +85,7 @@ map<string, Vector<n, double>> PhysicBody<n>::getNextForces() const
 		double distance = position.getLength();
 
 		if (position.notZero() && force.notZero()) {
-			Angle torque = position.cross(force) / (distance * this->_mass);
+			Angle torque = position.cross(force) / distance;
 			i.second /= (torque.getLength() / getMomentOfInertia()) + 1;
 		}
 	}
@@ -123,19 +123,19 @@ Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(const double ti
 	Angle velocity = Angle();
 	Angle torquePulse = Angle();
 
-	velocity += (getNextTorque(time) / getMomentOfInertia()) * time;
+	velocity = (getNextTorque(time) / getMomentOfInertia()) * time;
 
 	for (auto forcePos : _pulsesPosition) {
 		Vector<n, double> force = this->getPulse(forcePos.first);
 		double distance = forcePos.second.getLength();
 
 		if (forcePos.second.notZero() && force.notZero()) {
-			Angle torque = forcePos.second.cross(force) / (distance * this->_mass);
+			Angle torque = forcePos.second.cross(force) / distance;
 			torquePulse += torque;
 		}
 	}
 
-	velocity = torquePulse / getMomentOfInertia();
+	velocity += torquePulse / getMomentOfInertia();
 
 	return _angularVelocity + (velocity / 1.0001) * tau;
 }
@@ -155,8 +155,10 @@ Vector<freedom(n), double> PhysicBody<n>::getNextTorque(const double time) const
 		Vector<n, double> force = this->getForce(forcePos.first);
 		double distance = forcePos.second.getLength();
 
-		Angle forceTorque = forcePos.second.cross(force) / (distance * this->_mass);
-		torque += forceTorque;
+		if (forcePos.second.notZero() && force.notZero()) {
+			Angle forceTorque = forcePos.second.cross(force) / distance;
+			torque += forceTorque;
+		}
 	}
 
 	return torque;
