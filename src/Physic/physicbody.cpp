@@ -9,6 +9,8 @@ using namespace std;
 
 namespace sbg {
 
+const double correction = 12;
+
 template<int n>
 PhysicBody<n>::PhysicBody() : _torque(Angle()), _angularVelocity(Angle()), _orientation(Angle()) {}
 
@@ -60,7 +62,7 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(const double time) const
 		double distance = position.getLength();
 
 		if (position.notZero() && pulse.notZero()) {
-			Angle torque = position.cross(pulse) / distance;
+			Angle torque = position.cross(pulse) / correction;
 			pulse /= (torque.getLength() / getMomentOfInertia()) + 1;
 		}
 
@@ -85,7 +87,7 @@ map<string, Vector<n, double>> PhysicBody<n>::getNextForces() const
 		double distance = position.getLength();
 
 		if (position.notZero() && force.notZero()) {
-			Angle torque = position.cross(force) / distance;
+			Angle torque = position.cross(force) / correction;
 			i.second /= (torque.getLength() / getMomentOfInertia()) + 1;
 		}
 	}
@@ -130,7 +132,7 @@ Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(const double ti
 		double distance = forcePos.second.getLength();
 
 		if (forcePos.second.notZero() && force.notZero()) {
-			Angle torque = forcePos.second.cross(force) / distance;
+			Angle torque = forcePos.second.cross(force) / correction;
 			torquePulse += torque;
 		}
 	}
@@ -156,7 +158,7 @@ Vector<freedom(n), double> PhysicBody<n>::getNextTorque(const double time) const
 		double distance = forcePos.second.getLength();
 
 		if (forcePos.second.notZero() && force.notZero()) {
-			Angle forceTorque = forcePos.second.cross(force) / distance;
+			Angle forceTorque = forcePos.second.cross(force) / correction;
 			torque += forceTorque;
 		}
 	}
