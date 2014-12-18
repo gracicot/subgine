@@ -10,15 +10,15 @@ template<int n>
 class PhysicBodyDisplayComponentProvider : public virtual PhysicBodyComponentProvider<n>, public virtual DisplayComponentProvider<n>
 {
 public:
-	PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, double scale = 0);
-	PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, std::function<double()> scale);
+	PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, Vector<n, double> scale = {});
+	PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, std::function<Vector<n, double>()> scale);
 	
-	void setScale(double scale);
-	void setScale(std::function<double()> scale);
+	void setScale(Vector<n, double> scale);
+	void setScale(std::function<Vector<n, double>()> scale);
 	
-	virtual double getScale() const override;
+	virtual Vector<n, double> getScale() const override;
 private:
-	std::function<double()> _scale;
+	std::function<Vector<n, double>()> _scale;
 };
 
 extern template class PhysicBodyDisplayComponentProvider<2>;

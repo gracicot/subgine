@@ -10,18 +10,18 @@ template<int n>
 class PhysicPointDisplayComponentProvider : public PhysicPointComponentProvider<n>, public DisplayComponentProvider<n>
 {
 public:
-	PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation = Vector<freedom(n), double>(), double scale = 0);
-	PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, std::function<Vector<freedom(n), double>()> orientation, double scale = 0);
-	PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation, std::function<double()> scale);
-	PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, std::function<Vector<freedom(n), double>()> orientation, std::function<double()> scale);
+	PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation = Vector<freedom(n), double>(), Vector<n, double> scale = Vector<n, double>());
+	PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, std::function<Vector<freedom(n), double>()> orientation, Vector<n, double> scale = Vector<n, double>());
+	PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation, std::function<Vector<n, double>()> scale);
+	PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, std::function<Vector<freedom(n), double>()> orientation, std::function<Vector<n, double>()> scale);
 	
-	void setScale(double scale);
-	void setScale(std::function<double()> scale);
+	void setScale(Vector<n, double> scale);
+	void setScale(std::function<Vector<n, double>()> scale);
 	
-	virtual double getScale() const override;
+	virtual Vector<n, double> getScale() const override;
 	
 private:
-	std::function<double()> _scale;
+	std::function<Vector<n, double>()> _scale;
 };
 
 extern template class PhysicPointDisplayComponentProvider<2>;

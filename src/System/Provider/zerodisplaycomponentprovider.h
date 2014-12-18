@@ -9,7 +9,7 @@ template<int n>
 class ZeroDisplayComponentProvider : public virtual ZeroComponentProvider<n>, public virtual DisplayComponentProvider<n>
 {
 public:
-	virtual double getScale() const override;
+	virtual Vector<n, double> getScale() const override;
 };
 
 extern template class ZeroDisplayComponentProvider<2>;

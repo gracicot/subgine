@@ -12,57 +12,57 @@ public:
 	CallbackDisplayComponentProvider(
 		std::function<Vector<n, double>()> position,
 		std::function<Vector<freedom(n), double>()> orientation,
-		std::function<double()> scale
+		std::function<Vector<n, double>()> scale
 	);
 	
 	CallbackDisplayComponentProvider(
 		Vector<n, double> position,
 		std::function<Vector<freedom(n), double>()> orientation,
-		std::function<double()> scale
+		std::function<Vector<n, double>()> scale
 	);
 	
 	CallbackDisplayComponentProvider(
 		std::function<Vector<n, double>()> position,
 		Vector<freedom(n), double> orientation,
-		std::function<double()> scale
+		std::function<Vector<n, double>()> scale
 	);
 	
 	CallbackDisplayComponentProvider(
 		Vector<n, double> position,
 		Vector<freedom(n), double> orientation,
-		std::function<double()> scale
+		std::function<Vector<n, double>()> scale
 	);
 	
 	CallbackDisplayComponentProvider(
 		std::function<Vector<n, double>()> position,
 		std::function<Vector<freedom(n), double>()> orientation,
-		double scale = 0
+		Vector<n, double> scale = 0
 	);
 	
 	CallbackDisplayComponentProvider(
 		Vector<n, double> position,
 		std::function<Vector<freedom(n), double>()> orientation,
-		double scale = 0
+		Vector<n, double> scale = 0
 	);
 	
 	CallbackDisplayComponentProvider(
 		std::function<Vector<n, double>()> position,
 		Vector<freedom(n), double> orientation = Vector<freedom(n), double>(),
-		double scale = 0
+		Vector<n, double> scale = 0
 	);
 	
 	CallbackDisplayComponentProvider(
 		Vector<n, double> position = Vector<n, double>(),
 		Vector<freedom(n), double> orientation = Vector<freedom(n), double>(),
-		double scale = 0
+		Vector<n, double> scale = 0
 	);
 	
-	void setScale(std::function<double()> scale);
-	void setScale(double scale);
-	virtual double getScale() const override;
+	void setScale(std::function<Vector<n, double>()> scale);
+	void setScale(Vector<n, double> scale);
+	virtual Vector<n, double> getScale() const override;
 	
 private:
-	std::function<double()> _scale;
+	std::function<Vector<n, double>()> _scale;
 	
 };
 

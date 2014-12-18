@@ -2,13 +2,15 @@
 
 #include "componentprovider.h"
 
+#include "../vector-all.h"
+
 namespace sbg {
 
 template<int n>
 class DisplayComponentProvider : public virtual ComponentProvider<n>
 {
 public:
-	virtual double getScale() const = 0;
+	virtual Vector<n, double> getScale() const = 0;
 };
 
 extern template class DisplayComponentProvider<2>;

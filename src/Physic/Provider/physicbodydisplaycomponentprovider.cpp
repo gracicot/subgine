@@ -5,7 +5,7 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, function<double()> scale) :
+PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, function<Vector<n, double>()> scale) :
 	PhysicPointPositionProvider<n>(physicBody),
 	PhysicBodyComponentProvider<n>(physicBody),
 	_scale(scale)
@@ -14,7 +14,7 @@ PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const 
 }
 
 template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, double scale) :
+PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, Vector<n, double> scale) :
 	PhysicPointPositionProvider<n>(physicBody),
 	PhysicBodyComponentProvider<n>(physicBody),
 	_scale([scale]() {
@@ -25,13 +25,13 @@ PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const 
 }
 
 template<int n>
-void PhysicBodyDisplayComponentProvider<n>::setScale(function<double()> scale)
+void PhysicBodyDisplayComponentProvider<n>::setScale(function<Vector<n, double>()> scale)
 {
 	_scale = scale;
 }
 
 template<int n>
-void PhysicBodyDisplayComponentProvider<n>::setScale(double scale)
+void PhysicBodyDisplayComponentProvider<n>::setScale(Vector<n, double> scale)
 {
 	_scale = [scale]() {
 		return scale;
@@ -39,7 +39,7 @@ void PhysicBodyDisplayComponentProvider<n>::setScale(double scale)
 }
 
 template<int n>
-double PhysicBodyDisplayComponentProvider<n>::getScale() const
+Vector<n, double> PhysicBodyDisplayComponentProvider<n>::getScale() const
 {
 	return _scale();
 }

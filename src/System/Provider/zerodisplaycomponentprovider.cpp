@@ -5,9 +5,9 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-double ZeroDisplayComponentProvider<n>::getScale() const
+Vector<n, double> ZeroDisplayComponentProvider<n>::getScale() const
 {
-	return 0;
+	return {};
 }
 
 template class ZeroDisplayComponentProvider<2>;
