@@ -2,7 +2,6 @@
 
 #include "System/engine.h"
 #include "System/mainengine.h"
-#include "System/positionnable.h"
 #include "System/material.h"
 #include "System/vector-all.h"
 #include "System/Shape/shape.h"
@@ -18,8 +17,3 @@
 #include "System/Provider/zerocomponentprovider.h"
 #include "System/Provider/zerodisplaycomponentprovider.h"
 #include "System/Provider/zeropositionprovider.h"
-
-#include "System/Traits/position.h"
-#include "System/Traits/vertex.h"
-#include "System/Traits/angle.h"
-#include "System/Traits/radius.h"

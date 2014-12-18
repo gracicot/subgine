@@ -7,7 +7,7 @@
 
 namespace sbg {
 
-class Point : public virtual CollisionBody, public virtual Positionnable2
+class Point : public virtual CollisionBody
 {
 public:
 	Point() = default;

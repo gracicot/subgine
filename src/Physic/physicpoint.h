@@ -11,7 +11,7 @@
 namespace sbg {
 
 template<int n>
-class PhysicPoint : public AbstractPhysicPoint, public Positionnable<n>, public virtual Traits::Position<n>
+class PhysicPoint : public AbstractPhysicPoint
 {
 public:
 	PhysicPoint();
@@ -51,6 +51,7 @@ public:
 
 protected:
 	Vector<n, double> _velocity;
+	Vector<n, double> _position;
 	std::map<std::string, Vector<n, double>> _pulses;
 	std::map<std::string, Rule::Rule<n>*> _rules;
 	std::map<std::string, Vector<n, double>> _forces;

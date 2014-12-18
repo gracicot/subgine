@@ -3,6 +3,8 @@
 #include "rule.h"
 #include "../physicpoint.h"
 
+#include <list>
+
 namespace sbg {
 namespace Rule {
 
