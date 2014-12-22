@@ -1,9 +1,9 @@
 #pragma once
 
-#include <map>
 #include <thread>
 #include <mutex>
 #include <functional>
+#include <set>
 
 namespace sbg
 {
@@ -13,19 +13,14 @@ class Engine;
 class MainEngine
 {
 public:
-	//constructors and destructors
 	MainEngine();
 	~MainEngine();
 
-	//speed
 	void setSpeed(double speed);
 	double getSpeed();
 
-	//engines
-	Engine& getEngine(const std::string tag);
-	const Engine& getEngine(const std::string tag) const;
-
-	void addEngine(const std::string alias, Engine* e);
+	void add(std::weak_ptr<Engine> engine);
+	void remove(std::weak_ptr<Engine> engine);
 	
 	void onUpdate(std::function<void()> callback);
 	void onUpdate() const;
@@ -42,7 +37,7 @@ private:
 	double _time;
 	std::chrono::high_resolution_clock::time_point _timer;
 
-	std::map<std::string, Engine*> _engineList;
+	std::set<std::weak_ptr<Engine>, std::owner_less<std::weak_ptr<Engine>>> _engines;
 };
 
 

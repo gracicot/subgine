@@ -3,6 +3,7 @@
 #include <iostream>
 #include <ratio>
 #include <chrono>
+#include <algorithm>
 
 #include "engine.h"
 
@@ -66,17 +67,33 @@ void MainEngine::update()
 	_timer = chrono::high_resolution_clock::now();
 
 	
-	auto timer2 = chrono::high_resolution_clock::now();
-	for (auto engines : _engineList) {
-		engines.second->execute(_time);
-//         cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
-		timer2 = chrono::high_resolution_clock::now();
+// 	auto timer2 = chrono::high_resolution_clock::now();
+	for (auto ref : _engines) {
+		if (!ref.expired()) {
+			auto engine = ref.lock();
+			engine->execute(_time);
+		} else {
+			remove(ref);
+		}
+// 		cerr << engines.first << ": " << chrono::duration_cast<chrono::duration<double, milli>> (chrono::high_resolution_clock::now() - timer2).count() << endl;
+// 		timer2 = chrono::high_resolution_clock::now();
 	}
 }
 
-void MainEngine::addEngine(const string alias, Engine* e)
+void MainEngine::add(weak_ptr<Engine> engine)
 {
-	_engineList[alias] = e;
+	_engines.insert(engine);
+}
+
+void MainEngine::remove(weak_ptr<Engine> engine)
+{
+	auto it = find_if(_engines.begin(), _engines.end(), [&engine](weak_ptr<Engine> other){
+		return !engine.owner_before(other) && !other.owner_before(engine);
+	});
+	
+	if (it != _engines.end()) {
+		_engines.erase(it);
+	}
 }
 
 double MainEngine::getSpeed()
@@ -87,28 +104,6 @@ double MainEngine::getSpeed()
 void MainEngine::setSpeed(double speed)
 {
 	_speed = speed >= 0 ? speed : 0;
-}
-
-Engine& MainEngine::getEngine(const string tag)
-{
-	map<string, Engine*>::iterator it = _engineList.find(tag);
-
-	if (it != _engineList.end()) {
-		return *it->second;
-	}
-
-	throw out_of_range("Cannot find Engine associated with tag " + tag + "...");
-}
-
-const Engine& MainEngine::getEngine(const string tag) const
-{
-	map<string, Engine*>::const_iterator it = _engineList.find(tag);
-
-	if (it != _engineList.end()) {
-		return *it->second;
-	}
-
-	throw out_of_range("Cannot find Engine associated with tag " + tag + "...");
 }
 
 }

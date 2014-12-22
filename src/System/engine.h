@@ -1,12 +1,10 @@
 #pragma once
 
-namespace sbg
-{
+namespace sbg {
+
 class Engine
 {
 public:
-	Engine();
-	virtual ~Engine();
 	virtual void execute(const double time) = 0;
 
 protected:
@@ -14,5 +12,6 @@ protected:
 private:
 
 };
+
 }
 
