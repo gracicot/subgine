@@ -1,4 +1,4 @@
-#include "physics.h"
+#include "physicengine.h"
 
 #include <algorithm>
 
@@ -6,22 +6,12 @@ using namespace std;
 
 namespace sbg {
 
-Physics::Physics()
-{
-
-}
-
-Physics::~Physics()
-{
-
-}
-
-void Physics::add(weak_ptr<AbstractPhysicPoint> object)
+void PhysicEngine::add(weak_ptr<AbstractPhysicPoint> object)
 {
 	_objects.insert(object);
 }
 
-void Physics::remove(weak_ptr<AbstractPhysicPoint> object)
+void PhysicEngine::remove(weak_ptr<AbstractPhysicPoint> object)
 {
 	auto it = find_if(_objects.begin(), _objects.end(), [&object](weak_ptr<AbstractPhysicPoint> other){
 		return !object.owner_before(other) && !other.owner_before(object);
@@ -32,7 +22,7 @@ void Physics::remove(weak_ptr<AbstractPhysicPoint> object)
 	}
 }
 
-void Physics::execute(const double time)
+void PhysicEngine::execute(const double time)
 {
 	for (auto ref : _objects) {
 		if (!ref.expired()) {

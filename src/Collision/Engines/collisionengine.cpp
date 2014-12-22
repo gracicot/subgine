@@ -1,4 +1,4 @@
-#include "collision.h"
+#include "collisionengine.h"
 
 #include "../collisionbody.h"
 #include "../CollisionResults/collisionresult.h"
@@ -11,17 +11,7 @@ using namespace std;
 
 namespace sbg {
 
-Collision::Collision() : _listClean(true)
-{
-
-}
-
-Collision::~Collision()
-{
-
-}
-
-void Collision::execute(const double time)
+void CollisionEngine::execute(const double time)
 {
 	if (!_listClean) {
 		makeObjectList();
@@ -93,7 +83,7 @@ void Collision::execute(const double time)
 	}
 }
 
-void Collision::add(std::weak_ptr<CollisionBody> object, vector<string> groups, vector< string > collisionGroups)
+void CollisionEngine::add(std::weak_ptr<CollisionBody> object, vector<string> groups, vector< string > collisionGroups)
 {
 	_inserting.lock();
 	_objects[object] = {groups, collisionGroups};
@@ -102,7 +92,7 @@ void Collision::add(std::weak_ptr<CollisionBody> object, vector<string> groups, 
 	_inserting.unlock();
 }
 
-void Collision::remove(std::weak_ptr<CollisionBody> object)
+void CollisionEngine::remove(std::weak_ptr<CollisionBody> object)
 {
 	_inserting.lock();
 	_objects.erase(object);
@@ -111,7 +101,7 @@ void Collision::remove(std::weak_ptr<CollisionBody> object)
 	_inserting.unlock();
 }
 
-void Collision::makeObjectList()
+void CollisionEngine::makeObjectList()
 {
 	_inserting.lock();
 	_test.clear();

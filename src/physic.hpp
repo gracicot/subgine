@@ -11,7 +11,7 @@
 #include "Physic/Provider/physicbodycomponentprovider.h"
 #include "Physic/Provider/physicbodydisplaycomponentprovider.h"
 
-#include "Physic/Engines/physics.h"
+#include "Physic/physicengine.h"
 
 #include "Physic/Rules/rule.h"
 #include "Physic/Rules/attraction.h"

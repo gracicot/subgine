@@ -12,14 +12,11 @@ namespace sbg {
 
 class CollisionBody;
 
-class Collision : public Engine
+class CollisionEngine : public Engine
 {
 
 public:
-	Collision();
-	virtual ~Collision();
-
-	virtual void execute(const double time);
+	void execute(const double time) override;
 
 	void add(std::weak_ptr<CollisionBody> object, std::vector<std::string> groups, std::vector<std::string> collisionGroups);
 	void remove(std::weak_ptr<CollisionBody> object);
