@@ -1,7 +1,7 @@
 subgine
 =======
 
-A simple async physic engine made from scratch working with multiple sub-engine
+A simple physic engine made from scratch working with multiple sub-engine. This engine feature abstraction beetween the number of dimensions you're working with using templates.
 
 Subgine has not achieved a stable release yet, so use it at your own risks!
 
