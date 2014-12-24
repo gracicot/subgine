@@ -19,7 +19,7 @@ public:
 	void setOrientation(std::function<Vector<freedom(n), double>()> orientation);
 	void setOrientation(Vector<freedom(n), double> orientation);
 	
-	virtual Vector<freedom(n), double> getOrientation() const override;
+	Vector<freedom(n), double> getOrientation() const override;
 	
 private:
 	std::function<Vector<freedom(n), double>()> _orientation;

@@ -9,7 +9,7 @@ template<int n>
 class ZeroComponentProvider : public virtual ComponentProvider<n>, public virtual ZeroPositionProvider<n>
 {
 public:
-	virtual Vector<freedom(n), double> getOrientation() const override;
+	Vector<freedom(n), double> getOrientation() const override;
 };
 
 extern template class ZeroComponentProvider<2>;

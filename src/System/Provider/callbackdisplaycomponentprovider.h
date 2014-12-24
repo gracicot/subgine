@@ -59,7 +59,7 @@ public:
 	
 	void setScale(std::function<Vector<n, double>()> scale);
 	void setScale(Vector<n, double> scale);
-	virtual Vector<n, double> getScale() const override;
+	Vector<n, double> getScale() const override;
 	
 private:
 	std::function<Vector<n, double>()> _scale;

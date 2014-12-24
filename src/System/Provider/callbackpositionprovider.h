@@ -16,7 +16,7 @@ public:
 	void setPosition(std::function<Vector<n, double>()> position);
 	void setPosition(Vector<n, double> position);
 	
-	virtual Vector<n, double> getPosition() const override;
+	Vector<n, double> getPosition() const override;
 private:
 	std::function<Vector<n, double>()> _position;
 };

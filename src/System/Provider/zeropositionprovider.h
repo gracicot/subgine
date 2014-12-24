@@ -8,7 +8,7 @@ template<int n>
 class ZeroPositionProvider : public virtual PositionProvider<n>
 {
 public:
-	virtual Vector<n, double> getPosition() const override;
+	Vector<n, double> getPosition() const override;
 };
 
 extern template class ZeroPositionProvider<2>;
