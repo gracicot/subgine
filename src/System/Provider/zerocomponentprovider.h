@@ -10,6 +10,7 @@ class ZeroComponentProvider : public virtual ComponentProvider<n>, public virtua
 {
 public:
 	Vector<freedom(n), double> getOrientation() const override;
+	ZeroComponentProvider<n>* clone() const override;
 };
 
 extern template class ZeroComponentProvider<2>;

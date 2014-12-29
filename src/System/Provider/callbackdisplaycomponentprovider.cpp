@@ -128,6 +128,12 @@ Vector<n, double> CallbackDisplayComponentProvider<n>::getScale() const
 	return _scale();
 }
 
+template <int n>
+CallbackDisplayComponentProvider<n>* CallbackDisplayComponentProvider<n>::clone() const
+{
+	return new CallbackDisplayComponentProvider<n>(*this);
+}
+
 template class CallbackDisplayComponentProvider<2>;
 template class CallbackDisplayComponentProvider<3>;
 

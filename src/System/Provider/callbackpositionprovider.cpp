@@ -39,6 +39,12 @@ Vector<n, double> CallbackPositionProvider<n>::getPosition() const
 	return _position();
 }
 
+template<int n>
+CallbackPositionProvider<n>* CallbackPositionProvider<n>::clone() const
+{
+	return new CallbackPositionProvider<n>(*this);
+}
+
 template class CallbackPositionProvider<2>;
 template class CallbackPositionProvider<3>;
 

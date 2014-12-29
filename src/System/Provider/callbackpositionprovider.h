@@ -17,6 +17,7 @@ public:
 	void setPosition(Vector<n, double> position);
 	
 	Vector<n, double> getPosition() const override;
+	CallbackPositionProvider<n>* clone() const override;
 private:
 	std::function<Vector<n, double>()> _position;
 };

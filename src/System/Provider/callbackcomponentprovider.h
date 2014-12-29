@@ -20,6 +20,7 @@ public:
 	void setOrientation(Vector<freedom(n), double> orientation);
 	
 	Vector<freedom(n), double> getOrientation() const override;
+	CallbackComponentProvider<n>* clone() const override;
 	
 private:
 	std::function<Vector<freedom(n), double>()> _orientation;

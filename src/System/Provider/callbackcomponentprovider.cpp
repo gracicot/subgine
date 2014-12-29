@@ -60,6 +60,12 @@ Vector <freedom(n), double> CallbackComponentProvider<n>::getOrientation() const
 	return _orientation();
 }
 
+template <int n>
+CallbackComponentProvider<n>* CallbackComponentProvider<n>::clone() const
+{
+	return new CallbackComponentProvider<n>(*this);
+}
+
 template class CallbackComponentProvider<2>;
 template class CallbackComponentProvider<3>;
 

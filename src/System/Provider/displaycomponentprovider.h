@@ -3,14 +3,16 @@
 #include "componentprovider.h"
 
 #include "../vector-all.h"
+#include "../clonable.h"
 
 namespace sbg {
 
 template<int n>
-class DisplayComponentProvider : public virtual ComponentProvider<n>
+class DisplayComponentProvider : public virtual ComponentProvider<n>, public virtual Clonable
 {
 public:
 	virtual Vector<n, double> getScale() const = 0;
+	virtual DisplayComponentProvider<n>* clone() const = 0;
 };
 
 extern template class DisplayComponentProvider<2>;

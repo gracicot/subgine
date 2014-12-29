@@ -10,6 +10,7 @@ class ZeroDisplayComponentProvider : public virtual ZeroComponentProvider<n>, pu
 {
 public:
 	Vector<n, double> getScale() const override;
+	ZeroDisplayComponentProvider<n>* clone() const override;
 };
 
 extern template class ZeroDisplayComponentProvider<2>;

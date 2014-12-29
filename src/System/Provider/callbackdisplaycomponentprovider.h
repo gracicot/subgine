@@ -60,6 +60,7 @@ public:
 	void setScale(std::function<Vector<n, double>()> scale);
 	void setScale(Vector<n, double> scale);
 	Vector<n, double> getScale() const override;
+	CallbackDisplayComponentProvider<n>* clone() const override;
 	
 private:
 	std::function<Vector<n, double>()> _scale;

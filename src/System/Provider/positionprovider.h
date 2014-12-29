@@ -1,14 +1,16 @@
 #pragma once
 
 #include "../vector-all.h"
+#include "../clonable.h"
 
 namespace sbg {
 
 template<int n>
-class PositionProvider
+class PositionProvider : public virtual Clonable
 {
 public:
 	virtual Vector<n, double> getPosition() const = 0;
+	virtual PositionProvider<n>* clone() const = 0;
 };
 
 extern template class PositionProvider<2>;

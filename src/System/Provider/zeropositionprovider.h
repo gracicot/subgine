@@ -9,6 +9,7 @@ class ZeroPositionProvider : public virtual PositionProvider<n>
 {
 public:
 	Vector<n, double> getPosition() const override;
+	ZeroPositionProvider<n>* clone() const override;
 };
 
 extern template class ZeroPositionProvider<2>;
