@@ -34,11 +34,11 @@ public:
 	void setPulse(const std::string type, const Vector<n, double> pulse);
 	Vector<n, double> getPulse(const std::string type) const;
 	
-	void setRule(const std::string tag, Rule::Rule<n>* rule);
-	std::map<std::string, Rule::Rule<n>*>& getRule();
-	Rule::Rule<n>& getRule(const std::string tag);
-	const std::map<std::string, Rule::Rule<n>*>& getRule() const;
-	const Rule::Rule<n>& getRule(const std::string tag) const;
+	void setRule(const std::string tag, Rule<n>* rule);
+	std::map<std::string, Rule<n>*>& getRule();
+	Rule<n>& getRule(const std::string tag);
+	const std::map<std::string, Rule<n>*>& getRule() const;
+	const Rule<n>& getRule(const std::string tag) const;
 	
 	void setForce(const std::string type, const Vector<n, double> force);
 	Vector<n, double> getForce(const std::string type) const;
@@ -53,7 +53,7 @@ protected:
 	Vector<n, double> _velocity;
 	Vector<n, double> _position;
 	std::map<std::string, Vector<n, double>> _pulses;
-	std::map<std::string, Rule::Rule<n>*> _rules;
+	std::map<std::string, Rule<n>*> _rules;
 	std::map<std::string, Vector<n, double>> _forces;
 	std::map<std::string, std::vector<Vector<n, double>>> _corrections;
 

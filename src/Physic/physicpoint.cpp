@@ -36,7 +36,7 @@ void PhysicPoint<n>::setPosition(const Vector<n, double> posision)
 }
 
 template<int n>
-Rule::Rule<n>& PhysicPoint<n>::getRule(const string tag)
+Rule<n>& PhysicPoint<n>::getRule(const string tag)
 {
 	auto it = _rules.find(tag);
 
@@ -48,7 +48,7 @@ Rule::Rule<n>& PhysicPoint<n>::getRule(const string tag)
 }
 
 template<int n>
-const Rule::Rule<n>& PhysicPoint<n>::getRule(const string tag) const
+const Rule<n>& PhysicPoint<n>::getRule(const string tag) const
 {
 	auto it = _rules.find(tag);
 
@@ -192,19 +192,19 @@ PhysicPoint<n>& PhysicPoint<n>::operator= (const PhysicPoint<n>& c)
 }
 
 template<int n>
-map<string, Rule::Rule<n>*>& PhysicPoint<n>::getRule()
+map<string, Rule<n>*>& PhysicPoint<n>::getRule()
 {
 	return _rules;
 }
 
 template<int n>
-const map<string, Rule::Rule<n>*>& PhysicPoint<n>::getRule() const
+const map<string, Rule<n>*>& PhysicPoint<n>::getRule() const
 {
 	return _rules;
 }
 
 template<int n>
-void PhysicPoint<n>::setRule(const string tag, Rule::Rule<n>* rule)
+void PhysicPoint<n>::setRule(const string tag, Rule<n>* rule)
 {
 	auto it = _rules.find(tag);
 

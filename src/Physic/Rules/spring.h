@@ -8,88 +8,38 @@
 
 
 namespace sbg {
-namespace Rule {
 
 template<int n>
 class Spring : public Rule<n>
 {
 public:
-	Spring(const double value, const double size, std::function< Vector<n, double>(void) > functor) : _value(value), _size(size), _functor(functor)
-	{
-		
-	}
+	Spring();
+	Spring(const double strength, const double length);
+	Spring(const double strength, const double length, std::unique_ptr<PositionProvider<n>> provider);
+	Spring(const Spring& other);
 	
-	Spring(const double value, const double size = 0, const Vector<n, double> position = Vector<n, double>()) : _value(value), _size(size), _functor(nullptr), _position(position)
-	{
-		
-	}
+	Vector<n, double> getPosition() const;
+	void setPositionProvider(std::unique_ptr<PositionProvider<n>> provider);
 	
-	Spring(const Spring& other)
-	{
-		_functor = other._functor;
-		_position = other._position;
-		_size = other._size;
-		_value = other._value;
-	}
+	double getLength() const;
+	void setLength(const double length);
 	
-	~Spring()
-	{
-		
-	}
+	double getStrength() const;
+	void setStrength(const double strength);
 	
-	Vector<n, double> getPosition() const
-	{
-		if (_functor) {
-			return _functor();
-		} else {
-			return _position;
-		}
-	}
-	
-	void setPosition(std::function< Vector<n, double>(void) > functor)
-	{
-		_functor = functor;
-	}
-	
-	void setPosition(Vector<n, double> pos)
-	{
-		_functor = nullptr;
-		_position = pos;
-	}
-	
-	double getSize() const
-	{
-		return _size;
-	}
-	
-	void setSize(const double size)
-	{
-		_size = size;
-	}
-	
-	Vector<n, double> getResult(const PhysicPoint<n>& object) const
-	{
-		Vector<n, double> relative = getPosition() - object.getPosition();
-		return relative.unit() * getValue() * (relative.getLength() - getSize());
-	}
-	
-	double getValue() const
-	{
-		return _value;
-	}
-	
-	void setValue(const double value)
-	{
-		_value = value;
-	}
+	Vector<n, double> getResult(const PhysicPoint<n>& object) const override;
+	Spring<n>* clone() const override;
 
 private:
-	double  _value;
-	double _size;
-
-	Vector<n, double> _position;
-	std::function< Vector<n, double>(void) > _functor;
+	double _strength;
+	double _length;
+	std::unique_ptr<PositionProvider<n>> _provider;
 };
 
-}
+extern template class Spring<2>;
+extern template class Spring<3>;
+
+using Spring2D = Spring<2>;
+using Spring3D = Spring<3>;
+
 }

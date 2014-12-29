@@ -4,35 +4,27 @@
 #include "../physicpoint.h"
 
 namespace sbg {
-namespace Rule {
 
 template<int n>
 class Resistance : public Rule<n>
 {
 public:
-	Resistance(const double value = 0) : _value(value)
-	{
-		
-	}
+	Resistance(const double value = 0);
 	
-	Vector<n, double> getResult(const PhysicPoint<n>& object) const
-	{
-		return -1 * object.getVelocity() * getValue();
-	}
+	Vector<n, double> getResult(const PhysicPoint<n>& object) const override;
+	Resistance<n>* clone() const override;
 	
-	double getValue() const
-	{
-		return _value;
-	}
-	
-	void setValue(const double value)
-	{
-		_value = value;
-	}
+	double getValue() const;
+	void setValue(const double value);
 
 private:
 	double _value;
 };
 
-}
+extern template class Resistance<2>;
+extern template class Resistance<3>;
+
+using Resistance2D = Resistance<2>;
+using Resistance3D = Resistance<3>;
+
 }

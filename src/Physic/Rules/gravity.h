@@ -4,35 +4,27 @@
 #include "../physicpoint.h"
 
 namespace sbg {
-namespace Rule {
-	
+
 template<int n>
 class Gravity : public Rule<n>
 {
 public:
-	Gravity(const Vector<n, double> value = Vector<n, double>()) : _value(value)
-	{
-		
-	}
+	Gravity(const Vector<n, double> value = Vector<n, double>());
 	
-	Vector<n, double> getResult(const PhysicPoint<n>& object) const
-	{
-		return _value * object.getMass();
-	}
+	Vector<n, double> getResult(const PhysicPoint<n>& object) const override;
+	Gravity<n>* clone() const override;
 	
-	Vector<n, double> getValue() const
-	{
-		return _value;
-	}
-	
-	void setValue(const Vector<n, double> value)
-	{
-		_value = value;
-	}
+	Vector<n, double> getValue() const;
+	void setValue(const Vector<n, double> value);
 
 private:
 	Vector<n, double> _value;
 };
 
-}
+extern template class Gravity<2>;
+extern template class Gravity<3>;
+
+using Gravity2D = Gravity<2>;
+using Gravity3D = Gravity<3>;
+
 }
