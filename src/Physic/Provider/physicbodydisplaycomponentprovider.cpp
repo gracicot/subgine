@@ -44,6 +44,12 @@ Vector<n, double> PhysicBodyDisplayComponentProvider<n>::getScale() const
 	return _scale();
 }
 
+template<int n>
+PhysicBodyDisplayComponentProvider<n>* PhysicBodyDisplayComponentProvider<n>::clone() const
+{
+	return new PhysicBodyDisplayComponentProvider<n>(*this);
+}
+
 template class PhysicBodyDisplayComponentProvider<2>;
 template class PhysicBodyDisplayComponentProvider<3>;
 

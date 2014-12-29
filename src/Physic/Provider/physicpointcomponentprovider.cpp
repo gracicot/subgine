@@ -42,6 +42,12 @@ Vector<freedom(n), double> PhysicPointComponentProvider<n>::getOrientation() con
 	return _orientation();
 }
 
+template <int n>
+PhysicPointComponentProvider<n>* PhysicPointComponentProvider<n>::clone() const
+{
+	return new PhysicPointComponentProvider<n>(*this);
+}
+
 template class PhysicPointComponentProvider<2>;
 template class PhysicPointComponentProvider<3>;
 

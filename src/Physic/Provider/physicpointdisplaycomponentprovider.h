@@ -19,6 +19,7 @@ public:
 	void setScale(std::function<Vector<n, double>()> scale);
 	
 	virtual Vector<n, double> getScale() const override;
+	PhysicPointDisplayComponentProvider<n>* clone() const override;
 	
 private:
 	std::function<Vector<n, double>()> _scale;

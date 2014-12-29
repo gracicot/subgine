@@ -13,6 +13,8 @@ public:
 	PhysicPointPositionProvider(const PhysicPoint<n>& physicPoint);
 	
 	virtual Vector<n, double> getPosition() const override;
+	PhysicPointPositionProvider<n>* clone() const override;
+	
 protected:
 	const PhysicPoint<n>& _physicPoint;
 };

@@ -14,6 +14,7 @@ public:
 	PhysicBodyComponentProvider(const PhysicBody<n>& physicoBody);
 	
 	virtual Vector<freedom(n), double> getOrientation() const override;
+	PhysicBodyComponentProvider<n>* clone() const override;
 	
 private:
 	const PhysicBody<n>& _physicBody;

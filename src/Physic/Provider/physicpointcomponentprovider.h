@@ -18,6 +18,7 @@ public:
 	void setOrientation(Vector<freedom(n), double> orientation);
 	
 	virtual Vector<freedom(n), double> getOrientation() const override;
+	PhysicPointComponentProvider<n>* clone() const override;
 	
 private:
 	std::function<Vector<freedom(n), double>()> _orientation;

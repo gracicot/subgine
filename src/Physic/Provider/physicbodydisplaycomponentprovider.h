@@ -17,6 +17,8 @@ public:
 	void setScale(std::function<Vector<n, double>()> scale);
 	
 	virtual Vector<n, double> getScale() const override;
+	PhysicBodyDisplayComponentProvider<n>* clone() const override;
+	
 private:
 	std::function<Vector<n, double>()> _scale;
 };
