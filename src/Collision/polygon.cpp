@@ -7,14 +7,24 @@ using namespace std;
 
 namespace sbg {
 
-Polygon::Polygon(): _components(shared_ptr<ComponentProvider2D>(new ZeroComponentProvider2D))
+Polygon::Polygon(): _components(unique_ptr<ComponentProvider2D>(new ZeroComponentProvider2D))
 {
 	
 }
 
-Polygon::Polygon(shared_ptr<ComponentProvider2D> components): _components(components)
+Polygon::Polygon(unique_ptr<ComponentProvider2D> components): _components(move(components))
 {
 	setShape(make_shared<shape::Polygon>());
+}
+
+Polygon::Polygon(const Polygon &other) : 
+	_shape(other._shape),
+	_components(other._components->clone()),
+	_cachedBoundingBox(other._cachedBoundingBox),
+	_cachedAngles(other._cachedAngles),
+	_cachedProjections(other._cachedProjections)
+{
+
 }
 
 shared_ptr<shape::Polygon> Polygon::getShape() const
@@ -27,7 +37,7 @@ CollisionEntity* Polygon::clone() const
 	return new Polygon(*this);
 }
 
-void Polygon::setComponents(shared_ptr<ComponentProvider2D> components)
+void Polygon::setComponents(unique_ptr<ComponentProvider2D> components)
 {
 	_components = move(components);
 }
