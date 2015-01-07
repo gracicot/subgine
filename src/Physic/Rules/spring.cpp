@@ -11,6 +11,12 @@ Spring<n>::Spring() : _strength(0), _length(0), _provider(unique_ptr<PositionPro
 }
 
 template<int n>
+Spring<n>::~Spring()
+{
+	
+}
+
+template<int n>
 Spring<n>::Spring(const double strength, const double length, std::unique_ptr<PositionProvider<n>> provider) : _strength(strength), _length(length), _provider(move(provider))
 {
 	

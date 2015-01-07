@@ -11,6 +11,12 @@ Resistance<n>::Resistance(const double value) : _value(value)
 }
 
 template<int n>
+Resistance<n>::~Resistance()
+{
+	
+}
+
+template<int n>
 Vector<n, double> Resistance<n>::getResult(const PhysicPoint<n>& object) const
 {
 	return -1 * object.getVelocity() * getValue();

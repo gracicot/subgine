@@ -10,6 +10,7 @@ template<int n>
 class Rule : public virtual Clonable
 {
 public:
+	virtual ~Rule();
 	virtual Vector<n, double> getResult(const PhysicPoint<n>& object) const = 0;
 	virtual Rule<n>* clone() const = 0;
 };

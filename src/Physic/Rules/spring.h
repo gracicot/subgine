@@ -14,6 +14,7 @@ class Spring : public Rule<n>
 {
 public:
 	Spring();
+	~Spring();
 	Spring(const double strength, const double length);
 	Spring(const double strength, const double length, std::unique_ptr<PositionProvider<n>> provider);
 	Spring(const Spring& other);

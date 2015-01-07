@@ -11,6 +11,12 @@ Gravity<n>::Gravity(const Vector<n, double> value) : _value(value)
 }
 
 template<int n>
+Gravity<n>::~Gravity()
+{
+	
+}
+
+template<int n>
 Vector<n, double> Gravity<n>::getResult(const PhysicPoint<n>& object) const
 {
 	return _value * object.getMass();
