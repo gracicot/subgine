@@ -115,8 +115,8 @@ bool Polygon::isPointInside(Vector2d point) const
 			current.setAngle(current.getAngle() + getAngle());
 			current += getPosition();
 
-			if ((current.y < point.y && previous.y >= point.y
-					|| previous.y < point.y && current.y >= point.y)
+			if (((current.y < point.y && previous.y >= point.y)
+					|| (previous.y < point.y && current.y >= point.y))
 					&& (current.x <= point.x || previous.x <= point.x)) {
 				oddNodes ^= (current.x + (point.y - current.y) / (previous.y - current.y) * (previous.x - current.x) < point.x);
 			}
