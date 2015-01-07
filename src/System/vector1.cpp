@@ -22,7 +22,7 @@ Vector<1, T>::Vector(const Vector<1, T>& other) : x(other.x)
 {}
 
 template<class T>
-inline double Vector<1, T>::getLength() const
+double Vector<1, T>::getLength() const
 {
 	return abs(x);
 }
@@ -38,7 +38,7 @@ void Vector<1, T>::setLength(double length)
 }
 
 template<class T>
-inline bool Vector<1, T>::notZero() const
+bool Vector<1, T>::notZero() const
 {
 	return x != 0;
 }

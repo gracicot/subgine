@@ -3,6 +3,7 @@
 #include "vector.h"
 
 #include <iosfwd>
+#include <type_traits>
 
 namespace sbg {
 
