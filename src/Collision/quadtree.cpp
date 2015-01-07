@@ -44,6 +44,10 @@ pair<Vector2d, Vector2d> QuadTree::getChildBoundingBox(int position) const
 			return {{getPosition().x + (getSize().x / 2), getPosition().y + (getSize().y / 2)}, getPosition() + getSize()};
 			break;
 		}
+		default:
+		{
+			return {};
+		}
 	}
 }
 

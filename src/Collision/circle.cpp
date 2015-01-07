@@ -75,7 +75,7 @@ Vector2d Circle::overlap(const SAT_able& other) const
 	return overlap;
 }
 
-Vector2d Circle::setPositionProvider(shared_ptr<PositionProvider2D> provider)
+void Circle::setPositionProvider(shared_ptr<PositionProvider2D> provider)
 {
 	_provider = provider;
 }

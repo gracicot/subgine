@@ -1,7 +1,5 @@
 #include "abstractphysicpoint.h"
 
-using namespace std;
-
 namespace sbg {
 
 AbstractPhysicPoint::AbstractPhysicPoint() : _mass(1)

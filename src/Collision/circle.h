@@ -18,7 +18,7 @@ public:
 	virtual std::pair< Vector2d, Vector2d > getBoundingBox() const override;
 	
 	Vector2d getPosition() const;
-	Vector2d setPositionProvider(std::shared_ptr<PositionProvider2D> provider);
+	void setPositionProvider(std::shared_ptr<PositionProvider2D> provider);
 	
 	void setShape(std::shared_ptr<shape::Circle> shape);
 	std::shared_ptr<shape::Circle> getShape() const;
