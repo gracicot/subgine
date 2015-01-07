@@ -30,57 +30,33 @@ void CollisionEngine::execute(const double time)
 	mutex write;
 	vector<TestResult> results;
 	
-	auto worker = [&results, time, this, &write, &objects](int number, int starts){
-		auto it = objects.begin();
-		advance(it, starts);
-		
-		while (distance(it, objects.end()) > 0) {
-			Test& test = *it;
+	parallel_for(objects.begin(), objects.end(), [&results, time, this, &write](Test& test){
+		if (!test.getObject().expired() && !test.getOther().expired()) {
+			auto testObject = test.getObject().lock();
+			auto testOther = test.getOther().lock();
 			
-			if (!test.getObject().expired() && !test.getOther().expired()) {
-				auto testObject = test.getObject().lock();
-				auto testOther = test.getOther().lock();
-				
-				TestResult&& testResult = {testObject, move(testObject->testObject(*testOther, time, test.getTest())), test.getTest(), testOther};
-				write.lock();
-				results.push_back(move(testResult));
-				write.unlock();
-			} else {
-				if (test.getObject().expired()) {
-					remove(test.getObject());
-				}
-				
-				if (test.getOther().expired()) {
-					remove(test.getOther());
-				}
+			TestResult&& testResult = {testObject, move(testObject->testObject(*testOther, time, test.getTest())), test.getTest(), testOther};
+			write.lock();
+			results.push_back(move(testResult));
+			write.unlock();
+		} else {
+			if (test.getObject().expired()) {
+				remove(test.getObject());
 			}
-			advance(it, number);
-		}
-	};
-	
-	const int numbreOfWorkers = min(static_cast<long unsigned int>(thread::hardware_concurrency() - 1), objects.size());
-	if (numbreOfWorkers > 1) {
 			
-		vector<thread> workers;
-		for (int i = 0 ; i<numbreOfWorkers ; i++) {
-			workers.push_back(thread(worker, numbreOfWorkers, i));
-		}
-		for (auto& workerThread : workers) {
-			if (workerThread.joinable()) {
-				workerThread.join();
+			if (test.getOther().expired()) {
+				remove(test.getOther());
 			}
 		}
-	} else {
-		worker(1, 0);
-	}
+	});
 	
-	for (auto& result : results) {
+	for_each(results.begin(), results.end(), [](TestResult& result) {
 		if (result.result) {
 			if (result.result->isColliding()) {
 				result.object->trigger(*result.other, move(result.result), result.test);
 			}
 		}
-	}
+	});
 }
 
 void CollisionEngine::add(std::weak_ptr<CollisionBody> object, vector<string> groups, vector< string > collisionGroups)

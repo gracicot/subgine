@@ -2,6 +2,7 @@
 
 #include "System/engine.h"
 #include "System/mainengine.h"
+#include "System/parallel_for.h"
 #include "System/material.h"
 #include "System/vector-all.h"
 #include "System/Shape/shape.h"
