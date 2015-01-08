@@ -11,13 +11,13 @@ namespace sbg {
 
 std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const CollisionBody& self, const CollisionBody& other, double time, std::string test) const
 {
-	Vector2d response;
-
 	auto tree = std::dynamic_pointer_cast<const QuadTree>(other.getCollisionEntity(test));
 	auto satThis = std::dynamic_pointer_cast<const SAT_able>(self.getCollisionEntity(test));
 
 	if (tree && satThis) {
+		Vector2d response;
 		QuadTree::container test;
+		int count = 0;
 
 		if (tree->isContaining(*satThis)) {
 			test = tree->getNearby(*satThis);
@@ -28,23 +28,14 @@ std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const Collis
 
 					if (satThis->isboxOverlapping(*realAABBOther)) {
 						auto realSatOther = std::dynamic_pointer_cast<const SAT_able>(realAABBOther);
+						
+						if (realSatOther) {
+							Vector2d overlap1 = satThis->overlap(*realSatOther);
+							Vector2d overlap2 = realSatOther->overlap(*satThis);
 
-						Vector2d overlap1 = satThis->overlap(*realSatOther);
-						Vector2d overlap2 = realSatOther->overlap(*satThis);
-
-						if (overlap1.notZero() && overlap2.notZero()) {
-							Vector2d shortest = overlap1 < overlap2 ? overlap1 : -1 * overlap2;
-
-							if ((shortest.x > 0 && response.x > 0) || (shortest.x < 0 && response.x < 0)) {
-								response.x = std::abs(response.x) < std::abs(shortest.x) ? shortest.x : response.x;
-							} else {
-								response.x += shortest.x;
-							}
-
-							if ((shortest.y > 0 && response.y > 0) || (shortest.y < 0 && response.y < 0)) {
-								response.y = std::abs(response.y) < std::abs(shortest.y) ? shortest.y : response.y;
-							} else {
-								response.y += shortest.y;
+							if (overlap1.notZero() && overlap2.notZero()) {
+								count++;
+								response += overlap1 < overlap2 ? overlap1 : -1 * overlap2;
 							}
 						}
 					}
@@ -52,8 +43,8 @@ std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const Collis
 			}
 		}
 
-		if (response.getLength() > 0) {
-			return std::unique_ptr<Results::CollisionResult>(new Results::SatResult(other, true, time, response));
+		if (response.notZero() && count > 0) {
+			return std::unique_ptr<Results::CollisionResult>(new Results::SatResult(other, true, time, response/count));
 		} else {
 			return std::unique_ptr<Results::CollisionResult>(new Results::SatResult(other, false, time, Vector2d()));
 		}
