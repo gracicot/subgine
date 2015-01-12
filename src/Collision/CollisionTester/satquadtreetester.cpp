@@ -7,16 +7,17 @@
 
 #include "../../system.hpp"
 
+using namespace std;
+
 namespace sbg {
 
-std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const CollisionBody& self, const CollisionBody& other, double time, std::string test) const
+pair<unique_ptr<ResultData>, bool> SatQuadTreeTester::test(shared_ptr<const CollisionEntity> self, shared_ptr<const CollisionEntity> other) const
 {
-	Vector2d response;
-
-	auto tree = std::dynamic_pointer_cast<const QuadTree>(other.getCollisionEntity(test));
-	auto satThis = std::dynamic_pointer_cast<const SAT_able>(self.getCollisionEntity(test));
+	auto tree = dynamic_pointer_cast<const QuadTree>(other);
+	auto satThis = dynamic_pointer_cast<const SAT_able>(self);
 
 	if (tree && satThis) {
+		Vector2d response;
 		QuadTree::container test;
 
 		if (tree->isContaining(*satThis)) {
@@ -27,7 +28,7 @@ std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const Collis
 					auto realAABBOther = weakAAABBOther.lock();
 
 					if (satThis->isboxOverlapping(*realAABBOther)) {
-						auto realSatOther = std::dynamic_pointer_cast<const SAT_able>(realAABBOther);
+						auto realSatOther = dynamic_pointer_cast<const SAT_able>(realAABBOther);
 
 						Vector2d overlap1 = satThis->overlap(*realSatOther);
 						Vector2d overlap2 = realSatOther->overlap(*satThis);
@@ -36,13 +37,13 @@ std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const Collis
 							Vector2d shortest = overlap1 < overlap2 ? overlap1 : -1 * overlap2;
 
 							if ((shortest.x > 0 && response.x > 0) || (shortest.x < 0 && response.x < 0)) {
-								response.x = std::abs(response.x) < std::abs(shortest.x) ? shortest.x : response.x;
+								response.x = abs(response.x) < abs(shortest.x) ? shortest.x : response.x;
 							} else {
 								response.x += shortest.x;
 							}
 
 							if ((shortest.y > 0 && response.y > 0) || (shortest.y < 0 && response.y < 0)) {
-								response.y = std::abs(response.y) < std::abs(shortest.y) ? shortest.y : response.y;
+								response.y = abs(response.y) < abs(shortest.y) ? shortest.y : response.y;
 							} else {
 								response.y += shortest.y;
 							}
@@ -52,17 +53,17 @@ std::unique_ptr< Results::CollisionResult > SatQuadTreeTester::test(const Collis
 			}
 		}
 
-		if (response.getLength() > 0) {
-			return std::unique_ptr<Results::CollisionResult>(new Results::SatResult(other, true, time, response));
+		if (response.notZero()) {
+			return {make_unique<SatResult>(response), true};
 		} else {
-			return std::unique_ptr<Results::CollisionResult>(new Results::SatResult(other, false, time, Vector2d()));
+			return {make_unique<SatResult>(), false};
 		}
 	} else {
-		return std::unique_ptr<Results::CollisionResult>(nullptr);
+		return {nullptr, false};
 	}
 }
 
-CollisionTester* SatQuadTreeTester::clone()
+SatQuadTreeTester* SatQuadTreeTester::clone() const
 {
 	return new SatQuadTreeTester(*this);
 }

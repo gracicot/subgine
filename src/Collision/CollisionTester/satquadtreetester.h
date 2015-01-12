@@ -9,8 +9,8 @@ namespace sbg {
 class SatQuadTreeTester : public CollisionTester
 {
 public:
-	virtual std::unique_ptr< Results::CollisionResult > test(const CollisionBody& self, const CollisionBody& other, double time, std::string test) const override;
-	virtual CollisionTester* clone() override;
+	std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const CollisionEntity> self, std::shared_ptr<const CollisionEntity> other) const override;
+	SatQuadTreeTester* clone() const override;
 };
 
 }

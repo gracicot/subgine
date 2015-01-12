@@ -1,7 +1,9 @@
 #include "collisionengine.h"
 
+#include "../CollisionTester/collisiontester.h"
 #include "../collisionbody.h"
 #include "../CollisionResults/collisionresult.h"
+#include "../CollisionResults/resultdata.h"
 
 #include <future>
 #include <thread>
@@ -22,9 +24,8 @@ void CollisionEngine::execute(const double time)
 	// todo: move to a class
 	struct TestResult {
 		shared_ptr<CollisionBody> object;
-		unique_ptr<Results::CollisionResult> result;
+		CollisionResult result;
 		string test;
-		shared_ptr<CollisionBody> other;
 	};
 	
 	mutex write;
@@ -35,7 +36,7 @@ void CollisionEngine::execute(const double time)
 			auto testObject = test.getObject().lock();
 			auto testOther = test.getOther().lock();
 			
-			TestResult&& testResult = {testObject, move(testObject->testObject(*testOther, time, test.getTest())), test.getTest(), testOther};
+			TestResult&& testResult{testObject, move(testObject->testObject(testOther, time, test.getTest())), test.getTest()};
 			write.lock();
 			results.push_back(move(testResult));
 			write.unlock();
@@ -51,10 +52,8 @@ void CollisionEngine::execute(const double time)
 	});
 	
 	for_each(results.begin(), results.end(), [](TestResult& result) {
-		if (result.result) {
-			if (result.result->isColliding()) {
-				result.object->trigger(*result.other, move(result.result), result.test);
-			}
+		if (result.result.isColliding()) {
+			result.object->trigger(move(result.result), result.test);
 		}
 	});
 }

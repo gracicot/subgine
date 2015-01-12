@@ -2,15 +2,14 @@
 
 #include "../system.hpp"
 
+#include "CollisionResults/collisionresult.h"
+
 #include <memory>
 #include <map>
 
 namespace sbg {
 
-namespace Results {
-	class CollisionResult;
-}
-
+class ResultData;
 class CollisionTester;
 class CollisionHandler;
 class CollisionEntity;
@@ -23,7 +22,7 @@ public:
 	CollisionBody(CollisionBody&& other);
 	virtual ~CollisionBody();
 
-	std::unique_ptr<Results::CollisionResult> testObject(const CollisionBody& other, double time, std::string test) const;
+	CollisionResult testObject(std::shared_ptr<const CollisionBody> other, double time, std::string test) const;
 	
 	std::multimap<std::string, std::shared_ptr<CollisionHandler>>& getCollisionHandler();
 	const std::multimap<std::string, std::shared_ptr<CollisionHandler>>& getCollisionHandler() const;
@@ -38,7 +37,7 @@ public:
 	std::map<std::string, std::shared_ptr<CollisionEntity>>& getCollisionEntity();
 	const std::map<std::string, std::shared_ptr<CollisionEntity>>& getCollisionEntity() const;
 	
-	void trigger(const CollisionBody& other, std::unique_ptr<Results::CollisionResult> result, std::string tag);
+	void trigger(CollisionResult result, std::string test);
 
 	void setMaterial(Material material);
 	Material getMaterial() const;

@@ -1,20 +1,19 @@
 #pragma once
 
+#include "../../system.hpp"
+
 #include <memory>
 
 namespace sbg{
 
-class CollisionBody;
+class CollisionEntity;
+class ResultData;
 
-namespace Results {
-	class CollisionResult;
-}
-
-class CollisionTester
+class CollisionTester : public Clonable
 {
 public:
-	virtual std::unique_ptr<Results::CollisionResult> test(const CollisionBody& self, const CollisionBody& other, double time, std::string test) const = 0;
-	virtual CollisionTester* clone() = 0;
+	virtual std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const CollisionEntity> self, std::shared_ptr<const CollisionEntity> other) const = 0;
+	virtual CollisionTester* clone() const = 0;
 };
 
 }

@@ -4,12 +4,13 @@
 #include "collisionentity.h"
 #include "CollisionHandlers/collisionhandler.h"
 #include "CollisionResults/collisionresult.h"
+#include "CollisionResults/resultdata.h"
 
 using namespace std;
 
 namespace sbg {
 
-CollisionBody::CollisionBody(CollisionBody && other) :
+CollisionBody::CollisionBody(CollisionBody&& other) :
 	_material(move(other._material)),
 	_collisionhandlers(move(other._collisionhandlers)),
 	_collisionEntities(move(other._collisionEntities)),
@@ -22,7 +23,7 @@ CollisionBody::CollisionBody(const CollisionBody& other) :
 	_collisionEntities(other._collisionEntities)
 {
 	for (auto& tester : other._collisionTesters) {
-		_collisionTesters.insert(pair<string, unique_ptr<CollisionTester>>(tester.first, unique_ptr<CollisionTester>(tester.second->clone())));
+		_collisionTesters.insert(make_pair(tester.first, unique_ptr<CollisionTester>(tester.second->clone())));
 	}
 }
 
@@ -33,25 +34,27 @@ CollisionBody::CollisionBody()
 
 CollisionBody::~CollisionBody()
 {
-
+	
 }
 
-unique_ptr< Results::CollisionResult > CollisionBody::testObject(const CollisionBody& other, double time, string test) const
+CollisionResult CollisionBody::testObject(shared_ptr<const CollisionBody> other, double time, string test) const
 {
 	auto it = _collisionTesters.find(test);
 	
 	if (it != _collisionTesters.end()) {
-		return it->second->test(*this, other, time, test);
+		auto data = it->second->test(getCollisionEntity(test), other->getCollisionEntity(test));
+		return CollisionResult(other, data.second, move(data.first), time);
 	}
 	
-	return unique_ptr<Results::CollisionResult>(nullptr);
+	return CollisionResult(other, false, nullptr, time);
 }
 
-void CollisionBody::trigger(const CollisionBody& other, unique_ptr< Results::CollisionResult > result, string tag)
+void CollisionBody::trigger(CollisionResult result, string test)
 {
-	auto range = _collisionhandlers.equal_range(tag);
+	auto range = _collisionhandlers.equal_range(test);
+	
 	for(auto it = range.first ; it != range.second ; it++) {
-		it->second->apply(*this, *result);
+		it->second->apply(*this, result);
 	}
 }
 
