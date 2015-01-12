@@ -18,3 +18,7 @@
 #include "System/Provider/zerocomponentprovider.h"
 #include "System/Provider/zerodisplaycomponentprovider.h"
 #include "System/Provider/zeropositionprovider.h"
+
+#include "System/memory.h"
+#include "System/clone.h"
+
