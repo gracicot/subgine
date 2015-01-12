@@ -1,5 +1,7 @@
 #include "point.h"
 
+#include "CollisionTester/collisiontester.h"
+
 using namespace std;
 
 namespace sbg {

@@ -13,7 +13,7 @@ public:
 	SAT_able() = default;
 	~SAT_able() = default;
 
-	virtual Vector2d projection(double angle) const = 0;
+	virtual std::pair<double, double> projection(double angle) const = 0;
 	virtual Vector2d overlap(const SAT_able& other) const = 0;
 	virtual Vector2d getNearestPoint(Vector2d point) const = 0;
 

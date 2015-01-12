@@ -81,24 +81,24 @@ void Polygon::setShape(shared_ptr<shape::Polygon> shape)
 		for (auto angle : _cachedAngles) {
 			Vector2d axis(cos(angle), sin(angle));
 			Vector2d current;
-			Vector2d projection;
+			pair<double, double> projection;
 			auto vertex = _shape->getVertices().begin();
 
 			current = *vertex;
 
-			projection.x = axis.dot(current);
-			projection.y = projection.x;
+			projection.first = axis.dot(current);
+			projection.second = projection.first;
 
 			for (vertex++ ; vertex != _shape->getVertices().end() ; vertex++) {
 				current = *vertex;
 				double p = axis.dot(current);
 
-				projection.x = min(projection.x, p);
-				projection.y = max(projection.y, p);
+				projection.first = min(projection.first, p);
+				projection.second = max(projection.second, p);
 			}
 
 			_cachedProjections[sin(angle)] = projection;
-			_cachedProjections[sin((angle + pi))] = Vector2d(-projection.y, -projection.x);
+			_cachedProjections[sin((angle + pi))] = {-projection.second, -projection.first};
 		}
 	}
 }
@@ -130,11 +130,11 @@ bool Polygon::isPointInside(Vector2d point) const
 	}
 }
 
-Vector2d Polygon::projection(double angle) const
+pair<double, double> Polygon::projection(double angle) const
 {
 	if (_shape && _shape->getVertices().size() > 0) {
-		Vector2d projection;
-		unordered_map<double, Vector2d>::const_iterator it;
+		pair<double, double> projection;
+		unordered_map<double, pair<double, double>>::const_iterator it;
 
 		if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(sin(angle - getAngle()))) != _cachedProjections.end())) {
 			projection = it->second;
@@ -146,25 +146,25 @@ Vector2d Polygon::projection(double angle) const
 
 			current = *verticle;
 
-			projection.x = axis.dot(current);
-			projection.y = projection.x;
+			projection.first = axis.dot(current);
+			projection.second = projection.first;
 
 			for (verticle++ ; verticle != _shape->getVertices().end() ; verticle++) {
 				current = *verticle;
 				double p = axis.dot(current);
 
-				projection.x = min(projection.x, p);
-				projection.y = max(projection.y, p);
+				projection.first = min(projection.first, p);
+				projection.second = max(projection.second, p);
 			}
 		}
 
 		Vector2d axis(cos(angle), sin(angle));
-		projection.x += axis.dot(getPosition());
-		projection.y += axis.dot(getPosition());
+		projection.first += axis.dot(getPosition());
+		projection.second += axis.dot(getPosition());
 
 		return projection;
 	} else {
-		return Vector2d();
+		return {};
 	}
 }
 
@@ -177,14 +177,14 @@ Vector2d Polygon::overlap(const SAT_able& other) const
 	Vector2d overlap;
 
 	for (double angle : getAngles()) {
-		Vector2d projectionThis = this->projection(angle);
-		Vector2d projectionOther = other.projection(angle);
+		pair<double, double> projectionThis = this->projection(angle);
+		pair<double, double> projectionOther = other.projection(angle);
 
-		if (projectionThis.y < projectionOther.x || projectionThis.x > projectionOther.y) {
-			return Vector2d();
+		if (projectionThis.second < projectionOther.first || projectionThis.first > projectionOther.second) {
+			return {};
 		} else {
-			if (!overlap.notZero() || overlap > projectionThis.y - projectionOther.x) {
-				overlap = Vector2d(projectionThis.y - projectionOther.x, 0);
+			if (!overlap.notZero() || overlap > projectionThis.second - projectionOther.first) {
+				overlap = Vector2d(projectionThis.second - projectionOther.first, 0);
 				overlap.setAngle(angle);
 			}
 		}

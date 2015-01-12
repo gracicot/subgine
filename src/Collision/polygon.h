@@ -23,7 +23,7 @@ public:
 	
 	void setComponents(std::unique_ptr<ComponentProvider2D> components);
 	
-	Vector2d projection(double angle) const override;
+	std::pair<double, double> projection(double angle) const override;
 	bool isPointInside(Vector2d point) const override;
 	Vector2d overlap(const SAT_able& other) const override;
 	Vector2d getNearestPoint(Vector2d point) const override;
@@ -40,7 +40,7 @@ private:
 	
 	std::pair<Vector2d, Vector2d> _cachedBoundingBox;
 	std::vector<double> _cachedAngles;
-	std::unordered_map<double, Vector2d> _cachedProjections;
+	std::unordered_map<double, std::pair<double, double>> _cachedProjections;
 };
 
 }

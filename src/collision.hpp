@@ -21,6 +21,7 @@
 #include "Collision/CollisionTester/satquadtreetester.h"
 
 #include "Collision/CollisionResults/collisionresult.h"
+#include "Collision/CollisionResults/resultdata.h"
 #include "Collision/CollisionResults/satresult.h"
 
 #include "Collision/Engines/test.h"
