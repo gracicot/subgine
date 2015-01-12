@@ -5,9 +5,8 @@
 using namespace std;
 
 namespace sbg {
-namespace Results {
 
-SatResult::SatResult(const CollisionBody& other, const bool colliding, const double time, const Vector2d gap) : CollisionResult(other, colliding, time), _gap(gap)
+SatResult::SatResult(const Vector2d gap) : _gap(gap)
 {
 
 }
@@ -32,5 +31,9 @@ void SatResult::setContacts(std::vector< Vector2d > contacts)
 	_contacts = contacts;
 }
 
+SatResult* SatResult::clone() const
+{
+	return new SatResult(*this);
 }
+
 }

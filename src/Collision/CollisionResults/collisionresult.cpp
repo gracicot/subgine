@@ -1,20 +1,29 @@
 #include "collisionresult.h"
 
 #include "../collisionbody.h"
+#include "resultdata.h"
 
 using namespace std;
 
 namespace sbg {
-namespace Results {
 
-CollisionResult::CollisionResult(const CollisionBody& other, const bool colliding, const double time) : _time(time), _colliding(colliding), _other(&other)
+CollisionResult::CollisionResult(): _colliding(false), _time(0)
+{
+	
+}
+
+CollisionResult::CollisionResult(weak_ptr<const CollisionBody> other, const bool colliding, unique_ptr<const ResultData> data, const double time) : _time(time), _colliding(colliding), _other(other), _data(move(data))
 {
 
 }
 
-CollisionResult::~CollisionResult()
+CollisionResult::CollisionResult(const CollisionResult& other):
+	_data(clone_unique(other._data)),
+	_other(other._other),
+	_colliding(other._colliding),
+	_time(other._time)
 {
-
+	
 }
 
 void CollisionResult::colliding(const bool colliding)
@@ -37,15 +46,28 @@ void CollisionResult::setTime(double time)
 	_time = time;
 }
 
-const CollisionBody& CollisionResult::getOther() const
+shared_ptr<const CollisionBody> CollisionResult::getOther() const
 {
-	return *_other;
+	if (!_other.expired()) {
+		return _other.lock();
+	} else {
+		return {};
+	}
 }
 
-void CollisionResult::setOther(const CollisionBody& other)
+void CollisionResult::setOther(weak_ptr<const CollisionBody> other)
 {
-	_other = &other;
+	_other = other;
 }
 
+unique_ptr<const ResultData> CollisionResult::getData() const
+{
+	return clone_unique(_data);
 }
+
+void CollisionResult::setData(unique_ptr<const ResultData> data)
+{
+	_data = move(data);
+}
+
 }
