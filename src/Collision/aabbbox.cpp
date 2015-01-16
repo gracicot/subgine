@@ -9,7 +9,7 @@ AABBBox::AABBBox(pair<Vector2d, Vector2d> box) : _box(box)
 
 }
 
-CollisionEntity* AABBBox::clone() const
+AABBBox* AABBBox::clone() const
 {
 	return new AABBBox(*this);
 }

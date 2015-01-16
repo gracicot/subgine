@@ -19,7 +19,7 @@ Polygon::Polygon(unique_ptr<ComponentProvider2D> components): _components(move(c
 
 Polygon::Polygon(const Polygon &other) : 
 	_shape(other._shape),
-	_components(other._components->clone()),
+	_components(clone_unique(other._components)),
 	_cachedBoundingBox(other._cachedBoundingBox),
 	_cachedAngles(other._cachedAngles),
 	_cachedProjections(other._cachedProjections)
@@ -32,7 +32,7 @@ shared_ptr<shape::Polygon> Polygon::getShape() const
 	return _shape;
 }
 
-CollisionEntity* Polygon::clone() const
+Polygon* Polygon::clone() const
 {
 	return new Polygon(*this);
 }
@@ -134,31 +134,18 @@ pair<double, double> Polygon::projection(double angle) const
 {
 	if (_shape && _shape->getVertices().size() > 0) {
 		pair<double, double> projection;
-		unordered_map<double, pair<double, double>>::const_iterator it;
-
-		if (_cachedProjections.size() > 0 && ((it = _cachedProjections.find(sin(angle - getAngle()))) != _cachedProjections.end())) {
-			projection = it->second;
-		} else {
-			Vector2d axis(cos(angle - getAngle()), sin(angle - getAngle()));
-			Vector2d current;
-
-			auto verticle = _shape->getVertices().begin();
-
-			current = *verticle;
-
-			projection.first = axis.dot(current);
-			projection.second = projection.first;
-
-			for (verticle++ ; verticle != _shape->getVertices().end() ; verticle++) {
-				current = *verticle;
-				double p = axis.dot(current);
-
-				projection.first = min(projection.first, p);
-				projection.second = max(projection.second, p);
-			}
-		}
 
 		Vector2d axis(cos(angle), sin(angle));
+
+		bool first = true;
+		for (Vector2d current : _shape->getVertices()) {
+			double p = axis.dot(current.angle(current.getAngle() + getAngle()));
+
+			projection.first = first ? p:min(projection.first, p);
+			projection.second = first ? p:max(projection.second, p);
+			first = false;
+		}
+		
 		projection.first += axis.dot(getPosition());
 		projection.second += axis.dot(getPosition());
 

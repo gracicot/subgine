@@ -1,12 +1,14 @@
 #pragma once
 
+#include "../system.hpp"
+
 namespace sbg {
 
-class CollisionEntity
+class CollisionEntity : public Clonable
 {
 public:
 	CollisionEntity() = default;
-	virtual CollisionEntity* clone() const =0;
+	virtual CollisionEntity* clone() const = 0;
 	~CollisionEntity() = default;
 };
 

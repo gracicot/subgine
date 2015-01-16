@@ -19,11 +19,13 @@ CollisionBody::CollisionBody(CollisionBody&& other) :
 
 CollisionBody::CollisionBody(const CollisionBody& other) :
 	_material(other._material),
-	_collisionhandlers(other._collisionhandlers),
-	_collisionEntities(other._collisionEntities)
+	_collisionhandlers(other._collisionhandlers)
 {
 	for (auto& tester : other._collisionTesters) {
-		_collisionTesters.insert(make_pair(tester.first, unique_ptr<CollisionTester>(tester.second->clone())));
+		_collisionTesters.insert(make_pair(tester.first, clone_unique(tester.second)));
+	}
+	for (auto& entity : other._collisionEntities) {
+		_collisionEntities.insert(make_pair(entity.first, clone_shared(entity.second)));
 	}
 }
 

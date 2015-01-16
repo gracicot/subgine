@@ -27,7 +27,7 @@ public:
 	bool isPointInside(Vector2d point) const override;
 	Vector2d overlap(const SAT_able& other) const override;
 	Vector2d getNearestPoint(Vector2d point) const override;
-	CollisionEntity* clone() const override;
+	Polygon* clone() const override;
 	std::pair< Vector2d, Vector2d > getBoundingBox() const override;
 
 	std::shared_ptr< shape::Polygon > getShape() const;

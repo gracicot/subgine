@@ -13,12 +13,14 @@
 #include "Collision/point.h"
 #include "Collision/polygon.h"
 #include "Collision/quadtree.h"
+#include "Collision/compoundcollision.h"
 
 #include "Collision/CollisionHandlers/collisionhandler.h"
 
 #include "Collision/CollisionTester/collisiontester.h"
 #include "Collision/CollisionTester/sattester.h"
-#include "Collision/CollisionTester/satquadtreetester.h"
+#include "Collision/CollisionTester/quadtreetester.h"
+#include "Collision/CollisionTester/compoundtester.h"
 
 #include "Collision/CollisionResults/collisionresult.h"
 #include "Collision/CollisionResults/resultdata.h"

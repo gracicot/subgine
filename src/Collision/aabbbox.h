@@ -15,8 +15,8 @@ public:
 	void setBox(std::pair<Vector2d, Vector2d> box);
 	std::pair<Vector2d, Vector2d> getBox() const;
 	
-	virtual CollisionEntity* clone() const;
-	virtual std::pair< Vector2d, Vector2d > getBoundingBox() const;
+	AABBBox* clone() const override;
+	std::pair< Vector2d, Vector2d > getBoundingBox() const override;
 	
 private:
 	 std::pair<Vector2d, Vector2d> _box;
