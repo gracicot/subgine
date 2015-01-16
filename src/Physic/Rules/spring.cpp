@@ -29,7 +29,7 @@ Spring<n>::Spring(const double strength, const double length) : _strength(streng
 }
 
 template<int n>
-Spring<n>::Spring(const Spring& other) : _strength(other._strength), _length(other._length), _provider(other._provider->clone())
+Spring<n>::Spring(const Spring& other) : _strength(other._strength), _length(other._length), _provider(clone_unique(other._provider))
 {
 	
 }

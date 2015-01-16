@@ -1,6 +1,7 @@
 #include "physicengine.h"
 
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -32,6 +33,16 @@ void PhysicEngine::execute(const double time)
 			remove(ref);
 		}
 	}
+// 	auto objects = _objects;
+// 	
+// 	multitask(objects.begin(), objects.end(), [time, this] (typename decltype(_objects)::value_type ref) {
+// 		if (!ref.expired()) {
+// 			auto object = ref.lock();
+// 			object->update(time);
+// 		} else {
+// 			remove(ref);
+// 		}
+// 	});
 }
 
 }
