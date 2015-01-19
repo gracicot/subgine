@@ -19,6 +19,10 @@
 #include "System/Provider/zerodisplaycomponentprovider.h"
 #include "System/Provider/zeropositionprovider.h"
 
+#include "System/accumulator.h"
+#include "System/avgaccumulator.h"
+#include "System/sumaccumulator.h"
+
 #include "System/memory.h"
 #include "System/clone.h"
 
