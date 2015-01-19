@@ -4,6 +4,7 @@
 
 #include "collisionresult.h"
 #include "resultdata.h"
+#include "../satresultaccumulator.h"
 
 #include <vector>
 
@@ -12,6 +13,7 @@ namespace sbg {
 class SatResult : public ResultData
 {
 public:
+	using AccumulatorType = Accumulator<SatResult>;
 	SatResult(const Vector2d gap = Vector2d{});
 
 	void setGap(const Vector2d gap);

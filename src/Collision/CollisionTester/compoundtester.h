@@ -5,7 +5,7 @@
 
 namespace sbg {
 
-template<typename T, typename Next = typename T::DefaultTester>
+template<typename T, typename Next = typename T::DefaultTester, typename AccumulatorType = typename T::DefaultTester::ResultType::AccumulatorType>
 class CompoundTester : public CollisionTester
 {
 public:
@@ -23,13 +23,22 @@ public:
 	
 	std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const T> self, std::shared_ptr<const CompoundCollision<const T>> others) const
 	{
+		AccumulatorType accumulator;
+		bool hasCollision = false;
+		
 		for (auto other : others->get()) {
-			std::pair<std::unique_ptr<ResultData>, bool> result = _next.test(self, other);
+			std::pair<std::unique_ptr<typename T::DefaultTester::ResultType>, bool> result = _next.test(self, other);
+			
 			if (result.second) {
-				return result;
+				hasCollision = true;
+				if (result.first) {
+					accumulator.take(*result.first.get());
+				}
 			}
+			
 		}
-		return {nullptr, false};
+		
+		return {std::make_unique<typename T::DefaultTester::ResultType>(accumulator.flush()), hasCollision};
 	}
 	
 	CompoundTester<T, Next>* clone() const override
