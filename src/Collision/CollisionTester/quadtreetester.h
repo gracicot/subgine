@@ -19,6 +19,8 @@ template<typename T, typename Next = CompoundTester<T>>
 class QuadTreeTester : public CollisionTester
 {
 public:
+	using ResultType = typename Next::ResultType;
+	
 	std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const CollisionEntity> self, std::shared_ptr<const CollisionEntity> other) const override
 	{
 		auto selfT = std::dynamic_pointer_cast<const T>(self);
@@ -31,7 +33,7 @@ public:
 		}
 	}
 	
-	std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const T> self, std::shared_ptr<const QuadTree<T>> tree) const
+	std::pair<std::unique_ptr<ResultType>, bool> test(std::shared_ptr<const T> self, std::shared_ptr<const QuadTree<T>> tree) const
 	{
 		if (tree->isContaining(*self)) {
 			typename QuadTree<T>::container othersRef = tree->getNearby(*self);

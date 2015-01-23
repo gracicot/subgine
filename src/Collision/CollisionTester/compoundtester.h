@@ -5,10 +5,12 @@
 
 namespace sbg {
 
-template<typename T, typename Next = typename T::DefaultTester, typename AccumulatorType = typename T::DefaultTester::ResultType::AccumulatorType>
+template<typename T, typename Next = typename T::DefaultTester, typename AccumulatorType = typename Next::ResultType::AccumulatorType>
 class CompoundTester : public CollisionTester
 {
 public:
+	using ResultType = typename Next::ResultType;
+	
 	std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const CollisionEntity> self, std::shared_ptr<const CollisionEntity> other) const override
 	{
 		auto selfT = std::dynamic_pointer_cast<const T>(self);
@@ -21,13 +23,13 @@ public:
 		}
 	}
 	
-	std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const T> self, std::shared_ptr<const CompoundCollision<const T>> others) const
+	std::pair<std::unique_ptr<ResultType>, bool> test(std::shared_ptr<const T> self, std::shared_ptr<const CompoundCollision<const T>> others) const
 	{
 		AccumulatorType accumulator;
 		bool hasCollision = false;
 		
 		for (auto other : others->get()) {
-			std::pair<std::unique_ptr<typename T::DefaultTester::ResultType>, bool> result = _next.test(self, other);
+			std::pair<std::unique_ptr<ResultType>, bool> result = _next.test(self, other);
 			
 			if (result.second) {
 				hasCollision = true;
@@ -38,7 +40,7 @@ public:
 			
 		}
 		
-		return {std::make_unique<typename T::DefaultTester::ResultType>(accumulator.flush()), hasCollision};
+		return {std::make_unique<ResultType>(accumulator.flush()), hasCollision};
 	}
 	
 	CompoundTester<T, Next>* clone() const override
