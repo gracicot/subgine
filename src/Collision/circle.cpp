@@ -88,7 +88,7 @@ Vector2d Circle::getNearestPoint(Vector2d point) const
 	return nearest + getPosition();
 }
 
-std::pair< Vector2d, Vector2d > Circle::getBoundingBox() const
+std::pair<Vector2d, Vector2d> Circle::getBoundingBox() const
 {
 	double radius = _shape->getRadius();
 	return {Vector2d{-radius, -radius} + getPosition(), Vector2d{radius, radius} + getPosition()};
