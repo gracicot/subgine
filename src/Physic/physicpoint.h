@@ -62,8 +62,8 @@ protected:
 extern template class PhysicPoint<2>;
 extern template class PhysicPoint<3>;
 
-typedef PhysicPoint<2> PhysicPoint2;
-typedef PhysicPoint<3> PhysicPoint3;
+typedef PhysicPoint<2> PhysicPoint2D;
+typedef PhysicPoint<3> PhysicPoint3D;
 
 }
 
