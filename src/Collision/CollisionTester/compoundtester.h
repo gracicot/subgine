@@ -31,7 +31,7 @@ public:
 			std::pair<std::unique_ptr<ResultType>, bool> result = _next.test(self, other);
 			
 			if (result.first && result.second) {
-				accumulator += *result.first.get();
+				accumulator += *result.first;
 			}
 			
 		}
