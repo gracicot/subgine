@@ -95,17 +95,9 @@ template<int n>
 Vector<n, double> PhysicPoint<n>::getNextPosition(const double time) const
 {
 	Vector<n, double> position = this->_position + (_velocity + getNextVelocity(time)) * time / 2;
-
-	for (auto & correctionList : _corrections) {
-		Vector<n, double> average;
-
-		for (auto & correction : correctionList.second) {
-			average += correction;
-		}
-
-		average / correctionList.second.size();
-
-		position += average;
+	
+	for (auto& correction : _corrections) {
+		position += static_cast<Vector<n, double>>(correction.second);
 	}
 
 	return position;
@@ -231,7 +223,8 @@ Vector<n, double> PhysicPoint<n>::getPosition() const
 template<int n>
 void PhysicPoint<n>::correctPosition(const string profile, const Vector<n, double> amount)
 {
-	_corrections[profile].push_back(amount);
+	lock_guard<mutex> lock{_correctionMutex};
+	_corrections[profile] += amount;
 }
 
 template class PhysicPoint<2>;

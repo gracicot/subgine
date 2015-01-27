@@ -55,7 +55,8 @@ protected:
 	std::map<std::string, Vector<n, double>> _pulses;
 	std::map<std::string, Rule<n>*> _rules;
 	std::map<std::string, Vector<n, double>> _forces;
-	std::map<std::string, std::vector<Vector<n, double>>> _corrections;
+	std::map<std::string, AvgAccumulator<Vector<n, double>>> _corrections;
+	std::mutex _correctionMutex;
 
 };
 

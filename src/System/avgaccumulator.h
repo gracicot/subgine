@@ -13,29 +13,29 @@ public:
 		
 	}
 	
-	void operator+=(T value)
+	void operator+=(T value) override
 	{
 		_total += value;
 		_count++;
 	}
 	
-	operator T() const
+	operator T() const override
 	{
 		return _total / _count;
 	}
 	
-	void clear()
+	void clear() override
 	{
 		_total = T();
 		_count = 0;
 	}
 	
-	bool empty() const
+	bool empty() const override
 	{
 		return _count == 0;
 	}
 	
-	int count() const
+	int count() const override
 	{
 		return _count;
 	}

@@ -77,11 +77,11 @@ map<string, Vector<n, double>> PhysicBody<n>::getNextForces() const
 {
 	auto forces = this->_forces;
 
-	for (auto i : this->_rules) {
+	for (auto& i : this->_rules) {
 		forces[i.first] = i.second->getResult(*this);
 	}
 
-	for (auto & i : forces) {
+	for (auto& i : forces) {
 		Vector<n, double> force = i.second;
 		Vector<n, double> position = getForcePosition(i.first);
 		double distance = position.getLength();
