@@ -13,23 +13,37 @@ Accumulator< SatResult >::Accumulator() : _count(0)
 
 }
 
-SatResult Accumulator<SatResult>::flush()
+Accumulator<SatResult>::operator SatResult() const
 {
 	SatResult result;
 	result.setContacts(_contacts);
 	result.setGap(_total / _count);
-	_contacts.clear();
-	_total = Vector2d();
-	_count = 0;
 	return result;
 }
 
-void Accumulator<SatResult>::take(SatResult value)
+void Accumulator<SatResult>::operator+=(SatResult value)
 {
 	_total += value.getGap();
 	_count++;
 	auto contacts = value.getContacts();
 	_contacts.insert(_contacts.end(), contacts.begin(), contacts.end());
+}
+
+void Accumulator<SatResult>::clear()
+{
+	_contacts.clear();
+	_total = Vector2d();
+	_count = 0;
+}
+
+bool Accumulator<SatResult>::empty() const
+{
+	return _count == 0;
+}
+
+int Accumulator<SatResult>::count() const
+{
+	return _count;
 }
 
 }

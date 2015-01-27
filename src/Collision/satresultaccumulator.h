@@ -11,8 +11,11 @@ class Accumulator<SatResult>
 {
 public:
 	Accumulator();
-	void take(SatResult value);
-	SatResult flush();
+	void operator+=(SatResult value);
+	operator SatResult() const;
+	void clear();
+	bool empty() const;
+	int count() const;
 	
 private:
 	Vector2d _total;

@@ -12,17 +12,32 @@ public:
 	{
 		
 	}
-	void take(T value)
+	
+	void operator+=(T value)
 	{
 		_total += value;
+		_count++;
 	}
 	
-	T flush()
+	operator T() const
 	{
-		T result = _total / _count;
+		return _total / _count;
+	}
+	
+	void clear()
+	{
 		_total = T();
 		_count = 0;
-		return result;
+	}
+	
+	bool empty() const
+	{
+		return _count == 0;
+	}
+	
+	int count() const
+	{
+		return _count;
 	}
 	
 private:

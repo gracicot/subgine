@@ -26,21 +26,17 @@ public:
 	std::pair<std::unique_ptr<ResultType>, bool> test(std::shared_ptr<const T> self, std::shared_ptr<const CompoundCollision<const T>> others) const
 	{
 		AccumulatorType accumulator;
-		bool hasCollision = false;
 		
 		for (auto other : others->get()) {
 			std::pair<std::unique_ptr<ResultType>, bool> result = _next.test(self, other);
 			
-			if (result.second) {
-				hasCollision = true;
-				if (result.first) {
-					accumulator.take(*result.first.get());
-				}
+			if (result.first && result.second) {
+				accumulator += *result.first.get();
 			}
 			
 		}
 		
-		return {std::make_unique<ResultType>(accumulator.flush()), hasCollision};
+		return {std::make_unique<ResultType>(accumulator), !accumulator.empty()};
 	}
 	
 	CompoundTester<T, Next>* clone() const override
