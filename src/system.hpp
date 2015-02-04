@@ -5,6 +5,7 @@
 #include "System/parallel_for.h"
 #include "System/material.h"
 #include "System/vector-all.h"
+#include "System/time.h"
 #include "System/Shape/shape.h"
 #include "System/Shape/circle.h"
 #include "System/Shape/polygon.h"
