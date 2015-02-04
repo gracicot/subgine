@@ -21,7 +21,11 @@ public:
 	
 	operator T() const override
 	{
-		return _total / _count;
+		if (_count > 0) {
+			return _total / _count;
+		} else {
+			return T();
+		}
 	}
 	
 	void clear() override

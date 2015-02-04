@@ -4,6 +4,7 @@
 
 #include "Physic/physicpoint.h"
 #include "Physic/physicbody.h"
+#include "Physic/pulseaccumulator.h"
 
 #include "Physic/Provider/physicpointcomponentprovider.h"
 #include "Physic/Provider/physicpointdisplaycomponentprovider.h"

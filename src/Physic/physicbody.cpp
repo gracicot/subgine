@@ -22,11 +22,13 @@ void PhysicBody<2>::update(const double time)
 	_pulsesPosition.clear();
 	_torque = getNextTorque(time);
 
-	this->_position = PhysicPoint<2>::getNextPosition(time);
+	this->_position = getNextPosition(time);
 	this->_corrections.clear();
-	this->_velocity = PhysicPoint<2>::getNextVelocity(time);
+	this->_velocity = getNextVelocity(time);
 	this->_pulses.clear();
-	this->_forces = PhysicPoint<2>::getNextForces();
+	_pulsesPositionAccumulator.clear();
+	this->_pulseAccumulators.clear();
+	this->_forces = getNextForces();
 }
 
 template<>
@@ -40,26 +42,32 @@ void PhysicBody<3>::update(const double time)
 	_pulsesPosition.clear();
 	_torque = getNextTorque(time);
 
-	this->_position = PhysicPoint<3>::getNextPosition(time);
+	this->_position = getNextPosition(time);
 	this->_corrections.clear();
-	this->_velocity = PhysicPoint<3>::getNextVelocity(time);
+	this->_velocity = getNextVelocity(time);
 	this->_pulses.clear();
-	this->_forces = PhysicPoint<3>::getNextForces();
+	_pulsesPositionAccumulator.clear();
+	this->_pulseAccumulators.clear();
+	this->_forces = getNextForces();
 }
 
 template<int n>
 Vector<n, double> PhysicBody<n>::getNextVelocity(const double time) const
-{
-	Vector<n, double> velocity = this->_velocity;
+{	Vector<n, double> velocity = this->_velocity;
 
 	for (auto i : this->getNextForces()) {
 		velocity += (i.second / this->_mass) * time;
 	}
+	
+	auto pulses = this->_pulses;
+	
+	for (auto& accumulator : this->_pulseAccumulators) {
+		pulses[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second);
+	}
 
-	for (auto i : this->_pulses) {
+	for (auto i : pulses) {
 		Vector<n, double> pulse = i.second;
 		Vector<n, double> position = getPulsePosition(i.first);
-		double distance = position.getLength();
 
 		if (position.notZero() && pulse.notZero()) {
 			Angle torque = position.cross(pulse) / correction;
@@ -84,7 +92,6 @@ map<string, Vector<n, double>> PhysicBody<n>::getNextForces() const
 	for (auto& i : forces) {
 		Vector<n, double> force = i.second;
 		Vector<n, double> position = getForcePosition(i.first);
-		double distance = position.getLength();
 
 		if (position.notZero() && force.notZero()) {
 			Angle torque = position.cross(force) / correction;
@@ -126,20 +133,34 @@ Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(const double ti
 	Angle torquePulse = Angle();
 
 	velocity = (getNextTorque(time) / getMomentOfInertia()) * time;
+	
+	auto pulsePosition = _pulsesPosition;
+	
+	for (auto accumulator : _pulsesPositionAccumulator) {
+		if (accumulator.second.second > 0) {
+			pulsePosition[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second.first) / accumulator.second.second;
+		}
+	}
+	
+	auto pulses = this->_pulses;
+	
+	for (auto& accumulator : this->_pulseAccumulators) {
+		pulses[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second);
+	}
 
-	for (auto forcePos : _pulsesPosition) {
-		Vector<n, double> force = this->getPulse(forcePos.first);
-		double distance = forcePos.second.getLength();
+	for (auto forcePos : pulsePosition) {
+		Vector<n, double> pulse = pulses[forcePos.first];
+		Vector<n, double> position = forcePos.second;
 
-		if (forcePos.second.notZero() && force.notZero()) {
-			Angle torque = forcePos.second.cross(force) / correction;
+		if (position.notZero() && pulse.notZero()) {
+			Angle torque = position.cross(pulse) / correction;
 			torquePulse += torque;
 		}
 	}
 
 	velocity += torquePulse / getMomentOfInertia();
 
-	return _angularVelocity + (velocity / 1.0001) * tau;
+	return _angularVelocity + (velocity / 1.001) * tau;
 }
 
 template<int n>
@@ -155,7 +176,6 @@ Vector<freedom(n), double> PhysicBody<n>::getNextTorque(const double time) const
 
 	for (auto forcePos : _forcesPosition) {
 		Vector<n, double> force = this->getForce(forcePos.first);
-		double distance = forcePos.second.getLength();
 
 		if (forcePos.second.notZero() && force.notZero()) {
 			Angle forceTorque = forcePos.second.cross(force) / correction;
@@ -206,9 +226,16 @@ void PhysicBody<n>::setForce(const string type, const Vector<n, double> force, c
 template<int n>
 Vector<n, double> PhysicBody<n>::getPulsePosition(string type) const
 {
-	auto it = _pulsesPosition.find(type);
+	auto pulsePosition = _pulsesPosition;
+	
+	for (auto accumulator : _pulsesPositionAccumulator) {
+		if (accumulator.second.second > 0) {
+			pulsePosition[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second.first) / accumulator.second.second;
+		}
+	}
+	auto it = pulsePosition.find(type);
 
-	if (it != _pulsesPosition.end()) {
+	if (it != pulsePosition.end()) {
 		return it->second;
 	}
 
@@ -225,6 +252,22 @@ Vector<n, double> PhysicBody<n>::getForcePosition(string type) const
 	}
 
 	return Vector<n, double>();
+}
+
+template<int n>
+void PhysicBody<n>::accumulatePulse(const string type, Vector<n, double> pulse)
+{
+	PhysicPoint<n>::accumulatePulse(type, pulse);
+}
+
+template<int n>
+void PhysicBody<n>::accumulatePulse(const string type, Vector<n, double> pulse, Vector<n, double> position)
+{
+	lock_guard<mutex> lock{_pulseAccumulationMutex};
+	PhysicPoint<n>::accumulatePulse(type, pulse);
+	_pulsesPositionAccumulator[type].first += position * pulse.getLength();
+	_pulsesPositionAccumulator[type].second += pulse.getLength();
+	
 }
 
 template class PhysicBody<2>;

@@ -51,10 +51,8 @@ void CollisionEngine::execute(const double time)
 		}
 	});
 	
-	for_each(results.begin(), results.end(), [](TestResult& result) {
-		if (result.result.isColliding()) {
-			result.object->trigger(move(result.result), result.test);
-		}
+	parallel_for(results.begin(), results.end(), [](TestResult& result) {
+		result.object->trigger(move(result.result), result.test);
 	});
 }
 

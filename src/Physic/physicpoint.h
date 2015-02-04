@@ -7,6 +7,7 @@
 #include <map>
 #include "abstractphysicpoint.h"
 #include "Rules/rule.h"
+#include "pulseaccumulator.h"
 
 namespace sbg {
 
@@ -29,6 +30,7 @@ public:
 	
 	void update(const double time) override;
 	
+	virtual void accumulatePulse(const std::string type, Vector<n, double> pulse);
 	std::map<std::string, Vector<n, double>>& getPulse();
 	const std::map<std::string, Vector<n, double>>& getPulse() const;
 	void setPulse(const std::string type, const Vector<n, double> pulse);
@@ -56,7 +58,9 @@ protected:
 	std::map<std::string, Rule<n>*> _rules;
 	std::map<std::string, Vector<n, double>> _forces;
 	std::map<std::string, AvgAccumulator<Vector<n, double>>> _corrections;
+	std::map<std::string, PulseAccumulator<n>> _pulseAccumulators;
 	std::mutex _correctionMutex;
+	std::mutex _pulseAccumulatorMutex;
 
 };
 

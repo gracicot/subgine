@@ -34,6 +34,8 @@ public:
 	void setShape(std::shared_ptr<shape::Shape<n>> shape);
 	std::shared_ptr<shape::Shape<n>> getShape() const;
 
+	void accumulatePulse(const std::string type, Vector<n, double> pulse) override;
+	void accumulatePulse(const std::string type, Vector<n, double> pulse, Vector<n, double> position = Vector<n, double>());
 	void setPulse(const std::string type, const Vector<n, double> pulse, const Vector<n, double> position = Vector<n, double>());
 	void setForce(const std::string type, const Vector<n, double> force, const Vector<n, double> position = Vector<n, double>());
 	Vector<n, double> getPulsePosition(std::string type) const;
@@ -44,6 +46,8 @@ protected:
 	std::shared_ptr<shape::Shape<n>> _shape;
 	std::map<std::string, Vector<n, double>> _pulsesPosition;
 	std::map<std::string, Vector<n, double>> _forcesPosition;
+	std::map<std::string, std::pair<SumAccumulator<Vector<n, double>>, double>> _pulsesPositionAccumulator;
+	std::mutex _pulseAccumulationMutex;
 
 	Angle _orientation;
 	Angle _angularVelocity;

@@ -72,6 +72,7 @@ void PhysicPoint<n>::update(const double time)
 	_corrections.clear();
 	_velocity = getNextVelocity(time);
 	_pulses.clear();
+	_pulseAccumulators.clear();
 	_forces = getNextForces();
 }
 
@@ -83,8 +84,14 @@ Vector<n, double> PhysicPoint<n>::getNextVelocity(const double time) const
 	for (auto i : getNextForces()) {
 		velocity += (i.second / _mass) * time;
 	}
+	
+	auto pulses = _pulses;
+	
+	for (auto& accumulator : _pulseAccumulators) {
+		pulses[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second);
+	}
 
-	for (auto i : _pulses) {
+	for (auto i : pulses) {
 		velocity += (i.second / _mass);
 	}
 
@@ -118,13 +125,20 @@ map<string, Vector<n, double>> PhysicPoint<n>::getNextForces() const
 template<int n>
 Vector<n, double> PhysicPoint<n>::getPulse(const string type) const
 {
-	auto pulse = _pulses.find(type);
+	auto it = _pulses.find(type);
 
-	if (pulse == _pulses.end()) {
+	if (it == _pulses.end()) {
 		return Vector<n, double>();
 	}
+	
+	Vector<n, double> pulse = it->second;
 
-	return pulse->second;
+	auto accumulator = _pulseAccumulators.find(type);
+	if (accumulator != _pulseAccumulators.end()) {
+		pulse += static_cast<Vector<n, double>>(accumulator->second);
+	}
+	
+	return pulse;
 }
 
 template<int n>
@@ -226,6 +240,15 @@ void PhysicPoint<n>::correctPosition(const string profile, const Vector<n, doubl
 	lock_guard<mutex> lock{_correctionMutex};
 	_corrections[profile] += amount;
 }
+
+template<int n>
+void PhysicPoint<n>::accumulatePulse(const string type, Vector<n, double> pulse)
+{
+	lock_guard<mutex> lock{_pulseAccumulatorMutex};
+	_pulseAccumulators[type] += pulse;
+	
+}
+
 
 template class PhysicPoint<2>;
 template class PhysicPoint<3>;
