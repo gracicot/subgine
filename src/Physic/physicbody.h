@@ -42,6 +42,7 @@ public:
 	Vector<n, double> getForcePosition(std::string type) const;
 
 protected:
+	std::map<std::string, Vector<n, double>> getNextPulsesPositions() const;
 	double _momentOfInertia;
 	std::shared_ptr<shape::Shape<n>> _shape;
 	std::map<std::string, Vector<n, double>> _pulsesPosition;

@@ -59,12 +59,8 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(const double time) const
 		velocity += (i.second / this->_mass) * time;
 	}
 	
-	auto pulses = this->_pulses;
+	auto pulses = this->getNextPulses();
 	
-	for (auto& accumulator : this->_pulseAccumulators) {
-		pulses[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second);
-	}
-
 	for (auto i : pulses) {
 		Vector<n, double> pulse = i.second;
 		Vector<n, double> position = getPulsePosition(i.first);
@@ -134,21 +130,9 @@ Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(const double ti
 
 	velocity = (getNextTorque(time) / getMomentOfInertia()) * time;
 	
-	auto pulsePosition = _pulsesPosition;
-	
-	for (auto accumulator : _pulsesPositionAccumulator) {
-		if (accumulator.second.second > 0) {
-			pulsePosition[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second.first) / accumulator.second.second;
-		}
-	}
-	
-	auto pulses = this->_pulses;
-	
-	for (auto& accumulator : this->_pulseAccumulators) {
-		pulses[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second);
-	}
+	auto pulses = this->getNextPulses();
 
-	for (auto forcePos : pulsePosition) {
+	for (auto forcePos : getNextPulsesPositions()) {
 		Vector<n, double> pulse = pulses[forcePos.first];
 		Vector<n, double> position = forcePos.second;
 
@@ -226,13 +210,8 @@ void PhysicBody<n>::setForce(const string type, const Vector<n, double> force, c
 template<int n>
 Vector<n, double> PhysicBody<n>::getPulsePosition(string type) const
 {
-	auto pulsePosition = _pulsesPosition;
+	auto pulsePosition = getNextPulsesPositions();
 	
-	for (auto accumulator : _pulsesPositionAccumulator) {
-		if (accumulator.second.second > 0) {
-			pulsePosition[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second.first) / accumulator.second.second;
-		}
-	}
 	auto it = pulsePosition.find(type);
 
 	if (it != pulsePosition.end()) {
@@ -268,6 +247,20 @@ void PhysicBody<n>::accumulatePulse(const string type, Vector<n, double> pulse, 
 	_pulsesPositionAccumulator[type].first += position * pulse.getLength();
 	_pulsesPositionAccumulator[type].second += pulse.getLength();
 	
+}
+
+template<int n>
+std::map<std::string, Vector<n, double>> PhysicBody<n>::getNextPulsesPositions() const
+{
+	auto pulsePositions = _pulsesPosition;
+	
+	for (auto accumulator : _pulsesPositionAccumulator) {
+		if (accumulator.second.second > 0) {
+			pulsePositions[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second.first) / accumulator.second.second;
+		}
+	}
+	
+	return pulsePositions;
 }
 
 template class PhysicBody<2>;

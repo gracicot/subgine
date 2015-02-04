@@ -85,13 +85,7 @@ Vector<n, double> PhysicPoint<n>::getNextVelocity(const double time) const
 		velocity += (i.second / _mass) * time;
 	}
 	
-	auto pulses = _pulses;
-	
-	for (auto& accumulator : _pulseAccumulators) {
-		pulses[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second);
-	}
-
-	for (auto i : pulses) {
+	for (auto i : getNextPulses()) {
 		velocity += (i.second / _mass);
 	}
 
@@ -131,14 +125,20 @@ Vector<n, double> PhysicPoint<n>::getPulse(const string type) const
 		return Vector<n, double>();
 	}
 	
-	Vector<n, double> pulse = it->second;
+	return it->second;
+}
 
-	auto accumulator = _pulseAccumulators.find(type);
-	if (accumulator != _pulseAccumulators.end()) {
-		pulse += static_cast<Vector<n, double>>(accumulator->second);
+template<int n>
+Vector<n, double> PhysicPoint<n>::getNextPulse(const string type) const
+{
+	auto pulses = getNextPulses();
+	auto it = pulses.find(type);
+
+	if (it == pulses.end()) {
+		return Vector<n, double>();
 	}
 	
-	return pulse;
+	return it->second;
 }
 
 template<int n>
@@ -249,6 +249,17 @@ void PhysicPoint<n>::accumulatePulse(const string type, Vector<n, double> pulse)
 	
 }
 
+template<int n>
+std::map<std::string, Vector<n, double>> PhysicPoint<n>::getNextPulses() const
+{
+	auto pulses = _pulses;
+	
+	for (auto& accumulator : _pulseAccumulators) {
+		pulses[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second);
+	}
+	
+	return pulses;
+}
 
 template class PhysicPoint<2>;
 template class PhysicPoint<3>;

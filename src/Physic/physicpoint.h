@@ -35,6 +35,7 @@ public:
 	const std::map<std::string, Vector<n, double>>& getPulse() const;
 	void setPulse(const std::string type, const Vector<n, double> pulse);
 	Vector<n, double> getPulse(const std::string type) const;
+	Vector<n, double> getNextPulse(const std::string type) const;
 	
 	void setRule(const std::string tag, Rule<n>* rule);
 	std::map<std::string, Rule<n>*>& getRule();
@@ -47,6 +48,7 @@ public:
 	std::map<std::string, Vector<n, double>>& getForce();
 	const std::map<std::string, Vector<n, double>>& getForce() const;
 	
+	std::map<std::string, Vector<n, double>> getNextPulses() const;
 	Vector<n, double> getNextPosition(const double time) const;
 	virtual Vector<n, double> getNextVelocity(const double time) const;
 	virtual std::map<std::string, Vector<n, double>> getNextForces() const;
