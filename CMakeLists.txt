@@ -15,7 +15,7 @@ add_library(subgine-physic SHARED ${PHYSIC_SRC_FILES})
 add_library(subgine-collision SHARED ${COLLISION_SRC_FILES})
 
 target_link_libraries(subgine-collision subgine-system)
-target_link_libraries(subgine-physic subgine-collision subgine-system)
+target_link_libraries(subgine-physic subgine-system)
 
 install(TARGETS subgine-system DESTINATION lib)
 install(TARGETS subgine-physic DESTINATION lib)
