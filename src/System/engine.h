@@ -1,11 +1,13 @@
 #pragma once
 
+#include "time.h"
+
 namespace sbg {
 
 class Engine
 {
 public:
-	virtual void execute(const double time) = 0;
+	virtual void execute(Time time) = 0;
 
 protected:
 

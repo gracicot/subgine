@@ -23,7 +23,7 @@ void PhysicEngine::remove(weak_ptr<AbstractPhysicPoint> object)
 	}
 }
 
-void PhysicEngine::execute(const double time)
+void PhysicEngine::execute(Time time)
 {
 	for (auto ref : _objects) {
 		if (!ref.expired()) {

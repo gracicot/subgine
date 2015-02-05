@@ -7,12 +7,12 @@ using namespace std;
 
 namespace sbg {
 
-CollisionResult::CollisionResult(): _colliding(false), _time(0)
+CollisionResult::CollisionResult(): _colliding(false), _time()
 {
 	
 }
 
-CollisionResult::CollisionResult(weak_ptr<const CollisionBody> other, const bool colliding, unique_ptr<const ResultData> data, const double time) : _time(time), _colliding(colliding), _other(other), _data(move(data))
+CollisionResult::CollisionResult(weak_ptr<const CollisionBody> other, const bool colliding, unique_ptr<const ResultData> data, Time time) : _time(time), _colliding(colliding), _other(other), _data(move(data))
 {
 
 }
@@ -31,7 +31,7 @@ void CollisionResult::colliding(const bool colliding)
 	_colliding = colliding;
 }
 
-double CollisionResult::getTime() const
+Time CollisionResult::getTime() const
 {
 	return _time;
 }
@@ -41,7 +41,7 @@ bool CollisionResult::isColliding() const
 	return _colliding;
 }
 
-void CollisionResult::setTime(double time)
+void CollisionResult::setTime(Time time)
 {
 	_time = time;
 }

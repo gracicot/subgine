@@ -12,7 +12,7 @@ using namespace std;
 namespace sbg
 {
 
-MainEngine::MainEngine() : _speed(1), _timer(chrono::high_resolution_clock::now()), _time(0), _onUpdate(nullptr)
+MainEngine::MainEngine() : _speed(1), _timer(chrono::high_resolution_clock::now()), _time(), _onUpdate(nullptr)
 {
 
 }
@@ -27,7 +27,7 @@ MainEngine::~MainEngine()
 void MainEngine::reset()
 {
 	_timer = chrono::high_resolution_clock::now();
-	_time = 0;
+	_time = Time();
 }
 
 void MainEngine::run(bool run)
@@ -63,7 +63,9 @@ void MainEngine::onUpdate(function< void() > callback)
 
 void MainEngine::update()
 {
-	_time = chrono::duration_cast<chrono::duration<double, ratio<1, 1>>> (chrono::high_resolution_clock::now() - _timer).count() * _speed;
+	double lastTime = _time.getCurrentTime();
+	_time.setCurrentTime(_time.getNextTime());
+	_time.setNextTime(((chrono::duration_cast<chrono::duration<double, ratio<1, 1>>> (chrono::high_resolution_clock::now() - _timer).count() * _speed) + lastTime + _time.getCurrentTime())/3.0);
 	_timer = chrono::high_resolution_clock::now();
 
 	

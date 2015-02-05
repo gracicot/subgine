@@ -39,7 +39,7 @@ CollisionBody::~CollisionBody()
 	
 }
 
-CollisionResult CollisionBody::testObject(shared_ptr<const CollisionBody> other, double time, string test) const
+CollisionResult CollisionBody::testObject(shared_ptr<const CollisionBody> other, Time time, string test) const
 {
 	auto it = _collisionTesters.find(test);
 	

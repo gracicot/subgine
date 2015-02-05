@@ -66,18 +66,18 @@ void PhysicPoint<n>::setForce(const string type, const Vector<n, double> force)
 }
 
 template<int n>
-void PhysicPoint<n>::update(const double time)
+void PhysicPoint<n>::update(Time time)
 {
-	this->_position = getNextPosition(time);
+	this->_position = getNextPosition(time.getCurrentTime());
 	_corrections.clear();
-	_velocity = getNextVelocity(time);
+	_velocity = getNextVelocity(time.getCurrentTime());
 	_pulses.clear();
 	_pulseAccumulators.clear();
 	_forces = getNextForces();
 }
 
 template<int n>
-Vector<n, double> PhysicPoint<n>::getNextVelocity(const double time) const
+Vector<n, double> PhysicPoint<n>::getNextVelocity(double time) const
 {
 	Vector<n, double> velocity = _velocity;
 
@@ -93,7 +93,7 @@ Vector<n, double> PhysicPoint<n>::getNextVelocity(const double time) const
 }
 
 template<int n>
-Vector<n, double> PhysicPoint<n>::getNextPosition(const double time) const
+Vector<n, double> PhysicPoint<n>::getNextPosition(double time) const
 {
 	Vector<n, double> position = this->_position + (_velocity + getNextVelocity(time)) * time / 2;
 	

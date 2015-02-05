@@ -27,9 +27,9 @@ void Time::setCurrentTime(double currentTime)
 	_currentTime = currentTime;
 }
 
-void Time::setNextTime(double currentTime)
+void Time::setNextTime(double nextTime)
 {
-	_nextTime = _nextTime;
+	_nextTime = nextTime;
 }
 
 }

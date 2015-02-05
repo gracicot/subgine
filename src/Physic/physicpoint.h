@@ -28,7 +28,7 @@ public:
 	
 	Vector<n, double> momentum() const;
 	
-	void update(const double time) override;
+	void update(Time time) override;
 	
 	virtual void accumulatePulse(const std::string type, Vector<n, double> pulse);
 	std::map<std::string, Vector<n, double>>& getPulse();
@@ -49,8 +49,8 @@ public:
 	const std::map<std::string, Vector<n, double>>& getForce() const;
 	
 	std::map<std::string, Vector<n, double>> getNextPulses() const;
-	Vector<n, double> getNextPosition(const double time) const;
-	virtual Vector<n, double> getNextVelocity(const double time) const;
+	Vector<n, double> getNextPosition(double time) const;
+	virtual Vector<n, double> getNextVelocity(double time) const;
 	virtual std::map<std::string, Vector<n, double>> getNextForces() const;
 
 protected:

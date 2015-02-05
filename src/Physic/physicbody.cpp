@@ -15,16 +15,16 @@ template<int n>
 PhysicBody<n>::PhysicBody() : _torque(Angle()), _angularVelocity(Angle()), _orientation(Angle()) {}
 
 template<>
-void PhysicBody<2>::update(const double time)
+void PhysicBody<2>::update(Time time)
 {
-	_orientation = fmod(getNextOrientation(time), tau);
-	_angularVelocity = getNextAngularVelocity(time);
+	_orientation = fmod(getNextOrientation(time.getCurrentTime()), tau);
+	_angularVelocity = getNextAngularVelocity(time.getCurrentTime());
 	_pulsesPosition.clear();
-	_torque = getNextTorque(time);
+	_torque = getNextTorque();
 
-	this->_position = getNextPosition(time);
+	this->_position = getNextPosition(time.getCurrentTime());
 	this->_corrections.clear();
-	this->_velocity = getNextVelocity(time);
+	this->_velocity = getNextVelocity(time.getCurrentTime());
 	this->_pulses.clear();
 	_pulsesPositionAccumulator.clear();
 	this->_pulseAccumulators.clear();
@@ -32,19 +32,19 @@ void PhysicBody<2>::update(const double time)
 }
 
 template<>
-void PhysicBody<3>::update(const double time)
+void PhysicBody<3>::update(Time time)
 {
-	Angle nextOrientation = getNextOrientation(time);
+	Angle nextOrientation = getNextOrientation(time.getCurrentTime());
 	_orientation.x = fmod(nextOrientation.x, tau);
 	_orientation.y = fmod(nextOrientation.y, tau);
 	_orientation.z = fmod(nextOrientation.z, tau);
-	_angularVelocity = getNextAngularVelocity(time);
+	_angularVelocity = getNextAngularVelocity(time.getCurrentTime());
 	_pulsesPosition.clear();
-	_torque = getNextTorque(time);
+	_torque = getNextTorque();
 
-	this->_position = getNextPosition(time);
+	this->_position = getNextPosition(time.getCurrentTime());
 	this->_corrections.clear();
-	this->_velocity = getNextVelocity(time);
+	this->_velocity = getNextVelocity(time.getCurrentTime());
 	this->_pulses.clear();
 	_pulsesPositionAccumulator.clear();
 	this->_pulseAccumulators.clear();
@@ -52,16 +52,14 @@ void PhysicBody<3>::update(const double time)
 }
 
 template<int n>
-Vector<n, double> PhysicBody<n>::getNextVelocity(const double time) const
+Vector<n, double> PhysicBody<n>::getNextVelocity(double time) const
 {	Vector<n, double> velocity = this->_velocity;
 
 	for (auto i : this->getNextForces()) {
 		velocity += (i.second / this->_mass) * time;
 	}
 	
-	auto pulses = this->getNextPulses();
-	
-	for (auto i : pulses) {
+	for (auto i : this->getNextPulses()) {
 		Vector<n, double> pulse = i.second;
 		Vector<n, double> position = getPulsePosition(i.first);
 
@@ -99,7 +97,7 @@ map<string, Vector<n, double>> PhysicBody<n>::getNextForces() const
 }
 
 template<int n>
-Vector<freedom(n), double> PhysicBody<n>::getNextOrientation(const double time) const
+Vector<freedom(n), double> PhysicBody<n>::getNextOrientation(double time) const
 {
 	return _orientation + (getNextAngularVelocity(time)) * time;
 }
@@ -123,12 +121,12 @@ void PhysicBody<n>::setOrientation(Angle orientation)
 }
 
 template<int n>
-Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(const double time) const
+Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(double time) const
 {
 	Angle velocity = Angle();
 	Angle torquePulse = Angle();
 
-	velocity = (getNextTorque(time) / getMomentOfInertia()) * time;
+	velocity = (getNextTorque() / getMomentOfInertia()) * time;
 	
 	auto pulses = this->getNextPulses();
 
@@ -154,7 +152,7 @@ Vector<freedom(n), double> PhysicBody<n>::getTorque() const
 }
 
 template<int n>
-Vector<freedom(n), double> PhysicBody<n>::getNextTorque(const double time) const
+Vector<freedom(n), double> PhysicBody<n>::getNextTorque() const
 {
 	Angle torque = Angle();
 

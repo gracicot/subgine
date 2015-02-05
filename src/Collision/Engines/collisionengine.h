@@ -16,7 +16,7 @@ class CollisionEngine : public Engine
 {
 
 public:
-	void execute(const double time) override;
+	void execute(Time time) override;
 
 	void add(std::weak_ptr<CollisionBody> object, std::vector<std::string> groups, std::vector<std::string> collisionGroups);
 	void remove(std::weak_ptr<CollisionBody> object);

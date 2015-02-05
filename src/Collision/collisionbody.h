@@ -22,7 +22,7 @@ public:
 	CollisionBody(CollisionBody&& other);
 	virtual ~CollisionBody();
 
-	CollisionResult testObject(std::shared_ptr<const CollisionBody> other, double time, std::string test) const;
+	CollisionResult testObject(std::shared_ptr<const CollisionBody> other, Time time, std::string test) const;
 	
 	std::multimap<std::string, std::shared_ptr<CollisionHandler>>& getCollisionHandler();
 	const std::multimap<std::string, std::shared_ptr<CollisionHandler>>& getCollisionHandler() const;

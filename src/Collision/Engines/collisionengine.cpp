@@ -13,7 +13,7 @@ using namespace std;
 
 namespace sbg {
 
-void CollisionEngine::execute(const double time)
+void CollisionEngine::execute(Time time)
 {
 	if (!_listClean) {
 		makeObjectList();

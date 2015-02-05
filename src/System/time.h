@@ -12,7 +12,7 @@ public:
 	double getNextTime() const;
 	
 	void setCurrentTime(double currentTime);
-	void setNextTime(double currentTime);
+	void setNextTime(double nextTime);
 	
 private:
 	double _currentTime;

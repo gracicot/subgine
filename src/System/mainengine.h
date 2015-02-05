@@ -1,5 +1,7 @@
 #pragma once
 
+#include "time.h"
+
 #include <thread>
 #include <mutex>
 #include <functional>
@@ -29,12 +31,12 @@ public:
 	void run(bool run);
 	void update();
 private:
+	Time _time;
 	std::thread _thread;
 	
 	std::function<void()> _onUpdate;
 	bool _run;
 	double _speed;
-	double _time;
 	std::chrono::high_resolution_clock::time_point _timer;
 
 	std::set<std::weak_ptr<Engine>, std::owner_less<std::weak_ptr<Engine>>> _engines;

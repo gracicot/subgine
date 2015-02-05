@@ -14,18 +14,18 @@ public:
 	
 	PhysicBody();
 
-	void update(const double time) override;
+	void update(Time time) override;
 	
-	virtual Vector<n, double> getNextVelocity(const double time) const override;
+	virtual Vector<n, double> getNextVelocity(double time) const override;
 	virtual std::map<std::string, Vector<n, double>> getNextForces() const;
 
 	Angle getTorque() const;
 	Angle getOrientation() const;
 	Angle getAngularVelocity() const;
 	
-	Angle getNextOrientation(const double time) const;
-	Angle getNextAngularVelocity(const double time) const;
-	Angle getNextTorque(const double time) const;
+	Angle getNextOrientation(double time) const;
+	Angle getNextAngularVelocity(double time) const;
+	Angle getNextTorque() const;
 
 	void setOrientation(Angle orientation);
 	
@@ -55,8 +55,8 @@ protected:
 	Angle _torque;
 };
 
-template <> void PhysicBody<2>::update(const double time);
-template <> void PhysicBody<3>::update(const double time);
+template <> void PhysicBody<2>::update(Time time);
+template <> void PhysicBody<3>::update(Time time);
 
 extern template class PhysicBody<2>;
 extern template class PhysicBody<3>;
