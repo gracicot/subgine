@@ -74,6 +74,18 @@ Vector<1, T>& Vector<1, T>::operator= (T value)
 }
 
 template<class T>
+bool Vector<1, T>::operator== (const Vector<1, T>& other) const
+{
+	return x == other.x;
+}
+
+template<class T>
+bool Vector<1, T>::operator!= (const Vector<1, T>& other) const
+{
+	return !(*this == other);
+}
+
+template<class T>
 inline bool Vector<1, T>::operator< (const Vector<1, T>& other) const
 {
 	return x < other.x;

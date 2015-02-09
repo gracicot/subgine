@@ -123,6 +123,18 @@ Vector<2, T>& Vector<2, T>::operator= (const Vector<2, T> &other)
 }
 
 template<class T>
+bool Vector<2, T>::operator== (const Vector<2, T>& other) const
+{
+	return x == other.x && y == other.y;
+}
+
+template<class T>
+bool Vector<2, T>::operator!= (const Vector<2, T>& other) const
+{
+	return !(*this == other);
+}
+
+template<class T>
 bool Vector<2, T>::operator< (const Vector<2, T> &other) const
 {
 	return ((x * x) + (y * y)) < ((other.x * other.x) + (other.y * other.y));

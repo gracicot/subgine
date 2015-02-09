@@ -80,6 +80,42 @@ Vector<4, T>& Vector<4, T>::operator= (const Vector<4, T>& other)
 }
 
 template<class T>
+bool Vector<4, T>::operator== (const Vector<4, T>& other) const
+{
+	return x == other.x && y == other.y && z == other.z && w == other.w;
+}
+
+template<class T>
+bool Vector<4, T>::operator!= (const Vector<4, T>& other) const
+{
+	return !(*this == other);
+}
+
+template<class T>
+bool Vector<4, T>::operator< (const Vector<4, T> &other) const
+{
+	return ((x * x) + (y * y) + (z * z) + (w * w)) < ((other.x * other.x) + (other.y * other.y) + (other.z * other.z) + (other.w * other.w));
+}
+
+template<class T>
+bool Vector<4, T>::operator> (const Vector<4, T> &other) const
+{
+	return ((x * x) + (y * y) + (z * z) + (w * w)) > ((other.x * other.x) + (other.y * other.y) + (other.z * other.z) + (other.w * other.w));
+}
+
+template<class T>
+bool Vector<4, T>::operator> (double length) const
+{
+	return ((x * x) + (y * y) + (z * z) + (w * w)) > (length * length);
+}
+
+template<class T>
+bool Vector<4, T>::operator< (double length) const
+{
+	return ((x * x) + (y * y) + (z * z) + (w * w)) < (length * length);
+}
+
+template<class T>
 Vector<4, T> operator/ (const Vector<4, T>& vec, const double& divider)
 {
 	return Vector<4, T>(vec.x / divider, vec.y / divider, vec.z / divider, vec.w / divider);

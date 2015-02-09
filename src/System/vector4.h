@@ -35,6 +35,13 @@ public:
 	
 	Vector<4, T>& operator= (const Vector<4, T>& other);
 	
+	bool operator< (const Vector<4, T>& other) const;
+	bool operator> (const Vector<4, T>& other) const;
+	bool operator> (double length) const;
+	bool operator< (double length) const;
+	bool operator== (const Vector<4, T>& other) const;
+	bool operator!= (const Vector<4, T>& other) const;
+	
 	T x, y, z, w;
 	
 	constexpr static int size = 4;

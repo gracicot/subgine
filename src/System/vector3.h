@@ -37,6 +37,13 @@ public:
 	
 	Vector<3, T>& operator= (const Vector<3, T>& other);
 	
+	bool operator< (const Vector<3, T>& other) const;
+	bool operator> (const Vector<3, T>& other) const;
+	bool operator> (double length) const;
+	bool operator< (double length) const;
+	bool operator== (const Vector<3, T>& other) const;
+	bool operator!= (const Vector<3, T>& other) const;
+	
 	T x, y, z;
 	
 	constexpr static int size = 3;

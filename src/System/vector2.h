@@ -39,10 +39,13 @@ public:
 	Vector< 2 , T > cross(const double multiplier) const;
 	
 	Vector<2, T>& operator= (const Vector<2, T>& other);
+	
 	bool operator< (const Vector<2, T>& other) const;
 	bool operator> (const Vector<2, T>& other) const;
 	bool operator> (double length) const;
 	bool operator< (double length) const;
+	bool operator== (const Vector<2, T>& other) const;
+	bool operator!= (const Vector<2, T>& other) const;
 	
 	T x, y;
 	

@@ -102,6 +102,42 @@ Vector<3, T>& Vector<3, T>::operator= (const Vector<3, T> &other)
 }
 
 template<class T>
+bool Vector<3, T>::operator== (const Vector<3, T>& other) const
+{
+	return x == other.x && y == other.y && z == other.z;
+}
+
+template<class T>
+bool Vector<3, T>::operator!= (const Vector<3, T>& other) const
+{
+	return !(*this == other);
+}
+
+template<class T>
+bool Vector<3, T>::operator< (const Vector<3, T> &other) const
+{
+	return ((x * x) + (y * y) + (z * z)) < ((other.x * other.x) + (other.y * other.y) + (other.z * other.z));
+}
+
+template<class T>
+bool Vector<3, T>::operator> (const Vector<3, T> &other) const
+{
+	return ((x * x) + (y * y) + (z * z)) > ((other.x * other.x) + (other.y * other.y) + (other.z * other.z));
+}
+
+template<class T>
+bool Vector<3, T>::operator> (double length) const
+{
+	return ((x * x) + (y * y) + (z * z)) > (length * length);
+}
+
+template<class T>
+bool Vector<3, T>::operator< (double length) const
+{
+	return ((x * x) + (y * y) + (z * z)) < (length * length);
+}
+
+template<class T>
 Vector<3, T> operator/ (const Vector<3, T> &vec, const double &divider)
 {
 	return Vector<3, T>(vec.x / divider, vec.y / divider, vec.z / divider);

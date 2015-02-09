@@ -34,6 +34,8 @@ public:
 	bool operator> (const Vector<1, T>& other) const;
 	bool operator> (double length) const;
 	bool operator< (double length) const;
+	bool operator== (const Vector<1, T>& other) const;
+	bool operator!= (const Vector<1, T>& other) const;
 	operator T () const;
 
 	T x;
