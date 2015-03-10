@@ -12,9 +12,6 @@ PhysicPoint<n>::PhysicPoint()
 template<int n>
 PhysicPoint<n>::~PhysicPoint()
 {
-	for (auto i : _rules) {
-		delete i.second;
-	}
 }
 
 template<int n>
@@ -36,24 +33,24 @@ void PhysicPoint<n>::setPosition(const Vector<n, double> posision)
 }
 
 template<int n>
-Rule<n>& PhysicPoint<n>::getRule(const string tag)
+unique_ptr<Rule<n>>& PhysicPoint<n>::getRule(const string tag)
 {
 	auto it = _rules.find(tag);
 
 	if (it != _rules.end()) {
-		return *it->second;
+		return it->second;
 	}
 
 	throw out_of_range("Rule " + tag + " doesn't exist...");
 }
 
 template<int n>
-const Rule<n>& PhysicPoint<n>::getRule(const string tag) const
+const unique_ptr<Rule<n>>& PhysicPoint<n>::getRule(const string tag) const
 {
 	auto it = _rules.find(tag);
 
 	if (it != _rules.end()) {
-		return *it->second;
+		return it->second;
 	}
 
 	throw out_of_range("Rule " + tag + " doesn't exist...");
@@ -109,7 +106,7 @@ map<string, Vector<n, double>> PhysicPoint<n>::getNextForces() const
 {
 	auto forces = _forces;
 
-	for (auto i : _rules) {
+	for (auto& i : _rules) {
 		forces[i.first] = i.second->getResult(*this);
 	}
 
@@ -198,28 +195,21 @@ PhysicPoint<n>& PhysicPoint<n>::operator= (const PhysicPoint<n>& c)
 }
 
 template<int n>
-map<string, Rule<n>*>& PhysicPoint<n>::getRule()
+map<string, unique_ptr<Rule<n>>>& PhysicPoint<n>::getRule()
 {
 	return _rules;
 }
 
 template<int n>
-const map<string, Rule<n>*>& PhysicPoint<n>::getRule() const
+const map<string, unique_ptr<Rule<n>>>& PhysicPoint<n>::getRule() const
 {
 	return _rules;
 }
 
 template<int n>
-void PhysicPoint<n>::setRule(const string tag, Rule<n>* rule)
+void PhysicPoint<n>::setRule(const string tag, unique_ptr<Rule<n>> rule)
 {
-	auto it = _rules.find(tag);
-
-	if (it == _rules.end()) {
-		_rules[tag] = rule;
-	} else {
-		delete it->second;
-		it->second = rule;
-	}
+	_rules[tag] = move(rule);
 }
 
 template<int n>
