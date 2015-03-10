@@ -98,7 +98,7 @@ Vector<n, double> PhysicPoint<n>::getNextPosition(double time) const
 	Vector<n, double> position = this->_position + (_velocity + getNextVelocity(time)) * time / 2;
 	
 	for (auto& correction : _corrections) {
-		position += static_cast<Vector<n, double>>(correction.second);
+		position += correction.second.value();
 	}
 
 	return position;
@@ -255,7 +255,7 @@ std::map<std::string, Vector<n, double>> PhysicPoint<n>::getNextPulses() const
 	auto pulses = _pulses;
 	
 	for (auto& accumulator : _pulseAccumulators) {
-		pulses[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second);
+		pulses[accumulator.first] += accumulator.second.value();
 	}
 	
 	return pulses;

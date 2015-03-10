@@ -11,7 +11,7 @@ public:
 	PulseAccumulator();
 	
 	void operator+=(Vector<n, double> value) override;
-	operator Vector<n, double>() const override;
+	Vector<n, double> value() const override;
 	
 	void clear() override;
 	bool empty() const override;

@@ -254,7 +254,7 @@ std::map<std::string, Vector<n, double>> PhysicBody<n>::getNextPulsesPositions()
 	
 	for (auto accumulator : _pulsesPositionAccumulator) {
 		if (accumulator.second.second > 0) {
-			pulsePositions[accumulator.first] += static_cast<Vector<n, double>>(accumulator.second.first) / accumulator.second.second;
+			pulsePositions[accumulator.first] += accumulator.second.first.value() / accumulator.second.second;
 		}
 	}
 	

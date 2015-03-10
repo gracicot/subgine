@@ -19,7 +19,7 @@ public:
 		_count++;
 	}
 	
-	operator T() const override
+	T value() const override
 	{
 		return _total;
 	}
