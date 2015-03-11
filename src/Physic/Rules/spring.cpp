@@ -5,13 +5,7 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-Spring<n>::Spring() : _strength(0), _length(0), _provider(unique_ptr<PositionProvider<n>>(new ZeroPositionProvider<n>()))
-{
-	
-}
-
-template<int n>
-Spring<n>::~Spring()
+Spring<n>::Spring() : _strength(0), _length(0), _provider(make_unique<ZeroPositionProvider<n>>())
 {
 	
 }
@@ -23,7 +17,7 @@ Spring<n>::Spring(const double strength, const double length, std::unique_ptr<Po
 }
 
 template<int n>
-Spring<n>::Spring(const double strength, const double length) : _strength(strength), _length(length), _provider(unique_ptr<PositionProvider<n>>(new ZeroPositionProvider<n>()))
+Spring<n>::Spring(const double strength, const double length) : _strength(strength), _length(length), _provider(make_unique<ZeroPositionProvider<n>>())
 {
 	
 }
@@ -37,7 +31,7 @@ Spring<n>::Spring(const Spring& other) : _strength(other._strength), _length(oth
 template<int n>
 Vector<n, double> Spring<n>::getPosition() const
 {
-	return _provider->getPosition();
+	return _provider ? _provider->getPosition():Vector<n, double>{};
 }
 
 template<int n>
@@ -61,7 +55,7 @@ void Spring<n>::setLength(const double size)
 template<int n>
 Vector<n, double> Spring<n>::getResult(const PhysicPoint<n>& object) const
 {
-	Vector<n, double> relative = getPosition() - object.getPosition();
+	auto relative = getPosition() - object.getPosition();
 	return relative.unit() * getStrength() * (relative.getLength() - getLength());
 }
 

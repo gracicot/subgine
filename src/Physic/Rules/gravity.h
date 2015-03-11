@@ -10,7 +10,6 @@ class Gravity : public Rule<n>
 {
 public:
 	Gravity(const Vector<n, double> value = Vector<n, double>());
-	~Gravity();
 	
 	Vector<n, double> getResult(const PhysicPoint<n>& object) const override;
 	Gravity<n>* clone() const override;
