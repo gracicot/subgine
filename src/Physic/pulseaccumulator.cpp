@@ -26,7 +26,7 @@ void PulseAccumulator<3>::operator+=(Vector3d value)
 }
 
 template<int n>
-PulseAccumulator<n>::operator Vector<n, double>() const
+Vector<n, double> PulseAccumulator<n>::value() const
 {
 	if (_count > 0) {
 		return _total;

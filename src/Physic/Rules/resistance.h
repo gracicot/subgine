@@ -10,7 +10,6 @@ class Resistance : public Rule<n>
 {
 public:
 	Resistance(const double value = 0);
-	~Resistance();
 	
 	Vector<n, double> getResult(const PhysicPoint<n>& object) const override;
 	Resistance<n>* clone() const override;
