@@ -5,7 +5,7 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation, Vector<n, double> scale) :
+PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, Vector<freedom(n), double> orientation, Vector<n, double> scale) :
 	PhysicPointPositionProvider<n>(physicPoint),
 	PhysicPointComponentProvider<n>(physicPoint, orientation),
 	_scale([scale]() {
@@ -16,7 +16,7 @@ PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(cons
 }
 
 template<int n>
-PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, function<Vector<freedom(n), double>()> orientation, Vector<n, double> scale) :
+PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, function<Vector<freedom(n), double>()> orientation, Vector<n, double> scale) :
 	PhysicPointPositionProvider<n>(physicPoint),
 	PhysicPointComponentProvider<n>(physicPoint, orientation),
 	_scale([scale]() {
@@ -27,7 +27,7 @@ PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(cons
 }
 
 template<int n>
-PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation, function<Vector<n, double>()> scale) :
+PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, Vector<freedom(n), double> orientation, function<Vector<n, double>()> scale) :
 	PhysicPointPositionProvider<n>(physicPoint),
 	PhysicPointComponentProvider<n>(physicPoint, orientation),
 	_scale(scale)
@@ -36,7 +36,7 @@ PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(cons
 }
 
 template<int n>
-PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(const PhysicPoint<n>& physicPoint, function<Vector<freedom(n), double>()> orientation, function<Vector<n, double>()> scale) :
+PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, function<Vector<freedom(n), double>()> orientation, function<Vector<n, double>()> scale) :
 	PhysicPointPositionProvider<n>(physicPoint),
 	PhysicPointComponentProvider<n>(physicPoint, orientation),
 	_scale(scale)

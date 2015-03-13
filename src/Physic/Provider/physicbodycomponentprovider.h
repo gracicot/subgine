@@ -1,23 +1,24 @@
 #pragma once
 
 #include "physicpointpositionprovider.h"
-#include "../physicbody.h"
 
 #include "../../system.hpp"
 
 namespace sbg {
 
+template<int n> class PhysicBody;
+
 template<int n>
 class PhysicBodyComponentProvider : public virtual ComponentProvider<n>, public virtual PhysicPointPositionProvider<n>
 {
 public:
-	PhysicBodyComponentProvider(const PhysicBody<n>& physicoBody);
+	PhysicBodyComponentProvider(std::weak_ptr<const PhysicBody<n>> physicoBody);
 	
 	virtual Vector<freedom(n), double> getOrientation() const override;
 	PhysicBodyComponentProvider<n>* clone() const override;
 	
 private:
-	const PhysicBody<n>& _physicBody;
+	std::weak_ptr<const PhysicBody<n>> _physicBody;
 };
 
 extern template class PhysicBodyComponentProvider<2>;

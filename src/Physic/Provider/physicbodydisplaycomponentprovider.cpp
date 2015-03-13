@@ -1,11 +1,13 @@
 #include "physicbodydisplaycomponentprovider.h"
 
+#include "../physicbody.h"
+
 using namespace std;
 
 namespace sbg {
 
 template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, function<Vector<n, double>()> scale) :
+PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, function<Vector<n, double>()> scale) :
 	PhysicPointPositionProvider<n>(physicBody),
 	PhysicBodyComponentProvider<n>(physicBody),
 	_scale(scale)
@@ -14,7 +16,7 @@ PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const 
 }
 
 template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, Vector<n, double> scale) :
+PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, Vector<n, double> scale) :
 	PhysicPointPositionProvider<n>(physicBody),
 	PhysicBodyComponentProvider<n>(physicBody),
 	_scale([scale]() {

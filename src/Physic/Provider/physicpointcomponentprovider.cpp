@@ -5,7 +5,7 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-PhysicPointComponentProvider<n>::PhysicPointComponentProvider(const PhysicPoint<n>& physicPoint, function<Vector<freedom(n), double>()> orientation) :
+PhysicPointComponentProvider<n>::PhysicPointComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, function<Vector<freedom(n), double>()> orientation) :
 	PhysicPointPositionProvider<n>(physicPoint),
 	_orientation(orientation)
 {
@@ -13,7 +13,7 @@ PhysicPointComponentProvider<n>::PhysicPointComponentProvider(const PhysicPoint<
 }
 
 template<int n>
-PhysicPointComponentProvider<n>::PhysicPointComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation) :
+PhysicPointComponentProvider<n>::PhysicPointComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, Vector<freedom(n), double> orientation) :
 	PhysicPointPositionProvider<n>(physicPoint),
 	_orientation([orientation]() {
 		return orientation;

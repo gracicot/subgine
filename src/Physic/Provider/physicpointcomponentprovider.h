@@ -1,18 +1,19 @@
 #pragma once
 
 #include "physicpointpositionprovider.h"
-#include "../physicpoint.h"
 
 #include "../../system.hpp"
 
 namespace sbg {
 
-template <int n>
+template<int n> class PhysicPoint;
+
+template<int n>
 class PhysicPointComponentProvider : public virtual ComponentProvider<n>, public virtual PhysicPointPositionProvider<n>
 {
 public:
-	PhysicPointComponentProvider(const PhysicPoint<n>& physicPoint, Vector<freedom(n), double> orientation = Vector<freedom(n), double>());
-	PhysicPointComponentProvider(const PhysicPoint<n>& physicPoint, std::function<Vector<freedom(n), double>()> orientation);
+	PhysicPointComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, Vector<freedom(n), double> orientation = Vector<freedom(n), double>());
+	PhysicPointComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, std::function<Vector<freedom(n), double>()> orientation);
 	
 	void setOrientation(std::function<Vector<freedom(n), double>()> orientation);
 	void setOrientation(Vector<freedom(n), double> orientation);

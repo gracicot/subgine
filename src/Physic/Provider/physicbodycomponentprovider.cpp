@@ -7,7 +7,7 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-PhysicBodyComponentProvider<n>::PhysicBodyComponentProvider(const PhysicBody<n>& physicBody) : PhysicPointPositionProvider<n>(physicBody), _physicBody(physicBody)
+PhysicBodyComponentProvider<n>::PhysicBodyComponentProvider(weak_ptr<const PhysicBody<n>> physicBody) : PhysicPointPositionProvider<n>(physicBody), _physicBody(physicBody)
 {
 	
 }
@@ -15,7 +15,7 @@ PhysicBodyComponentProvider<n>::PhysicBodyComponentProvider(const PhysicBody<n>&
 template<int n>
 Vector<freedom(n), double> PhysicBodyComponentProvider<n>::getOrientation() const
 {
-	return _physicBody.getOrientation();
+	return _physicBody.expired() ? Vector<freedom(n), double>{}:_physicBody.lock()->getOrientation();
 }
 
 template<int n>

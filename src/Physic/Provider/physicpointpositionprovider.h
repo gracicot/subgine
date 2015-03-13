@@ -1,22 +1,24 @@
 #pragma once
 
-#include "../physicpoint.h"
-
 #include "../../system.hpp"
 
+#include <memory>
+
 namespace sbg {
+
+template<int n> class PhysicPoint;
 
 template<int n>
 class PhysicPointPositionProvider : public virtual PositionProvider<n>
 {
 public:
-	PhysicPointPositionProvider(const PhysicPoint<n>& physicPoint);
+	PhysicPointPositionProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint);
 	
 	virtual Vector<n, double> getPosition() const override;
 	PhysicPointPositionProvider<n>* clone() const override;
 	
 protected:
-	const PhysicPoint<n>& _physicPoint;
+	std::weak_ptr<const PhysicPoint<n>> _physicPoint;
 };
 
 extern template class PhysicPointPositionProvider<2>;
