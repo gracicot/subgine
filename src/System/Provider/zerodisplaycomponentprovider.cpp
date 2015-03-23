@@ -7,7 +7,7 @@ namespace sbg {
 template<int n>
 Vector<n, double> ZeroDisplayComponentProvider<n>::getScale() const
 {
-	return {};
+	return {1};
 }
 
 template<int n>

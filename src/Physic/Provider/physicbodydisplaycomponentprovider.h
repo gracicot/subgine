@@ -10,7 +10,7 @@ template<int n>
 class PhysicBodyDisplayComponentProvider : public virtual PhysicBodyComponentProvider<n>, public virtual DisplayComponentProvider<n>
 {
 public:
-	PhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, Vector<n, double> scale = {});
+	PhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, Vector<n, double> scale = {1});
 	PhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, std::function<Vector<n, double>()> scale);
 	
 	void setScale(Vector<n, double> scale);

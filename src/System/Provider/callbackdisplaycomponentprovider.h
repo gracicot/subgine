@@ -36,25 +36,25 @@ public:
 	CallbackDisplayComponentProvider(
 		std::function<Vector<n, double>()> position,
 		std::function<Vector<freedom(n), double>()> orientation,
-		Vector<n, double> scale = 0
+		Vector<n, double> scale = {1}
 	);
 	
 	CallbackDisplayComponentProvider(
 		Vector<n, double> position,
 		std::function<Vector<freedom(n), double>()> orientation,
-		Vector<n, double> scale = 0
+		Vector<n, double> scale = {1}
 	);
 	
 	CallbackDisplayComponentProvider(
 		std::function<Vector<n, double>()> position,
 		Vector<freedom(n), double> orientation = Vector<freedom(n), double>(),
-		Vector<n, double> scale = 0
+		Vector<n, double> scale = {1}
 	);
 	
 	CallbackDisplayComponentProvider(
 		Vector<n, double> position = Vector<n, double>(),
 		Vector<freedom(n), double> orientation = Vector<freedom(n), double>(),
-		Vector<n, double> scale = 0
+		Vector<n, double> scale = {1}
 	);
 	
 	void setScale(std::function<Vector<n, double>()> scale);
