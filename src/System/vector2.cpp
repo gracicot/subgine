@@ -11,6 +11,10 @@ Vector<2, T>::Vector() : x(0), y(0)
 {}
 
 template<class T>
+Vector<2, T>::Vector(T value) : x(value), y(value)
+{}
+
+template<class T>
 Vector<2, T>::Vector(T _x, T _y) : x(_x), y(_y)
 {}
 

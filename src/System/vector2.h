@@ -13,6 +13,7 @@ class Vector<2, T>
 {
 public:
 	Vector();
+	Vector(T value);
 	Vector(T _x, T _y);
 	Vector(const Vector<2, T>& other);
 	

@@ -12,6 +12,7 @@ class Vector<4, T>
 {
 public:
 	Vector();
+	Vector(T value);
 	Vector(T _x, T _y, T _z, T _w);
 	Vector(const Vector<4, T>& other);
 	
