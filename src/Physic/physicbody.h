@@ -7,7 +7,7 @@
 namespace sbg {
 
 template<int n>
-class PhysicBody : public PhysicPoint<n>
+class PhysicBody : public virtual PhysicPoint<n>
 {
 public:
 	typedef Vector<freedom(n), double> Angle;
