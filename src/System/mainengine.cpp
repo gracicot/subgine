@@ -14,7 +14,7 @@ namespace sbg
 
 MainEngine::MainEngine() : _speed(1), _timer(chrono::high_resolution_clock::now()), _time(), _onUpdate(nullptr)
 {
-
+	
 }
 
 MainEngine::~MainEngine()
@@ -27,7 +27,7 @@ MainEngine::~MainEngine()
 void MainEngine::reset()
 {
 	_timer = chrono::high_resolution_clock::now();
-	_time = Time();
+	_time = {};
 }
 
 void MainEngine::run(bool run)
@@ -108,5 +108,9 @@ void MainEngine::setSpeed(double speed)
 	_speed = speed >= 0 ? speed : 0;
 }
 
+Time MainEngine::getTime() const
+{
+	return _time;
 }
 
+}

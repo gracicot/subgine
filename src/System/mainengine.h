@@ -30,6 +30,9 @@ public:
 	void reset();
 	void run(bool run);
 	void update();
+	
+	Time getTime() const;
+	
 private:
 	Time _time;
 	std::thread _thread;

@@ -10,6 +10,9 @@
 #include "System/Shape/circle.h"
 #include "System/Shape/polygon.h"
 
+#include "System/Provider/valueprovider.h"
+#include "System/Provider/callbackvalueprovider.h"
+#include "System/Provider/mainenginetimeprovider.h"
 #include "System/Provider/positionprovider.h"
 #include "System/Provider/componentprovider.h"
 #include "System/Provider/displaycomponentprovider.h"
