@@ -56,6 +56,13 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(double time) const
 {	Vector<n, double> velocity = this->_velocity;
 
 	for (auto i : this->getNextForces()) {
+		Vector<n, double> position = getForcePosition(i.first);
+
+		if (position.notZero() && i.second.notZero()) {
+			Angle torque = position.cross(i.second) / correction;
+			i.second /= (torque.getLength() / getMomentOfInertia()) + 1;
+		}
+		
 		velocity += (i.second / this->_mass) * time;
 	}
 	
@@ -81,16 +88,6 @@ map<string, Vector<n, double>> PhysicBody<n>::getNextForces() const
 
 	for (auto& i : this->_rules) {
 		forces[i.first] = i.second->getResult(*this);
-	}
-
-	for (auto& i : forces) {
-		Vector<n, double> force = i.second;
-		Vector<n, double> position = getForcePosition(i.first);
-
-		if (position.notZero() && force.notZero()) {
-			Angle torque = position.cross(force) / correction;
-			i.second /= (torque.getLength() / getMomentOfInertia()) + 1;
-		}
 	}
 
 	return forces;
