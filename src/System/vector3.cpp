@@ -19,7 +19,7 @@ Vector<3, T>::Vector(T _x, T _y, T _z) : x(_x), y(_y), z(_z)
 {}
 
 template<class T>
-Vector<3, T>::Vector(const Vector<3, T> &other) : x(other.x), y(other.y), z(other.z)
+Vector<3, T>::Vector(const Vector<3, T>& other) : x(other.x), y(other.y), z(other.z)
 {}
 
 template<class T>
@@ -89,7 +89,7 @@ Vector<3, T> Vector<3, T>::cross(Vector<3, T> &other) const
 }
 
 template<class T>
-double Vector<3, T>::dot(const Vector<3, T> &vec) const
+double Vector<3, T>::dot(const Vector<3, T> vec) const
 {
 	return (x * vec.x) + (y * vec.y) + (z * vec.z);
 }
@@ -97,7 +97,7 @@ double Vector<3, T>::dot(const Vector<3, T> &vec) const
 //Operators
 
 template<class T>
-Vector<3, T>& Vector<3, T>::operator= (const Vector<3, T> &other)
+Vector<3, T>& Vector<3, T>::operator= (const Vector<3, T> other)
 {
 	x = other.x;
 	y = other.y;
@@ -106,25 +106,25 @@ Vector<3, T>& Vector<3, T>::operator= (const Vector<3, T> &other)
 }
 
 template<class T>
-bool Vector<3, T>::operator== (const Vector<3, T>& other) const
+bool Vector<3, T>::operator== (const Vector<3, T> other) const
 {
 	return x == other.x && y == other.y && z == other.z;
 }
 
 template<class T>
-bool Vector<3, T>::operator!= (const Vector<3, T>& other) const
+bool Vector<3, T>::operator!= (const Vector<3, T> other) const
 {
 	return !(*this == other);
 }
 
 template<class T>
-bool Vector<3, T>::operator< (const Vector<3, T> &other) const
+bool Vector<3, T>::operator< (const Vector<3, T> other) const
 {
 	return ((x * x) + (y * y) + (z * z)) < ((other.x * other.x) + (other.y * other.y) + (other.z * other.z));
 }
 
 template<class T>
-bool Vector<3, T>::operator> (const Vector<3, T> &other) const
+bool Vector<3, T>::operator> (const Vector<3, T> other) const
 {
 	return ((x * x) + (y * y) + (z * z)) > ((other.x * other.x) + (other.y * other.y) + (other.z * other.z));
 }
@@ -142,25 +142,37 @@ bool Vector<3, T>::operator< (double length) const
 }
 
 template<class T>
-Vector<3, T> operator/ (const Vector<3, T> &vec, const double &divider)
+Vector<3, T> operator/ (const Vector<3, T> vec, const double divider)
 {
 	return Vector<3, T>(vec.x / divider, vec.y / divider, vec.z / divider);
 }
 
 template<class T>
-Vector<3, T> operator* (const Vector<3, T> &vec, const double &multiplier)
+Vector<3, T> operator/ (const double divider, const Vector<3, T> vec)
+{
+	return Vector<3, T>(divider / vec.x, divider / vec.y, divider / vec.z);
+}
+
+template<class T>
+Vector<3, T> operator* (const Vector<3, T> vec, const double multiplier)
 {
 	return Vector<3, T>(vec.x * multiplier, vec.y * multiplier, vec.z * multiplier);
 }
 
 template<class T>
-Vector<3, T> operator* (const double &multiplier, const Vector<3, T> &vec)
+Vector<3, T> operator* (const double multiplier, const Vector<3, T> vec)
 {
 	return Vector<3, T>(vec.x * multiplier, vec.y * multiplier, vec.z * multiplier);
 }
 
 template<class T>
-Vector<3, T> &operator*= (Vector<3, T> &vec, const double &multiplier)
+Vector<3, T> operator* (const Vector<3, T> vec1, const Vector<3, T> vec2)
+{
+	return Vector<3, T>(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
+}
+
+template<class T>
+Vector<3, T> &operator*= (Vector<3, T>& vec, const double multiplier)
 {
 	vec.x *= multiplier;
 	vec.y *= multiplier;
@@ -169,13 +181,22 @@ Vector<3, T> &operator*= (Vector<3, T> &vec, const double &multiplier)
 }
 
 template<class T>
-Vector<3, T> operator+ (const Vector<3, T> &vec1, const Vector<3, T> &vec2)
+Vector<3, T> &operator*= (Vector<3, T>& vec1, const Vector<3, T> vec2)
+{
+	vec1.x *= vec2.x;
+	vec1.y *= vec2.y;
+	vec1.z *= vec2.z;
+	return vec1;
+}
+
+template<class T>
+Vector<3, T> operator+ (const Vector<3, T> vec1, const Vector<3, T> vec2)
 {
 	return Vector<3, T>(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z);
 }
 
 template<class T>
-Vector<3, T> &operator+= (Vector<3, T> &vec1, const Vector<3, T> &vec2)
+Vector<3, T> &operator+= (Vector<3, T> &vec1, const Vector<3, T> vec2)
 {
 	vec1.x += vec2.x;
 	vec1.y += vec2.y;
@@ -184,13 +205,13 @@ Vector<3, T> &operator+= (Vector<3, T> &vec1, const Vector<3, T> &vec2)
 }
 
 template<class T>
-Vector<3, T> operator- (const Vector<3, T> &vec1, const Vector<3, T> &vec2)
+Vector<3, T> operator- (const Vector<3, T> vec1, const Vector<3, T> vec2)
 {
 	return Vector<3, T>(vec1.x - vec2.x, vec1.y - vec2.y, vec1.z - vec2.z);
 }
 
 template<class T>
-Vector<3, T> &operator-= (Vector<3, T> &vec1, const Vector<3, T> &vec2)
+Vector<3, T> &operator-= (Vector<3, T> &vec1, const Vector<3, T> vec2)
 {
 	vec1.x -= vec2.x;
 	vec1.y -= vec2.y;
@@ -199,7 +220,7 @@ Vector<3, T> &operator-= (Vector<3, T> &vec1, const Vector<3, T> &vec2)
 }
 
 template<class T>
-Vector<3, T> &operator/= (Vector<3, T> &vec, const double &divider)
+Vector<3, T> &operator/= (Vector<3, T> &vec, const double divider)
 {
 	vec.x /= divider;
 	vec.y /= divider;
@@ -208,7 +229,7 @@ Vector<3, T> &operator/= (Vector<3, T> &vec, const double &divider)
 }
 
 template<class T>
-Vector<3, T> operator- (const Vector<3, T> &vec)
+Vector<3, T> operator- (const Vector<3, T> vec)
 {
 	return Vector<3, T>(-vec.x, -vec.y, -vec.z);
 }
@@ -220,126 +241,159 @@ ostream &operator<< (ostream &out, Vector<3, T> vec)
 	return out;
 }
 
-template Vector<3, float> operator/ (const Vector<3, float>& vec, const double& divider);
-template Vector<3, float> operator* (const Vector<3, float>& vec, const double& multiplier);
-template Vector<3, float> operator* (const double& multiplier, const Vector<3, float>& vec);
-template Vector<3, float>& operator*= (Vector<3, float>& vec, const double& multiplier);
-template Vector<3, float> operator+ (const Vector<3, float>& vec1, const Vector<3, float>& vec2);
-template Vector<3, float>& operator+= (Vector<3, float>& vec1, const Vector<3, float>& vec2);
-template Vector<3, float> operator- (const Vector<3, float>& vec1, const Vector<3, float>& vec2);
-template Vector<3, float>& operator-= (Vector<3, float>& vec1, const Vector<3, float>& vec2);
-template Vector<3, float>& operator/= (Vector<3, float>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, float> vec);
+template Vector<3, float> operator/ (const Vector<3, float> vec, const double divider);
+template Vector<3, float> operator/ (const double divider, const Vector<3, float> vec);
+template Vector<3, float> operator* (const Vector<3, float> vec, const double multiplier);
+template Vector<3, float> operator* (const double multiplier, const Vector<3, float> vec);
+template Vector<3, float> operator* (const Vector<3, float> vec1, const Vector<3, float> vec2);
+template Vector<3, float>& operator*= (Vector<3, float>& vec, const double multiplier);
+template Vector<3, float>& operator*= (Vector<3, float>& vec1, const Vector<3, float> vec2);
+template Vector<3, float> operator+ (const Vector<3, float> vec1, const Vector<3, float> vec2);
+template Vector<3, float>& operator+= (Vector<3, float>& vec1, const Vector<3, float> vec2);
+template Vector<3, float> operator- (const Vector<3, float> vec1, const Vector<3, float> vec2);
+template Vector<3, float>& operator-= (Vector<3, float>& vec1, const Vector<3, float> vec2);
+template Vector<3, float>& operator/= (Vector<3, float>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, float> vec);
 
-template Vector<3, double> operator/ (const Vector<3, double>& vec, const double& divider);
-template Vector<3, double> operator* (const Vector<3, double>& vec, const double& multiplier);
-template Vector<3, double> operator* (const double& multiplier, const Vector<3, double>& vec);
-template Vector<3, double>& operator*= (Vector<3, double>& vec, const double& multiplier);
-template Vector<3, double> operator+ (const Vector<3, double>& vec1, const Vector<3, double>& vec2);
-template Vector<3, double>& operator+= (Vector<3, double>& vec1, const Vector<3, double>& vec2);
-template Vector<3, double> operator- (const Vector<3, double>& vec1, const Vector<3, double>& vec2);
-template Vector<3, double>& operator-= (Vector<3, double>& vec1, const Vector<3, double>& vec2);
-template Vector<3, double>& operator/= (Vector<3, double>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, double> vec);
+template Vector<3, double> operator/ (const Vector<3, double> vec, const double divider);
+template Vector<3, double> operator/ (const double divider, const Vector<3, double> vec);
+template Vector<3, double> operator* (const Vector<3, double> vec, const double multiplier);
+template Vector<3, double> operator* (const double multiplier, const Vector<3, double> vec);
+template Vector<3, double> operator* (const Vector<3, double> vec1, const Vector<3, double> vec2);
+template Vector<3, double>& operator*= (Vector<3, double>& vec, const double multiplier);
+template Vector<3, double>& operator*= (Vector<3, double>& vec1, const Vector<3, double> vec2);
+template Vector<3, double> operator+ (const Vector<3, double> vec1, const Vector<3, double> vec2);
+template Vector<3, double>& operator+= (Vector<3, double>& vec1, const Vector<3, double> vec2);
+template Vector<3, double> operator- (const Vector<3, double> vec1, const Vector<3, double> vec2);
+template Vector<3, double>& operator-= (Vector<3, double>& vec1, const Vector<3, double> vec2);
+template Vector<3, double>& operator/= (Vector<3, double>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, double> vec);
 
-template Vector<3, long double> operator/ (const Vector<3, long double>& vec, const double& divider);
-template Vector<3, long double> operator* (const Vector<3, long double>& vec, const double& multiplier);
-template Vector<3, long double> operator* (const double& multiplier, const Vector<3, long double>& vec);
-template Vector<3, long double>& operator*= (Vector<3, long double>& vec, const double& multiplier);
-template Vector<3, long double> operator+ (const Vector<3, long double>& vec1, const Vector<3, long double>& vec2);
-template Vector<3, long double>& operator+= (Vector<3, long double>& vec1, const Vector<3, long double>& vec2);
-template Vector<3, long double> operator- (const Vector<3, long double>& vec1, const Vector<3, long double>& vec2);
-template Vector<3, long double>& operator-= (Vector<3, long double>& vec1, const Vector<3, long double>& vec2);
-template Vector<3, long double>& operator/= (Vector<3, long double>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, long double> vec);
+template Vector<3, long double> operator/ (const Vector<3, long double> vec, const double divider);
+template Vector<3, long double> operator/ (const double divider, const Vector<3, long double> vec);
+template Vector<3, long double> operator* (const Vector<3, long double> vec, const double multiplier);
+template Vector<3, long double> operator* (const double multiplier, const Vector<3, long double> vec);
+template Vector<3, long double> operator* (const Vector<3, long double> vec1, const Vector<3, long double> vec2);
+template Vector<3, long double>& operator*= (Vector<3, long double>& vec, const double multiplier);
+template Vector<3, long double>& operator*= (Vector<3, long double>& vec1, const Vector<3, long double> vec2);
+template Vector<3, long double> operator+ (const Vector<3, long double> vec1, const Vector<3, long double> vec2);
+template Vector<3, long double>& operator+= (Vector<3, long double>& vec1, const Vector<3, long double> vec2);
+template Vector<3, long double> operator- (const Vector<3, long double> vec1, const Vector<3, long double> vec2);
+template Vector<3, long double>& operator-= (Vector<3, long double>& vec1, const Vector<3, long double> vec2);
+template Vector<3, long double>& operator/= (Vector<3, long double>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, long double> vec);
 
-template Vector<3, int> operator/ (const Vector<3, int>& vec, const double& divider);
-template Vector<3, int> operator* (const Vector<3, int>& vec, const double& multiplier);
-template Vector<3, int> operator* (const double& multiplier, const Vector<3, int>& vec);
-template Vector<3, int>& operator*= (Vector<3, int>& vec, const double& multiplier);
-template Vector<3, int> operator+ (const Vector<3, int>& vec1, const Vector<3, int>& vec2);
-template Vector<3, int>& operator+= (Vector<3, int>& vec1, const Vector<3, int>& vec2);
-template Vector<3, int> operator- (const Vector<3, int>& vec1, const Vector<3, int>& vec2);
-template Vector<3, int>& operator-= (Vector<3, int>& vec1, const Vector<3, int>& vec2);
-template Vector<3, int>& operator/= (Vector<3, int>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, int> vec);
+template Vector<3, int> operator/ (const Vector<3, int> vec, const double divider);
+template Vector<3, int> operator/ (const double divider, const Vector<3, int> vec);
+template Vector<3, int> operator* (const Vector<3, int> vec, const double multiplier);
+template Vector<3, int> operator* (const double multiplier, const Vector<3, int> vec);
+template Vector<3, int> operator* (const Vector<3, int> vec1, const Vector<3, int> vec2);
+template Vector<3, int>& operator*= (Vector<3, int>& vec, const double multiplier);
+template Vector<3, int>& operator*= (Vector<3, int>& vec1, const Vector<3, int> vec2);
+template Vector<3, int> operator+ (const Vector<3, int> vec1, const Vector<3, int> vec2);
+template Vector<3, int>& operator+= (Vector<3, int>& vec1, const Vector<3, int> vec2);
+template Vector<3, int> operator- (const Vector<3, int> vec1, const Vector<3, int> vec2);
+template Vector<3, int>& operator-= (Vector<3, int>& vec1, const Vector<3, int> vec2);
+template Vector<3, int>& operator/= (Vector<3, int>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, int> vec);
 
-template Vector<3, unsigned int> operator/ (const Vector<3, unsigned int>& vec, const double& divider);
-template Vector<3, unsigned int> operator* (const Vector<3, unsigned int>& vec, const double& multiplier);
-template Vector<3, unsigned int> operator* (const double& multiplier, const Vector<3, unsigned int>& vec);
-template Vector<3, unsigned int>& operator*= (Vector<3, unsigned int>& vec, const double& multiplier);
-template Vector<3, unsigned int> operator+ (const Vector<3, unsigned int>& vec1, const Vector<3, unsigned int>& vec2);
-template Vector<3, unsigned int>& operator+= (Vector<3, unsigned int>& vec1, const Vector<3, unsigned int>& vec2);
-template Vector<3, unsigned int> operator- (const Vector<3, unsigned int>& vec1, const Vector<3, unsigned int>& vec2);
-template Vector<3, unsigned int>& operator-= (Vector<3, unsigned int>& vec1, const Vector<3, unsigned int>& vec2);
-template Vector<3, unsigned int>& operator/= (Vector<3, unsigned int>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, unsigned int> vec);
+template Vector<3, unsigned int> operator/ (const Vector<3, unsigned int> vec, const double divider);
+template Vector<3, unsigned int> operator/ (const double divider, const Vector<3, unsigned int> vec);
+template Vector<3, unsigned int> operator* (const Vector<3, unsigned int> vec, const double multiplier);
+template Vector<3, unsigned int> operator* (const double multiplier, const Vector<3, unsigned int> vec);
+template Vector<3, unsigned int> operator* (const Vector<3, unsigned int> vec1, const Vector<3, unsigned int> vec2);
+template Vector<3, unsigned int>& operator*= (Vector<3, unsigned int>& vec, const double multiplier);
+template Vector<3, unsigned int>& operator*= (Vector<3, unsigned int>& vec1, const Vector<3, unsigned int> vec2);
+template Vector<3, unsigned int> operator+ (const Vector<3, unsigned int> vec1, const Vector<3, unsigned int> vec2);
+template Vector<3, unsigned int>& operator+= (Vector<3, unsigned int>& vec1, const Vector<3, unsigned int> vec2);
+template Vector<3, unsigned int> operator- (const Vector<3, unsigned int> vec1, const Vector<3, unsigned int> vec2);
+template Vector<3, unsigned int>& operator-= (Vector<3, unsigned int>& vec1, const Vector<3, unsigned int> vec2);
+template Vector<3, unsigned int>& operator/= (Vector<3, unsigned int>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, unsigned int> vec);
 
-template Vector<3, long> operator/ (const Vector<3, long>& vec, const double& divider);
-template Vector<3, long> operator* (const Vector<3, long>& vec, const double& multiplier);
-template Vector<3, long> operator* (const double& multiplier, const Vector<3, long>& vec);
-template Vector<3, long>& operator*= (Vector<3, long>& vec, const double& multiplier);
-template Vector<3, long> operator+ (const Vector<3, long>& vec1, const Vector<3, long>& vec2);
-template Vector<3, long>& operator+= (Vector<3, long>& vec1, const Vector<3, long>& vec2);
-template Vector<3, long> operator- (const Vector<3, long>& vec1, const Vector<3, long>& vec2);
-template Vector<3, long>& operator-= (Vector<3, long>& vec1, const Vector<3, long>& vec2);
-template Vector<3, long>& operator/= (Vector<3, long>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, long> vec);
+template Vector<3, long> operator/ (const Vector<3, long> vec, const double divider);
+template Vector<3, long> operator/ (const double divider, const Vector<3, long> vec);
+template Vector<3, long> operator* (const Vector<3, long> vec, const double multiplier);
+template Vector<3, long> operator* (const double multiplier, const Vector<3, long> vec);
+template Vector<3, long> operator* (const Vector<3, long> vec1, const Vector<3, long> vec2);
+template Vector<3, long>& operator*= (Vector<3, long>& vec, const double multiplier);
+template Vector<3, long>& operator*= (Vector<3, long>& vec1, const Vector<3, long> vec2);
+template Vector<3, long> operator+ (const Vector<3, long> vec1, const Vector<3, long> vec2);
+template Vector<3, long>& operator+= (Vector<3, long>& vec1, const Vector<3, long> vec2);
+template Vector<3, long> operator- (const Vector<3, long> vec1, const Vector<3, long> vec2);
+template Vector<3, long>& operator-= (Vector<3, long>& vec1, const Vector<3, long> vec2);
+template Vector<3, long>& operator/= (Vector<3, long>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, long> vec);
 
-template Vector<3, unsigned long> operator/ (const Vector<3, unsigned long>& vec, const double& divider);
-template Vector<3, unsigned long> operator* (const Vector<3, unsigned long>& vec, const double& multiplier);
-template Vector<3, unsigned long> operator* (const double& multiplier, const Vector<3, unsigned long>& vec);
-template Vector<3, unsigned long>& operator*= (Vector<3, unsigned long>& vec, const double& multiplier);
-template Vector<3, unsigned long> operator+ (const Vector<3, unsigned long>& vec1, const Vector<3, unsigned long>& vec2);
-template Vector<3, unsigned long>& operator+= (Vector<3, unsigned long>& vec1, const Vector<3, unsigned long>& vec2);
-template Vector<3, unsigned long> operator- (const Vector<3, unsigned long>& vec1, const Vector<3, unsigned long>& vec2);
-template Vector<3, unsigned long>& operator-= (Vector<3, unsigned long>& vec1, const Vector<3, unsigned long>& vec2);
-template Vector<3, unsigned long>& operator/= (Vector<3, unsigned long>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, unsigned long> vec);
+template Vector<3, unsigned long> operator/ (const Vector<3, unsigned long> vec, const double divider);
+template Vector<3, unsigned long> operator/ (const double divider, const Vector<3, unsigned long> vec);
+template Vector<3, unsigned long> operator* (const Vector<3, unsigned long> vec, const double multiplier);
+template Vector<3, unsigned long> operator* (const double multiplier, const Vector<3, unsigned long> vec);
+template Vector<3, unsigned long> operator* (const Vector<3, unsigned long> vec1, const Vector<3, unsigned long> vec2);
+template Vector<3, unsigned long>& operator*= (Vector<3, unsigned long>& vec, const double multiplier);
+template Vector<3, unsigned long>& operator*= (Vector<3, unsigned long>& vec1, const Vector<3, unsigned long> vec2);
+template Vector<3, unsigned long> operator+ (const Vector<3, unsigned long> vec1, const Vector<3, unsigned long> vec2);
+template Vector<3, unsigned long>& operator+= (Vector<3, unsigned long>& vec1, const Vector<3, unsigned long> vec2);
+template Vector<3, unsigned long> operator- (const Vector<3, unsigned long> vec1, const Vector<3, unsigned long> vec2);
+template Vector<3, unsigned long>& operator-= (Vector<3, unsigned long>& vec1, const Vector<3, unsigned long> vec2);
+template Vector<3, unsigned long>& operator/= (Vector<3, unsigned long>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, unsigned long> vec);
 
-template Vector<3, short> operator/ (const Vector<3, short>& vec, const double& divider);
-template Vector<3, short> operator* (const Vector<3, short>& vec, const double& multiplier);
-template Vector<3, short> operator* (const double& multiplier, const Vector<3, short>& vec);
-template Vector<3, short>& operator*= (Vector<3, short>& vec, const double& multiplier);
-template Vector<3, short> operator+ (const Vector<3, short>& vec1, const Vector<3, short>& vec2);
-template Vector<3, short>& operator+= (Vector<3, short>& vec1, const Vector<3, short>& vec2);
-template Vector<3, short> operator- (const Vector<3, short>& vec1, const Vector<3, short>& vec2);
-template Vector<3, short>& operator-= (Vector<3, short>& vec1, const Vector<3, short>& vec2);
-template Vector<3, short>& operator/= (Vector<3, short>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, short> vec);
+template Vector<3, short> operator/ (const Vector<3, short> vec, const double divider);
+template Vector<3, short> operator/ (const double divider, const Vector<3, short> vec);
+template Vector<3, short> operator* (const Vector<3, short> vec, const double multiplier);
+template Vector<3, short> operator* (const double multiplier, const Vector<3, short> vec);
+template Vector<3, short> operator* (const Vector<3, short> vec1, const Vector<3, short> vec2);
+template Vector<3, short>& operator*= (Vector<3, short>& vec, const double multiplier);
+template Vector<3, short>& operator*= (Vector<3, short>& vec1, const Vector<3, short> vec2);
+template Vector<3, short> operator+ (const Vector<3, short> vec1, const Vector<3, short> vec2);
+template Vector<3, short>& operator+= (Vector<3, short>& vec1, const Vector<3, short> vec2);
+template Vector<3, short> operator- (const Vector<3, short> vec1, const Vector<3, short> vec2);
+template Vector<3, short>& operator-= (Vector<3, short>& vec1, const Vector<3, short> vec2);
+template Vector<3, short>& operator/= (Vector<3, short>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, short> vec);
 
-template Vector<3, unsigned short> operator/ (const Vector<3, unsigned short>& vec, const double& divider);
-template Vector<3, unsigned short> operator* (const Vector<3, unsigned short>& vec, const double& multiplier);
-template Vector<3, unsigned short> operator* (const double& multiplier, const Vector<3, unsigned short>& vec);
-template Vector<3, unsigned short>& operator*= (Vector<3, unsigned short>& vec, const double& multiplier);
-template Vector<3, unsigned short> operator+ (const Vector<3, unsigned short>& vec1, const Vector<3, unsigned short>& vec2);
-template Vector<3, unsigned short>& operator+= (Vector<3, unsigned short>& vec1, const Vector<3, unsigned short>& vec2);
-template Vector<3, unsigned short> operator- (const Vector<3, unsigned short>& vec1, const Vector<3, unsigned short>& vec2);
-template Vector<3, unsigned short>& operator-= (Vector<3, unsigned short>& vec1, const Vector<3, unsigned short>& vec2);
-template Vector<3, unsigned short>& operator/= (Vector<3, unsigned short>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, unsigned short> vec);
+template Vector<3, unsigned short> operator/ (const Vector<3, unsigned short> vec, const double divider);
+template Vector<3, unsigned short> operator/ (const double divider, const Vector<3, unsigned short> vec);
+template Vector<3, unsigned short> operator* (const Vector<3, unsigned short> vec, const double multiplier);
+template Vector<3, unsigned short> operator* (const double multiplier, const Vector<3, unsigned short> vec);
+template Vector<3, unsigned short> operator* (const Vector<3, unsigned short> vec1, const Vector<3, unsigned short> vec2);
+template Vector<3, unsigned short>& operator*= (Vector<3, unsigned short>& vec, const double multiplier);
+template Vector<3, unsigned short>& operator*= (Vector<3, unsigned short>& vec1, const Vector<3, unsigned short> vec2);
+template Vector<3, unsigned short> operator+ (const Vector<3, unsigned short> vec1, const Vector<3, unsigned short> vec2);
+template Vector<3, unsigned short>& operator+= (Vector<3, unsigned short>& vec1, const Vector<3, unsigned short> vec2);
+template Vector<3, unsigned short> operator- (const Vector<3, unsigned short> vec1, const Vector<3, unsigned short> vec2);
+template Vector<3, unsigned short>& operator-= (Vector<3, unsigned short>& vec1, const Vector<3, unsigned short> vec2);
+template Vector<3, unsigned short>& operator/= (Vector<3, unsigned short>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, unsigned short> vec);
 
-template Vector<3, char> operator/ (const Vector<3, char>& vec, const double& divider);
-template Vector<3, char> operator* (const Vector<3, char>& vec, const double& multiplier);
-template Vector<3, char> operator* (const double& multiplier, const Vector<3, char>& vec);
-template Vector<3, char>& operator*= (Vector<3, char>& vec, const double& multiplier);
-template Vector<3, char> operator+ (const Vector<3, char>& vec1, const Vector<3, char>& vec2);
-template Vector<3, char>& operator+= (Vector<3, char>& vec1, const Vector<3, char>& vec2);
-template Vector<3, char> operator- (const Vector<3, char>& vec1, const Vector<3, char>& vec2);
-template Vector<3, char>& operator-= (Vector<3, char>& vec1, const Vector<3, char>& vec2);
-template Vector<3, char>& operator/= (Vector<3, char>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, char> vec);
+template Vector<3, char> operator/ (const Vector<3, char> vec, const double divider);
+template Vector<3, char> operator/ (const double divider, const Vector<3, char> vec);
+template Vector<3, char> operator* (const Vector<3, char> vec, const double multiplier);
+template Vector<3, char> operator* (const double multiplier, const Vector<3, char> vec);
+template Vector<3, char> operator* (const Vector<3, char> vec1, const Vector<3, char> vec2);
+template Vector<3, char>& operator*= (Vector<3, char>& vec, const double multiplier);
+template Vector<3, char>& operator*= (Vector<3, char>& vec1, const Vector<3, char> vec2);
+template Vector<3, char> operator+ (const Vector<3, char> vec1, const Vector<3, char> vec2);
+template Vector<3, char>& operator+= (Vector<3, char>& vec1, const Vector<3, char> vec2);
+template Vector<3, char> operator- (const Vector<3, char> vec1, const Vector<3, char> vec2);
+template Vector<3, char>& operator-= (Vector<3, char>& vec1, const Vector<3, char> vec2);
+template Vector<3, char>& operator/= (Vector<3, char>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, char> vec);
 
-template Vector<3, unsigned char> operator/ (const Vector<3, unsigned char>& vec, const double& divider);
-template Vector<3, unsigned char> operator* (const Vector<3, unsigned char>& vec, const double& multiplier);
-template Vector<3, unsigned char> operator* (const double& multiplier, const Vector<3, unsigned char>& vec);
-template Vector<3, unsigned char>& operator*= (Vector<3, unsigned char>& vec, const double& multiplier);
-template Vector<3, unsigned char> operator+ (const Vector<3, unsigned char>& vec1, const Vector<3, unsigned char>& vec2);
-template Vector<3, unsigned char>& operator+= (Vector<3, unsigned char>& vec1, const Vector<3, unsigned char>& vec2);
-template Vector<3, unsigned char> operator- (const Vector<3, unsigned char>& vec1, const Vector<3, unsigned char>& vec2);
-template Vector<3, unsigned char>& operator-= (Vector<3, unsigned char>& vec1, const Vector<3, unsigned char>& vec2);
-template Vector<3, unsigned char>& operator/= (Vector<3, unsigned char>& vec, const double& divider);
-template ostream& operator<< (ostream& out, Vector<3, unsigned char> vec);
+template Vector<3, unsigned char> operator/ (const Vector<3, unsigned char> vec, const double divider);
+template Vector<3, unsigned char> operator/ (const double divider, const Vector<3, unsigned char> vec);
+template Vector<3, unsigned char> operator* (const Vector<3, unsigned char> vec, const double multiplier);
+template Vector<3, unsigned char> operator* (const double multiplier, const Vector<3, unsigned char> vec);
+template Vector<3, unsigned char> operator* (const Vector<3, unsigned char> vec1, const Vector<3, unsigned char> vec2);
+template Vector<3, unsigned char>& operator*= (Vector<3, unsigned char>& vec, const double multiplier);
+template Vector<3, unsigned char>& operator*= (Vector<3, unsigned char>& vec1, const Vector<3, unsigned char> vec2);
+template Vector<3, unsigned char> operator+ (const Vector<3, unsigned char> vec1, const Vector<3, unsigned char> vec2);
+template Vector<3, unsigned char>& operator+= (Vector<3, unsigned char>& vec1, const Vector<3, unsigned char> vec2);
+template Vector<3, unsigned char> operator- (const Vector<3, unsigned char> vec1, const Vector<3, unsigned char> vec2);
+template Vector<3, unsigned char>& operator-= (Vector<3, unsigned char>& vec1, const Vector<3, unsigned char> vec2);
+template Vector<3, unsigned char>& operator/= (Vector<3, unsigned char>& vec, const double divider);
+template std::ostream& operator<< (std::ostream& out, Vector<3, unsigned char> vec);
 
 template class Vector<3, float>;
 template class Vector<3, double>;

@@ -60,7 +60,7 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(double time) const
 
 		if (position.notZero() && i.second.notZero()) {
 			Angle torque = position.cross(i.second) / correction;
-			i.second /= (torque.getLength() / getMomentOfInertia()) + 1;
+			i.second *= 1 / ((torque.getLength() * (1.0/getMomentOfInertia())) + Vector<freedom(n), double>{1});
 		}
 		
 		velocity += (i.second / this->_mass) * time;
@@ -72,7 +72,7 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(double time) const
 
 		if (position.notZero() && pulse.notZero()) {
 			Angle torque = position.cross(pulse) / correction;
-			pulse /= (torque.getLength() / getMomentOfInertia()) + 1;
+			pulse *= 1 / ((torque.getLength() / getMomentOfInertia()) + Vector<freedom(n), double>{1});
 		}
 
 		velocity += (pulse / this->_mass);
@@ -123,7 +123,7 @@ Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(double time) co
 	Angle velocity = Angle();
 	Angle torquePulse = Angle();
 
-	velocity = (getNextTorque() / getMomentOfInertia()) * time;
+	velocity = (getNextTorque() * (1/getMomentOfInertia())) * time;
 	
 	auto pulses = this->getNextPulses();
 
@@ -137,7 +137,7 @@ Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(double time) co
 		}
 	}
 
-	velocity += torquePulse / getMomentOfInertia();
+	velocity += torquePulse * (1/ getMomentOfInertia());
 
 	return _angularVelocity + (velocity / 1.001) * tau;
 }
@@ -166,12 +166,12 @@ Vector<freedom(n), double> PhysicBody<n>::getNextTorque() const
 }
 
 template<int n>
-double PhysicBody<n>::getMomentOfInertia() const
+Vector<freedom(n), double> PhysicBody<n>::getMomentOfInertia() const
 {
 	if (_shape) {
 		return _momentOfInertia;
 	} else {
-		return this->_mass;
+		return {this->_mass};
 	}
 }
 

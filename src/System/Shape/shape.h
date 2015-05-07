@@ -14,7 +14,7 @@ public:
 	Shape(const Shape&) = default;
 	Shape(Shape&&) = default;
 	
-	virtual double getMomentOfInertia(double mass) const = 0;
+	virtual Vector<freedom(n), double> getMomentOfInertia(double mass) const = 0;
 	virtual Vector<n, double> getCenterOfMass() const = 0;
 	
 private:

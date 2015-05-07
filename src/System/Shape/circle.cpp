@@ -12,7 +12,7 @@ Vector2d Circle::getCenterOfMass() const
 	return {0, 0};
 }
 
-double Circle::getMomentOfInertia(double mass) const
+Vector1d Circle::getMomentOfInertia(double mass) const
 {
 	return mass * (_radius*_radius) / 2;
 }

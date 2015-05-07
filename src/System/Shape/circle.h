@@ -19,7 +19,7 @@ public:
 	void setRadius(double radius);
 	double getRadius() const;
 	
-	virtual double getMomentOfInertia(double mass) const override;
+	virtual Vector1d getMomentOfInertia(double mass) const override;
 	virtual Vector2d getCenterOfMass() const override;
 	
 private:

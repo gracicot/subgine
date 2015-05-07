@@ -10,7 +10,7 @@ template<int n>
 class PhysicBody : public virtual PhysicPoint<n>
 {
 public:
-	typedef Vector<freedom(n), double> Angle;
+	using Angle = Vector<freedom(n), double>;
 	
 	PhysicBody();
 
@@ -29,7 +29,7 @@ public:
 
 	void setOrientation(Angle orientation);
 	
-	double getMomentOfInertia() const;
+	Angle getMomentOfInertia() const;
 
 	void setShape(std::shared_ptr<shape::Shape<n>> shape);
 	std::shared_ptr<shape::Shape<n>> getShape() const;
@@ -43,7 +43,7 @@ public:
 
 protected:
 	std::map<std::string, Vector<n, double>> getNextPulsesPositions() const;
-	double _momentOfInertia;
+	Angle _momentOfInertia;
 	std::shared_ptr<shape::Shape<n>> _shape;
 	std::map<std::string, Vector<n, double>> _pulsesPosition;
 	std::map<std::string, Vector<n, double>> _forcesPosition;

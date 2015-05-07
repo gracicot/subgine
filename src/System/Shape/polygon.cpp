@@ -30,7 +30,7 @@ Polygon::Polygon(std::vector< Vector2d > vertices): _vertices(vertices)
 
 }
 
-double Polygon::getMomentOfInertia(double mass) const
+Vector1d Polygon::getMomentOfInertia(double mass) const
 {
 	double momentOfInertia = 0;
 	Vector2d center;

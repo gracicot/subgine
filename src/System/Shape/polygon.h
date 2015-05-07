@@ -21,7 +21,7 @@ public:
 	std::vector<Vector2d>& getVertices();
 	void setVertices(std::vector<Vector2d> vertices);
 	
-	virtual double getMomentOfInertia(double mass) const override;
+	virtual Vector1d getMomentOfInertia(double mass) const override;
 	virtual Vector2d getCenterOfMass() const override;
 	
 private:
