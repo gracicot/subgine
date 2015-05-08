@@ -18,40 +18,62 @@ CollisionBody::CollisionBody(CollisionBody&& other) :
 {}
 
 CollisionBody::CollisionBody(const CollisionBody& other) :
-	_material(other._material),
-	_collisionhandlers(other._collisionhandlers)
+	_material(other._material)
 {
 	for (auto& tester : other._collisionTesters) {
-		_collisionTesters.insert(make_pair(tester.first, clone_unique(tester.second)));
+		_collisionTesters.emplace(tester.first, clone_unique(tester.second));
 	}
 	for (auto& entity : other._collisionEntities) {
-		_collisionEntities.insert(make_pair(entity.first, clone_shared(entity.second)));
+		_collisionEntities.emplace(entity.first, clone_shared(entity.second));
+	}
+	for (auto& entity : other._collisionhandlers) {
+		_collisionhandlers.emplace(entity.first, clone_unique(entity.second));
 	}
 }
 
-CollisionBody::CollisionBody()
+void CollisionBody::addCollisionHandler(Group* group, unique_ptr<CollisionHandler> collisionHandler)
 {
-
+	_collisionhandlers.emplace(group, move(collisionHandler));
 }
 
-CollisionBody::~CollisionBody()
+void CollisionBody::setCollisionTester(Group* group, unique_ptr<CollisionTester> collisionTester)
 {
-	
+	_collisionTesters[group] = move(collisionTester);
 }
 
-CollisionResult CollisionBody::testObject(shared_ptr<const CollisionBody> other, Time time, string test) const
+void CollisionBody::removeCollisionHandler(Group* group)
+{
+	_collisionhandlers.erase(group);
+}
+
+void CollisionBody::removeCollisionTester(Group* group)
+{
+	_collisionTesters.erase(group);
+}
+
+void CollisionBody::setCollisionEntity(Group* group, shared_ptr<CollisionEntity> entity)
+{
+	_collisionEntities[group] = move(entity);
+}
+
+CollisionResult CollisionBody::testObject(shared_ptr<const CollisionBody> other, Time time, Group* test) const
 {
 	auto it = _collisionTesters.find(test);
 	
 	if (it != _collisionTesters.end()) {
-		auto data = it->second->test(getCollisionEntity(test), other->getCollisionEntity(test));
-		return CollisionResult(other, data.second, move(data.first), time);
+		auto entityThis = getCollisionEntity(test);
+		auto entityOther = other->getCollisionEntity(test);
+		
+		if (entityThis && entityOther) {
+			auto data = it->second->test(entityThis, entityOther);
+			return CollisionResult(other, data.second, move(data.first), time);
+		}
 	}
 	
 	return CollisionResult(other, false, nullptr, time);
 }
 
-void CollisionBody::trigger(CollisionResult result, string test)
+void CollisionBody::trigger(CollisionResult result, Group* test)
 {
 	auto range = _collisionhandlers.equal_range(test);
 	
@@ -60,80 +82,26 @@ void CollisionBody::trigger(CollisionResult result, string test)
 	}
 }
 
-shared_ptr<CollisionEntity> CollisionBody::getCollisionEntity(string tag)
+shared_ptr<CollisionEntity> CollisionBody::getCollisionEntity(Group* group)
 {
-	auto it = _collisionEntities.find(tag);
+	auto it = _collisionEntities.find(group);
 	
 	if (it != _collisionEntities.end()) {
 		return it->second;
 	}
 	
-	throw out_of_range("CollisionEntity with tag \"" + tag + "\" not found...");
+	return nullptr;
 }
 
-const shared_ptr<const CollisionEntity> CollisionBody::getCollisionEntity(string tag) const
+const shared_ptr<const CollisionEntity> CollisionBody::getCollisionEntity(Group* group) const
 {
-	auto it = _collisionEntities.find(tag);
+	auto it = _collisionEntities.find(group);
 	
 	if (it != _collisionEntities.end()) {
 		return it->second;
 	}
 	
-	throw out_of_range("CollisionEntity with tag \"" + tag + "\" not found...");
-}
-
-const map< string, shared_ptr< CollisionEntity > >& CollisionBody::getCollisionEntity() const
-{
-	return _collisionEntities;
-}
-
-map< string, shared_ptr< CollisionEntity > >& CollisionBody::getCollisionEntity()
-{
-	return _collisionEntities;
-}
-
-vector<shared_ptr< const CollisionHandler >> CollisionBody::getCollisionHandler(const string tag) const
-{
-	auto range = _collisionhandlers.equal_range(tag);
-	vector<shared_ptr< const CollisionHandler >> results;
-	
-	for(auto& it = range.first ; it != range.second ; it++) {
-		results.push_back(it->second);
-	}
-	
-	return results;
-}
-
-vector<shared_ptr< CollisionHandler >> CollisionBody::getCollisionHandler(const string tag)
-{
-	auto range = _collisionhandlers.equal_range(tag);
-	vector<shared_ptr< CollisionHandler >> results;
-	
-	for(auto it = range.first ; it != range.second ; it++) {
-		results.push_back(it->second);
-	}
-	
-	return results;
-}
-
-const multimap< string, shared_ptr< CollisionHandler > >& CollisionBody::getCollisionHandler() const
-{
-	return _collisionhandlers;
-}
-
-multimap< string, shared_ptr< CollisionHandler > >& CollisionBody::getCollisionHandler()
-{
-	return _collisionhandlers;
-}
-
-const map< string, unique_ptr< CollisionTester > >& CollisionBody::getCollisionTester() const
-{
-	return _collisionTesters;
-}
-
-map< string, unique_ptr< CollisionTester > >& CollisionBody::getCollisionTester()
-{
-	return _collisionTesters;
+	return nullptr;
 }
 
 Material CollisionBody::getMaterial() const

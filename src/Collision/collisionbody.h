@@ -13,40 +13,38 @@ class ResultData;
 class CollisionTester;
 class CollisionHandler;
 class CollisionEntity;
+struct Group;
 
 class CollisionBody
 {
 public:
-	CollisionBody();
+	CollisionBody() = default;
 	CollisionBody(const CollisionBody& other);
 	CollisionBody(CollisionBody&& other);
-	virtual ~CollisionBody();
+	virtual ~CollisionBody() = default;
 
-	CollisionResult testObject(std::shared_ptr<const CollisionBody> other, Time time, std::string test) const;
+	CollisionResult testObject(std::shared_ptr<const CollisionBody> other, Time time, Group* test) const;
 	
-	std::multimap<std::string, std::shared_ptr<CollisionHandler>>& getCollisionHandler();
-	const std::multimap<std::string, std::shared_ptr<CollisionHandler>>& getCollisionHandler() const;
-	std::vector<std::shared_ptr<CollisionHandler>> getCollisionHandler(const std::string tag);
-	std::vector< std::shared_ptr< const CollisionHandler > > getCollisionHandler(const std::string tag) const;
+	void setCollisionEntity(Group* group, std::shared_ptr<CollisionEntity> entity);
+	std::shared_ptr<CollisionEntity> getCollisionEntity(Group* group);
+	const std::shared_ptr<const CollisionEntity> getCollisionEntity(Group* group) const;
 	
-	std::map<std::string, std::unique_ptr<CollisionTester>>& getCollisionTester();
-	const std::map<std::string, std::unique_ptr<CollisionTester>>& getCollisionTester() const;
+	void addCollisionHandler(Group* group, std::unique_ptr<CollisionHandler> collisionHandler);
+	void removeCollisionHandler(Group* group);
 	
-	std::shared_ptr<CollisionEntity> getCollisionEntity(std::string tag);
-	const std::shared_ptr<const CollisionEntity> getCollisionEntity(std::string tag) const;
-	std::map<std::string, std::shared_ptr<CollisionEntity>>& getCollisionEntity();
-	const std::map<std::string, std::shared_ptr<CollisionEntity>>& getCollisionEntity() const;
+	void setCollisionTester(Group* group, std::unique_ptr<CollisionTester> collisionTester);
+	void removeCollisionTester(Group* group);
 	
-	void trigger(CollisionResult result, std::string test);
+	void trigger(CollisionResult result, Group* test);
 
 	void setMaterial(Material material);
 	Material getMaterial() const;
 
 private:
 	Material _material;
-	std::multimap<std::string, std::shared_ptr<CollisionHandler>> _collisionhandlers;
-	std::map<std::string, std::shared_ptr<CollisionEntity>> _collisionEntities;
-	std::map<std::string, std::unique_ptr<CollisionTester>> _collisionTesters;
+	std::multimap<Group*, std::unique_ptr<CollisionHandler>> _collisionhandlers;
+	std::map<Group*, std::shared_ptr<CollisionEntity>> _collisionEntities;
+	std::map<Group*, std::unique_ptr<CollisionTester>> _collisionTesters;
 };
 
 }

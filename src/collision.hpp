@@ -28,4 +28,6 @@
 #include "Collision/satresultaccumulator.h"
 
 #include "Collision/Engines/test.h"
+#include "Collision/Engines/group.h"
+#include "Collision/Engines/groupcontainer.h"
 #include "Collision/Engines/collisionengine.h"

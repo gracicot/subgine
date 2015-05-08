@@ -7,14 +7,12 @@
 
 namespace sbg {
 
-class Point : public virtual CollisionBody
+class Point : public CollisionEntity
 {
 public:
 	Point() = default;
 	Point(std::function< Vector2d(void) > functor);
 	Vector2d getPosition() const;
-	virtual ~Point();
-
 	operator Vector2d();
 	
 private:

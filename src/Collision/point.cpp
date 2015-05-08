@@ -1,19 +1,10 @@
 #include "point.h"
 
-#include "CollisionTester/collisiontester.h"
-
 using namespace std;
 
 namespace sbg {
 
-Point::Point(function< Vector2d(void) > functor) : _functor(functor)
-{
-}
-
-Point::~Point()
-{
-
-}
+Point::Point(function< Vector2d(void) > functor) : _functor(functor) {}
 
 Point::operator Vector2d()
 {

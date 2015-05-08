@@ -6,14 +6,15 @@
 namespace sbg {
 
 class CollisionBody;
+struct Group;
 
 class Test
 {
 public:
-	Test(std::weak_ptr<CollisionBody> object, std::weak_ptr<CollisionBody> other, std::string test);
+	Test(std::weak_ptr<CollisionBody> object, std::weak_ptr<CollisionBody> other, Group* test);
 	
-	void setTest(std::string test);
-	std::string getTest() const;
+	void setTest(Group* test);
+	Group* getTest() const;
 	
 	std::weak_ptr<CollisionBody> getObject() const;
 	void setObject(std::weak_ptr<CollisionBody> object);
@@ -24,7 +25,7 @@ public:
 private:
 	std::weak_ptr<CollisionBody> _object;
 	std::weak_ptr<CollisionBody> _other;
-	std::string _test;
+	Group* _test;
 };
 
 }

@@ -6,7 +6,7 @@ namespace sbg {
 
 class CollisionBody;
 
-class CollisionHandler
+class CollisionHandler : Clonable
 {
 public:
 	virtual void apply(CollisionBody& object, CollisionResult result) = 0;

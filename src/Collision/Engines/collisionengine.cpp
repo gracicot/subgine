@@ -1,4 +1,5 @@
 #include "collisionengine.h"
+#include "groupcontainer.h"
 
 #include "../CollisionTester/collisiontester.h"
 #include "../collisionbody.h"
@@ -13,71 +14,73 @@ using namespace std;
 
 namespace sbg {
 
+CollisionEngine::CollisionEngine(shared_ptr<GroupContainer> groupContainer) : _groupContainer{groupContainer} {}
+
 void CollisionEngine::execute(Time time)
 {
 	if (!_listClean) {
 		makeObjectList();
 	}
-	_inserting.lock();
-	vector<Test> objects = _test;
-	_inserting.unlock();
 	// todo: move to a class
 	struct TestResult {
 		shared_ptr<CollisionBody> object;
 		CollisionResult result;
-		string test;
+		Group* test;
 	};
 	
-	mutex write;
 	vector<TestResult> results;
+	mutex write;
 	
-	parallel_for(objects.begin(), objects.end(), [&results, time, this, &write](Test& test){
-		if (!test.getObject().expired() && !test.getOther().expired()) {
-			auto testObject = test.getObject().lock();
-			auto testOther = test.getOther().lock();
-			
-			TestResult&& testResult{testObject, move(testObject->testObject(testOther, time, test.getTest())), test.getTest()};
-			write.lock();
-			results.push_back(move(testResult));
-			write.unlock();
-		} else {
-			if (test.getObject().expired()) {
-				remove(test.getObject());
+	{
+		lock_guard<mutex> lock{_changeTests};
+		parallel_for(_tests.begin(), _tests.end(), [&results, time, this, &write](Test& test){
+			if (!test.getObject().expired() && !test.getOther().expired()) {
+				auto testObject = test.getObject().lock();
+				auto testOther = test.getOther().lock();
+				
+				TestResult testResult{testObject, move(testObject->testObject(testOther, time, test.getTest())), test.getTest()};
+				{
+					lock_guard<mutex> lock2{write};
+					results.push_back(move(testResult));
+				}
+			} else {
+				if (test.getObject().expired()) {
+					remove(test.getObject());
+				}
+				
+				if (test.getOther().expired()) {
+					remove(test.getOther());
+				}
 			}
-			
-			if (test.getOther().expired()) {
-				remove(test.getOther());
-			}
-		}
-	});
+		});
+	}
 	
 	parallel_for(results.begin(), results.end(), [](TestResult& result) {
 		result.object->trigger(move(result.result), result.test);
 	});
 }
 
-void CollisionEngine::add(std::weak_ptr<CollisionBody> object, vector<string> groups, vector< string > collisionGroups)
+void CollisionEngine::add(std::weak_ptr<CollisionBody> object, vector<std::string> groups, vector<std::string> collisionGroups)
 {
-	_inserting.lock();
+	lock_guard<mutex> lock{_inserting};
 	_objects[object] = {groups, collisionGroups};
 	
 	_listClean = false;
-	_inserting.unlock();
 }
 
 void CollisionEngine::remove(std::weak_ptr<CollisionBody> object)
 {
-	_inserting.lock();
+	lock_guard<mutex> lock{_inserting};
 	_objects.erase(object);
 	
 	_listClean = false;
-	_inserting.unlock();
 }
 
 void CollisionEngine::makeObjectList()
 {
-	_inserting.lock();
-	_test.clear();
+	lock_guard<mutex> lock{_inserting};
+	lock_guard<mutex> lock2{_changeTests};
+	_tests.clear();
 	
 	for (auto object : _objects) {
 		for (auto group : object.second.second) {
@@ -90,14 +93,13 @@ void CollisionEngine::makeObjectList()
 				it = find_if(++it, _objects.end(), findByGroup)
 			) {
 				if (!(!object.first.owner_before(it->first) && !it->first.owner_before(object.first))) {
-					_test.push_back({object.first, it->first, group});
+					_tests.push_back({object.first, it->first, _groupContainer->group(group)});
 				}
 			}
 		}
 	}
 	
 	_listClean = true;
-	_inserting.unlock();
 }
 
 }
