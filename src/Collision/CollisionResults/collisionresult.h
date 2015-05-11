@@ -25,7 +25,7 @@ public:
 	std::shared_ptr<const CollisionBody> getOther() const;
 	void setOther(std::weak_ptr<const CollisionBody> other);
 	
-	std::unique_ptr<const ResultData> getData() const;
+	const ResultData* getData() const;
 	void setData(std::unique_ptr<const ResultData> data);
 
 private:

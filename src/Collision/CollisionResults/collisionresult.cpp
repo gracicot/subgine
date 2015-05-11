@@ -60,9 +60,9 @@ void CollisionResult::setOther(weak_ptr<const CollisionBody> other)
 	_other = other;
 }
 
-unique_ptr<const ResultData> CollisionResult::getData() const
+const ResultData* CollisionResult::getData() const
 {
-	return clone_unique(_data);
+	return _data.get();
 }
 
 void CollisionResult::setData(unique_ptr<const ResultData> data)

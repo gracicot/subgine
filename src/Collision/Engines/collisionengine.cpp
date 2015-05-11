@@ -14,7 +14,7 @@ using namespace std;
 
 namespace sbg {
 
-CollisionEngine::CollisionEngine(shared_ptr<GroupContainer> groupContainer) : _groupContainer{groupContainer} {}
+CollisionEngine::CollisionEngine() {}
 
 void CollisionEngine::execute(Time time)
 {
@@ -60,7 +60,7 @@ void CollisionEngine::execute(Time time)
 	});
 }
 
-void CollisionEngine::add(std::weak_ptr<CollisionBody> object, vector<std::string> groups, vector<std::string> collisionGroups)
+void CollisionEngine::add(std::weak_ptr<CollisionBody> object, vector<Group*> groups, vector<Group*> collisionGroups)
 {
 	lock_guard<mutex> lock{_inserting};
 	_objects[object] = {groups, collisionGroups};
@@ -93,7 +93,7 @@ void CollisionEngine::makeObjectList()
 				it = find_if(++it, _objects.end(), findByGroup)
 			) {
 				if (!(!object.first.owner_before(it->first) && !it->first.owner_before(object.first))) {
-					_tests.push_back({object.first, it->first, _groupContainer->group(group)});
+					_tests.push_back({object.first, it->first, group});
 				}
 			}
 		}
