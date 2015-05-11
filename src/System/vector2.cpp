@@ -19,10 +19,6 @@ Vector<2, T>::Vector(T _x, T _y) : x(_x), y(_y)
 {}
 
 template<class T>
-Vector<2, T>::Vector(const Vector<2, T> &other) : x(other.x), y(other.y)
-{}
-
-template<class T>
 double Vector<2, T>::getAngle() const
 {
 	double angle = atan2(y, x);

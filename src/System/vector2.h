@@ -15,7 +15,8 @@ public:
 	Vector();
 	Vector(T value);
 	Vector(T _x, T _y);
-	Vector(const Vector<2, T>& other);
+	Vector(const Vector<2, T>& other) = default;
+	Vector(Vector<2, T>&& other) = default;
 	
 	template <class O>
 	operator Vector< 2 , O > () const
