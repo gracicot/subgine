@@ -1,13 +1,22 @@
 #pragma once
 
-#include "../clonable.h"
+#include <functional>
 
 namespace sbg {
 
 template<typename T>
-struct ValueProvider : virtual Clonable {
-	virtual T getValue() const = 0;
-	virtual ValueProvider* clone() const = 0;
+struct ValueProvider final {
+	ValueProvider(std::function<T()> callback) : _callback{callback} {}
+	ValueProvider(T value) : _callback{[=](){ return value; }} {}
+	ValueProvider(const ValueProvider&) = default;
+	ValueProvider(ValueProvider&&) = default;
+	
+	T operator()() const {
+		return _callback();
+	}
+	
+private:
+	std::function<T()> _callback;
 };
 
 }

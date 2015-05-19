@@ -7,16 +7,6 @@
 
 namespace sbg {
 
-class MainEngineTimeProvider : public ValueProvider<Time>
-{
-public:
-	MainEngineTimeProvider(std::weak_ptr<const MainEngine> mainEngine = {});
-	
-	Time getValue() const override;
-	MainEngineTimeProvider* clone() const override;
-	
-private:
-	std::weak_ptr<const MainEngine> _mainEngineRef;
-};
+ValueProvider<Time> makeMainEngineTimeProvider(std::weak_ptr<const MainEngine> mainEngine);
 
 }

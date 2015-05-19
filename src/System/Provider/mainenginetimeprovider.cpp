@@ -2,19 +2,9 @@
 
 namespace sbg {
 
-MainEngineTimeProvider::MainEngineTimeProvider(std::weak_ptr< const sbg::MainEngine > mainEngine) : _mainEngineRef{mainEngine}
+ValueProvider<Time> makeMainEngineTimeProvider(std::weak_ptr<const MainEngine> mainEngine)
 {
-
-}
-
-Time MainEngineTimeProvider::getValue() const
-{
-	return _mainEngineRef.expired() ? Time{} : _mainEngineRef.lock()->getTime();
-}
-
-MainEngineTimeProvider* MainEngineTimeProvider::clone() const
-{
-	return new MainEngineTimeProvider(*this);
+	return {[=]{return mainEngine.expired() ? Time{} : mainEngine.lock()->getTime();}};
 }
 
 }
