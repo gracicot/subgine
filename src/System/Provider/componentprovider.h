@@ -1,16 +1,24 @@
 #pragma once
 
-#include "positionprovider.h"
-#include "../clonable.h"
+#include "../vector-all.h"
+
+#include <functional>
 
 namespace sbg {
 
 template <int n>
-class ComponentProvider : public virtual PositionProvider<n>, public virtual Clonable
-{
-public:
-	virtual Vector<freedom(n), double> getOrientation() const = 0;
-	virtual ComponentProvider<n>* clone() const = 0;
+struct ComponentProvider {
+	ComponentProvider(std::function<Vector<n, double>()> position, std::function<Vector<freedom(n), double>()> orientation);
+	ComponentProvider(Vector<n, double> position, std::function<Vector<freedom(n), double>()> orientation);
+	ComponentProvider(std::function<Vector<n, double>()> position, Vector<freedom(n), double> orientation);
+	ComponentProvider(Vector<n, double> position, Vector<freedom(n), double> orientation);
+	
+	Vector<freedom(n), double> getOrientation() const;
+	Vector<n, double> getPosition() const;
+	
+private:
+	std::function<Vector<freedom(n), double>()> _orientation;
+	std::function<Vector<n, double>()> _position;
 };
 
 extern template class ComponentProvider<2>;

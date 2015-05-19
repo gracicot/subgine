@@ -7,24 +7,14 @@ using namespace std;
 
 namespace sbg {
 
-Polygon::Polygon(): _components(unique_ptr<ComponentProvider2D>(new ZeroComponentProvider2D))
+Polygon::Polygon(): _components(makeZeroComponentProvider2D())
 {
 	
 }
 
-Polygon::Polygon(unique_ptr<ComponentProvider2D> components): _components(move(components))
+Polygon::Polygon(ComponentProvider2D components): _components(components)
 {
 	setShape(make_shared<shape::Polygon>());
-}
-
-Polygon::Polygon(const Polygon &other) : 
-	_shape(other._shape),
-	_components(clone_unique(other._components)),
-	_cachedBoundingBox(other._cachedBoundingBox),
-	_cachedAngles(other._cachedAngles),
-	_cachedProjections(other._cachedProjections)
-{
-
 }
 
 shared_ptr<shape::Polygon> Polygon::getShape() const
@@ -37,22 +27,22 @@ Polygon* Polygon::clone() const
 	return new Polygon(*this);
 }
 
-void Polygon::setComponents(unique_ptr<ComponentProvider2D> components)
+void Polygon::setComponents(ComponentProvider2D components)
 {
-	_components = move(components);
+	_components = components;
 }
 
 double Polygon::getAngle() const
 {
-	return _components->getOrientation();
+	return _components.getOrientation();
 }
 
 Vector2d Polygon::getPosition() const
 {
-	return _components->getPosition();
+	return _components.getPosition();
 }
 
-pair< Vector2d, Vector2d> Polygon::getBoundingBox() const
+pair<Vector2d, Vector2d> Polygon::getBoundingBox() const
 {
 	return {_cachedBoundingBox.first + getPosition(), _cachedBoundingBox.second + getPosition()};
 }

@@ -11,14 +11,10 @@
 #include "System/Shape/polygon.h"
 
 #include "System/Provider/valueprovider.h"
-#include "System/Provider/callbackvalueprovider.h"
 #include "System/Provider/mainenginetimeprovider.h"
 #include "System/Provider/positionprovider.h"
 #include "System/Provider/componentprovider.h"
 #include "System/Provider/displaycomponentprovider.h"
-#include "System/Provider/callbackcomponentprovider.h"
-#include "System/Provider/callbackdisplaycomponentprovider.h"
-#include "System/Provider/callbackpositionprovider.h"
 #include "System/Provider/zerocomponentprovider.h"
 #include "System/Provider/zerodisplaycomponentprovider.h"
 #include "System/Provider/zeropositionprovider.h"
@@ -28,5 +24,6 @@
 #include "System/sumaccumulator.h"
 
 #include "System/memory.h"
+#include "System/clonable.h"
 #include "System/clone.h"
 

@@ -1,76 +1,74 @@
 #include "physicpointdisplaycomponentprovider.h"
 
+#include "../physicpoint.h"
+
 using namespace std;
 
 namespace sbg {
 
 template<int n>
-PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, Vector<freedom(n), double> orientation, Vector<n, double> scale) :
-	PhysicPointPositionProvider<n>(physicPoint),
-	PhysicPointComponentProvider<n>(physicPoint, orientation),
-	_scale([scale]() {
-		return scale;
-	})
+DisplayComponentProvider<n> makePhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, Vector<freedom(n), double> orientation, Vector<n, double> scale)
 {
-	
-}
-
-template<int n>
-PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, function<Vector<freedom(n), double>()> orientation, Vector<n, double> scale) :
-	PhysicPointPositionProvider<n>(physicPoint),
-	PhysicPointComponentProvider<n>(physicPoint, orientation),
-	_scale([scale]() {
-		return scale;
-	})
-{
-	
-}
-
-template<int n>
-PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, Vector<freedom(n), double> orientation, function<Vector<n, double>()> scale) :
-	PhysicPointPositionProvider<n>(physicPoint),
-	PhysicPointComponentProvider<n>(physicPoint, orientation),
-	_scale(scale)
-{
-	
-}
-
-template<int n>
-PhysicPointDisplayComponentProvider<n>::PhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, function<Vector<freedom(n), double>()> orientation, function<Vector<n, double>()> scale) :
-	PhysicPointPositionProvider<n>(physicPoint),
-	PhysicPointComponentProvider<n>(physicPoint, orientation),
-	_scale(scale)
-{
-	
-}
-
-template<int n>
-void PhysicPointDisplayComponentProvider<n>::setScale(Vector<n, double> scale)
-{
-	_scale = [scale]() {
-		return scale;
+	return {
+		[physicPoint]{
+			return physicPoint.expired() ? Vector<n, double>{} : physicPoint.lock()->getPosition();
+		},
+		[orientation]{
+			return orientation;
+		},
+		[scale]{
+			return scale;
+		}
 	};
 }
 
 template<int n>
-void PhysicPointDisplayComponentProvider<n>::setScale(function<Vector<n, double>()> scale)
+DisplayComponentProvider<n> makePhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, std::function<Vector<freedom(n), double>()> orientation, Vector<n, double> scale)
 {
-	_scale = scale;
+	return {
+		[physicPoint]{
+			return physicPoint.expired() ? Vector<n, double>{} : physicPoint.lock()->getPosition();
+		},
+		orientation,
+		[scale]{
+			return scale;
+		}
+	};
 }
 
 template<int n>
-Vector<n, double> PhysicPointDisplayComponentProvider<n>::getScale() const
+DisplayComponentProvider<n> makePhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, Vector<freedom(n), double> orientation, std::function<Vector<n, double>()> scale)
 {
-	return _scale();
+	return {
+		[physicPoint]{
+			return physicPoint.expired() ? Vector<n, double>{} : physicPoint.lock()->getPosition();
+		},
+		[orientation]{
+			return orientation;
+		},
+		scale
+	};
 }
 
 template<int n>
-PhysicPointDisplayComponentProvider<n>* PhysicPointDisplayComponentProvider<n>::clone() const
+DisplayComponentProvider<n> makePhysicPointDisplayComponentProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint, std::function<Vector<freedom(n), double>()> orientation, std::function<Vector<n, double>()> scale)
 {
-	return new PhysicPointDisplayComponentProvider<n>(*this);
+	return {
+		[physicPoint]{
+			return physicPoint.expired() ? Vector<n, double>{} : physicPoint.lock()->getPosition();
+		},
+		orientation,
+		scale
+	};
 }
 
-template class PhysicPointDisplayComponentProvider<2>;
-template class PhysicPointDisplayComponentProvider<3>;
+template DisplayComponentProvider<2> makePhysicPointDisplayComponentProvider<2>(std::weak_ptr<const PhysicPoint<2>> physicPoint, Vector<freedom(2), double>, Vector<2, double>);
+template DisplayComponentProvider<2> makePhysicPointDisplayComponentProvider<2>(std::weak_ptr<const PhysicPoint<2>> physicPoint, std::function<Vector<freedom(2), double>()>, Vector<2, double>);
+template DisplayComponentProvider<2> makePhysicPointDisplayComponentProvider<2>(std::weak_ptr<const PhysicPoint<2>> physicPoint, Vector<freedom(2), double>, std::function<Vector<2, double>()>);
+template DisplayComponentProvider<2> makePhysicPointDisplayComponentProvider<2>(std::weak_ptr<const PhysicPoint<2>> physicPoint, std::function<Vector<freedom(2), double>()>, std::function<Vector<2, double>()>);
+template DisplayComponentProvider<3> makePhysicPointDisplayComponentProvider<3>(std::weak_ptr<const PhysicPoint<3>> physicPoint, Vector<freedom(3), double>, Vector<3, double>);
+template DisplayComponentProvider<3> makePhysicPointDisplayComponentProvider<3>(std::weak_ptr<const PhysicPoint<3>> physicPoint, std::function<Vector<freedom(3), double>()>, Vector<3, double>);
+template DisplayComponentProvider<3> makePhysicPointDisplayComponentProvider<3>(std::weak_ptr<const PhysicPoint<3>> physicPoint, Vector<freedom(3), double>, std::function<Vector<3, double>()>);
+template DisplayComponentProvider<3> makePhysicPointDisplayComponentProvider<3>(std::weak_ptr<const PhysicPoint<3>> physicPoint, std::function<Vector<freedom(3), double>()>, std::function<Vector<3, double>()>);
 
 }

@@ -1,22 +1,16 @@
 #pragma once
 
 #include "displaycomponentprovider.h"
-#include "zerocomponentprovider.h"
 
 namespace sbg {
 
 template<int n>
-class ZeroDisplayComponentProvider : public virtual ZeroComponentProvider<n>, public virtual DisplayComponentProvider<n>
-{
-public:
-	Vector<n, double> getScale() const override;
-	ZeroDisplayComponentProvider<n>* clone() const override;
-};
+DisplayComponentProvider<n> makeZeroDisplayComponentProvier();
 
-extern template class ZeroDisplayComponentProvider<2>;
-extern template class ZeroDisplayComponentProvider<3>;
+constexpr auto makeZeroDisplayComponentProvier2D = makeZeroDisplayComponentProvier<2>;
+constexpr auto makeZeroDisplayComponentProvier3D = makeZeroDisplayComponentProvier<3>;
 
-typedef ZeroDisplayComponentProvider<2> ZeroDisplayComponentProvider2D;
-typedef ZeroDisplayComponentProvider<3> ZeroDisplayComponentProvider3D;
+extern template DisplayComponentProvider<2> makeZeroDisplayComponentProvier<2>();
+extern template DisplayComponentProvider<3> makeZeroDisplayComponentProvier<3>();
 
 }

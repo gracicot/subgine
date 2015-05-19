@@ -5,17 +5,12 @@
 namespace sbg {
 
 template<int n>
-class ZeroPositionProvider : public virtual PositionProvider<n>
-{
-public:
-	Vector<n, double> getPosition() const override;
-	ZeroPositionProvider<n>* clone() const override;
-};
+PositionProvider<n> makeZeroPositionProvider();
 
-extern template class ZeroPositionProvider<2>;
-extern template class ZeroPositionProvider<3>;
+constexpr auto makeZeroPositionProvider2D = makeZeroPositionProvider<2>;
+constexpr auto makeZeroPositionProvider3D = makeZeroPositionProvider<3>;
 
-typedef ZeroPositionProvider<2> ZeroPositionProvider2D;
-typedef ZeroPositionProvider<3> ZeroPositionProvider3D;
+extern template PositionProvider<2> makeZeroPositionProvider<2>();
+extern template PositionProvider<3> makeZeroPositionProvider<3>();
 
 }

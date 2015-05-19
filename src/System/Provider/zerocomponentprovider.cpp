@@ -5,18 +5,12 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-Vector<freedom(n), double> ZeroComponentProvider<n>::getOrientation() const
+ComponentProvider<n> makeZeroComponentProvider()
 {
-	return {};
+	return {Vector<n, double>{0}, Vector<freedom(n), double>{0}};
 }
 
-template<int n>
-ZeroComponentProvider<n>* ZeroComponentProvider<n>::clone() const
-{
-	return new ZeroComponentProvider<n>(*this);
-}
-
-template class ZeroComponentProvider<2>;
-template class ZeroComponentProvider<3>;
+template ComponentProvider<2> makeZeroComponentProvider<2>();
+template ComponentProvider<3> makeZeroComponentProvider<3>();
 
 }

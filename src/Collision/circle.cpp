@@ -7,19 +7,19 @@ using namespace std;
 
 namespace sbg {
 
-Circle::Circle() : _provider(make_shared<ZeroPositionProvider2D>())
+Circle::Circle() : _provider{makeZeroPositionProvider2D()}
 {
 
 }
 
-Circle::Circle(shared_ptr<sbg::PositionProvider2D> provider): _provider(provider)
+Circle::Circle(PositionProvider2D provider): _provider{provider}
 {
 	
 }
 
 Vector2d Circle::getPosition() const
 {
-	return _provider->getPosition();
+	return _provider.getPosition();
 }
 
 std::shared_ptr<shape::Circle> Circle::getShape() const
@@ -75,7 +75,7 @@ Vector2d Circle::overlap(const SAT_able& other) const
 	return overlap;
 }
 
-void Circle::setPositionProvider(shared_ptr<PositionProvider2D> provider)
+void Circle::setPositionProvider(PositionProvider2D provider)
 {
 	_provider = provider;
 }

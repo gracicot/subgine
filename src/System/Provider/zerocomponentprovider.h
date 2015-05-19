@@ -1,22 +1,17 @@
 #pragma once
 
 #include "componentprovider.h"
-#include "zeropositionprovider.h"
 
 namespace sbg {
 
 template<int n>
-class ZeroComponentProvider : public virtual ComponentProvider<n>, public virtual ZeroPositionProvider<n>
-{
-public:
-	Vector<freedom(n), double> getOrientation() const override;
-	ZeroComponentProvider<n>* clone() const override;
-};
+ComponentProvider<n> makeZeroComponentProvider();
 
-extern template class ZeroComponentProvider<2>;
-extern template class ZeroComponentProvider<3>;
+constexpr auto makeZeroComponentProvider2D = makeZeroComponentProvider<2>;
+constexpr auto makeZeroComponentProvider3D = makeZeroComponentProvider<3>;
 
-typedef ZeroComponentProvider<2> ZeroComponentProvider2D;
-typedef ZeroComponentProvider<3> ZeroComponentProvider3D;
+extern template ComponentProvider<2> makeZeroComponentProvider<2>();
+extern template ComponentProvider<3> makeZeroComponentProvider<3>();
+
 
 }

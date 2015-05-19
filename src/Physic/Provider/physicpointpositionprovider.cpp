@@ -7,24 +7,17 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-PhysicPointPositionProvider<n>::PhysicPointPositionProvider(std::weak_ptr<const PhysicPoint<n>> physicPoint) : _physicPoint(physicPoint)
+PositionProvider<n> makePhysicPointPositionProvider(std::weak_ptr<const PhysicPoint<n>> physicPointRef)
 {
-	
+	return {[=]{
+		if (!physicPointRef.expired()) {
+			return physicPointRef.lock()->getPosition();
+			
+		}
+	}};
 }
 
-template<int n>
-Vector<n, double> PhysicPointPositionProvider<n>::getPosition() const
-{
-	return _physicPoint.expired() ? Vector<n, double>{} : _physicPoint.lock()->getPosition();
-}
-
-template<int n>
-PhysicPointPositionProvider<n>* PhysicPointPositionProvider<n>::clone() const
-{
-	return new PhysicPointPositionProvider<n>(*this);
-}
-
-template class PhysicPointPositionProvider<2>;
-template class PhysicPointPositionProvider<3>;
+template PositionProvider<2> makePhysicPointPositionProvider<2>(std::weak_ptr<const PhysicPoint<2>>);
+template PositionProvider<3> makePhysicPointPositionProvider<3>(std::weak_ptr<const PhysicPoint<3>>);
 
 }

@@ -13,7 +13,7 @@ class SAT_able : public virtual CollisionEntity, public virtual AABB_able, publi
 {
 public:
 	SAT_able() = default;
-	~SAT_able() = default;
+	virtual ~SAT_able() = default;
 	
 	using DefaultTester = SatTester;
 

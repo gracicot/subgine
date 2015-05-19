@@ -7,52 +7,28 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, function<Vector<n, double>()> scale) :
-	PhysicPointPositionProvider<n>(physicBody),
-	PhysicBodyComponentProvider<n>(physicBody),
-	_scale(scale)
+DisplayComponentProvider<n> makePhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, Vector<n, double> scale)
 {
-	
-}
-
-template<int n>
-PhysicBodyDisplayComponentProvider<n>::PhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, Vector<n, double> scale) :
-	PhysicPointPositionProvider<n>(physicBody),
-	PhysicBodyComponentProvider<n>(physicBody),
-	_scale([scale]() {
-		return scale;
-	})
-{
-
-}
-
-template<int n>
-void PhysicBodyDisplayComponentProvider<n>::setScale(function<Vector<n, double>()> scale)
-{
-	_scale = scale;
-}
-
-template<int n>
-void PhysicBodyDisplayComponentProvider<n>::setScale(Vector<n, double> scale)
-{
-	_scale = [scale]() {
-		return scale;
+	return {
+		[physicBody]{ return physicBody.expired() ? Vector<n, double>{} : physicBody.lock()->getPosition(); },
+		[physicBody]{ return physicBody.expired() ? Vector<freedom(n), double>{} : physicBody.lock()->getOrientation(); },
+		[scale]{ return scale; }
 	};
 }
 
 template<int n>
-Vector<n, double> PhysicBodyDisplayComponentProvider<n>::getScale() const
+DisplayComponentProvider<n> makePhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody, std::function<Vector<n, double>()> scale)
 {
-	return _scale();
+	return {
+		[physicBody]{ return physicBody.expired() ? Vector<n, double>{} : physicBody.lock()->getPosition(); },
+		[physicBody]{ return physicBody.expired() ? Vector<freedom(n), double>{} : physicBody.lock()->getOrientation(); },
+		scale
+	};
 }
 
-template<int n>
-PhysicBodyDisplayComponentProvider<n>* PhysicBodyDisplayComponentProvider<n>::clone() const
-{
-	return new PhysicBodyDisplayComponentProvider<n>(*this);
-}
-
-template class PhysicBodyDisplayComponentProvider<2>;
-template class PhysicBodyDisplayComponentProvider<3>;
+template DisplayComponentProvider<2> makePhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<2>>, Vector<2, double>);
+template DisplayComponentProvider<2> makePhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<2>>, std::function<Vector<2, double>()>);
+template DisplayComponentProvider<3> makePhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<3>>, Vector<3, double>);
+template DisplayComponentProvider<3> makePhysicBodyDisplayComponentProvider(std::weak_ptr<const PhysicBody<3>>, std::function<Vector<3, double>()>);
 
 }

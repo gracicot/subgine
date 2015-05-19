@@ -15,11 +15,12 @@ class Spring : public Rule<n>
 public:
 	Spring();
 	Spring(const double strength, const double length);
-	Spring(const double strength, const double length, std::unique_ptr<PositionProvider<n>> provider);
-	Spring(const Spring& other);
+	Spring(const double strength, const double length, PositionProvider<n> provider);
+	Spring(const Spring& other) = default;
+	Spring(Spring&& other) = default;
 	
 	Vector<n, double> getPosition() const;
-	void setPositionProvider(std::unique_ptr<PositionProvider<n>> provider);
+	void setPositionProvider(PositionProvider<n> provider);
 	
 	double getLength() const;
 	void setLength(const double length);
@@ -33,7 +34,7 @@ public:
 private:
 	double _strength;
 	double _length;
-	std::unique_ptr<PositionProvider<n>> _provider;
+	PositionProvider<n> _provider;
 };
 
 extern template class Spring<2>;

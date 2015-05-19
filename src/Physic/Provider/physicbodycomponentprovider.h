@@ -1,30 +1,20 @@
 #pragma once
 
-#include "physicpointpositionprovider.h"
-
 #include "../../system.hpp"
+
+#include <memory>
 
 namespace sbg {
 
 template<int n> class PhysicBody;
 
 template<int n>
-class PhysicBodyComponentProvider : public virtual ComponentProvider<n>, public virtual PhysicPointPositionProvider<n>
-{
-public:
-	PhysicBodyComponentProvider(std::weak_ptr<const PhysicBody<n>> physicoBody);
-	
-	virtual Vector<freedom(n), double> getOrientation() const override;
-	PhysicBodyComponentProvider<n>* clone() const override;
-	
-private:
-	std::weak_ptr<const PhysicBody<n>> _physicBody;
-};
+PositionProvider<n> makePhysicBodyComponentProvider(std::weak_ptr<const PhysicBody<n>> physicBody);
 
-extern template class PhysicBodyComponentProvider<2>;
-extern template class PhysicBodyComponentProvider<3>;
+constexpr auto makePhysicBody2DComponentProvider = makePhysicBodyComponentProvider<2>;
+constexpr auto makePhysicBody3DComponentProvider = makePhysicBodyComponentProvider<3>;
 
-typedef PhysicBodyComponentProvider<2> PhysicBody2DComponentProvider;
-typedef PhysicBodyComponentProvider<3> PhysicBody3DComponentProvider;
+extern template PositionProvider<2> makePhysicBodyComponentProvider<2>(std::weak_ptr<const PhysicBody<2>>);
+extern template PositionProvider<3> makePhysicBodyComponentProvider<3>(std::weak_ptr<const PhysicBody<3>>);
 
 }
