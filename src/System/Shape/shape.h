@@ -6,19 +6,18 @@ namespace sbg {
 namespace shape {
 
 template<int n>
-class Shape
-{
-public:
-	Shape() = default;
-	~Shape() = default;
-	Shape(const Shape&) = default;
-	Shape(Shape&&) = default;
+struct Shape {
+	virtual ~Shape();
 	
 	virtual Vector<freedom(n), double> getMomentOfInertia(double mass) const = 0;
 	virtual Vector<n, double> getCenterOfMass() const = 0;
-	
-private:
 };
+
+using Shape2D = Shape<2>;
+using Shape3D = Shape<3>;
+
+extern template struct Shape<2>;
+extern template struct Shape<3>;
 
 }
 }

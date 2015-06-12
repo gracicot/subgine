@@ -7,7 +7,7 @@
 namespace sbg {
 namespace shape {
 
-class Circle : public Shape<2>
+class Circle : public Shape2D
 {
 public:
 	Circle() = default;

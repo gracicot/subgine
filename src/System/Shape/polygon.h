@@ -7,7 +7,7 @@
 namespace sbg {
 namespace shape {
 
-class Polygon : public Shape<2>
+class Polygon : public Shape2D
 {
 public:
 	Polygon() = default;
