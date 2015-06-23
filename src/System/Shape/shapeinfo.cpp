@@ -100,7 +100,7 @@ void ShapeInfo<n, shape::Polytope<n>>::setPolytope(shape::Polytope<n>&& polytope
 
 template class ShapeInfo<2, shape::Polytope<2>>;
 template class ShapeInfo<2, shape::NSphere<2>>;
-// template class ShapeInfo<3, shape::Polytope<3>>; I won't even try
+template class ShapeInfo<3, shape::Polytope<3>>;
 template class ShapeInfo<3, shape::NSphere<3>>;
 
 
