@@ -1,6 +1,6 @@
 #include "physicbody.h"
 
-#include "../System/Shape/shape.h"
+#include "../System/Shape/shapeinfo.h"
 
 #include <cmath>
 #include <iostream>
@@ -12,7 +12,7 @@ namespace sbg {
 const double correction = 12;
 
 template<int n>
-PhysicBody<n>::PhysicBody() : _torque(Angle()), _angularVelocity(Angle()), _orientation(Angle()) {}
+PhysicBody<n>::PhysicBody(){}
 
 template<>
 void PhysicBody<2>::update(Time time)
@@ -168,24 +168,23 @@ Vector<freedom(n), double> PhysicBody<n>::getNextTorque() const
 template<int n>
 Vector<freedom(n), double> PhysicBody<n>::getMomentOfInertia() const
 {
-	if (_shape) {
-		return _momentOfInertia;
+	if (_shapeInfo) {
+		return _shapeInfo->getMomentOfInertia(this->_mass);
 	} else {
 		return {this->_mass};
 	}
 }
 
 template<int n>
-void PhysicBody<n>::setShape(shared_ptr<shape::Shape<n>> shape)
+void PhysicBody<n>::setShapeInfo(unique_ptr<AbstractShapeInfo<n>> shapeInfo)
 {
-	_shape = shape;
-	_momentOfInertia = _shape->getMomentOfInertia(this->_mass);
+	_shapeInfo = move(shapeInfo);
 }
 
 template<int n>
-shared_ptr<shape::Shape<n>> PhysicBody<n>::getShape() const
+const AbstractShapeInfo<n>* PhysicBody<n>::getShapeInfo() const
 {
-	return _shape;
+	return _shapeInfo.get();
 }
 
 template<int n>

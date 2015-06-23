@@ -6,9 +6,9 @@
 #include "System/material.h"
 #include "System/vector-all.h"
 #include "System/time.h"
-#include "System/Shape/shape.h"
-#include "System/Shape/circle.h"
-#include "System/Shape/polygon.h"
+#include "System/Shape/nsphere.h"
+#include "System/Shape/polytope.h"
+#include "System/Shape/shapeinfo.h"
 
 #include "System/Provider/valueprovider.h"
 #include "System/Provider/mainenginetimeprovider.h"

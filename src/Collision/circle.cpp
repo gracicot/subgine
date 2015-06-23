@@ -22,26 +22,31 @@ Vector2d Circle::getPosition() const
 	return _provider.getPosition();
 }
 
-std::shared_ptr<shape::Circle> Circle::getShape() const
+shape::Circle Circle::getShape() const
 {
 	return _shape;
 }
 
-void Circle::setShape(std::shared_ptr<shape::Circle> shape)
+void Circle::setShape(const shape::Circle& shape)
 {
 	_shape = shape;
 }
 
+void Circle::setShape(shape::Circle&& shape)
+{
+	_shape = move(shape);
+}
+
 bool Circle::isPointInside(Vector2d point) const
 {
-	double radius = _shape->getRadius();
+	double radius = _shape.getRadius();
 	return (getPosition() - point).getLength() < radius;
 }
 
 pair<double, double> Circle::projection(double angle) const
 {
 	double proj;
-	double radius = _shape->getRadius();
+	double radius = _shape.getRadius();
 	Vector2d axis = {cos(angle), sin(angle) };
 
 	proj = axis.dot(getPosition());
@@ -57,7 +62,7 @@ Circle* Circle::clone() const
 
 Vector2d Circle::overlap(const SAT_able& other) const
 {
-	Vector2d overlap(0, 0);
+	Vector2d overlap;
 	double angle = (other.getNearestPoint(getPosition()) - getPosition()).getAngle();
 
 	pair<double, double> projectionThis = this->projection(angle);
@@ -82,7 +87,7 @@ void Circle::setPositionProvider(PositionProvider2D provider)
 
 Vector2d Circle::getNearestPoint(Vector2d point) const
 {
-	double radius = _shape->getRadius();
+	double radius = _shape.getRadius();
 	Vector2d nearest(radius, 0);
 	nearest.setAngle((point - getPosition()).getAngle());
 	return nearest + getPosition();
@@ -90,7 +95,7 @@ Vector2d Circle::getNearestPoint(Vector2d point) const
 
 std::pair<Vector2d, Vector2d> Circle::getBoundingBox() const
 {
-	double radius = _shape->getRadius();
+	double radius = _shape.getRadius();
 	return {Vector2d{-radius, -radius} + getPosition(), Vector2d{radius, radius} + getPosition()};
 }
 

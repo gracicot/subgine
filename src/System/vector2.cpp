@@ -33,7 +33,7 @@ double Vector<2, T>::getAngle() const
 template<class T>
 double Vector<2, T>::getLength() const
 {
-	return sqrt((x * x) + (y * y));
+	return sqrt(power<2>(x) + power<2>(y));
 }
 
 template<class T>
@@ -137,25 +137,25 @@ bool Vector<2, T>::operator!= (const Vector<2, T>& other) const
 template<class T>
 bool Vector<2, T>::operator< (const Vector<2, T> &other) const
 {
-	return ((x * x) + (y * y)) < ((other.x * other.x) + (other.y * other.y));
+	return (power<2>(x) + power<2>(y)) < ((other.x * other.x) + (other.y * other.y));
 }
 
 template<class T>
 bool Vector<2, T>::operator> (const Vector<2, T> &other) const
 {
-	return ((x * x) + (y * y)) > ((other.x * other.x) + (other.y * other.y));
+	return (power<2>(x) + power<2>(y)) > ((other.x * other.x) + (other.y * other.y));
 }
 
 template<class T>
 bool Vector<2, T>::operator> (double length) const
 {
-	return ((x * x) + (y * y)) > (length * length);
+	return (power<2>(x) + power<2>(y)) > (length * length);
 }
 
 template<class T>
 bool Vector<2, T>::operator< (double length) const
 {
-	return ((x * x) + (y * y)) < (length * length);
+	return (power<2>(x) + power<2>(y)) < (length * length);
 }
 
 template<class T>

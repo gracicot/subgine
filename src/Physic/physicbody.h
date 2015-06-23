@@ -31,8 +31,8 @@ public:
 	
 	Angle getMomentOfInertia() const;
 
-	void setShape(std::shared_ptr<shape::Shape<n>> shape);
-	std::shared_ptr<shape::Shape<n>> getShape() const;
+	void setShapeInfo(std::unique_ptr<AbstractShapeInfo<n>> shape);
+	const AbstractShapeInfo<n>* getShapeInfo() const;
 
 	void accumulatePulse(const std::string type, Vector<n, double> pulse) override;
 	void accumulatePulse(const std::string type, Vector<n, double> pulse, Vector<n, double> position = Vector<n, double>());
@@ -43,8 +43,7 @@ public:
 
 protected:
 	std::map<std::string, Vector<n, double>> getNextPulsesPositions() const;
-	Angle _momentOfInertia;
-	std::shared_ptr<shape::Shape<n>> _shape;
+	std::unique_ptr<AbstractShapeInfo<n>> _shapeInfo;
 	std::map<std::string, Vector<n, double>> _pulsesPosition;
 	std::map<std::string, Vector<n, double>> _forcesPosition;
 	std::map<std::string, std::pair<SumAccumulator<Vector<n, double>>, double>> _pulsesPositionAccumulator;

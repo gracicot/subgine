@@ -30,12 +30,14 @@ public:
 	Polygon* clone() const override;
 	std::pair<Vector2d, Vector2d> getBoundingBox() const override;
 
-	std::shared_ptr<shape::Polygon> getShape() const;
-	void setShape(std::shared_ptr<shape::Polygon> shape);
+	shape::Polygon getShape() const;
+	void setShape(const shape::Polygon& shape);
+	void setShape(shape::Polygon&& shape);
 	std::vector<double> getAngles() const;
 
 private:
-	std::shared_ptr<shape::Polygon> _shape;
+	void makeCache();
+	shape::Polygon _shape;
 	ComponentProvider2D _components;
 	
 	std::pair<Vector2d, Vector2d> _cachedBoundingBox;

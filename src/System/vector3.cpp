@@ -31,7 +31,7 @@ Vector<2, double> Vector<3, T>::getAngle() const
 template<class T>
 double Vector<3, T>::getLength() const
 {
-	return sqrt((x * x) + (y * y) + (z * z));
+	return sqrt(power<2>(x) + power<2>(y) + power<2>(z));
 }
 
 template<class T>

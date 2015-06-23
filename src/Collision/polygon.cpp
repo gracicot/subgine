@@ -12,12 +12,12 @@ Polygon::Polygon(): _components(makeZeroComponentProvider2D())
 	
 }
 
-Polygon::Polygon(ComponentProvider2D components): _components(components)
+Polygon::Polygon(ComponentProvider2D components): _components{components}
 {
-	setShape(make_shared<shape::Polygon>());
+	makeCache();
 }
 
-shared_ptr<shape::Polygon> Polygon::getShape() const
+shape::Polygon Polygon::getShape() const
 {
 	return _shape;
 }
@@ -47,13 +47,25 @@ pair<Vector2d, Vector2d> Polygon::getBoundingBox() const
 	return {_cachedBoundingBox.first + getPosition(), _cachedBoundingBox.second + getPosition()};
 }
 
-void Polygon::setShape(shared_ptr<shape::Polygon> shape)
+void Polygon::setShape(const shape::Polygon& shape)
 {
 	_shape = shape;
-	if (_shape->getVertices().size() > 0) {
+	makeCache();
+}
+
+void Polygon::setShape(shape::Polygon&& shape)
+{
+	_shape = move(shape);
+	makeCache();
+}
+
+void Polygon::makeCache()
+{
+	const auto& vertices = _shape.getVertices();
+	if (vertices.size() > 0) {
 		{
 			Vector2d maximum;
-			for (auto vertex : _shape->getVertices()) {
+			for (auto vertex : vertices) {
 				maximum.x = max(maximum.x, abs(vertex.x));
 				maximum.y = max(maximum.y, abs(vertex.y));
 			}
@@ -61,8 +73,8 @@ void Polygon::setShape(shared_ptr<shape::Polygon> shape)
 		}
 
 		{
-			Vector2d previous = *_shape->getVertices().rbegin();
-			for (Vector2d current : _shape->getVertices()) {
+			Vector2d previous = *vertices.rbegin();
+			for (Vector2d current : vertices) {
 				_cachedAngles.push_back((previous - current).getAngle() - (tau / 4));
 				previous = current;
 			}
@@ -72,14 +84,14 @@ void Polygon::setShape(shared_ptr<shape::Polygon> shape)
 			Vector2d axis(cos(angle), sin(angle));
 			Vector2d current;
 			pair<double, double> projection;
-			auto vertex = _shape->getVertices().begin();
+			auto vertex = vertices.begin();
 
 			current = *vertex;
 
 			projection.first = axis.dot(current);
 			projection.second = projection.first;
 
-			for (vertex++ ; vertex != _shape->getVertices().end() ; vertex++) {
+			for (vertex++ ; vertex != _shape.getVertices().end() ; vertex++) {
 				current = *vertex;
 				double p = axis.dot(current);
 
@@ -95,13 +107,13 @@ void Polygon::setShape(shared_ptr<shape::Polygon> shape)
 
 bool Polygon::isPointInside(Vector2d point) const
 {
-	if (_shape && _shape->getVertices().size()) {
+	if (_shape.getVertices().size()) {
 		bool oddNodes = false;
-		Vector2d previous = *_shape->getVertices().rbegin();
+		Vector2d previous = *_shape.getVertices().rbegin();
 		previous.setAngle(previous.getAngle() + getAngle());
 		previous += getPosition();
 
-		for (Vector2d current :_shape->getVertices()) {
+		for (Vector2d current :_shape.getVertices()) {
 			current.setAngle(current.getAngle() + getAngle());
 			current += getPosition();
 
@@ -122,13 +134,13 @@ bool Polygon::isPointInside(Vector2d point) const
 
 pair<double, double> Polygon::projection(double angle) const
 {
-	if (_shape && _shape->getVertices().size() > 0) {
+	if (_shape.getVertices().size() > 0) {
 		pair<double, double> projection;
 
 		Vector2d axis(cos(angle), sin(angle));
 
 		bool first = true;
-		for (Vector2d current : _shape->getVertices()) {
+		for (Vector2d current : _shape.getVertices()) {
 			double p = axis.dot(current.angle(current.getAngle() + getAngle()));
 
 			projection.first = first ? p:min(projection.first, p);
@@ -147,7 +159,7 @@ pair<double, double> Polygon::projection(double angle) const
 
 Vector2d Polygon::overlap(const SAT_able& other) const
 {
-	if (!_shape || _shape->getVertices().size() == 0) {
+	if (_shape.getVertices().size() == 0) {
 		return Vector2d();
 	}
 
@@ -183,11 +195,11 @@ vector< double > Polygon::getAngles() const
 
 Vector2d Polygon::getNearestPoint(Vector2d point) const
 {
-	if (_shape && _shape->getVertices().size()) {
+	if (_shape.getVertices().size()) {
 		Vector2d nearest(0, 0);
 		bool first = true;
 
-		for (Vector2d current : _shape->getVertices()) {
+		for (Vector2d current : _shape.getVertices()) {
 			current.setAngle(getAngle() + current.getAngle());
 
 			if (first || nearest > (current - point)) {
