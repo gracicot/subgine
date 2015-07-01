@@ -21,22 +21,22 @@ struct ValueProvider final {
 		return *this;
 	}
 	
-	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type>
+	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
 	ValueProvider<T>& operator=(ValueProvider<U>&& other) {
 		std::swap(other._callback, _callback);
 		return *this;
 	}
 	
-	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type>
+	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
 	ValueProvider<T>& operator=(const ValueProvider<U>& other) {
 		_callback = other._callback;
 		return *this;
 	}
 	
-	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type>
+	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
 	ValueProvider(const ValueProvider<U>& other) : _callback{other._callback} {}
 	
-	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type>
+	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
 	ValueProvider(ValueProvider<U>&& other) : _callback{std::move(other._callback)} {}
 	
 	template<typename U, typename = typename std::enable_if<std::is_constructible<std::function<T()>, U>::value>::type>
