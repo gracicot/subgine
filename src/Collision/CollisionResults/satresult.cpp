@@ -6,7 +6,7 @@ using namespace std;
 
 namespace sbg {
 
-SatResult::SatResult(const Vector2d gap) : _gap(gap)
+SatResult::SatResult(const Vector2d gap, vector<Vector2d> contacts) : _gap(gap), _contacts{move(contacts)}
 {
 
 }
@@ -21,14 +21,19 @@ void SatResult::setGap(const Vector2d gap)
 	_gap = gap;
 }
 
-std::vector< Vector2d > SatResult::getContacts() const
+vector< Vector2d > SatResult::getContacts() const
 {
 	return _contacts;
 }
 
-void SatResult::setContacts(std::vector< Vector2d > contacts)
+void SatResult::setContacts(vector< Vector2d > contacts)
 {
 	_contacts = contacts;
+}
+
+unique_ptr<ResultData> SatResult::reverse() const
+{
+	return make_unique<SatResult>(_gap * -1, _contacts);
 }
 
 SatResult* SatResult::clone() const

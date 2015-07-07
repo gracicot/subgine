@@ -4,7 +4,7 @@ using namespace std;
 
 namespace sbg {
 
-Test::Test(weak_ptr<CollisionBody> object, weak_ptr<CollisionBody> other, Group* test) : _object{object}, _other{other}, _test{test}
+Test::Test(weak_ptr<CollisionBody> object, weak_ptr<CollisionBody> other, Group* test, bool reversible) : _object{object}, _other{other}, _test{test}, _reversible{reversible}
 {
 
 }
@@ -38,6 +38,16 @@ void Test::setOther(std::weak_ptr<CollisionBody> other)
 void Test::setTest(Group* test)
 {
 	_test = test;
+}
+
+bool Test::isReversible() const
+{
+	return _reversible;
+}
+
+void Test::reversible(bool reversible)
+{
+	_reversible = reversible;
 }
 
 }

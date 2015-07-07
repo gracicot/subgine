@@ -23,6 +23,7 @@ void CollisionEngine::execute(Time time)
 	}
 	// todo: move to a class
 	struct TestResult {
+		TestResult(shared_ptr<CollisionBody> _object, CollisionResult&& result, Group* _test) : object{move(_object)}, result{move(result)}, test{_test} {}
 		shared_ptr<CollisionBody> object;
 		CollisionResult result;
 		Group* test;
@@ -41,7 +42,10 @@ void CollisionEngine::execute(Time time)
 				TestResult testResult{testObject, move(testObject->testObject(testOther, time, test.getTest())), test.getTest()};
 				{
 					lock_guard<mutex> lock2{write};
-					results.push_back(move(testResult));
+					if (test.isReversible()) {
+						results.emplace_back(testOther, move(CollisionResult{testObject, testResult.result.isColliding(), testResult.result.getData()->reverse(), time}), test.getTest());
+					}
+					results.emplace_back(move(testResult));
 				}
 			} else {
 				if (test.getObject().expired()) {
@@ -84,22 +88,41 @@ void CollisionEngine::makeObjectList()
 	
 	for (auto object : _objects) {
 		for (auto group : object.second.second) {
-			auto findByGroup = [&group] (decltype(object)& current) -> bool {
-				return find(current.second.first.begin(), current.second.first.end(), group) != current.second.first.end();
+			auto findCurrent = [&group, this](decltype(object)& current){
+				return findByGroup(group, current);
 			};
+			
 			for (
-				auto it = find_if(_objects.begin(), _objects.end(), findByGroup);
+				auto it = find_if(_objects.begin(), _objects.end(), findCurrent);
 				it != _objects.end();
-				it = find_if(++it, _objects.end(), findByGroup)
+				it = find_if(++it, _objects.end(), findCurrent)
 			) {
 				if (!(!object.first.owner_before(it->first) && !it->first.owner_before(object.first))) {
-					_tests.push_back({object.first, it->first, group});
+					auto other = _objects[it->first];
+					auto duplicate = find(other.second.begin(), other.second.end(), group);
+					if (duplicate != other.second.end()) {
+						auto otherTest = find_if(_tests.begin(), _tests.end(), [&object, &it](Test& test){
+							
+							return (!test.getObject().owner_before(it->first) && !it->first.owner_before(test.getObject())) &&
+							(!test.getOther().owner_before(object.first) && !object.first.owner_before(test.getOther()));
+						});
+						if (otherTest == _tests.end()) {
+							_tests.emplace_back(object.first, it->first, group, true);
+						}
+					} else {
+						_tests.emplace_back(object.first, it->first, group, false);
+					}
 				}
 			}
 		}
 	}
 	
 	_listClean = true;
+}
+
+bool CollisionEngine::findByGroup(Group* group, pair<const weak_ptr<CollisionBody>, pair<vector<Group*>, vector<Group*>>>& object)
+{
+	return find(object.second.first.begin(), object.second.first.end(), group) != object.second.first.end();
 }
 
 }

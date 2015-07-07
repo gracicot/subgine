@@ -7,6 +7,7 @@
 #include "../satresultaccumulator.h"
 
 #include <vector>
+#include <memory>
 
 namespace sbg {
 
@@ -14,7 +15,7 @@ class SatResult : public ResultData
 {
 public:
 	using AccumulatorType = Accumulator<SatResult>;
-	SatResult(const Vector2d gap = Vector2d{});
+	SatResult(const Vector2d gap = {}, std::vector<Vector2d> contacts = {});
 
 	void setGap(const Vector2d gap);
 	Vector2d getGap() const;
@@ -23,6 +24,7 @@ public:
 	std::vector<Vector2d> getContacts() const;
 	
 	SatResult* clone() const override;
+	std::unique_ptr<ResultData> reverse() const override;
 
 private:
 	Vector2d _gap;

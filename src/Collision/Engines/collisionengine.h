@@ -22,8 +22,10 @@ public:
 
 	void add(std::weak_ptr<CollisionBody> object, std::vector<Group*> groups, std::vector<Group*> collisionGroups);
 	void remove(std::weak_ptr<CollisionBody> object);
+	
 
 protected:
+	bool findByGroup(Group* group, std::pair<const std::weak_ptr<CollisionBody>, std::pair<std::vector<Group*>, std::vector<Group*>>>& object);
 	std::mutex _inserting;
 	std::mutex _changeTests;
 	void makeObjectList();
