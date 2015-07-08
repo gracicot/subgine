@@ -43,7 +43,8 @@ void CollisionEngine::execute(Time time)
 				{
 					lock_guard<mutex> lock2{write};
 					if (test.isReversible()) {
-						results.emplace_back(testOther, move(CollisionResult{testObject, testResult.result.isColliding(), testResult.result.getData()->reverse(), time}), test.getTest());
+						auto data = testResult.result.getData();
+						results.emplace_back(testOther, move(CollisionResult{testObject, testResult.result.isColliding(), data ? data->reverse():nullptr, time}), test.getTest());
 					}
 					results.emplace_back(move(testResult));
 				}
@@ -99,12 +100,15 @@ void CollisionEngine::makeObjectList()
 			) {
 				if (!(!object.first.owner_before(it->first) && !it->first.owner_before(object.first))) {
 					auto other = _objects[it->first];
-					auto duplicate = find(other.second.begin(), other.second.end(), group);
-					if (duplicate != other.second.end()) {
-						auto otherTest = find_if(_tests.begin(), _tests.end(), [&object, &it](Test& test){
-							
+					auto duplicate = find(other.first.begin(), other.first.end(), group);
+					auto duplicate2 = find_if(other.second.begin(), other.second.end(), [&](Group* otherCollisionGroup){
+						return find(object.second.first.begin(), object.second.first.end(), otherCollisionGroup) != object.second.first.end();
+					});
+					if (duplicate != other.first.end() && duplicate2 != other.second.end()) {
+						auto otherTest = find_if(_tests.begin(), _tests.end(), [&object, &it, group](Test& test){
 							return (!test.getObject().owner_before(it->first) && !it->first.owner_before(test.getObject())) &&
-							(!test.getOther().owner_before(object.first) && !object.first.owner_before(test.getOther()));
+							(!test.getOther().owner_before(object.first) && !object.first.owner_before(test.getOther())) && 
+							group == test.getTest();
 						});
 						if (otherTest == _tests.end()) {
 							_tests.emplace_back(object.first, it->first, group, true);
