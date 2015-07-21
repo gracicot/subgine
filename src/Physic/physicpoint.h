@@ -39,9 +39,10 @@ public:
 	
 	void setRule(const std::string tag, std::unique_ptr<Rule<n>> rule);
 	std::map<std::string, std::unique_ptr<Rule<n>>>& getRule();
-	std::unique_ptr<Rule<n>>& getRule(const std::string tag);
+	Rule<n>* getRule(const std::string tag);
 	const std::map<std::string, std::unique_ptr<Rule<n>>>& getRule() const;
-	const std::unique_ptr<Rule<n>>& getRule(const std::string tag) const;
+	const Rule<n>* getRule(const std::string tag) const;
+	bool hasRule(std::string tag) const;
 	
 	void setForce(const std::string type, const Vector<n, double> force);
 	Vector<n, double> getForce(const std::string type) const;

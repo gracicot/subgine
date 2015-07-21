@@ -33,27 +33,33 @@ void PhysicPoint<n>::setPosition(const Vector<n, double> posision)
 }
 
 template<int n>
-unique_ptr<Rule<n>>& PhysicPoint<n>::getRule(const string tag)
+Rule<n>* PhysicPoint<n>::getRule(const string tag)
 {
 	auto it = _rules.find(tag);
 
 	if (it != _rules.end()) {
-		return it->second;
+		return it->second.get();
 	}
 
-	throw out_of_range("Rule " + tag + " doesn't exist...");
+	return nullptr;
 }
 
 template<int n>
-const unique_ptr<Rule<n>>& PhysicPoint<n>::getRule(const string tag) const
+const Rule<n>* PhysicPoint<n>::getRule(const string tag) const
 {
 	auto it = _rules.find(tag);
 
 	if (it != _rules.end()) {
-		return it->second;
+		return it->second.get();
 	}
 
-	throw out_of_range("Rule " + tag + " doesn't exist...");
+	return nullptr;
+}
+
+template<int n>
+bool PhysicPoint<n>::hasRule(string tag) const
+{
+	return _rules.find(tag) != _rules.end();
 }
 
 template<int n>
