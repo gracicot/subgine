@@ -12,7 +12,7 @@ CollisionResult::CollisionResult(): _colliding(false), _time()
 	
 }
 
-CollisionResult::CollisionResult(weak_ptr<const CollisionBody> other, const bool colliding, unique_ptr<const ResultData> data, Time time) : _time(time), _colliding(colliding), _other(other), _data(move(data))
+CollisionResult::CollisionResult(weak_ptr<const Entity> other, const bool colliding, unique_ptr<const ResultData> data, Time time) : _time(time), _colliding(colliding), _other(other), _data(move(data))
 {
 
 }
@@ -46,7 +46,7 @@ void CollisionResult::setTime(Time time)
 	_time = time;
 }
 
-shared_ptr<const CollisionBody> CollisionResult::getOther() const
+shared_ptr<const Entity> CollisionResult::getOther() const
 {
 	if (!_other.expired()) {
 		return _other.lock();
@@ -55,7 +55,7 @@ shared_ptr<const CollisionBody> CollisionResult::getOther() const
 	}
 }
 
-void CollisionResult::setOther(weak_ptr<const CollisionBody> other)
+void CollisionResult::setOther(weak_ptr<const Entity> other)
 {
 	_other = other;
 }

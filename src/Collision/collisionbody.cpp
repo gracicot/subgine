@@ -56,13 +56,13 @@ void CollisionBody::setCollisionEntity(Group* group, shared_ptr<CollisionEntity>
 	_collisionEntities[group] = move(entity);
 }
 
-CollisionResult CollisionBody::testObject(shared_ptr<const CollisionBody> other, Time time, Group* test) const
+CollisionResult CollisionBody::testObject(shared_ptr<const Entity> other, Time time, Group* test) const
 {
 	auto it = _collisionTesters.find(test);
 	
 	if (it != _collisionTesters.end()) {
 		auto entityThis = getCollisionEntity(test);
-		auto entityOther = other->getCollisionEntity(test);
+		auto entityOther = other->component<CollisionBody>().getCollisionEntity(test);
 		
 		if (entityThis && entityOther) {
 			auto data = it->second->test(entityThis, entityOther);
@@ -73,12 +73,12 @@ CollisionResult CollisionBody::testObject(shared_ptr<const CollisionBody> other,
 	return CollisionResult(other, false, nullptr, time);
 }
 
-void CollisionBody::trigger(CollisionResult result, Group* test)
+void CollisionBody::trigger(std::shared_ptr<Entity> self, CollisionResult result, Group* test)
 {
 	auto range = _collisionhandlers.equal_range(test);
 	
 	for(auto it = range.first ; it != range.second ; it++) {
-		it->second->apply(*this, result);
+		it->second->apply(self, result);
 	}
 }
 

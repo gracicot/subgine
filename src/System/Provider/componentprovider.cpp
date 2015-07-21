@@ -5,36 +5,10 @@ using namespace std;
 namespace sbg {
 
 template <int n>
-ComponentProvider<n>::ComponentProvider(function<Vector<n, double>()> position, function<Vector<freedom(n), double>()> orientation) :
-	_position(position),
-	_orientation(orientation)
-{
-	
-}
-
-template <int n>
-ComponentProvider<n>::ComponentProvider(Vector<n, double> position, function<Vector<freedom(n), double>()> orientation) :
-	_position([position]{ return position; }),
-	_orientation(orientation)
-{
-	
-}
-
-template <int n>
-ComponentProvider<n>::ComponentProvider(function<Vector<n, double>()> position, Vector<freedom(n), double> orientation) :
-	_position(position),
-	_orientation([orientation] { return orientation; })
-{
-	
-}
-
-template <int n>
-ComponentProvider<n>::ComponentProvider(Vector<n, double> position, Vector<freedom(n), double> orientation) :
-	_position([position]{ return position; }),
-	_orientation([orientation] { return orientation; })
-{
-	
-}
+ComponentProvider<n>::ComponentProvider(ValueProvider<Vector<n, double>> position, ValueProvider<Vector<freedom(n), double>> orientation) :
+	_position{move(position)},
+	_orientation{move(orientation)}
+{}
 
 template <int n>
 Vector <freedom(n), double> ComponentProvider<n>::getOrientation() const

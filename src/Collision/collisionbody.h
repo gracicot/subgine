@@ -23,7 +23,7 @@ public:
 	CollisionBody(CollisionBody&& other);
 	virtual ~CollisionBody() = default;
 
-	CollisionResult testObject(std::shared_ptr<const CollisionBody> other, Time time, Group* test) const;
+	CollisionResult testObject(std::shared_ptr<const Entity> other, Time time, Group* test) const;
 	
 	void setCollisionEntity(Group* group, std::shared_ptr<CollisionEntity> entity);
 	std::shared_ptr<CollisionEntity> getCollisionEntity(Group* group);
@@ -35,7 +35,7 @@ public:
 	void setCollisionTester(Group* group, std::unique_ptr<CollisionTester> collisionTester);
 	void removeCollisionTester(Group* group);
 	
-	void trigger(CollisionResult result, Group* test);
+	void trigger(std::shared_ptr<Entity> self, CollisionResult result, Group* test);
 
 	void setMaterial(Material material);
 	Material getMaterial() const;

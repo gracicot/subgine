@@ -6,107 +6,14 @@ namespace sbg {
 
 template <int n>
 DisplayComponentProvider<n>::DisplayComponentProvider(
-	function<Vector<n, double>()> position,
-	function<Vector<freedom(n), double>()> orientation,
-	function<Vector<n, double>()> scale
+	ValueProvider<Vector<n, double>> position,
+	ValueProvider<Vector<freedom(n), double>> orientation,
+	ValueProvider<Vector<n, double>> scale
 ) : 
-	_position{position},
-	_orientation{orientation},
-	_scale{scale}
-{
-	
-}
-
-template <int n>
-DisplayComponentProvider<n>::DisplayComponentProvider(
-	Vector<n, double> position,
-	function<Vector<freedom(n), double>()> orientation,
-	function<Vector<n, double>()> scale
-) : 
-	_position{[position]{ return position; }},
-	_orientation{orientation},
-	_scale{scale}
-{
-	
-}
-
-template <int n>
-DisplayComponentProvider<n>::DisplayComponentProvider(
-	function<Vector<n, double>()> position,
-	Vector<freedom(n), double> orientation,
-	function<Vector<n, double>()> scale
-) : 
-	_position{position},
-	_orientation{[orientation]{ return orientation; }},
-	_scale{scale}
-{
-	
-}
-
-template <int n>
-DisplayComponentProvider<n>::DisplayComponentProvider(
-	Vector<n, double> position,
-	Vector<freedom(n), double> orientation,
-	function<Vector<n, double>()> scale
-) : 
-	_position{[position]{ return position; }},
-	_orientation{[orientation]{ return orientation; }},
-	_scale{scale}
-{
-	
-}
-
-template <int n>
-DisplayComponentProvider<n>::DisplayComponentProvider(
-	function<Vector<n, double>()> position,
-	function<Vector<freedom(n), double>()> orientation,
-	Vector<n, double> scale
-) : 
-	_position{position},
-	_orientation{orientation},
-	_scale{[scale]{ return scale; }}
-{
-	
-}
-
-template <int n>
-DisplayComponentProvider<n>::DisplayComponentProvider(
-	Vector<n, double> position,
-	function<Vector<freedom(n), double>()> orientation,
-	Vector<n, double> scale
-) : 
-	_position{[position]{ return position; }},
-	_orientation{orientation},
-	_scale{[scale]{ return scale; }}
-{
-	
-}
-
-template <int n>
-DisplayComponentProvider<n>::DisplayComponentProvider(
-	function<Vector<n, double>()> position,
-	Vector<freedom(n), double> orientation,
-	Vector<n, double> scale
-) : 
-	_position{position},
-	_orientation{[orientation]{ return orientation; }},
-	_scale{[scale]{ return scale; }}
-{
-	
-}
-
-template <int n>
-DisplayComponentProvider<n>::DisplayComponentProvider(
-	Vector<n, double> position,
-	Vector<freedom(n), double> orientation,
-	Vector<n, double> scale
-) : 
-	_position{[position]{ return position; }},
-	_orientation{[orientation]{ return orientation; }},
-	_scale{[scale]{ return scale; }}
-{
-	
-}
+	_position{move(position)},
+	_orientation{move(orientation)},
+	_scale{move(scale)}
+{}
 
 template <int n>
 Vector<n, double> DisplayComponentProvider<n>::getScale() const

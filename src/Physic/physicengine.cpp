@@ -2,19 +2,22 @@
 
 #include <algorithm>
 #include <iostream>
+#include "abstractphysicpoint.h"
 
 using namespace std;
 
 namespace sbg {
 
-void PhysicEngine::add(weak_ptr<AbstractPhysicPoint> object)
+void PhysicEngine::add(shared_ptr<Entity> object)
 {
-	_objects.insert(object);
+	if (object->has<AbstractPhysicPoint>()) {
+		_objects.insert(move(object));
+	}
 }
 
-void PhysicEngine::remove(weak_ptr<AbstractPhysicPoint> object)
+void PhysicEngine::remove(weak_ptr<Entity> object)
 {
-	auto it = find_if(_objects.begin(), _objects.end(), [&object](weak_ptr<AbstractPhysicPoint> other){
+	auto it = find_if(_objects.begin(), _objects.end(), [&object](const weak_ptr<Entity>& other){
 		return !object.owner_before(other) && !other.owner_before(object);
 	});
 	
@@ -28,7 +31,7 @@ void PhysicEngine::execute(Time time)
 	for (auto ref : _objects) {
 		if (!ref.expired()) {
 			auto object = ref.lock();
-			object->update(time);
+			object->component<AbstractPhysicPoint>().update(time);
 		} else {
 			remove(ref);
 		}

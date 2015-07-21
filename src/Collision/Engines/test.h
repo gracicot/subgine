@@ -5,30 +5,30 @@
 
 namespace sbg {
 
-class CollisionBody;
+class Entity;
 struct Group;
 
 class Test
 {
 public:
-	Test(std::weak_ptr<CollisionBody> object, std::weak_ptr<CollisionBody> other, Group* test, bool reversible);
+	Test(std::weak_ptr<Entity> object, std::weak_ptr<Entity> other, Group* test, bool reversible);
 	
 	void setTest(Group* test);
 	Group* getTest() const;
 	
-	std::weak_ptr<CollisionBody> getObject() const;
-	void setObject(std::weak_ptr<CollisionBody> object);
+	std::weak_ptr<Entity> getObject() const;
+	void setObject(std::weak_ptr<Entity> object);
 	
-	std::weak_ptr<CollisionBody> getOther() const;
-	void setOther(std::weak_ptr<CollisionBody> other);
+	std::weak_ptr<Entity> getOther() const;
+	void setOther(std::weak_ptr<Entity> other);
 	
 	bool isReversible() const;
 	void reversible(bool reversible);
 	
 private:
 	bool _reversible;
-	std::weak_ptr<CollisionBody> _object;
-	std::weak_ptr<CollisionBody> _other;
+	std::weak_ptr<Entity> _object;
+	std::weak_ptr<Entity> _other;
 	Group* _test;
 };
 

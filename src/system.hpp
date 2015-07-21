@@ -9,6 +9,8 @@
 #include "System/Shape/nsphere.h"
 #include "System/Shape/polytope.h"
 #include "System/Shape/shapeinfo.h"
+#include "System/type_id.h"
+#include "System/entity.h"
 
 #include "System/Provider/valueprovider.h"
 #include "System/Provider/mainenginetimeprovider.h"
