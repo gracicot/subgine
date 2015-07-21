@@ -57,6 +57,12 @@ const Rule<n>* PhysicPoint<n>::getRule(const string tag) const
 }
 
 template<int n>
+void PhysicPoint<n>::removeRule(string tag)
+{
+	_rules.erase(tag);
+}
+
+template<int n>
 bool PhysicPoint<n>::hasRule(string tag) const
 {
 	return _rules.find(tag) != _rules.end();

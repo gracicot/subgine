@@ -44,6 +44,8 @@ public:
 	const Rule<n>* getRule(const std::string tag) const;
 	bool hasRule(std::string tag) const;
 	
+	void removeRule(std::string tag);
+	
 	void setForce(const std::string type, const Vector<n, double> force);
 	Vector<n, double> getForce(const std::string type) const;
 	std::map<std::string, Vector<n, double>>& getForce();
