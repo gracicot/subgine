@@ -60,6 +60,7 @@ template<int n>
 void PhysicPoint<n>::removeRule(string tag)
 {
 	_rules.erase(tag);
+	_forces.erase(tag);
 }
 
 template<int n>
