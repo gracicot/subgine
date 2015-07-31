@@ -194,20 +194,6 @@ Vector<n, double> PhysicPoint<n>::getForce(const string type) const
 }
 
 template<int n>
-PhysicPoint<n>& PhysicPoint<n>::operator= (const PhysicPoint<n>& c)
-{
-	this->_position = c._position;
-	_velocity = c._velocity;
-
-	_mass = c._mass;
-	_forces.clear();
-	_forces.insert(c._forces.begin(), c._forces.begin());
-	_pulses.clear();
-	_pulses.insert(c._forces.begin(), c._forces.begin());
-	return *this;
-}
-
-template<int n>
 map<string, unique_ptr<Rule<n>>>& PhysicPoint<n>::getRule()
 {
 	return _rules;

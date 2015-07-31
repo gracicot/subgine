@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "../system.hpp"
@@ -17,7 +16,8 @@ class PhysicPoint : public AbstractPhysicPoint
 public:
 	PhysicPoint();
 	~PhysicPoint();
-	PhysicPoint<n>& operator= (const PhysicPoint<n>& c);
+	PhysicPoint(const PhysicPoint&) = delete;
+	PhysicPoint& operator=(const PhysicPoint&) = delete;
 	
 	void setVelocity(const Vector<n, double> velocity);
 	Vector<n, double> getVelocity() const;
@@ -66,7 +66,6 @@ protected:
 	std::map<std::string, PulseAccumulator<n>> _pulseAccumulators;
 	std::mutex _correctionMutex;
 	std::mutex _pulseAccumulatorMutex;
-
 };
 
 extern template class PhysicPoint<2>;
