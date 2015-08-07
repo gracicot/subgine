@@ -16,8 +16,8 @@ public:
 
 	void update(Time time) override;
 	
-	virtual Vector<n, double> getNextVelocity(double time) const override;
-	virtual std::map<std::string, Vector<n, double>> getNextForces() const;
+	Vector<n, double> getNextVelocity(double time) const override;
+	std::map<std::string, Vector<n, double>> getNextForces() const override;
 
 	Angle getTorque() const;
 	Angle getOrientation() const;

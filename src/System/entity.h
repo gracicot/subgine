@@ -20,6 +20,7 @@ private:
 	template<typename T>
 	struct AbstractRProperty : AbstractProperty {
 		virtual T get() const = 0;
+		virtual std::function<T()> functor() const = 0;
 	};
 	
 	template<typename T>
@@ -29,6 +30,10 @@ private:
 		
 		T get() const override {
 			return _getter();
+		}
+		
+		std::function<T()> functor() const override {
+			return _getter;
 		}
 		
 	private:
@@ -53,6 +58,10 @@ private:
 		
 		T get() const override {
 			return _value();
+		}
+		
+		std::function<T()> functor() const override {
+			return _value.function();
 		}
 		
 	private:
@@ -134,6 +143,21 @@ public:
 		if (it != _properties.end()) {
 			if (auto property = dynamic_cast<AbstractRProperty<T>*>(it->second.get())) {
 				return property->get();
+			} else {
+				throw std::runtime_error{std::string{"The property with the name "} + name + "has the wrong type"};
+			}
+		}
+		
+		throw std::runtime_error{std::string{"The property with the name "} + name + "has not been found"};
+	}
+	
+	template<typename T>
+	std::function<T()> provider(std::string name) const {
+		auto it = _properties.find(name);
+		
+		if (it != _properties.end()) {
+			if (auto property = dynamic_cast<AbstractRProperty<T>*>(it->second.get())) {
+				return property->functor();
 			} else {
 				throw std::runtime_error{std::string{"The property with the name "} + name + "has the wrong type"};
 			}

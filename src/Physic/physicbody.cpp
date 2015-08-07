@@ -212,7 +212,7 @@ Vector<n, double> PhysicBody<n>::getPulsePosition(string type) const
 		return it->second;
 	}
 
-	return Vector<n, double>();
+	return {};
 }
 
 template<int n>
@@ -224,13 +224,13 @@ Vector<n, double> PhysicBody<n>::getForcePosition(string type) const
 		return it->second;
 	}
 
-	return Vector<n, double>();
+	return {};
 }
 
 template<int n>
 void PhysicBody<n>::accumulatePulse(const string type, Vector<n, double> pulse)
 {
-	PhysicPoint<n>::accumulatePulse(type, pulse);
+	accumulatePulse(type, pulse, {});
 }
 
 template<int n>
