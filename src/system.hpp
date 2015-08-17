@@ -12,7 +12,7 @@
 #include "System/type_id.h"
 #include "System/entity.h"
 
-#include "System/Provider/valueprovider.h"
+#include "System/Provider/provider.h"
 #include "System/Provider/mainenginetimeprovider.h"
 #include "System/Provider/positionprovider.h"
 #include "System/Provider/componentprovider.h"

@@ -1,21 +1,21 @@
 #pragma once
 
 #include "../vector-all.h"
-#include "valueprovider.h"
+#include "provider.h"
 #include <functional>
 
 namespace sbg {
 
 template <int n>
 struct ComponentProvider {
-	ComponentProvider(ValueProvider<Vector<n, double>> position, ValueProvider<Vector<freedom(n), double>> orientation);
+	ComponentProvider(Provider<Vector<n, double>> position, Provider<Vector<freedom(n), double>> orientation);
 	
 	Vector<freedom(n), double> getOrientation() const;
 	Vector<n, double> getPosition() const;
 	
 private:
-	ValueProvider<Vector<freedom(n), double>> _orientation;
-	ValueProvider<Vector<n, double>> _position;
+	Provider<Vector<freedom(n), double>> _orientation;
+	Provider<Vector<n, double>> _position;
 };
 
 extern template class ComponentProvider<2>;

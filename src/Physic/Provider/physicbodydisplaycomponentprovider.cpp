@@ -7,7 +7,7 @@ using namespace std;
 namespace sbg {
 
 template<int n>
-DisplayComponentProvider<n> makePhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, ValueProvider<Vector<n, double>> scale)
+DisplayComponentProvider<n> makePhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, Provider<Vector<n, double>> scale)
 {
 	return {
 		[&physicBody]{ return physicBody.getPosition(); },
@@ -16,7 +16,7 @@ DisplayComponentProvider<n> makePhysicBodyDisplayComponentProvider(const PhysicB
 	};
 }
 
-template DisplayComponentProvider<2> makePhysicBodyDisplayComponentProvider(const PhysicBody<2>&, ValueProvider<Vector<2, double>>);
-template DisplayComponentProvider<3> makePhysicBodyDisplayComponentProvider(const PhysicBody<3>&, ValueProvider<Vector<3, double>>);
+template DisplayComponentProvider<2> makePhysicBodyDisplayComponentProvider(const PhysicBody<2>&, Provider<Vector<2, double>>);
+template DisplayComponentProvider<3> makePhysicBodyDisplayComponentProvider(const PhysicBody<3>&, Provider<Vector<3, double>>);
 
 }

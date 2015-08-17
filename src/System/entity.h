@@ -2,7 +2,7 @@
 
 #include "./memory.h"
 #include "type_id.h"
-#include "Provider/valueprovider.h"
+#include "Provider/provider.h"
 
 #include <exception>
 #include <memory>
@@ -43,8 +43,8 @@ private:
 		RWProperty(T&& value) : _value{std::move(value)} {}
 		RWProperty(const T& value) : _value{value} {}
 		
-		RWProperty(ValueProvider<T>&& value) : _value{std::move(value)} {}
-		RWProperty(const ValueProvider<T>& value) : _value{value} {}
+		RWProperty(Provider<T>&& value) : _value{std::move(value)} {}
+		RWProperty(const Provider<T>& value) : _value{value} {}
 		
 		template<typename Arg>
 		void set(Arg&& arg) {
@@ -56,7 +56,7 @@ private:
 		}
 		
 	private:
-		ValueProvider<T> _value;
+		Provider<T> _value;
 	};
 
 public:

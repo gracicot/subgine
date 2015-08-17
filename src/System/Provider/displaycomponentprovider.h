@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../vector-all.h"
-#include "valueprovider.h"
+#include "provider.h"
 #include <functional>
 
 namespace sbg {
@@ -9,9 +9,9 @@ namespace sbg {
 template <int n>
 struct DisplayComponentProvider {
 	DisplayComponentProvider(
-		ValueProvider<Vector<n, double>> position,
-		ValueProvider<Vector<freedom(n), double>> orientation,
-		ValueProvider<Vector<n, double>> scale
+		Provider<Vector<n, double>> position,
+		Provider<Vector<freedom(n), double>> orientation,
+		Provider<Vector<n, double>> scale
 	);
 	
 	Vector<n, double> getScale() const;
@@ -19,9 +19,9 @@ struct DisplayComponentProvider {
 	Vector<n, double> getPosition() const;
 	
 private:
-	ValueProvider<Vector<n, double>> _scale;
-	ValueProvider<Vector<freedom(n), double>> _orientation;
-	ValueProvider<Vector<n, double>> _position;
+	Provider<Vector<n, double>> _scale;
+	Provider<Vector<freedom(n), double>> _orientation;
+	Provider<Vector<n, double>> _position;
 	
 };
 
