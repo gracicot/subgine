@@ -11,12 +11,12 @@ class Point : public CollisionEntity
 {
 public:
 	Point() = default;
-	Point(std::function< Vector2d(void) > functor);
+	Point(Provider<Vector2d> position);
 	Vector2d getPosition() const;
 	operator Vector2d();
 	
 private:
-	std::function< Vector2d(void) > _functor;
+	Provider<Vector2d> _position;
 };
 
 }

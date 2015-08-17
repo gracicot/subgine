@@ -4,7 +4,7 @@ using namespace std;
 
 namespace sbg {
 
-Point::Point(function< Vector2d(void) > functor) : _functor(functor) {}
+Point::Point(Provider<Vector2d> position) : _position{position} {}
 
 Point::operator Vector2d()
 {
@@ -13,7 +13,7 @@ Point::operator Vector2d()
 
 Vector2d Point::getPosition() const
 {
-	return _functor();
+	return _position();
 }
 
 }

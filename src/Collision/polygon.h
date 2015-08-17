@@ -17,6 +17,8 @@ public:
 	Polygon(ComponentProvider2D components);
 	Polygon(const Polygon&) = default;
 	Polygon(Polygon&&) = default;
+	Polygon& operator=(const Polygon&) = default;
+	Polygon& operator=(Polygon&&) = default;
 	
 	Vector2d getPosition() const;
 	double getAngle() const;
@@ -27,7 +29,6 @@ public:
 	bool isPointInside(Vector2d point) const override;
 	Vector2d overlap(const SAT_able& other) const override;
 	Vector2d getNearestPoint(Vector2d point) const override;
-	Polygon* clone() const override;
 	std::pair<Vector2d, Vector2d> getBoundingBox() const override;
 
 	shape::Polygon getShape() const;

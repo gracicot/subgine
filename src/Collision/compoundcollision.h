@@ -30,11 +30,6 @@ public:
 	{
 		return _entities;
 	}
-	
-	CompoundCollision* clone() const override
-	{
-		return new CompoundCollision(*this);
-	}
 
 private:
 	std::set<std::shared_ptr<T>> _entities;

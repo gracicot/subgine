@@ -9,11 +9,6 @@ AABBBox::AABBBox(pair<Vector2d, Vector2d> box) : _box(box)
 
 }
 
-AABBBox* AABBBox::clone() const
-{
-	return new AABBBox(*this);
-}
-
 pair< Vector2d, Vector2d > AABBBox::getBoundingBox() const
 {
 	return _box;

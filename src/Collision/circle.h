@@ -24,7 +24,6 @@ public:
 	void setShape(shape::Circle&& shape);
 	shape::Circle getShape() const;
 	
-	Circle* clone() const override;
 private:
 	shape::Circle _shape;
 	PositionProvider2D _provider;

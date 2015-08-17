@@ -55,11 +55,6 @@ pair<double, double> Circle::projection(double angle) const
 	return {proj - radius, proj + radius};
 }
 
-Circle* Circle::clone() const
-{
-	return new Circle(*this);
-}
-
 Vector2d Circle::overlap(const SAT_able& other) const
 {
 	Vector2d overlap;

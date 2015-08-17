@@ -17,18 +17,12 @@ CollisionBody::CollisionBody(CollisionBody&& other) :
 	_collisionTesters(move(other._collisionTesters))
 {}
 
-CollisionBody::CollisionBody(const CollisionBody& other) :
-	_material(other._material)
+CollisionBody& CollisionBody::operator=(CollisionBody&& other)
 {
-	for (auto& tester : other._collisionTesters) {
-		_collisionTesters.emplace(tester.first, clone_unique(tester.second));
-	}
-	for (auto& entity : other._collisionEntities) {
-		_collisionEntities.emplace(entity.first, clone_shared(entity.second));
-	}
-	for (auto& entity : other._collisionhandlers) {
-		_collisionhandlers.emplace(entity.first, clone_unique(entity.second));
-	}
+	swap(_material, other._material);
+	swap(_collisionEntities, other._collisionEntities);
+	swap(_collisionTesters, other._collisionTesters);
+	swap(_collisionhandlers, other._collisionhandlers);
 }
 
 void CollisionBody::addCollisionHandler(Group* group, unique_ptr<CollisionHandler> collisionHandler)

@@ -19,9 +19,11 @@ class CollisionBody
 {
 public:
 	CollisionBody() = default;
-	CollisionBody(const CollisionBody& other);
+	CollisionBody(const CollisionBody&) = delete;
 	CollisionBody(CollisionBody&& other);
 	virtual ~CollisionBody() = default;
+	CollisionBody& operator=(CollisionBody&& other);
+	CollisionBody& operator=(const CollisionBody&) = delete;
 
 	CollisionResult testObject(std::shared_ptr<const Entity> other, Time time, Group* test) const;
 	
