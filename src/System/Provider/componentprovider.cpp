@@ -5,7 +5,7 @@ using namespace std;
 namespace sbg {
 
 template <int n>
-ComponentProvider<n>::ComponentProvider(ValueProvider<Vector<n, double>> position, ValueProvider<Vector<freedom(n), double>> orientation) :
+ComponentProvider<n>::ComponentProvider(Provider<Vector<n, double>> position, Provider<Vector<freedom(n), double>> orientation) :
 	_position{move(position)},
 	_orientation{move(orientation)}
 {}

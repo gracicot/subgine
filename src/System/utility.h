@@ -4,8 +4,13 @@
 #include <type_traits>
 
 namespace sbg {
+	#if defined(__GNUC__) && !defined(__clang__)
 	constexpr double tau = 8.0 * std::atan(1.0);
 	constexpr double pi = tau / 2.0;
+	#elif !defined(__GNUC__) || defined(__clang__)
+	constexpr double tau = M_PI;
+	constexpr double pi = tau / 2.0;
+	#endif
 	
 	constexpr unsigned int freedom(unsigned int n) {
 		return n * (n - 1) / 2;

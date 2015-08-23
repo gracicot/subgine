@@ -7,7 +7,7 @@ namespace sbg {
 template<int> class PhysicPoint;
 
 template<int n>
-class Rule : public virtual Clonable
+class Rule : public Clonable
 {
 public:
 	virtual ~Rule();

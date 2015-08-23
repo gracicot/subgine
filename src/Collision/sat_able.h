@@ -17,7 +17,6 @@ public:
 	
 	using DefaultTester = SatTester;
 
-	virtual SAT_able* clone() const = 0;
 	virtual std::pair<double, double> projection(double angle) const = 0;
 	virtual Vector2d overlap(const SAT_able& other) const = 0;
 	virtual Vector2d getNearestPoint(Vector2d point) const = 0;

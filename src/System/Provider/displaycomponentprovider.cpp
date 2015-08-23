@@ -6,9 +6,9 @@ namespace sbg {
 
 template <int n>
 DisplayComponentProvider<n>::DisplayComponentProvider(
-	ValueProvider<Vector<n, double>> position,
-	ValueProvider<Vector<freedom(n), double>> orientation,
-	ValueProvider<Vector<n, double>> scale
+	Provider<Vector<n, double>> position,
+	Provider<Vector<freedom(n), double>> orientation,
+	Provider<Vector<n, double>> scale
 ) : 
 	_position{move(position)},
 	_orientation{move(orientation)},

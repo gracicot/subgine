@@ -14,20 +14,22 @@ class QuadTree : public AABB_able
 public:
 	using container = std::set<std::weak_ptr<const T>, std::owner_less<std::weak_ptr<const T>>>;
 	
-	QuadTree(std::pair<Vector2d, Vector2d> box = std::pair<Vector2d, Vector2d>(Vector2d(), Vector2d())): _boundingBox(box)
+	QuadTree(std::pair<Vector2d, Vector2d> box = {}): _boundingBox{box}
 	{
 		
 	}
+	
+	QuadTree(const QuadTree&) = delete;
+	QuadTree& operator=(const QuadTree&) = delete;
+	
+    QuadTree(QuadTree&& other) : _boundingBox{std::move(other._boundingBox)}, _nodes{std::move(other._nodes)}, _objects{std::move(other._objects)} {}
 
-	QuadTree(const QuadTree<T>& other)
-	{
-		_boundingBox = other._boundingBox;
-		_objects = other._objects;
-		for (int i = 0 ; i<_nodes.size() ; i++) {
-			_nodes[i] = std::unique_ptr<QuadTree<T>>(other._nodes[i]->clone());
-		}
-	}
-
+    QuadTree& operator=(QuadTree&& other) {
+		std::swap(_boundingBox, other._boundingBox);
+		std::swap(_nodes, other.nodes);
+		std::swap(_objects, other._objects);
+    }
+    
 	void add(std::weak_ptr<const T> object)
 	{
 		if (!object.expired()) {

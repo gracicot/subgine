@@ -22,11 +22,6 @@ shape::Polygon Polygon::getShape() const
 	return _shape;
 }
 
-Polygon* Polygon::clone() const
-{
-	return new Polygon(*this);
-}
-
 void Polygon::setComponents(ComponentProvider2D components)
 {
 	_components = components;
