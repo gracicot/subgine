@@ -28,17 +28,24 @@ public:
 		std::swap(_boundingBox, other._boundingBox);
 		std::swap(_nodes, other.nodes);
 		std::swap(_objects, other._objects);
+		
+		return *this;
     }
     
-	void add(std::weak_ptr<const T> object)
+    template<typename I>
+	void add(I first, I end)
 	{
-		if (!object.expired()) {
-			auto obj = object.lock();
-			if (isContaining(*obj) && (obj->getBoundingBox().first - obj->getBoundingBox().second).notZero()) {
-				subdivide(object);
+		for (auto it = std::move(first) ; it != end ; it++) {
+			if (isContaining(**it) && ((*it)->getBoundingBox().first - (*it)->getBoundingBox().second).notZero()) {
+				subdivide(*it);
 			}
-			pushDown();
 		}
+		pushDown();
+	}
+	
+	template<typename  C>
+	void add(C&& container) {
+		add(container.begin(), container.end());
 	}
 
 	container getNearby(const T& other) const
@@ -98,51 +105,46 @@ public:
 	}
 	
 private:
-	void subdivide(std::weak_ptr<const T> object)
+	void subdivide(std::shared_ptr<const T> object)
 	{
-		if (!object.expired()) {
-			auto obj = object.lock();
-			if (isboxOverlapping(*obj) && (obj->getBoundingBox().first - obj->getBoundingBox().second).notZero()) {
-				for (int i = 0 ; i<_nodes.size() ; i++) {
-					auto box = getChildBoundingBox(i);
-					auto& node = _nodes[i];
-					
-					if (!node) {
-						node = std::make_unique<QuadTree>(box);
-					}
-					
-					if (node->isContaining(*obj)) {
-						node->subdivide(object);
-					} else if (node->isboxOverlapping(*obj)) {
-						node->_objects.insert(object);
-					} else {
-						_objects.insert(object);
-					}
-				}
+		for (int i = 0 ; i<_nodes.size() ; i++) {
+			auto& node = _nodes[i];
+			
+			if (!node) {
+				node = std::make_unique<QuadTree>(getChildBoundingBox(i));
+			}
+			
+			if (node->isContaining(*object)) {
+				node->subdivide(object);
+			} else if (node->isboxOverlapping(*object)) {
+				node->_objects.emplace(object);
+			} else {
+				_objects.emplace(object);
 			}
 		}
+		
 	}
 
 	void pushDown()
 	{
 		auto it = _objects.begin();
+		bool inserted = false;
 		while(it!=_objects.end()) {
 			auto current = it++;
-			bool inserted = false;
 			for (auto& node : _nodes) {
 				if (node) {
 					if (!current->expired()) {
 						auto closePtr = current->lock();
 						if (node->isboxOverlapping(*closePtr)) {
-							node->_objects.insert(*current);
+							node->push(closePtr);
 							inserted = true;
 						}
 					}
 				}
 			}
-			if (inserted) {
-				_objects.erase(current);
-			}
+		}
+		if (inserted) {
+			_objects.clear();
 		}
 		for (auto& node : _nodes) {
 			if (node) { 
@@ -150,6 +152,22 @@ private:
 					node->pushDown();
 				}
 			}
+		}
+	}
+	
+	void push(std::shared_ptr<const T>& object) {
+		bool inserted = false;
+		for (auto& node : _nodes) {
+			if (node) {
+				if (node->isboxOverlapping(*object)) {
+					node->push(object);
+					inserted= true;
+				}
+			}
+		}
+		
+		if (!inserted) {
+			_objects.emplace(object);
 		}
 	}
 
