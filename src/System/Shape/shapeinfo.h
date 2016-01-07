@@ -7,12 +7,10 @@
 namespace sbg {
 
 template<int n, typename T>
-class ShapeInfo;
+struct ShapeInfo;
 
 template<int n>
-class ShapeInfo<n, shape::NSphere<n>> : public AbstractShapeInfo<n>
-{
-public:
+struct ShapeInfo<n, shape::NSphere<n>> : AbstractShapeInfo<n> {
 	ShapeInfo(const shape::NSphere<n>& sphere);
 	ShapeInfo(shape::NSphere<n>&& sphere);
 	
@@ -31,9 +29,7 @@ template<> Vector<freedom(2), double> ShapeInfo<2, shape::NSphere<2>>::getMoment
 template<> Vector<freedom(3), double> ShapeInfo<3, shape::NSphere<3>>::getMomentOfInertia(double mass) const;
 
 template<int n>
-class ShapeInfo<n, shape::Polytope<n>> : public AbstractShapeInfo<n>
-{
-public:
+struct ShapeInfo<n, shape::Polytope<n>> : AbstractShapeInfo<n> {
 	ShapeInfo(const shape::Polytope<n>& polytope);
 	ShapeInfo(shape::Polytope<n>&& polytope);
 	
@@ -51,12 +47,12 @@ private:
 template<> Vector<freedom(2), double> ShapeInfo<2, shape::Polytope<2>>::getMomentOfInertia(double mass) const;
 template<> Vector<freedom(3), double> ShapeInfo<3, shape::Polytope<3>>::getMomentOfInertia(double mass) const;
 
+extern template struct ShapeInfo<2, shape::Polytope<2>>;
+extern template struct ShapeInfo<2, shape::NSphere<2>>;
+extern template struct ShapeInfo<3, shape::Polytope<3>>;
+extern template struct ShapeInfo<3, shape::NSphere<3>>;
+
 template<typename T> using Shape2DInfo = ShapeInfo<2, T>;
 template<typename T> using Shape3DInfo = ShapeInfo<3, T>;
-
-extern template class ShapeInfo<2, shape::Polytope<2>>;
-extern template class ShapeInfo<2, shape::NSphere<2>>;
-extern template class ShapeInfo<3, shape::Polytope<3>>;
-extern template class ShapeInfo<3, shape::NSphere<3>>;
 
 }

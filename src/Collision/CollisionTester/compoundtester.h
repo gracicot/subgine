@@ -6,9 +6,7 @@
 namespace sbg {
 
 template<typename T, typename Next = typename T::DefaultTester, typename AccumulatorType = typename Next::ResultType::AccumulatorType>
-class CompoundTester : public CollisionTester
-{
-public:
+struct CompoundTester : CollisionTester {
 	using ResultType = typename Next::ResultType;
 	
 	std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const CollisionEntity> self, std::shared_ptr<const CollisionEntity> other) const override

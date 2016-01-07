@@ -10,9 +10,7 @@
 
 namespace sbg {
 
-class Polygon : public virtual SAT_able
-{
-public:
+struct Polygon : virtual SAT_able {
 	Polygon();
 	Polygon(ComponentProvider2D components);
 	Polygon(const Polygon&) = default;

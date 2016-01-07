@@ -5,9 +5,7 @@
 namespace sbg {
 
 template<int n>
-class PulseAccumulator : Accumulator<Vector<n, double>>
-{
-public:
+struct PulseAccumulator : Accumulator<Vector<n, double>> {
 	PulseAccumulator();
 	
 	void operator+=(Vector<n, double> value) override;
@@ -25,8 +23,8 @@ private:
 template <> void PulseAccumulator<2>::operator+=(Vector2d value);
 template <> void PulseAccumulator<3>::operator+=(Vector3d value);
 
-extern template class PulseAccumulator<2>;
-extern template class PulseAccumulator<3>;
+extern template struct PulseAccumulator<2>;
+extern template struct PulseAccumulator<3>;
 
 typedef PulseAccumulator<2> PulseAccumulator2D;
 typedef PulseAccumulator<3> PulseAccumulator3D;

@@ -15,8 +15,8 @@ private:
 	Provider<Vector<n, double>> _position;
 };
 
-extern template class PositionProvider<2>;
-extern template class PositionProvider<3>;
+extern template struct PositionProvider<2>;
+extern template struct PositionProvider<3>;
 
 using PositionProvider2D = PositionProvider<2>;
 using PositionProvider3D = PositionProvider<3>;

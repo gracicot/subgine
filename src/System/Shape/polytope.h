@@ -7,9 +7,7 @@ namespace sbg {
 namespace shape {
 
 template<int n>
-class Polytope
-{
-public:
+struct Polytope {
 	Polytope();
 	Polytope(const Polytope<n>& other);
 	Polytope<n>& operator=(const Polytope<n>& other);
@@ -29,11 +27,11 @@ private:
 	std::vector<Vector<n, double>> _vertices;
 };
 
+extern template struct Polytope<2>;
+extern template struct Polytope<3>;
+
 using Polygon = Polytope<2>;
 using Polyhedron = Polytope<3>;
-
-extern template class Polytope<2>;
-extern template class Polytope<3>;
 
 }
 }

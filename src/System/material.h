@@ -2,9 +2,7 @@
 
 namespace sbg {
 
-class Material
-{
-public:
+struct Material {
 	Material(double restitution = 1, double density = 1, double staticFriction = 1, double dynamicFriction = 1);
 	
 	double getRestitution() const;

@@ -10,9 +10,7 @@
 namespace sbg {
 
 template<int n>
-class Spring : public Rule<n>
-{
-public:
+struct Spring : Rule<n> {
 	Spring();
 	Spring(const double strength, const double length);
 	Spring(const double strength, const double length, PositionProvider<n> provider);
@@ -37,8 +35,8 @@ private:
 	PositionProvider<n> _provider;
 };
 
-extern template class Spring<2>;
-extern template class Spring<3>;
+extern template struct Spring<2>;
+extern template struct Spring<3>;
 
 using Spring2D = Spring<2>;
 using Spring3D = Spring<3>;

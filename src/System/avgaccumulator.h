@@ -5,9 +5,7 @@
 namespace sbg {
 
 template<typename T>
-class AvgAccumulator : public Accumulator<T>
-{
-public:
+struct AvgAccumulator : Accumulator<T> {
 	AvgAccumulator() : _total(), _count(0)
 	{
 		

@@ -4,9 +4,7 @@
 
 namespace sbg {
 
-class CollisionEntity
-{
-public:
+struct CollisionEntity {
 	CollisionEntity() = default;
 	virtual ~CollisionEntity() = default;
 };

@@ -8,9 +8,7 @@
 namespace sbg {
 
 template<int n>
-class Attraction : public Rule<n>
-{
-public:
+struct Attraction : public Rule<n> {
 	Attraction(const Attraction& c) : _value(c._value), _objects(c._objects)
 	{
 		

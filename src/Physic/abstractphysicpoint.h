@@ -4,9 +4,7 @@
 
 namespace sbg {
 
-class AbstractPhysicPoint
-{
-public:
+struct AbstractPhysicPoint {
 	void setMass(const double mass);
 	double getMass() const;
 	

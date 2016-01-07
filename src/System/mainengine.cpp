@@ -12,7 +12,7 @@ using namespace std;
 namespace sbg
 {
 
-MainEngine::MainEngine() : _speed(1), _timer(chrono::high_resolution_clock::now()), _time(), _onUpdate(nullptr)
+MainEngine::MainEngine() : _speed{1}, _timer{chrono::high_resolution_clock::now()}
 {
 	
 }

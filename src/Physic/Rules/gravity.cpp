@@ -34,7 +34,7 @@ void Gravity<n>::setValue(const Vector<n, double> value)
 	_value = value;
 }
 
-template class Gravity<2>;
-template class Gravity<3>;
+template struct Gravity<2>;
+template struct Gravity<3>;
 
 }

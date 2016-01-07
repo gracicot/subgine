@@ -2,9 +2,7 @@
 
 namespace sbg {
 
-class Time
-{
-public:
+struct Time {
 	Time();
 	Time(double currentTime, double nextTime);
 	

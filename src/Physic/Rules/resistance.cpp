@@ -34,7 +34,7 @@ Resistance<n>* Resistance<n>::clone() const
 	return new Resistance<n>(*this);
 }
 
-template class Resistance<2>;
-template class Resistance<3>;
+template struct Resistance<2>;
+template struct Resistance<3>;
 
 }

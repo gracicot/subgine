@@ -11,9 +11,7 @@
 
 namespace sbg {
 
-class SatResult : public ResultData
-{
-public:
+struct SatResult : ResultData {
 	using AccumulatorType = Accumulator<SatResult>;
 	SatResult(const Vector2d gap = {}, std::vector<Vector2d> contacts = {});
 

@@ -10,11 +10,9 @@
 namespace sbg
 {
 
-class Engine;
+struct Engine;
 
-class MainEngine
-{
-public:
+struct MainEngine {
 	MainEngine();
 	~MainEngine();
 

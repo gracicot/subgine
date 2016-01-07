@@ -5,9 +5,7 @@
 
 namespace sbg {
 
-class Point_able : public virtual CollisionEntity
-{
-public:
+struct Point_able : virtual CollisionEntity {
 	Point_able() = default;
 	~Point_able() = default;
 

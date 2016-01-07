@@ -2,9 +2,7 @@
 
 namespace sbg {
 
-class Clonable
-{
-public:
+struct Clonable {
 	virtual Clonable* clone() const = 0;
 };
 

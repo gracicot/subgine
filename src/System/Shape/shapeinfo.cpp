@@ -98,10 +98,10 @@ void ShapeInfo<n, shape::Polytope<n>>::setPolytope(shape::Polytope<n>&& polytope
 	_polytope = move(polytope);
 }
 
-template class ShapeInfo<2, shape::Polytope<2>>;
-template class ShapeInfo<2, shape::NSphere<2>>;
-template class ShapeInfo<3, shape::Polytope<3>>;
-template class ShapeInfo<3, shape::NSphere<3>>;
+template struct ShapeInfo<2, shape::Polytope<2>>;
+template struct ShapeInfo<2, shape::NSphere<2>>;
+template struct ShapeInfo<3, shape::Polytope<3>>;
+template struct ShapeInfo<3, shape::NSphere<3>>;
 
 
 }

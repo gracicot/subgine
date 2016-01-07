@@ -8,7 +8,7 @@ AbstractShapeInfo<n>::~AbstractShapeInfo()
 
 }
 
-template class AbstractShapeInfo<2>;
-template class AbstractShapeInfo<3>;
+template struct AbstractShapeInfo<2>;
+template struct AbstractShapeInfo<3>;
 
 }

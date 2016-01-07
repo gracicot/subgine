@@ -257,7 +257,7 @@ std::map<std::string, Vector<n, double>> PhysicBody<n>::getNextPulsesPositions()
 	return pulsePositions;
 }
 
-template class PhysicBody<2>;
-template class PhysicBody<3>;
+template struct PhysicBody<2>;
+template struct PhysicBody<3>;
 
 }

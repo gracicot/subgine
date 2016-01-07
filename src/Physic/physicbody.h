@@ -7,9 +7,7 @@
 namespace sbg {
 
 template<int n>
-class PhysicBody : public virtual PhysicPoint<n>
-{
-public:
+struct PhysicBody : virtual PhysicPoint<n> {
 	using Angle = Vector<freedom(n), double>;
 	
 	PhysicBody();
@@ -57,10 +55,10 @@ protected:
 template <> void PhysicBody<2>::update(Time time);
 template <> void PhysicBody<3>::update(Time time);
 
-extern template class PhysicBody<2>;
-extern template class PhysicBody<3>;
+extern template struct PhysicBody<2>;
+extern template struct PhysicBody<3>;
 
-typedef PhysicBody<2> PhysicBody2D;
-typedef PhysicBody<3> PhysicBody3D;
+using PhysicBody2D = PhysicBody<2>;
+using PhysicBody3D = PhysicBody<3>;
 
 }

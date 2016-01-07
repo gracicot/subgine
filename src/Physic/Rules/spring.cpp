@@ -71,7 +71,7 @@ Spring<n>* Spring<n>::clone() const
 	return new Spring<n>(*this);
 }
 
-template class Spring<2>;
-template class Spring<3>;
+template struct Spring<2>;
+template struct Spring<3>;
 
 }

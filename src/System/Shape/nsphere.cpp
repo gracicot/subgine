@@ -18,8 +18,8 @@ void NSphere<n>::setRadius(double radius)
 	_radius = radius;
 }
 
-template class NSphere<2>;
-template class NSphere<3>;
+template struct NSphere<2>;
+template struct NSphere<3>;
 
 }
 }

@@ -5,9 +5,7 @@
 
 namespace sbg {
 
-class Circle : public virtual SAT_able
-{
-public:
+struct Circle : virtual SAT_able {
 	Circle();
 	Circle(PositionProvider2D provider);
 

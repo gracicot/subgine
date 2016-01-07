@@ -3,9 +3,7 @@
 namespace sbg {
 
 template<typename T>
-class Accumulator
-{
-public:
+struct Accumulator {
 	virtual void operator+=(T value) = 0;
 	virtual T value() const = 0;
 	virtual void clear() = 0;

@@ -11,9 +11,7 @@
 namespace sbg {
 
 template<int n>
-class PhysicPoint : public AbstractPhysicPoint
-{
-public:
+struct PhysicPoint : AbstractPhysicPoint {
 	PhysicPoint();
 	~PhysicPoint();
 	PhysicPoint(const PhysicPoint&) = delete;
@@ -70,11 +68,11 @@ protected:
 	std::mutex _pulseAccumulatorMutex;
 };
 
-extern template class PhysicPoint<2>;
-extern template class PhysicPoint<3>;
+extern template struct PhysicPoint<2>;
+extern template struct PhysicPoint<3>;
 
-typedef PhysicPoint<2> PhysicPoint2D;
-typedef PhysicPoint<3> PhysicPoint3D;
+using PhysicPoint2D = PhysicPoint<2>;
+using PhysicPoint3D = PhysicPoint<3>;
 
 }
 

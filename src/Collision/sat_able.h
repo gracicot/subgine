@@ -7,11 +7,9 @@
 
 namespace sbg {
 
-class SatTester;
+struct SatTester;
 
-class SAT_able : public virtual CollisionEntity, public virtual AABB_able, public virtual Point_able
-{
-public:
+struct SAT_able : virtual CollisionEntity, virtual AABB_able, virtual Point_able {
 	SAT_able() = default;
 	virtual ~SAT_able() = default;
 	
@@ -20,9 +18,6 @@ public:
 	virtual std::pair<double, double> projection(double angle) const = 0;
 	virtual Vector2d overlap(const SAT_able& other) const = 0;
 	virtual Vector2d getNearestPoint(Vector2d point) const = 0;
-
-protected:
 };
-
 
 }

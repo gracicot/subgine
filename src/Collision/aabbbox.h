@@ -3,9 +3,7 @@
 
 namespace sbg {
 
-class AABBBox : public AABB_able
-{
-public:
+struct AABBBox : AABB_able {
 	AABBBox() = default;
 	AABBBox(const AABBBox&) = default;
 	AABBBox(AABBBox&&) = default;

@@ -4,15 +4,8 @@
 
 namespace sbg {
 
-class Engine
-{
-public:
+struct Engine {
 	virtual void execute(Time time) = 0;
-
-protected:
-
-private:
-
 };
 
 }

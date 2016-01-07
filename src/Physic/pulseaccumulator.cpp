@@ -56,7 +56,7 @@ int PulseAccumulator<n>::count() const
 	return _count;
 }
 
-template class PulseAccumulator<2>;
-template class PulseAccumulator<3>;
+template struct PulseAccumulator<2>;
+template struct PulseAccumulator<3>;
 
 }

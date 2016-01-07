@@ -7,9 +7,7 @@
 
 namespace sbg {
 
-class Point : public CollisionEntity
-{
-public:
+struct Point : CollisionEntity {
 	Point() = default;
 	Point(Provider<Vector2d> position);
 	Vector2d getPosition() const;

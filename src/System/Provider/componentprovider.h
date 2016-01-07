@@ -18,8 +18,8 @@ private:
 	Provider<Vector<n, double>> _position;
 };
 
-extern template class ComponentProvider<2>;
-extern template class ComponentProvider<3>;
+extern template struct ComponentProvider<2>;
+extern template struct ComponentProvider<3>;
 
 using ComponentProvider2D = ComponentProvider<2>;
 using ComponentProvider3D = ComponentProvider<3>;

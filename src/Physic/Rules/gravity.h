@@ -6,9 +6,7 @@
 namespace sbg {
 
 template<int n>
-class Gravity : public Rule<n>
-{
-public:
+struct Gravity : Rule<n> {
 	Gravity(const Vector<n, double> value = Vector<n, double>());
 	
 	Vector<n, double> getResult(const PhysicPoint<n>& object) const override;
@@ -21,8 +19,8 @@ private:
 	Vector<n, double> _value;
 };
 
-extern template class Gravity<2>;
-extern template class Gravity<3>;
+extern template struct Gravity<2>;
+extern template struct Gravity<3>;
 
 using Gravity2D = Gravity<2>;
 using Gravity3D = Gravity<3>;

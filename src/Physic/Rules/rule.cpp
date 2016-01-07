@@ -7,7 +7,7 @@ namespace sbg {
 template<int n>
 Rule<n>::~Rule(){}
 
-template class Rule<2>;
-template class Rule<3>;
+template struct Rule<2>;
+template struct Rule<3>;
 
 }

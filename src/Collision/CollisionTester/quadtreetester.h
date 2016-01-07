@@ -16,9 +16,7 @@
 namespace sbg {
 
 template<typename T, typename Next = CompoundTester<T>>
-class QuadTreeTester : public CollisionTester
-{
-public:
+struct QuadTreeTester : CollisionTester {
 	using ResultType = typename Next::ResultType;
 	
 	std::pair<std::unique_ptr<ResultData>, bool> test(std::shared_ptr<const CollisionEntity> self, std::shared_ptr<const CollisionEntity> other) const override

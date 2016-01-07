@@ -4,9 +4,7 @@
 
 namespace sbg {
 
-class Line : public virtual SAT_able
-{
-public:
+struct Line : virtual SAT_able {
 	virtual std::pair<double, double> projection(double angle) const override;
 };
 

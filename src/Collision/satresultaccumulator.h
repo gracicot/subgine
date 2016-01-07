@@ -4,12 +4,10 @@
 
 namespace sbg {
 
-class SatResult;
+struct SatResult;
 
 template<>
-class Accumulator<SatResult>
-{
-public:
+struct Accumulator<SatResult> {
 	Accumulator();
 	void operator+=(SatResult value);
 	operator SatResult() const;

@@ -58,8 +58,8 @@ void Polytope<n>::setVertices(std::vector<Vector<n, double>>&& vertices)
 	_vertices = move(vertices);
 }
 
-template class Polytope<2>;
-template class Polytope<3>;
+template struct Polytope<2>;
+template struct Polytope<3>;
 
 }
 }

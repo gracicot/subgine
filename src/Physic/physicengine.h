@@ -6,9 +6,7 @@
 
 namespace sbg {
 
-class PhysicEngine : public Engine
-{
-public:
+struct PhysicEngine : Engine {
 	void add(std::shared_ptr<Entity> entity);
 	void remove(std::weak_ptr<Entity> entity);
 

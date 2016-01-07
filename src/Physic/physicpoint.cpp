@@ -274,7 +274,7 @@ std::map<std::string, Vector<n, double>> PhysicPoint<n>::getNextPulses() const
 	return pulses;
 }
 
-template class PhysicPoint<2>;
-template class PhysicPoint<3>;
+template struct PhysicPoint<2>;
+template struct PhysicPoint<3>;
 
 }

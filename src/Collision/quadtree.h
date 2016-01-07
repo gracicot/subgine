@@ -9,9 +9,7 @@
 namespace sbg {
 
 template<typename T>
-class QuadTree : public AABB_able
-{
-public:
+struct QuadTree : AABB_able {
 	using container = std::set<std::weak_ptr<const T>, std::owner_less<std::weak_ptr<const T>>>;
 	
 	QuadTree(std::pair<Vector2d, Vector2d> box = {}): _boundingBox{box}

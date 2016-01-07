@@ -7,9 +7,7 @@
 namespace sbg {
 
 template<typename T>
-class CompoundCollision : public CollisionEntity
-{
-public:
+struct CompoundCollision : CollisionEntity {
 	CompoundCollision(){};
 	CompoundCollision(std::set<std::shared_ptr<T>> entities) : _entities(entities)
 	{
