@@ -16,7 +16,7 @@ Vector<n, double> PositionProvider<n>::getPosition() const
 	return _position();
 }
 
-template class PositionProvider<2>;
-template class PositionProvider<3>;
+template struct PositionProvider<2>;
+template struct PositionProvider<3>;
 
 }

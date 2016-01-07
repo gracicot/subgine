@@ -18,6 +18,8 @@ public:
 	~PhysicPoint();
 	PhysicPoint(const PhysicPoint&) = delete;
 	PhysicPoint& operator=(const PhysicPoint&) = delete;
+	PhysicPoint(PhysicPoint&&);
+	PhysicPoint& operator=(PhysicPoint&&);
 	
 	void setVelocity(const Vector<n, double> velocity);
 	Vector<n, double> getVelocity() const;

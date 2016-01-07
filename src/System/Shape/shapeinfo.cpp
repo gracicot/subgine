@@ -15,19 +15,19 @@ ShapeInfo<n, shape::NSphere<n>>::ShapeInfo(shape::NSphere<n>&& sphere) : _sphere
 template<int n>
 Vector<n, double> ShapeInfo<n, shape::NSphere<n>>::getCenterOfMass() const
 {
- 	return {0};
+ 	return Vector<n, double>{0};
 }
 
 template <>
 Vector<freedom(2), double> ShapeInfo<2, shape::NSphere<2>>::getMomentOfInertia(double mass) const
 {
-	return {mass * power<2>(_sphere.getRadius()) * 0.5};
+	return Vector<freedom(2), double>{mass * power<2>(_sphere.getRadius()) * 0.5};
 }
 
 template <>
 Vector<freedom(3), double> ShapeInfo<3, shape::NSphere<3>>::getMomentOfInertia(double mass) const
 {
-	return {mass * power<2>(_sphere.getRadius()) * 0.4};
+	return Vector<freedom(3), double>{mass * power<2>(_sphere.getRadius()) * 0.4};
 }
 
 template<int n>
@@ -58,14 +58,14 @@ template<>
 Vector<freedom(2), double> ShapeInfo<2, shape::Polytope<2>>::getMomentOfInertia(double mass) const
 {
 	// TODO: todo
-	return mass;
+	return Vector<freedom(2), double>{mass};
 }
 
 template<>
 Vector<freedom(3), double> ShapeInfo<3, shape::Polytope<3>>::getMomentOfInertia(double mass) const
 {
 	// one day, this function shall be complete.
-	return mass;
+	return Vector<freedom(3), double>{mass};
 }
 
 template<int n>

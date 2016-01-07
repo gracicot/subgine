@@ -7,21 +7,16 @@ using namespace std;
 
 namespace sbg {
 
-CollisionResult::CollisionResult(): _colliding(false), _time()
-{
-	
-}
-
-CollisionResult::CollisionResult(weak_ptr<const Entity> other, const bool colliding, unique_ptr<const ResultData> data, Time time) : _time(time), _colliding(colliding), _other(other), _data(move(data))
+CollisionResult::CollisionResult(weak_ptr<const Entity> other, const bool colliding, unique_ptr<const ResultData> data, Time time) : _data{move(data)}, _other{other}, _colliding{colliding}, _time{time}
 {
 
 }
 
 CollisionResult::CollisionResult(const CollisionResult& other):
-	_data(clone_unique(other._data)),
-	_other(other._other),
-	_colliding(other._colliding),
-	_time(other._time)
+	_data{clone_unique(other._data)},
+	_other{other._other},
+	_colliding{other._colliding},
+	_time{other._time}
 {
 	
 }

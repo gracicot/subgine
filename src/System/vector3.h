@@ -1,247 +1,298 @@
 #pragma once
 
-#include <ostream>
+#include <iosfwd>
 #include <cmath>
 #include "vector.h"
 #include "vector2.h"
 
 namespace sbg {
 
-template<class T>
-class Vector<3, T>
-{
-public:
-	Vector();
-	Vector(T value);
-	Vector(T _x, T _y, T _z);
-	Vector(const Vector<3, T>& other);
+template<typename T>
+struct Vector<3, T> {
+	static_assert(std::is_arithmetic<T>::value, "Vector must be aritmetic");
+private:
+	using MathType = typename std::conditional<std::is_floating_point<T>::value, T, double>::type;
 	
-	template<class O>
-	operator Vector< 3 , O >() const
-	{
-		return Vector< 3 , O >(
+public:
+	constexpr Vector() : x{0}, y{0}, z{0} {}
+	constexpr explicit Vector(T value) : x{value}, y{value}, z{value} {}
+	constexpr Vector(T _x, T _y, T _z) : x{_x}, y{_y}, z{_z} {}
+	
+	template<typename O, typename std::enable_if<std::is_convertible<T, O>::value, int>::type = 0>
+	constexpr inline operator Vector<3, O> () const {
+		return Vector<3, O>{
 			static_cast<O>(x),
 			static_cast<O>(y),
 			static_cast<O>(z)
-		);
+		};
 	}
 	
-	Vector<2, double> getAngle() const;
-	double getLength() const;
-	void setAngle(const Vector<3, double> angles);
-	void setLenght(double lenght);
-	Vector<3, T> project(Vector<3, T> other) const;
-	bool notZero() const;
-	Vector<3, T> unit() const;
-	Vector<3, T> cross(Vector<3, T>& other) const;
-	double dot(const Vector<3, T> vec) const;
+	template<typename O, typename std::enable_if<!is_strictly_explicitly_convertible<T, O>::value, int>::type = 0>
+	constexpr explicit inline operator Vector<3, O> () const {
+		return Vector<3, O>{
+			static_cast<O>(x),
+			static_cast<O>(y),
+			static_cast<O>(z)
+		};
+	}
 	
-	Vector<3, T>& operator= (const Vector<3, T> other);
-	
-	bool operator< (const Vector<3, T> other) const;
-	bool operator> (const Vector<3, T> other) const;
-	bool operator> (double length) const;
-	bool operator< (double length) const;
-	bool operator== (const Vector<3, T> other) const;
-	bool operator!= (const Vector<3, T> other) const;
+	Vector<2, MathType> angle() const {
+		return Vector<2, double>(std::atan(y / x), std::acos(z / length()));
+	}
+
+	MathType length() const {
+		return std::sqrt(power<2>(x) + power<2>(y) + power<2>(z));
+	}
+
+	void applyAngle(const Vector<2, MathType> angles) {
+		if (!null()) {
+			auto lenght = length();
+			x = std::sin(angles.y) * std::cos(angles.x) * lenght;
+			y = std::sin(angles.x) * std::sin(angles.y) * lenght;
+			z = std::cos(angles.y) * lenght;
+		}
+	}
+
+	Vector<3, T> angle(const Vector<2, MathType> angles) const {
+		Vector<3, T> temp;
+
+		if (!null()) {
+			auto lenght = length();
+			temp.x = std::sin(angles.y) * std::cos(angles.x) * lenght;
+			temp.y = std::sin(angles.x) * std::sin(angles.y) * lenght;
+			temp.z = std::cos(angles.y) * lenght;
+		}
+		
+		return temp;
+	}
+
+	void applyLenght(MathType lenght) {
+		if (!null()) {
+			auto product = lenght / length();
+			x *= product;
+			y *= product;
+			z *= product;
+		} else {
+			x = lenght;
+		}
+	}
+
+	template<typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+	Vector<3, decltype(std::declval<T>() * std::declval<U>())> lenght(U lenght) {
+		auto product = lenght / length();
+		return {
+			x * product,
+			y * product,
+			z * product
+		};
+	}
+
+	Vector<3, T> project(const Vector<3, T>& other) const {
+		return dot(other.unit()) * other;
+	}
+
+	bool null() const {
+		return x == 0 && y == 0 && z == 0;
+	}
+
+	Vector<3, decltype((std::declval<T>() / std::declval<MathType>()))> unit() const {
+		if (!null()) {
+			auto lenght = length();
+
+			return {x / lenght, y / lenght, z / lenght};
+		} else {
+			return {0, 0, 0};
+		}
+	}
+
+	template<typename U>
+	constexpr Vector<3, decltype((std::declval<T>() * std::declval<U>()))> cross(const Vector<3, U>& other) const {
+		return {y * other.z - z * other.y, -1 * x * other.z + z * other.x, x * other.y - y * other.x};
+	}
+
+	template<typename U>
+	constexpr auto dot(const Vector<3, U>& vec) const -> decltype((std::declval<T>() * std::declval<U>())) {
+		return (x * vec.x) + (y * vec.y) + (z * vec.z);
+	}
+
+	Vector<3, T>& operator=(const Vector<3, T>& other) {
+		x = other.x;
+		y = other.y;
+		z = other.z;
+		return *this;
+	}
+
+	template<typename U>
+	constexpr bool operator==(const Vector<3, U>& other) const {
+		return x == other.x && y == other.y && z == other.z;
+	}
+
+	template<typename U>
+	constexpr bool operator!=(const Vector<3, U>& other) const {
+		return !(*this == other);
+	}
+
+	template<typename U>
+	constexpr bool operator<(const Vector<3, U>& other) const {
+		return ((x * x) + (y * y) + (z * z)) < ((other.x * other.x) + (other.y * other.y) + (other.z * other.z));
+	}
+
+	template<typename U>
+	constexpr bool operator>(const Vector<3, U>& other) const {
+		return ((x * x) + (y * y) + (z * z)) > ((other.x * other.x) + (other.y * other.y) + (other.z * other.z));
+	}
+
+	constexpr bool operator>(MathType length) const {
+		return ((x * x) + (y * y) + (z * z)) > (length * length);
+	}
+
+	constexpr bool operator<(MathType length) const {
+		return ((x * x) + (y * y) + (z * z)) < (length * length);
+	}
 	
 	T x, y, z;
 	
 	constexpr static int size = 3;
 	using type = T;
 };
-	
-template<class T> Vector<3, T> operator/ (const Vector<3, T> vec, const double divider);
-template<class T> Vector<3, T> operator/ (const double divider, const Vector<3, T> vec);
-template<class T> Vector<3, T> operator* (const Vector<3, T> vec, const double multiplier);
-template<class T> Vector<3, T> operator* (const double multiplier, const Vector<3, T> vec);
-template<class T> Vector<3, T> operator* (const Vector<3, T> vec1, const Vector<3, T> vec2);
-template<class T> Vector<3, T>& operator*= (Vector<3, T>& vec, const double multiplier);
-template<class T> Vector<3, T>& operator*= (Vector<3, T>& vec1, const Vector<3, T> vec2);
-template<class T> Vector<3, T> operator+ (const Vector<3, T> vec1, const Vector<3, T> vec2);
-template<class T> Vector<3, T>& operator+= (Vector<3, T>& vec1, const Vector<3, T> vec2);
-template<class T> Vector<3, T> operator- (const Vector<3, T> vec1, const Vector<3, T> vec2);
-template<class T> Vector<3, T>& operator-= (Vector<3, T>& vec1, const Vector<3, T> vec2);
-template<class T> Vector<3, T>& operator/= (Vector<3, T>& vec, const double divider);
-template<class T> Vector<3, T> operator- (const Vector<3, T> vec);
-template<class T> std::ostream& operator<< (std::ostream& out, Vector<3, T> vec);
 
-extern template Vector<3, float> operator/ (const Vector<3, float> vec, const double divider);
-extern template Vector<3, float> operator/ (const double divider, const Vector<3, float> vec);
-extern template Vector<3, float> operator* (const Vector<3, float> vec, const double multiplier);
-extern template Vector<3, float> operator* (const double multiplier, const Vector<3, float> vec);
-extern template Vector<3, float> operator* (const Vector<3, float> vec1, const Vector<3, float> vec2);
-extern template Vector<3, float>& operator*= (Vector<3, float>& vec, const double multiplier);
-extern template Vector<3, float>& operator*= (Vector<3, float>& vec1, const Vector<3, float> vec2);
-extern template Vector<3, float> operator+ (const Vector<3, float> vec1, const Vector<3, float> vec2);
-extern template Vector<3, float>& operator+= (Vector<3, float>& vec1, const Vector<3, float> vec2);
-extern template Vector<3, float> operator- (const Vector<3, float> vec1, const Vector<3, float> vec2);
-extern template Vector<3, float>& operator-= (Vector<3, float>& vec1, const Vector<3, float> vec2);
-extern template Vector<3, float>& operator/= (Vector<3, float>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, float> vec);
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr Vector<3, decltype(std::declval<T>() / std::declval<U>())> operator/(const Vector<3, T>& vec, U divider)
+{
+	return {vec.x / divider, vec.y / divider, vec.z / divider};
+}
 
-extern template Vector<3, double> operator/ (const Vector<3, double> vec, const double divider);
-extern template Vector<3, double> operator/ (const double divider, const Vector<3, double> vec);
-extern template Vector<3, double> operator* (const Vector<3, double> vec, const double multiplier);
-extern template Vector<3, double> operator* (const double multiplier, const Vector<3, double> vec);
-extern template Vector<3, double> operator* (const Vector<3, double> vec1, const Vector<3, double> vec2);
-extern template Vector<3, double>& operator*= (Vector<3, double>& vec, const double multiplier);
-extern template Vector<3, double>& operator*= (Vector<3, double>& vec1, const Vector<3, double> vec2);
-extern template Vector<3, double> operator+ (const Vector<3, double> vec1, const Vector<3, double> vec2);
-extern template Vector<3, double>& operator+= (Vector<3, double>& vec1, const Vector<3, double> vec2);
-extern template Vector<3, double> operator- (const Vector<3, double> vec1, const Vector<3, double> vec2);
-extern template Vector<3, double>& operator-= (Vector<3, double>& vec1, const Vector<3, double> vec2);
-extern template Vector<3, double>& operator/= (Vector<3, double>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, double> vec);
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr Vector<3, decltype(std::declval<T>() / std::declval<U>())> operator/(U divider, const Vector<3, T>& vec)
+{
+	return {divider / vec.x, divider / vec.y, divider / vec.z};
+}
 
-extern template Vector<3, long double> operator/ (const Vector<3, long double> vec, const double divider);
-extern template Vector<3, long double> operator/ (const double divider, const Vector<3, long double> vec);
-extern template Vector<3, long double> operator* (const Vector<3, long double> vec, const double multiplier);
-extern template Vector<3, long double> operator* (const double multiplier, const Vector<3, long double> vec);
-extern template Vector<3, long double> operator* (const Vector<3, long double> vec1, const Vector<3, long double> vec2);
-extern template Vector<3, long double>& operator*= (Vector<3, long double>& vec, const double multiplier);
-extern template Vector<3, long double>& operator*= (Vector<3, long double>& vec1, const Vector<3, long double> vec2);
-extern template Vector<3, long double> operator+ (const Vector<3, long double> vec1, const Vector<3, long double> vec2);
-extern template Vector<3, long double>& operator+= (Vector<3, long double>& vec1, const Vector<3, long double> vec2);
-extern template Vector<3, long double> operator- (const Vector<3, long double> vec1, const Vector<3, long double> vec2);
-extern template Vector<3, long double>& operator-= (Vector<3, long double>& vec1, const Vector<3, long double> vec2);
-extern template Vector<3, long double>& operator/= (Vector<3, long double>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, long double> vec);
+template<typename T, typename U>
+constexpr Vector<3, decltype(std::declval<T>() / std::declval<U>())> operator/(const Vector<3, T>& vec1, const Vector<3, U>& vec2)
+{
+	return {vec1.x / vec2.x, vec1.y / vec2.y, vec1.z / vec2.z};
+}
 
-extern template Vector<3, int> operator/ (const Vector<3, int> vec, const double divider);
-extern template Vector<3, int> operator/ (const double divider, const Vector<3, int> vec);
-extern template Vector<3, int> operator* (const Vector<3, int> vec, const double multiplier);
-extern template Vector<3, int> operator* (const double multiplier, const Vector<3, int> vec);
-extern template Vector<3, int> operator* (const Vector<3, int> vec1, const Vector<3, int> vec2);
-extern template Vector<3, int>& operator*= (Vector<3, int>& vec, const double multiplier);
-extern template Vector<3, int>& operator*= (Vector<3, int>& vec1, const Vector<3, int> vec2);
-extern template Vector<3, int> operator+ (const Vector<3, int> vec1, const Vector<3, int> vec2);
-extern template Vector<3, int>& operator+= (Vector<3, int>& vec1, const Vector<3, int> vec2);
-extern template Vector<3, int> operator- (const Vector<3, int> vec1, const Vector<3, int> vec2);
-extern template Vector<3, int>& operator-= (Vector<3, int>& vec1, const Vector<3, int> vec2);
-extern template Vector<3, int>& operator/= (Vector<3, int>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, int> vec);
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr Vector<3, decltype(std::declval<T>() * std::declval<U>())> operator*(const Vector<3, T>& vec, U multiplier)
+{
+	return {vec.x * multiplier, vec.y * multiplier, vec.z * multiplier};
+}
 
-extern template Vector<3, unsigned int> operator/ (const Vector<3, unsigned int> vec, const double divider);
-extern template Vector<3, unsigned int> operator/ (const double divider, const Vector<3, unsigned int> vec);
-extern template Vector<3, unsigned int> operator* (const Vector<3, unsigned int> vec, const double multiplier);
-extern template Vector<3, unsigned int> operator* (const double multiplier, const Vector<3, unsigned int> vec);
-extern template Vector<3, unsigned int> operator* (const Vector<3, unsigned int> vec1, const Vector<3, unsigned int> vec2);
-extern template Vector<3, unsigned int>& operator*= (Vector<3, unsigned int>& vec, const double multiplier);
-extern template Vector<3, unsigned int>& operator*= (Vector<3, unsigned int>& vec1, const Vector<3, unsigned int> vec2);
-extern template Vector<3, unsigned int> operator+ (const Vector<3, unsigned int> vec1, const Vector<3, unsigned int> vec2);
-extern template Vector<3, unsigned int>& operator+= (Vector<3, unsigned int>& vec1, const Vector<3, unsigned int> vec2);
-extern template Vector<3, unsigned int> operator- (const Vector<3, unsigned int> vec1, const Vector<3, unsigned int> vec2);
-extern template Vector<3, unsigned int>& operator-= (Vector<3, unsigned int>& vec1, const Vector<3, unsigned int> vec2);
-extern template Vector<3, unsigned int>& operator/= (Vector<3, unsigned int>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, unsigned int> vec);
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr Vector<3, decltype(std::declval<T>() * std::declval<U>())> operator*(U multiplier, const Vector<3, T>& vec)
+{
+	return {vec.x * multiplier, vec.y * multiplier, vec.z * multiplier};
+}
 
-extern template Vector<3, long> operator/ (const Vector<3, long> vec, const double divider);
-extern template Vector<3, long> operator/ (const double divider, const Vector<3, long> vec);
-extern template Vector<3, long> operator* (const Vector<3, long> vec, const double multiplier);
-extern template Vector<3, long> operator* (const double multiplier, const Vector<3, long> vec);
-extern template Vector<3, long> operator* (const Vector<3, long> vec1, const Vector<3, long> vec2);
-extern template Vector<3, long>& operator*= (Vector<3, long>& vec, const double multiplier);
-extern template Vector<3, long>& operator*= (Vector<3, long>& vec1, const Vector<3, long> vec2);
-extern template Vector<3, long> operator+ (const Vector<3, long> vec1, const Vector<3, long> vec2);
-extern template Vector<3, long>& operator+= (Vector<3, long>& vec1, const Vector<3, long> vec2);
-extern template Vector<3, long> operator- (const Vector<3, long> vec1, const Vector<3, long> vec2);
-extern template Vector<3, long>& operator-= (Vector<3, long>& vec1, const Vector<3, long> vec2);
-extern template Vector<3, long>& operator/= (Vector<3, long>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, long> vec);
+template<typename T, typename U>
+constexpr Vector<3, decltype(std::declval<T>() * std::declval<U>())> operator*(const Vector<3, T>& vec1, const Vector<3, U>& vec2)
+{
+	return {vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z};
+}
 
-extern template Vector<3, unsigned long> operator/ (const Vector<3, unsigned long> vec, const double divider);
-extern template Vector<3, unsigned long> operator/ (const double divider, const Vector<3, unsigned long> vec);
-extern template Vector<3, unsigned long> operator* (const Vector<3, unsigned long> vec, const double multiplier);
-extern template Vector<3, unsigned long> operator* (const double multiplier, const Vector<3, unsigned long> vec);
-extern template Vector<3, unsigned long> operator* (const Vector<3, unsigned long> vec1, const Vector<3, unsigned long> vec2);
-extern template Vector<3, unsigned long>& operator*= (Vector<3, unsigned long>& vec, const double multiplier);
-extern template Vector<3, unsigned long>& operator*= (Vector<3, unsigned long>& vec1, const Vector<3, unsigned long> vec2);
-extern template Vector<3, unsigned long> operator+ (const Vector<3, unsigned long> vec1, const Vector<3, unsigned long> vec2);
-extern template Vector<3, unsigned long>& operator+= (Vector<3, unsigned long>& vec1, const Vector<3, unsigned long> vec2);
-extern template Vector<3, unsigned long> operator- (const Vector<3, unsigned long> vec1, const Vector<3, unsigned long> vec2);
-extern template Vector<3, unsigned long>& operator-= (Vector<3, unsigned long>& vec1, const Vector<3, unsigned long> vec2);
-extern template Vector<3, unsigned long>& operator/= (Vector<3, unsigned long>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, unsigned long> vec);
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+Vector<3, T>& operator*=(Vector<3, T>& vec, U multiplier)
+{
+	vec.x *= multiplier;
+	vec.y *= multiplier;
+	vec.z *= multiplier;
+	return vec;
+}
 
-extern template Vector<3, short> operator/ (const Vector<3, short> vec, const double divider);
-extern template Vector<3, short> operator/ (const double divider, const Vector<3, short> vec);
-extern template Vector<3, short> operator* (const Vector<3, short> vec, const double multiplier);
-extern template Vector<3, short> operator* (const double multiplier, const Vector<3, short> vec);
-extern template Vector<3, short> operator* (const Vector<3, short> vec1, const Vector<3, short> vec2);
-extern template Vector<3, short>& operator*= (Vector<3, short>& vec, const double multiplier);
-extern template Vector<3, short>& operator*= (Vector<3, short>& vec1, const Vector<3, short> vec2);
-extern template Vector<3, short> operator+ (const Vector<3, short> vec1, const Vector<3, short> vec2);
-extern template Vector<3, short>& operator+= (Vector<3, short>& vec1, const Vector<3, short> vec2);
-extern template Vector<3, short> operator- (const Vector<3, short> vec1, const Vector<3, short> vec2);
-extern template Vector<3, short>& operator-= (Vector<3, short>& vec1, const Vector<3, short> vec2);
-extern template Vector<3, short>& operator/= (Vector<3, short>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, short> vec);
+template<typename T, typename U>
+Vector<3, T>& operator/=(Vector<3, T>& vec1, const Vector<3, U>& vec2)
+{
+	vec1.x /= vec2.x;
+	vec1.y /= vec2.y;
+	vec1.z /= vec2.z;
+	return vec1;
+}
 
-extern template Vector<3, unsigned short> operator/ (const Vector<3, unsigned short> vec, const double divider);
-extern template Vector<3, unsigned short> operator/ (const double divider, const Vector<3, unsigned short> vec);
-extern template Vector<3, unsigned short> operator* (const Vector<3, unsigned short> vec, const double multiplier);
-extern template Vector<3, unsigned short> operator* (const double multiplier, const Vector<3, unsigned short> vec);
-extern template Vector<3, unsigned short> operator* (const Vector<3, unsigned short> vec1, const Vector<3, unsigned short> vec2);
-extern template Vector<3, unsigned short>& operator*= (Vector<3, unsigned short>& vec, const double multiplier);
-extern template Vector<3, unsigned short>& operator*= (Vector<3, unsigned short>& vec1, const Vector<3, unsigned short> vec2);
-extern template Vector<3, unsigned short> operator+ (const Vector<3, unsigned short> vec1, const Vector<3, unsigned short> vec2);
-extern template Vector<3, unsigned short>& operator+= (Vector<3, unsigned short>& vec1, const Vector<3, unsigned short> vec2);
-extern template Vector<3, unsigned short> operator- (const Vector<3, unsigned short> vec1, const Vector<3, unsigned short> vec2);
-extern template Vector<3, unsigned short>& operator-= (Vector<3, unsigned short>& vec1, const Vector<3, unsigned short> vec2);
-extern template Vector<3, unsigned short>& operator/= (Vector<3, unsigned short>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, unsigned short> vec);
+template<typename T, typename U>
+Vector<3, T>& operator*=(Vector<3, T>& vec1, const Vector<3, U>& vec2)
+{
+	vec1.x *= vec2.x;
+	vec1.y *= vec2.y;
+	vec1.z *= vec2.z;
+	return vec1;
+}
 
-extern template Vector<3, char> operator/ (const Vector<3, char> vec, const double divider);
-extern template Vector<3, char> operator/ (const double divider, const Vector<3, char> vec);
-extern template Vector<3, char> operator* (const Vector<3, char> vec, const double multiplier);
-extern template Vector<3, char> operator* (const double multiplier, const Vector<3, char> vec);
-extern template Vector<3, char> operator* (const Vector<3, char> vec1, const Vector<3, char> vec2);
-extern template Vector<3, char>& operator*= (Vector<3, char>& vec, const double multiplier);
-extern template Vector<3, char>& operator*= (Vector<3, char>& vec1, const Vector<3, char> vec2);
-extern template Vector<3, char> operator+ (const Vector<3, char> vec1, const Vector<3, char> vec2);
-extern template Vector<3, char>& operator+= (Vector<3, char>& vec1, const Vector<3, char> vec2);
-extern template Vector<3, char> operator- (const Vector<3, char> vec1, const Vector<3, char> vec2);
-extern template Vector<3, char>& operator-= (Vector<3, char>& vec1, const Vector<3, char> vec2);
-extern template Vector<3, char>& operator/= (Vector<3, char>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, char> vec);
+template<typename T, typename U>
+constexpr Vector<3, decltype(std::declval<T>() + std::declval<U>())> operator+(const Vector<3, T> vec1, const Vector<3, U>& vec2)
+{
+	return {vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z};
+}
 
-extern template Vector<3, unsigned char> operator/ (const Vector<3, unsigned char> vec, const double divider);
-extern template Vector<3, unsigned char> operator/ (const double divider, const Vector<3, unsigned char> vec);
-extern template Vector<3, unsigned char> operator* (const Vector<3, unsigned char> vec, const double multiplier);
-extern template Vector<3, unsigned char> operator* (const double multiplier, const Vector<3, unsigned char> vec);
-extern template Vector<3, unsigned char> operator* (const Vector<3, unsigned char> vec1, const Vector<3, unsigned char> vec2);
-extern template Vector<3, unsigned char>& operator*= (Vector<3, unsigned char>& vec, const double multiplier);
-extern template Vector<3, unsigned char>& operator*= (Vector<3, unsigned char>& vec1, const Vector<3, unsigned char> vec2);
-extern template Vector<3, unsigned char> operator+ (const Vector<3, unsigned char> vec1, const Vector<3, unsigned char> vec2);
-extern template Vector<3, unsigned char>& operator+= (Vector<3, unsigned char>& vec1, const Vector<3, unsigned char> vec2);
-extern template Vector<3, unsigned char> operator- (const Vector<3, unsigned char> vec1, const Vector<3, unsigned char> vec2);
-extern template Vector<3, unsigned char>& operator-= (Vector<3, unsigned char>& vec1, const Vector<3, unsigned char> vec2);
-extern template Vector<3, unsigned char>& operator/= (Vector<3, unsigned char>& vec, const double divider);
-extern template std::ostream& operator<< (std::ostream& out, Vector<3, unsigned char> vec);
+template<typename T, typename U>
+Vector<3, T>& operator+=(Vector<3, T> &vec1, const Vector<3, U>& vec2)
+{
+	vec1.x += vec2.x;
+	vec1.y += vec2.y;
+	vec1.z += vec2.z;
+	return vec1;
+}
 
-extern template class Vector<3, float>;
-extern template class Vector<3, double>;
-extern template class Vector<3, long double>;
-extern template class Vector<3, int>;
-extern template class Vector<3, unsigned int>;
-extern template class Vector<3, long>;
-extern template class Vector<3, unsigned long>;
-extern template class Vector<3, short>;
-extern template class Vector<3, unsigned short>;
-extern template class Vector<3, char>;
-extern template class Vector<3, unsigned char>;
+template<typename T, typename U>
+constexpr Vector<3, decltype(std::declval<T>() - std::declval<U>())> operator-(const Vector<3, T>& vec1, const Vector<3, U>& vec2)
+{
+	return {vec1.x - vec2.x, vec1.y - vec2.y, vec1.z - vec2.z};
+}
 
-typedef Vector<3, float> Vector3f;
-typedef Vector<3, double> Vector3d;
-typedef Vector<3, long double> Vector3ld;
-typedef Vector<3, int> Vector3i;
-typedef Vector<3, unsigned int> Vector3ui;
-typedef Vector<3, long> Vector3l;
-typedef Vector<3, unsigned long> Vector3ul;
-typedef Vector<3, short> Vector3s;
-typedef Vector<3, unsigned short> Vector3us;
-typedef Vector<3, char> Vector3c;
-typedef Vector<3, unsigned char> Vector3uc;
+template<typename T>
+constexpr Vector<3, T> operator-(const Vector<3, T>& vec)
+{
+	return {-vec.x, -vec.y, -vec.z};
+}
+
+template<typename T, typename U>
+Vector<3, T>& operator-=(Vector<3, T>& vec1, const Vector<3, U> vec2)
+{
+	vec1.x -= vec2.x;
+	vec1.y -= vec2.y;
+	vec1.z -= vec2.z;
+	return vec1;
+}
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+Vector<3, T>& operator/=(Vector<3, T> &vec, U divider)
+{
+	vec.x /= divider;
+	vec.y /= divider;
+	vec.z /= divider;
+	return vec;
+}
+
+template<typename T>
+std::ostream& operator<<(std::ostream& out, const Vector<3, T>& vec)
+{
+	out << vec.x << ", " << vec.y << ", " << vec.z;
+	return out;
+}
+
+using Vector3f = Vector<3, float>;
+using Vector3d = Vector<3, double>;
+using Vector3ld = Vector<3, long double>;
+using Vector3i = Vector<3, int>;
+using Vector3ui = Vector<3, unsigned int>;
+using Vector3l = Vector<3, long>;
+using Vector3ul = Vector<3, unsigned long>;
+using Vector3s = Vector<3, short>;
+using Vector3us = Vector<3, unsigned short>;
+using Vector3c = Vector<3, char>;
+using Vector3uc = Vector<3, unsigned char>;
+
+extern template struct Vector<3, float>;
+extern template struct Vector<3, double>;
+extern template struct Vector<3, long double>;
+extern template struct Vector<3, int>;
+extern template struct Vector<3, unsigned int>;
+extern template struct Vector<3, long>;
+extern template struct Vector<3, unsigned long>;
+extern template struct Vector<3, short>;
+extern template struct Vector<3, unsigned short>;
+extern template struct Vector<3, char>;
+extern template struct Vector<3, unsigned char>;
 
 }

@@ -15,6 +15,30 @@ PhysicPoint<n>::~PhysicPoint()
 }
 
 template<int n>
+PhysicPoint<n>& PhysicPoint<n>::operator=(PhysicPoint<n>&& o)
+{
+	_velocity = move(o._velocity);
+	_corrections = move(o._corrections);
+	_forces = move(o._forces);
+	_position = move(o._position);
+	_pulseAccumulators = move(o._pulseAccumulators);
+	_pulses = move(o._pulses);
+	_rules = move(o._rules);
+	return *this;
+}
+
+template<int n>
+PhysicPoint<n>::PhysicPoint(PhysicPoint<n>&& o) :
+	_velocity{move(o._velocity)},
+	_position{move(o._position)},
+	_pulses{move(o._pulses)},
+	_rules{move(o._rules)},
+	_forces{move(o._forces)},
+	_corrections{move(o._corrections)},
+	_pulseAccumulators{move(o._pulseAccumulators)}
+{}
+
+template<int n>
 Vector<n, double> PhysicPoint<n>::getVelocity() const
 {
 	return _velocity;

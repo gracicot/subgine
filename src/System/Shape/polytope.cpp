@@ -24,6 +24,7 @@ template<int n>
 Polytope<n>& Polytope<n>::operator=(const Polytope<n>& other)
 {
 	_vertices = other._vertices;
+	return *this;
 }
 
 template<int n>

@@ -17,12 +17,12 @@ namespace sbg {
 	}
 	
 	template<unsigned int n, typename T>
-	constexpr inline typename std::enable_if<(n == 0), typename std::remove_reference<T>::type>::type power(T&& num) {
+	constexpr inline typename std::enable_if<(n == 0), T>::type power(T num) {
 		return 1;
 	}
 	
 	template<unsigned int n, typename T>
-	constexpr inline typename std::enable_if<(n > 0), typename std::remove_reference<T>::type>::type power(T&& num) {
+	constexpr inline typename std::enable_if<(n > 0), T>::type power(T num) {
 		return num * power<n - 1>(num);
 	}
 }

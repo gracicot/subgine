@@ -58,9 +58,9 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(double time) const
 	for (auto i : this->getNextForces()) {
 		Vector<n, double> position = getForcePosition(i.first);
 
-		if (position.notZero() && i.second.notZero()) {
+		if (!position.null() && !i.second.null()) {
 			Angle torque = position.cross(i.second) / correction;
-			i.second *= 1 / ((torque.getLength() * (1.0/getMomentOfInertia())) + Vector<freedom(n), double>{1});
+			i.second *= 1 / ((torque.length() * (1.0/getMomentOfInertia())) + Vector<freedom(n), double>{1});
 		}
 		
 		velocity += (i.second / this->_mass) * time;
@@ -70,9 +70,9 @@ Vector<n, double> PhysicBody<n>::getNextVelocity(double time) const
 		Vector<n, double> pulse = i.second;
 		Vector<n, double> position = getPulsePosition(i.first);
 
-		if (position.notZero() && pulse.notZero()) {
+		if (!position.null() && !pulse.null()) {
 			Angle torque = position.cross(pulse) / correction;
-			pulse *= 1 / ((torque.getLength() / getMomentOfInertia()) + Vector<freedom(n), double>{1});
+			pulse *= 1 / ((torque.length() / getMomentOfInertia()) + Vector<freedom(n), double>{1});
 		}
 
 		velocity += (pulse / this->_mass);
@@ -131,7 +131,7 @@ Vector<freedom(n), double> PhysicBody<n>::getNextAngularVelocity(double time) co
 		Vector<n, double> pulse = pulses[forcePos.first];
 		Vector<n, double> position = forcePos.second;
 
-		if (position.notZero() && pulse.notZero()) {
+		if (!position.null() && !pulse.null()) {
 			Angle torque = position.cross(pulse) / correction;
 			torquePulse += torque;
 		}
@@ -156,7 +156,7 @@ Vector<freedom(n), double> PhysicBody<n>::getNextTorque() const
 	for (auto forcePos : _forcesPosition) {
 		Vector<n, double> force = this->getForce(forcePos.first);
 
-		if (forcePos.second.notZero() && force.notZero()) {
+		if (!forcePos.second.null() && !force.null()) {
 			Angle forceTorque = forcePos.second.cross(force) / correction;
 			torque += forceTorque;
 		}
@@ -171,7 +171,7 @@ Vector<freedom(n), double> PhysicBody<n>::getMomentOfInertia() const
 	if (_shapeInfo) {
 		return _shapeInfo->getMomentOfInertia(this->_mass);
 	} else {
-		return {this->_mass};
+		return Vector<freedom(n), double>{this->_mass};
 	}
 }
 
@@ -238,8 +238,8 @@ void PhysicBody<n>::accumulatePulse(const string type, Vector<n, double> pulse, 
 {
 	lock_guard<mutex> lock{_pulseAccumulationMutex};
 	PhysicPoint<n>::accumulatePulse(type, pulse);
-	_pulsesPositionAccumulator[type].first += position * pulse.getLength();
-	_pulsesPositionAccumulator[type].second += pulse.getLength();
+	_pulsesPositionAccumulator[type].first += position * pulse.length();
+	_pulsesPositionAccumulator[type].second += pulse.length();
 	
 }
 

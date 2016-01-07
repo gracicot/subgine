@@ -5,7 +5,7 @@
 
 namespace sbg {
 
-class Entity;
+struct Entity;
 struct Group;
 
 class Test

@@ -1,5 +1,7 @@
 #include "pulseaccumulator.h"
 
+using namespace std;
+
 namespace sbg {
 
 template<int n>

@@ -10,9 +10,9 @@ DisplayComponentProvider<n>::DisplayComponentProvider(
 	Provider<Vector<freedom(n), double>> orientation,
 	Provider<Vector<n, double>> scale
 ) : 
-	_position{move(position)},
+	_scale{move(scale)},
 	_orientation{move(orientation)},
-	_scale{move(scale)}
+	_position{move(position)}
 {}
 
 template <int n>
@@ -33,7 +33,7 @@ Vector<n, double> DisplayComponentProvider<n>::getPosition() const
 	return _position();
 }
 
-template class DisplayComponentProvider<2>;
-template class DisplayComponentProvider<3>;
+template struct DisplayComponentProvider<2>;
+template struct DisplayComponentProvider<3>;
 
 }

@@ -25,8 +25,8 @@ private:
 	
 };
 
-extern template class DisplayComponentProvider<2>;
-extern template class DisplayComponentProvider<3>;
+extern template struct DisplayComponentProvider<2>;
+extern template struct DisplayComponentProvider<3>;
 
 using DisplayComponentProvider2D = DisplayComponentProvider<2>;
 using DisplayComponentProvider3D = DisplayComponentProvider<3>;

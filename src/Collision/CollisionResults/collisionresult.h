@@ -6,13 +6,11 @@
 
 namespace sbg {
 
-class Entity;
-class ResultData;
+struct Entity;
+struct ResultData;
 
-class CollisionResult
-{
-public:
-	CollisionResult();
+struct CollisionResult {
+	CollisionResult() = default;
 	CollisionResult(std::weak_ptr<const Entity> other, const bool colliding, std::unique_ptr<const ResultData> data, Time time);
 	CollisionResult(const CollisionResult& other);
 
@@ -31,7 +29,7 @@ public:
 private:
 	std::unique_ptr<const ResultData> _data;
 	std::weak_ptr<const Entity> _other;
-	bool _colliding;
+	bool _colliding = false;
 	Time _time;
 };
 

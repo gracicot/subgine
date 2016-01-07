@@ -28,7 +28,7 @@ pair<unique_ptr<SatResult>, bool> SatTester::test(shared_ptr<const SAT_able> sel
 		Vector2d overlap1 = self->overlap(*other);
 		Vector2d overlap2 = other->overlap(*self);
 
-		if (overlap1.notZero() && overlap2.notZero()) {
+		if (!overlap1.null() && !overlap2.null()) {
 			Vector2d shortest = overlap1 < overlap2 ? overlap1 : -1 * overlap2;
 			return {make_unique<SatResult>(shortest), true};
 		}

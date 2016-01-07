@@ -7,7 +7,7 @@ namespace sbg {
 class Line : public virtual SAT_able
 {
 public:
-	virtual Vector2d projection(double angle);
+	virtual std::pair<double, double> projection(double angle) const override;
 };
 
 }

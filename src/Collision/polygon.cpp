@@ -70,7 +70,7 @@ void Polygon::makeCache()
 		{
 			Vector2d previous = *vertices.rbegin();
 			for (Vector2d current : vertices) {
-				_cachedAngles.push_back((previous - current).getAngle() - (tau / 4));
+				_cachedAngles.push_back((previous - current).angle() - (tau / 4));
 				previous = current;
 			}
 		}
@@ -105,11 +105,11 @@ bool Polygon::isPointInside(Vector2d point) const
 	if (_shape.getVertices().size()) {
 		bool oddNodes = false;
 		Vector2d previous = *_shape.getVertices().rbegin();
-		previous.setAngle(previous.getAngle() + getAngle());
+		previous.applyAngle(previous.angle() + getAngle());
 		previous += getPosition();
 
 		for (Vector2d current :_shape.getVertices()) {
-			current.setAngle(current.getAngle() + getAngle());
+			current.applyAngle(current.angle() + getAngle());
 			current += getPosition();
 
 			if (((current.y < point.y && previous.y >= point.y)
@@ -136,7 +136,7 @@ pair<double, double> Polygon::projection(double angle) const
 
 		bool first = true;
 		for (Vector2d current : _shape.getVertices()) {
-			double p = axis.dot(current.angle(current.getAngle() + getAngle()));
+			double p = axis.dot(current.angle(current.angle() + getAngle()));
 
 			projection.first = first ? p:min(projection.first, p);
 			projection.second = first ? p:max(projection.second, p);
@@ -167,9 +167,9 @@ Vector2d Polygon::overlap(const SAT_able& other) const
 		if (projectionThis.second < projectionOther.first || projectionThis.first > projectionOther.second) {
 			return {};
 		} else {
-			if (!overlap.notZero() || overlap > projectionThis.second - projectionOther.first) {
+			if (overlap.null() || overlap > projectionThis.second - projectionOther.first) {
 				overlap = Vector2d(projectionThis.second - projectionOther.first, 0);
-				overlap.setAngle(angle);
+				overlap.applyAngle(angle);
 			}
 		}
 	}
@@ -195,7 +195,7 @@ Vector2d Polygon::getNearestPoint(Vector2d point) const
 		bool first = true;
 
 		for (Vector2d current : _shape.getVertices()) {
-			current.setAngle(getAngle() + current.getAngle());
+			current.applyAngle(getAngle() + current.angle());
 
 			if (first || nearest > (current - point)) {
 				nearest = current;

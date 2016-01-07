@@ -4,6 +4,6 @@
 
 namespace sbg {
 	template<int n, class T>
-	class Vector;
+	struct Vector;
 }
 

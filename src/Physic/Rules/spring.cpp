@@ -50,7 +50,7 @@ template<int n>
 Vector<n, double> Spring<n>::getResult(const PhysicPoint<n>& object) const
 {
 	auto relative = getPosition() - object.getPosition();
-	return relative.unit() * getStrength() * (relative.getLength() - getLength());
+	return relative.unit() * getStrength() * (relative.length() - getLength());
 }
 
 template<int n>

@@ -6,8 +6,8 @@ namespace sbg {
 
 template <int n>
 ComponentProvider<n>::ComponentProvider(Provider<Vector<n, double>> position, Provider<Vector<freedom(n), double>> orientation) :
-	_position{move(position)},
-	_orientation{move(orientation)}
+	_orientation{move(orientation)},
+	_position{move(position)}
 {}
 
 template <int n>
@@ -22,7 +22,7 @@ Vector<n, double> ComponentProvider<n>::getPosition() const
 	return _position();
 }
 
-template class ComponentProvider<2>;
-template class ComponentProvider<3>;
+template struct ComponentProvider<2>;
+template struct ComponentProvider<3>;
 
 }

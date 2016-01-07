@@ -22,11 +22,7 @@ typename std::enable_if<std::is_base_of<Clonable, T>::value, std::unique_ptr<T>>
 
 template<class T>
 constexpr typename std::enable_if<std::is_base_of<Clonable, T>::value, std::unique_ptr<T>>::type clone_unique(const std::unique_ptr<T>& arg) {
-	if (arg) {
-		return std::unique_ptr<T>(arg->clone());
-	} else {
-		return nullptr;
-	}
+	return arg ? std::unique_ptr<T>(arg->clone()) : nullptr;
 }
 
 template<class T>

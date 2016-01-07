@@ -40,7 +40,7 @@ void Circle::setShape(shape::Circle&& shape)
 bool Circle::isPointInside(Vector2d point) const
 {
 	double radius = _shape.getRadius();
-	return (getPosition() - point).getLength() < radius;
+	return (getPosition() - point).length() < radius;
 }
 
 pair<double, double> Circle::projection(double angle) const
@@ -58,7 +58,7 @@ pair<double, double> Circle::projection(double angle) const
 Vector2d Circle::overlap(const SAT_able& other) const
 {
 	Vector2d overlap;
-	double angle = (other.getNearestPoint(getPosition()) - getPosition()).getAngle();
+	double angle = (other.getNearestPoint(getPosition()) - getPosition()).angle();
 
 	pair<double, double> projectionThis = this->projection(angle);
 	pair<double, double> projectionOther = other.projection(angle);
@@ -66,9 +66,9 @@ Vector2d Circle::overlap(const SAT_able& other) const
 	if ((projectionThis.second < projectionOther.first) || projectionThis.first > projectionOther.second) {
 		return {};
 	} else {
-		if (!overlap.notZero() || overlap > projectionThis.first - projectionOther.second) {
+		if (overlap.null() || overlap > projectionThis.first - projectionOther.second) {
 			overlap = {projectionThis.second - projectionOther.first, 0};
-			overlap.setAngle(projectionThis.first < projectionOther.first ? angle:-angle);
+			overlap.applyAngle(projectionThis.first < projectionOther.first ? angle:-angle);
 		}
 	}
 
@@ -84,7 +84,7 @@ Vector2d Circle::getNearestPoint(Vector2d point) const
 {
 	double radius = _shape.getRadius();
 	Vector2d nearest(radius, 0);
-	nearest.setAngle((point - getPosition()).getAngle());
+	nearest.applyAngle((point - getPosition()).angle());
 	return nearest + getPosition();
 }
 

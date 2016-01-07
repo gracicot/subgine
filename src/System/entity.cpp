@@ -12,6 +12,7 @@ Entity& Entity::operator=(Entity&& o)
 {
 	_properties = move(o._properties);
 	_components = move(o._components);
+	return *this;
 }
 
 

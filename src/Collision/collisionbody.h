@@ -9,15 +9,13 @@
 
 namespace sbg {
 
-class ResultData;
-class CollisionTester;
-class CollisionHandler;
-class CollisionEntity;
+struct ResultData;
+struct CollisionTester;
+struct CollisionHandler;
+struct CollisionEntity;
 struct Group;
 
-class CollisionBody
-{
-public:
+struct CollisionBody {
 	CollisionBody() = default;
 	CollisionBody(const CollisionBody&) = delete;
 	CollisionBody(CollisionBody&& other);

@@ -4,9 +4,7 @@
 
 namespace sbg {
 
-class ResultData : public Clonable
-{
-public:
+struct ResultData : Clonable {
 	virtual std::unique_ptr<ResultData> reverse() const = 0;
 	virtual ResultData* clone() const = 0;
 };
