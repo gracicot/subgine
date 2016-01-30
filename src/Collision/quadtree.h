@@ -12,29 +12,17 @@ template<typename T>
 struct QuadTree : AABB_able {
 	using container = std::set<std::weak_ptr<const T>, std::owner_less<std::weak_ptr<const T>>>;
 	
-	QuadTree(std::pair<Vector2d, Vector2d> box = {}): _boundingBox{box}
-	{
-		
-	}
-	
+	QuadTree(std::pair<Vector2d, Vector2d> box = {}) : _boundingBox{box} {}
 	QuadTree(const QuadTree&) = delete;
 	QuadTree& operator=(const QuadTree&) = delete;
-	
-    QuadTree(QuadTree&& other) : _boundingBox{std::move(other._boundingBox)}, _nodes{std::move(other._nodes)}, _objects{std::move(other._objects)} {}
-
-    QuadTree& operator=(QuadTree&& other) {
-		std::swap(_boundingBox, other._boundingBox);
-		std::swap(_nodes, other.nodes);
-		std::swap(_objects, other._objects);
-		
-		return *this;
-    }
+    QuadTree(QuadTree&& other) = default;
+    QuadTree& operator=(QuadTree&& other) = default;
     
     template<typename I>
 	void add(I first, I end)
 	{
 		for (auto it = std::move(first) ; it != end ; it++) {
-			if (isContaining(**it) && ((*it)->getBoundingBox().first - (*it)->getBoundingBox().second).notZero()) {
+			if (isContaining(**it) && !((*it)->getBoundingBox().first - (*it)->getBoundingBox().second).null()) {
 				subdivide(*it);
 			}
 		}

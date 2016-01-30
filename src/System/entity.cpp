@@ -4,17 +4,7 @@ using namespace std;
 
 namespace sbg {
 
-Entity::AbstractProperty::~AbstractProperty() {}
-
-Entity::Entity(Entity&& o) : _properties{move(o._properties)}, _components{move(o._components)} {}
-
-Entity& Entity::operator=(Entity&& o)
-{
-	_properties = move(o._properties);
-	_components = move(o._components);
-	
-	return *this;
-}
-
+Entity::Entity(Entity&& o) = default;
+Entity& Entity::operator=(Entity&& o) = default;
 
 }
