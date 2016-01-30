@@ -9,51 +9,37 @@ template<typename T>
 struct Provider final {
 	Provider() = delete;
 	~Provider() = default;
-	Provider(const Provider& other) : _function{other._function} {}
-	Provider(Provider&& other) : _function{std::move(other._function)} {}
+	Provider(const Provider& other) = default;
+	Provider(Provider&& other) = default;
+	Provider& operator=(Provider&& other) = default;
+	Provider& operator=(const Provider& other) = default;
 	
-	Provider& operator=(Provider&& other) {
-		std::swap(other._function, _function);
-		return *this;
-	}
-	
-	Provider& operator=(const Provider& other) {
-		_function = other._function;
-		return *this;
-	}
-	
-	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
+	template<typename U, typename std::enable_if<std::is_convertible<U, T>::value, int>::type = 0, typename std::enable_if<!std::is_same<U, T>::value, int>::type = 0>
 	Provider<T>& operator=(Provider<U>&& other) {
 		std::swap(other._function, _function);
 		return *this;
 	}
 	
-	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
+	template<typename U, typename std::enable_if<std::is_convertible<U, T>::value, int>::type = 0, typename std::enable_if<!std::is_same<U, T>::value, int>::type = 0>
 	Provider<T>& operator=(const Provider<U>& other) {
 		_function = other._function;
 		return *this;
 	}
 	
-	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
+	template<typename U, typename std::enable_if<std::is_convertible<U, T>::value, int>::type = 0, typename std::enable_if<!std::is_same<U, T>::value, int>::type = 0>
 	Provider(const Provider<U>& other) : _function{other._function} {}
 	
-	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
+	template<typename U, typename std::enable_if<std::is_convertible<U, T>::value, int>::type = 0, typename std::enable_if<!std::is_same<U, T>::value, int>::type = 0>
 	Provider(Provider<U>&& other) : _function{std::move(other._function)} {}
 
-	template<typename U,
-		typename = typename std::enable_if<!std::is_convertible<U, T>::value>::type,
-		typename = typename std::enable_if<!std::is_same<U, T>::value>::type
-	>
+	template<typename U, typename std::enable_if<!std::is_constructible<T, U>::value && !std::is_convertible<U, T>::value && !std::is_same<U, T>::value, int>::type = 0>
 	Provider(U function) : _function{function} {}
-
-	Provider(T value) : _function{[=]{ return value; }} {}
+	
+	template<typename U, typename std::enable_if<std::is_constructible<T, U>::value || std::is_convertible<U, T>::value || std::is_same<U, T>::value, int>::type = 0>
+	Provider(U value) : _function{[=]{ return value; }} {}
 	
 	template<typename U>
 	friend struct Provider;
-	
-	std::function<T()> function() const {
-		return _function;
-	}
 	
 	T operator()() const {
 		return _function();

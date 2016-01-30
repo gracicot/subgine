@@ -9,6 +9,10 @@ namespace sbg {
 template<int n>
 struct PositionProvider {
 	PositionProvider(Provider<Vector<n, double>> position);
+	
+	template<typename T, typename std::enable_if<std::is_constructible<Provider<Vector<n, double>>, T>::value, int>::type = 0>
+	PositionProvider(T position) : _position{position} {}
+	
 	Vector<n, double> getPosition() const;
 	
 private:

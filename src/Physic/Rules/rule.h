@@ -10,7 +10,7 @@ template<int n>
 struct Rule : Clonable {
 	virtual ~Rule();
 	virtual Vector<n, double> getResult(const PhysicPoint<n>& object) const = 0;
-	virtual Rule<n>* clone() const = 0;
+	Rule<n>* clone() const override = 0;
 };
 
 using Rule2D = Rule<2>;
