@@ -3,7 +3,7 @@
 #include "utility.h"
 
 namespace sbg {
-	template<int n, class T>
+	template<int n, typename T>
 	struct Vector;
 }
 

@@ -8,7 +8,7 @@ namespace sbg {
 	constexpr double tau = 8.0 * std::atan(1.0);
 	constexpr double pi = tau / 2.0;
 	#elif !defined(__GNUC__) || defined(__clang__)
-	constexpr double tau = M_PI;
+	constexpr double tau = 3.14159265358979323846;
 	constexpr double pi = tau / 2.0;
 	#endif
 	

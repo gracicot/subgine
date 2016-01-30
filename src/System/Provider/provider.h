@@ -39,10 +39,14 @@ struct Provider final {
 	
 	template<typename U, typename = typename std::enable_if<std::is_convertible<U, T>::value>::type, typename = typename std::enable_if<!std::is_same<U, T>::value>::type>
 	Provider(Provider<U>&& other) : _function{std::move(other._function)} {}
-	
-	template<typename U, typename = typename std::enable_if<std::is_constructible<std::function<T()>, U>::value>::type>
+
+	template<typename U,
+		typename = typename std::enable_if<!std::is_convertible<U, T>::value>::type,
+		typename = typename std::enable_if<!std::is_same<U, T>::value>::type
+	>
 	Provider(U function) : _function{function} {}
-	Provider(typename std::enable_if<!std::is_constructible<std::function<T()>, T>::value, T>::type value) : _function{[=]{ return value; }} {}
+
+	Provider(T value) : _function{[=]{ return value; }} {}
 	
 	template<typename U>
 	friend struct Provider;

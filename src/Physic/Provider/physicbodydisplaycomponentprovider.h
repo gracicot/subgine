@@ -4,7 +4,7 @@
 
 namespace sbg {
 
-template<int i> class PhysicBody;
+template<int i> struct PhysicBody;
 
 template<int n>
 DisplayComponentProvider<n> makePhysicBodyDisplayComponentProvider(const PhysicBody<n>& physicBody, Provider<Vector<n, double>> scale = Vector<n, double>{1});

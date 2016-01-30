@@ -40,7 +40,7 @@ public:
 		auto angle = std::atan2(y, x);
 
 		if (angle < 0) {
-			angle += tau;
+			angle += static_cast<T>(tau);
 		}
 
 		return angle;
@@ -50,27 +50,22 @@ public:
 		return std::sqrt(power<2>(x) + power<2>(y));
 	}
 
-	void applyAngle(MathType angle) {
-		if (!null()) {
-			auto lenght = length();
-			x = std::cos(angle) * lenght;
-			y = std::sin(angle) * lenght;
-		}
+	void applyAngle(MathType a) {
+		*this = angle(a);
 	}
 
 	void applyLenght(MathType lenght) {
 		if (!null()) {
 			auto product = lenght / length();
-			x *= product;
-			y *= product;
+			x *= static_cast<T>(product);
+			y *= static_cast<T>(product);
 		} else {
-			x = lenght;
+			x = static_cast<T>(lenght);
 		}
 	}
 	
-	template<typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
-	inline Vector<2, decltype(std::declval<T>() * std::declval<U>())> lenght(U lenght) {
-		auto product = std::forward<U>(lenght) / length();
+	inline Vector<2, decltype(std::declval<T>() * std::declval<MathType>())> lenght(MathType lenght) {
+		auto product = lenght / length();
 		return {x * product, y * product};
 	}
 
@@ -96,8 +91,8 @@ public:
 
 		if (!null()) {
 			auto lenght = length();
-			temp.x = std::cos(angle) * lenght;
-			temp.y = std::sin(angle) * lenght;
+			temp.x = static_cast<T>(std::cos(angle) * lenght);
+			temp.y = static_cast<T>(std::sin(angle) * lenght);
 		}
 		
 		return temp;

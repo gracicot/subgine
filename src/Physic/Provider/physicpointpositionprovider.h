@@ -6,7 +6,7 @@
 
 namespace sbg {
 
-template<int n> class PhysicPoint;
+template<int n> struct PhysicPoint;
 
 template<int n>
 PositionProvider<n> makePhysicPointPositionProvider(const PhysicPoint<n>& physicPointRef);

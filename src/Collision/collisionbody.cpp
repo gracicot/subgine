@@ -23,6 +23,7 @@ CollisionBody& CollisionBody::operator=(CollisionBody&& other)
 	swap(_collisionEntities, other._collisionEntities);
 	swap(_collisionTesters, other._collisionTesters);
 	swap(_collisionhandlers, other._collisionhandlers);
+	
 	return *this;
 }
 

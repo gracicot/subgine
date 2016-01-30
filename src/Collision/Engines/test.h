@@ -8,9 +8,7 @@ namespace sbg {
 struct Entity;
 struct Group;
 
-class Test
-{
-public:
+struct Test {
 	Test(std::weak_ptr<Entity> object, std::weak_ptr<Entity> other, Group* test, bool reversible);
 	
 	void setTest(Group* test);

@@ -47,9 +47,9 @@ public:
 	void applyAngle(const Vector<2, MathType> angles) {
 		if (!null()) {
 			auto lenght = length();
-			x = std::sin(angles.y) * std::cos(angles.x) * lenght;
-			y = std::sin(angles.x) * std::sin(angles.y) * lenght;
-			z = std::cos(angles.y) * lenght;
+			x = static_cast<T>(std::sin(angles.y) * std::cos(angles.x) * lenght);
+			y = static_cast<T>(std::sin(angles.x) * std::sin(angles.y) * lenght);
+			z = static_cast<T>(std::cos(angles.y) * lenght);
 		}
 	}
 
@@ -58,9 +58,9 @@ public:
 
 		if (!null()) {
 			auto lenght = length();
-			temp.x = std::sin(angles.y) * std::cos(angles.x) * lenght;
-			temp.y = std::sin(angles.x) * std::sin(angles.y) * lenght;
-			temp.z = std::cos(angles.y) * lenght;
+			temp.x = static_cast<T>(std::sin(angles.y) * std::cos(angles.x) * lenght);
+			temp.y = static_cast<T>(std::sin(angles.x) * std::sin(angles.y) * lenght);
+			temp.z = static_cast<T>(std::cos(angles.y) * lenght);
 		}
 		
 		return temp;
@@ -69,16 +69,15 @@ public:
 	void applyLenght(MathType lenght) {
 		if (!null()) {
 			auto product = lenght / length();
-			x *= product;
-			y *= product;
-			z *= product;
+			x *= static_cast<T>(product);
+			y *= static_cast<T>(product);
+			z *= static_cast<T>(product);
 		} else {
-			x = lenght;
+			x = static_cast<T>(lenght);
 		}
 	}
 
-	template<typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
-	Vector<3, decltype(std::declval<T>() * std::declval<U>())> lenght(U lenght) {
+	Vector<3, decltype(std::declval<T>() * std::declval<MathType>())> lenght(MathType lenght) {
 		auto product = lenght / length();
 		return {
 			x * product,

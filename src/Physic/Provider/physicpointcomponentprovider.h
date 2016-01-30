@@ -7,7 +7,7 @@
 
 namespace sbg {
 
-template<int n> class PhysicPoint;
+template<int n> struct PhysicPoint;
 
 template<int n>
 ComponentProvider<n> makePhysicPointComponentProvider(const PhysicPoint<n>& physicPoint, Provider<Vector<freedom(n), double>> orientation = Vector<freedom(n), double>{});

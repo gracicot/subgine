@@ -7,7 +7,7 @@ namespace sbg {
 template<int n>
 PositionProvider<n> makeZeroPositionProvider()
 {
-	return {Vector<n, double>{0}};
+	return Vector<n, double>{0};
 }
 
 template PositionProvider<2> makeZeroPositionProvider<2>();

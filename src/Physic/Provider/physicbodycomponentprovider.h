@@ -6,7 +6,7 @@
 
 namespace sbg {
 
-template<int n> class PhysicBody;
+template<int n> struct PhysicBody;
 
 template<int n>
 ComponentProvider<n> makePhysicBodyComponentProvider(const PhysicBody<n>& physicBody);

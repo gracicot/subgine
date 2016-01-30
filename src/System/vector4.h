@@ -44,15 +44,15 @@ public:
 		return std::sqrt((x*x) + (y*y) + (z*z) + (w*w));
 	}
 
-	void applyLenght(double lenght) {
+	void applyLenght(MathType lenght) {
 		if (!null()) {
 			auto product = lenght / length();
-			x *= product;
-			y *= product;
-			z *= product;
-			w *= product;
+			x *= static_cast<T>(product);
+			y *= static_cast<T>(product);
+			z *= static_cast<T>(product);
+			w *= static_cast<T>(product);
 		} else {
-			x = lenght;
+			x = static_cast<T>(lenght);
 		}
 	}
 
@@ -61,7 +61,7 @@ public:
 	}
 
 	constexpr bool null() const {
-		return x != 0 || y != 0 || z != 0 || w != 0;
+		return x == 0 && y == 0 && z == 0 && w == 0;
 	}
 
 	Vector<4, decltype((std::declval<T>() / std::declval<MathType>()))> unit() const {
@@ -70,7 +70,7 @@ public:
 			
 			return {x / lenght, y / lenght,  z / lenght,  w / lenght};
 		} else {
-			return Vector< 4 , T >(0, 0, 0, 0);
+			return Vector< 4 , T >{0, 0, 0, 0};
 		}
 	}
 

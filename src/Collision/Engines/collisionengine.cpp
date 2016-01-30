@@ -47,7 +47,7 @@ void CollisionEngine::execute(Time time)
 				{
 					lock_guard<mutex> lock2{write};
 					if (test.isReversible()) {
-						auto data = testResult.result.getData();
+						auto&& data = testResult.result.getData();
 						results.emplace_back(bodySecond, testOther, move(CollisionResult{testObject, testResult.result.isColliding(), data ? data->reverse():nullptr, time}), test.getTest());
 					}
 					results.emplace_back(move(testResult));

@@ -11,11 +11,9 @@
 namespace sbg {
 
 struct Group;
-class GroupContainer;
+struct GroupContainer;
 
-class CollisionEngine : public Engine
-{
-public:
+struct CollisionEngine : Engine {
 	CollisionEngine();
 	void execute(Time time) override;
 

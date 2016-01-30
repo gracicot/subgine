@@ -7,9 +7,7 @@ namespace sbg {
 
 struct Group;
 
-class GroupContainer
-{
-public:
+struct GroupContainer {
 	Group* group(std::string name);
 	
 private:
