@@ -14,6 +14,10 @@ struct Engine;
 
 struct MainEngine {
 	MainEngine();
+	MainEngine(MainEngine&&);
+	MainEngine& operator=(MainEngine&&);
+	MainEngine(const MainEngine&) = delete;
+	MainEngine& operator=(const MainEngine&) = delete;
 	~MainEngine();
 
 	void setSpeed(double speed);
@@ -36,9 +40,9 @@ private:
 	std::thread _thread;
 	
 	std::function<void()> _onUpdate;
-	bool _run;
-	double _speed;
-	std::chrono::high_resolution_clock::time_point _timer;
+	bool _run = false;
+	double _speed = 1;
+	std::chrono::high_resolution_clock::time_point _timer = std::chrono::high_resolution_clock::now();
 
 	std::set<std::weak_ptr<Engine>, std::owner_less<std::weak_ptr<Engine>>> _engines;
 };

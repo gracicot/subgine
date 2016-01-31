@@ -12,10 +12,10 @@ using namespace std;
 namespace sbg
 {
 
-MainEngine::MainEngine() : _speed{1}, _timer{chrono::high_resolution_clock::now()}
-{
-	
-}
+MainEngine::MainEngine() = default;
+MainEngine::MainEngine(MainEngine&&) = default;
+MainEngine& MainEngine::operator=(MainEngine&&) = default;
+
 
 MainEngine::~MainEngine()
 {
