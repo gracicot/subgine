@@ -23,7 +23,8 @@ struct MainEngine {
 	void setSpeed(double speed);
 	double getSpeed();
 
-	void add(std::weak_ptr<Engine> engine);
+	void add(std::shared_ptr<Engine> engine);
+	void remove(std::shared_ptr<Engine> engine);
 	void remove(std::weak_ptr<Engine> engine);
 	
 	void onUpdate(std::function<void()> callback);

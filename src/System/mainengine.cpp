@@ -82,9 +82,14 @@ void MainEngine::update()
 	}
 }
 
-void MainEngine::add(weak_ptr<Engine> engine)
+void MainEngine::add(shared_ptr<Engine> engine)
 {
 	_engines.insert(engine);
+}
+
+void MainEngine::remove(shared_ptr<Engine> engine)
+{
+	remove(std::weak_ptr<Engine>{engine});
 }
 
 void MainEngine::remove(weak_ptr<Engine> engine)
