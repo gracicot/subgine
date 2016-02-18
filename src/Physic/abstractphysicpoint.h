@@ -5,6 +5,7 @@
 namespace sbg {
 
 struct AbstractPhysicPoint {
+	virtual ~AbstractPhysicPoint();
 	void setMass(const double mass);
 	double getMass() const;
 	

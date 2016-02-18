@@ -2,6 +2,8 @@
 
 namespace sbg {
 
+AbstractPhysicPoint::~AbstractPhysicPoint() = default;
+
 double AbstractPhysicPoint::getMass() const
 {
 	return _mass;
