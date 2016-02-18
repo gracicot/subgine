@@ -24,7 +24,7 @@ public:
 		return {static_cast<O>(x)};
 	}
 	
-	template<typename O, typename std::enable_if<!is_strictly_explicitly_convertible<T, O>::value, int>::type = 0>
+	template<typename O, typename std::enable_if<is_strictly_explicitly_convertible<T, O>::value, int>::type = 0>
 	constexpr explicit inline operator Vector<1, O> () const {
 		return {static_cast<O>(x)};
 	}
