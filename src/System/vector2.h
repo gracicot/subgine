@@ -12,10 +12,8 @@ namespace sbg {
 template<typename T>
 struct Vector<2, T> {
 	static_assert(std::is_arithmetic<T>::value, "Vector must be aritmetic");
-private:
 	using MathType = typename std::conditional<std::is_floating_point<T>::value, T, double>::type;
 	
-public:
 	constexpr Vector() : x{0}, y{0} {}
 	constexpr explicit Vector(T value) : x{value}, y{value} {}
 	constexpr Vector(T _x, T _y) : x{_x}, y{_y} {}
@@ -64,12 +62,12 @@ public:
 		}
 	}
 	
-	inline Vector<2, decltype(std::declval<T>() * std::declval<MathType>())> lenght(MathType lenght) {
+	Vector<2, decltype(std::declval<T>() * std::declval<MathType>())> lenght(MathType lenght) {
 		auto product = lenght / length();
 		return {x * product, y * product};
 	}
 
-	inline Vector<2, T> project(const Vector<2, T>& other) const {
+	Vector<2, T> project(const Vector<2, T>& other) const {
 		return dot(other.unit()) * other;
 	}
 
@@ -99,22 +97,22 @@ public:
 	}
 
 	template<typename U>
-	constexpr inline auto dot(const Vector<2, U>& vec) const -> decltype((std::declval<T>() * std::declval<U>())) {
+	constexpr auto dot(const Vector<2, U>& vec) const -> decltype((std::declval<T>() * std::declval<U>())) {
 		return (x * vec.x) + (y * vec.y);
 	}
 
 	template<typename U>
-	constexpr inline Vector<1, decltype((std::declval<T>() * std::declval<U>()))> cross(const Vector<2, U>& other) const {
+	constexpr Vector<1, decltype((std::declval<T>() * std::declval<U>()))> cross(const Vector<2, U>& other) const {
 		return {(x * other.y) - (y * other.x)};
 	}
 
 	template<typename U>
-	constexpr inline Vector<2, decltype((std::declval<U>() * std::declval<T>()))> cross(U multiplier) const {
+	constexpr Vector<2, decltype((std::declval<U>() * std::declval<T>()))> cross(U multiplier) const {
 		return {multiplier * y, -multiplier * x};
 	}
 
 	template<typename U>
-	constexpr inline Vector<2, decltype((std::declval<U>() * std::declval<T>()))> cross(const Vector<1, U>& multiplier) const {
+	constexpr Vector<2, decltype((std::declval<U>() * std::declval<T>()))> cross(const Vector<1, U>& multiplier) const {
 		return {multiplier * y, -multiplier * x};
 	}
 
@@ -125,31 +123,23 @@ public:
 	}
 
 	template<typename U>
-	constexpr inline bool operator==(const Vector<2, U>& other) const {
+	constexpr bool operator==(const Vector<2, U>& other) const {
 		return x == other.x && y == other.y;
 	}
 
 	template<typename U>
-	constexpr inline bool operator!=(const Vector<2, U>& other) const {
+	constexpr bool operator!=(const Vector<2, U>& other) const {
 		return !(*this == other);
 	}
 
 	template<typename U>
-	constexpr inline bool operator<(const Vector<2, U>& other) const {
+	constexpr bool operator<(const Vector<2, U>& other) const {
 		return (power<2>(x) + power<2>(y)) < ((other.x * other.x) + (other.y * other.y));
 	}
 
 	template<typename U>
-	constexpr inline bool operator>(const Vector<2, U>& other) const {
+	constexpr bool operator>(const Vector<2, U>& other) const {
 		return (power<2>(x) + power<2>(y)) > ((other.x * other.x) + (other.y * other.y));
-	}
-
-	constexpr inline bool operator>(MathType length) const {
-		return (power<2>(x) + power<2>(y)) > (length * length);
-	}
-
-	constexpr inline bool operator<(MathType length) const {
-		return (power<2>(x) + power<2>(y)) < (length * length);
 	}
 	
 	T x, y;
@@ -159,13 +149,37 @@ public:
 };
 
 template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
-constexpr inline Vector<2, decltype(std::declval<T>() / std::declval<U>())> operator/(const Vector<2, T>& vec, U divider)
+constexpr bool operator<(const Vector<2, T>& vec, U length)
+{
+	return power<2>(vec.x) + power<2>(vec.y) < static_cast<typename Vector<2, T>::MathType>(length * length);
+}
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr bool operator>(const Vector<2, T>& vec, U length)
+{
+	return power<2>(vec.x) + power<2>(vec.y) > static_cast<typename Vector<2, T>::MathType>(length * length);
+}
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr bool operator<(U length, const Vector<2, T>& vec)
+{
+	return static_cast<typename Vector<2, T>::MathType>(length * length) < power<2>(vec.x) + power<2>(vec.y);
+}
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr bool operator>(U length, const Vector<2, T>& vec)
+{
+	return static_cast<typename Vector<2, T>::MathType>(length * length) > power<2>(vec.x) + power<2>(vec.y);
+}
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr Vector<2, decltype(std::declval<T>() / std::declval<U>())> operator/(const Vector<2, T>& vec, U divider)
 {
 	return {vec.x / divider, vec.y / divider};
 }
 
 template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
-constexpr inline Vector<2, decltype(std::declval<T>() / std::declval<U>())> operator/(U divider, const Vector<2, T>& vec)
+constexpr Vector<2, decltype(std::declval<T>() / std::declval<U>())> operator/(U divider, const Vector<2, T>& vec)
 {
 	return {vec.x / divider, vec.y / divider};
 }
@@ -177,7 +191,7 @@ constexpr Vector<2, decltype(std::declval<T>() / std::declval<U>())> operator/(c
 }
 
 template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
-constexpr inline Vector<2, decltype(std::declval<T>() * std::declval<U>())> operator*(const Vector<2, T>& vec, U multiplier)
+constexpr Vector<2, decltype(std::declval<T>() * std::declval<U>())> operator*(const Vector<2, T>& vec, U multiplier)
 {
 	return {vec.x * multiplier, vec.y * multiplier};
 }
@@ -189,7 +203,7 @@ constexpr Vector<2, decltype(std::declval<T>() * std::declval<U>())> operator*(c
 }
 
 template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
-constexpr inline Vector<2, decltype(std::declval<T>() * std::declval<U>())> operator*(U multiplier, const Vector<2, T>& vec)
+constexpr Vector<2, decltype(std::declval<T>() * std::declval<U>())> operator*(U multiplier, const Vector<2, T>& vec)
 {
 	return {vec.x * multiplier, vec.y * multiplier};
 }
@@ -203,7 +217,7 @@ Vector<2, T>& operator*=(Vector<2, T>& vec, U multiplier)
 }
 
 template<typename T, typename U>
-constexpr inline Vector<2, decltype(std::declval<T>() + std::declval<U>())> operator+(const Vector<2, T>& vec1, const Vector<2, U>& vec2)
+constexpr Vector<2, decltype(std::declval<T>() + std::declval<U>())> operator+(const Vector<2, T>& vec1, const Vector<2, U>& vec2)
 {
 	return {vec1.x + vec2.x, vec1.y + vec2.y};
 }
@@ -217,7 +231,7 @@ Vector<2, T>& operator+=(Vector<2, T>& vec1, const Vector<2, U>& vec2)
 }
 
 template<typename T, typename U>
-constexpr inline Vector<2, decltype(std::declval<T>() - std::declval<U>())> operator-(const Vector<2, T>& vec1, const Vector<2, U>& vec2)
+constexpr Vector<2, decltype(std::declval<T>() - std::declval<U>())> operator-(const Vector<2, T>& vec1, const Vector<2, U>& vec2)
 {
 	return {vec1.x - vec2.x, vec1.y - vec2.y};
 }
@@ -261,7 +275,7 @@ constexpr Vector<2, T> operator-(const Vector<2, T>& vec)
 }
 
 template<typename T>
-inline std::ostream& operator<<(std::ostream& out, const Vector<2, T>& vec) {
+std::ostream& operator<<(std::ostream& out, const Vector<2, T>& vec) {
 	out << vec.x << ", " << vec.y;
 	return out;
 }

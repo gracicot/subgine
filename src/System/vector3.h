@@ -10,10 +10,8 @@ namespace sbg {
 template<typename T>
 struct Vector<3, T> {
 	static_assert(std::is_arithmetic<T>::value, "Vector must be aritmetic");
-private:
 	using MathType = typename std::conditional<std::is_floating_point<T>::value, T, double>::type;
 	
-public:
 	constexpr Vector() : x{0}, y{0}, z{0} {}
 	constexpr explicit Vector(T value) : x{value}, y{value}, z{value} {}
 	constexpr Vector(T _x, T _y, T _z) : x{_x}, y{_y}, z{_z} {}
@@ -154,6 +152,30 @@ public:
 	constexpr static int size = 3;
 	using type = T;
 };
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr bool operator<(const Vector<3, T>& vec, U length)
+{
+	return power<2>(vec.x) + power<2>(vec.y) + power<2>(vec.z) < static_cast<typename Vector<3, T>::MathType>(length * length);
+}
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr bool operator>(const Vector<3, T>& vec, U length)
+{
+	return power<2>(vec.x) + power<2>(vec.y) + power<2>(vec.z) > static_cast<typename Vector<3, T>::MathType>(length * length);
+}
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr bool operator<(U length, const Vector<3, T>& vec)
+{
+	return static_cast<typename Vector<3, T>::MathType>(length * length) < power<2>(vec.x) + power<2>(vec.y) + power<2>(vec.z);
+}
+
+template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
+constexpr bool operator>(U length, const Vector<3, T>& vec)
+{
+	return static_cast<typename Vector<3, T>::MathType>(length * length) > power<2>(vec.x) + power<2>(vec.y) + power<2>(vec.z);
+}
 
 template<typename T, typename U, typename std::enable_if<std::is_arithmetic<U>::value, int>::type = 0>
 constexpr Vector<3, decltype(std::declval<T>() / std::declval<U>())> operator/(const Vector<3, T>& vec, U divider)
