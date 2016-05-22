@@ -5,7 +5,12 @@
 namespace sbg {
 
 template<typename...>
-using void_t = void;
+struct voider {
+	using type = void;
+};
+
+template<typename... Ts>
+using void_t = typename voider<Ts...>::type;
 
 template<typename From, typename To, typename = void>
 struct is_explicitly_convertible : std::false_type {};
