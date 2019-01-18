@@ -1,6 +1,8 @@
 subgine
 =======
 
+> This repository is outdated. The next version may be available some day.
+
 A simple physic engine made from scratch working with multiple sub-engine. This engine feature abstraction beetween the number of dimensions you're working with using templates.
 
 Subgine has not achieved a stable release yet, so use it at your own risks!
